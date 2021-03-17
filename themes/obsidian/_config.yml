@@ -99,6 +99,7 @@ autoplay: false
 # default mp3 file
 mp3:
   - statics/chengdu.mp3
+  - statics/折戸伸治 - 梦のあと I.mp3
 
 # ---------------------------------------------------------------
 # Plugins
@@ -171,7 +172,7 @@ sharejs:
 # modes see: https://codemirror.net/mode/
 # see https://codemirror.net/
 codemirror:
-  modes: ['javascript', 'css', 'xml', 'htmlmixed', 'clike', 'php', 'shell', 'python']
+  modes: ['javascript', 'css', 'xml', 'htmlmixed', 'clike', 'php', 'shell', 'python','java']
 
 # Enabling mathjax support
 mathjax: true
@@ -186,7 +187,7 @@ footer_html: '
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?your_code";
+  hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
