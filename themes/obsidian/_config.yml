@@ -65,10 +65,11 @@ TOC: true
 welcome_cover: /img/cover.jpg
 
 # Article default cover image
-cover: /img/welcome-cover.jpg
+# cover: /img/welcome-cover.jpg
+cover: /img/welcome-cover2.jpg
 
 # Avatar
-avatar: /img/149b64edff82d540.jpg
+avatar: /img/avatar.jpg
 
 # Disable default scrollbar
 scrollbar: true
@@ -77,8 +78,8 @@ scrollbar: true
 keywords: TriDiamond Obsidian
 
 # Website slogans
-descriptionOne: '学而不思则罔,思而不学则殆'
-descriptionTwo: '艺术家思维去思考问题，工匠创造精神去开发'
+descriptionOne: '学而不思则罔,思而不学则殆.'
+descriptionTwo: '岁月是一指流沙,苍老是一段年华.'
 
 # If you use google analytics, please fill in the ID
 google_analytics: 'UA-149874671-1'
@@ -98,7 +99,7 @@ autoplay: false
 
 # default mp3 file
 mp3:
-  - statics/chengdu.mp3
+  # - statics/chengdu.mp3
   - statics/折戸伸治 - 梦のあと I.mp3
 
 # ---------------------------------------------------------------
