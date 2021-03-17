@@ -15,7 +15,10 @@
 
 
 
-123456@RequestMapping(&amp;quot;/chandao/getData&amp;quot;)@ResponseBodypublic ResultDto getData(@,"> 
+
+    @RequestMapping(&amp;quot;/chandao/getData&amp;quot;)
+    @ResponseBody
+    public ResultDto ,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="没想好" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -103,13 +106,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    3.7k
+                    1.3k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    3 mins.
+                    1 mins.
                 </span>
                 
                 
@@ -146,10 +149,31 @@
 
 
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/chandao/getData&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ResultDto <span class="title">getData</span><span class="params">(<span class="meta">@RequestParam</span> Map&lt;String, Object&gt; param)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> chandaoService.getData(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getData&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;map&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;map&quot;</span>&gt;</span></span><br><span class="line">    select b.realname as username, min(a.date) date, #&#123;endTime&#125; as deadline, Round(sum(a.consumed),1) as submitWorkTime from  zt_user b</span><br><span class="line">    LEFT JOIN zt_taskestimate a  on   b.account = a.account</span><br><span class="line">    JOIN zt_task c on a.task = c.id</span><br><span class="line">    where  b.dept  =1 </span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;startTime != null and startTime != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">        and a.date &gt;= #&#123;startTime&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;endTime != null and endTime != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">        and  a.date  <span class="symbol">&amp;lt;</span>= #&#123;endTime&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;username != null and username != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">       and b.realname like concat(concat(&#x27;%&#x27;,#&#123;username&#125;,&#x27;%&#x27;))</span><br><span class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    group by b.realname</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">
+    @RequestMapping(&quot;/chandao/getData&quot;)
+    @ResponseBody
+    public ResultDto getData(@RequestParam Map&lt;String, Object&gt; param)&#123;
+        return chandaoService.getData(param);
+    &#125;
+</code></pre>
+<pre><code class="xml">
+    &lt;select id=&quot;getData&quot; parameterType=&quot;map&quot; resultType=&quot;map&quot;&gt;
+        select b.realname as username, min(a.date) date, #&#123;endTime&#125; as deadline, Round(sum(a.consumed),1) as submitWorkTime from  zt_user b
+        LEFT JOIN zt_taskestimate a  on   b.account = a.account
+        JOIN zt_task c on a.task = c.id
+        where  b.dept  =1 
+        &lt;if test=&quot;startTime != null and startTime != &#39;&#39;&quot;&gt;
+            and a.date &gt;= #&#123;startTime&#125;
+        &lt;/if&gt;
+        &lt;if test=&quot;endTime != null and endTime != &#39;&#39;&quot;&gt;
+            and  a.date  &amp;lt;= #&#123;endTime&#125;
+        &lt;/if&gt;
+        &lt;if test=&quot;username != null and username != &#39;&#39;&quot;&gt;
+           and b.realname like concat(concat(&#39;%&#39;,#&#123;username&#125;,&#39;%&#39;))
+        &lt;/if&gt;
+        group by b.realname
+    &lt;/select&gt;
+</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -161,6 +185,10 @@
                 
                 
                 <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+                
+                <li title='1' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
                 
                     
             </ul>
@@ -308,6 +336,8 @@
 <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
   
 <script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/java/java.min.js"></script>
    
 <script src="/js/busuanzi.min.js"></script>
 
@@ -412,6 +442,6 @@
 
 
 
- <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?your_code"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
 
 </html>
