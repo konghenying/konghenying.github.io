@@ -1,8 +1,8 @@
 ---
 title: jvm
 date: 2021年2月28日17:08:26
-targs: jvm
-catefory: jvm
+tags: jvm
+category: jvm
 ---
 
 # JVM
