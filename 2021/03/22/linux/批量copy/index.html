@@ -139,7 +139,7 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h1 id="批量复制spring的sources源码包到指定目录"><a href="#批量复制spring的sources源码包到指定目录" class="headerlink" title="批量复制spring的sources源码包到指定目录"></a>批量复制spring的sources源码包到指定目录</h1><pre><code>cd /mnt/c/Users/60512/Downloads/spring-5.2.13.RELEASE-dist/spring-framework-5.2.13.RELEASE/
+            <h1 id="批量复制spring的sources源码包到指定目录"><a href="#批量复制spring的sources源码包到指定目录" class="headerlink" title="批量复制spring的sources源码包到指定目录"></a>批量复制spring的sources源码包到指定目录</h1><pre><code class="bash">cd /mnt/c/Users/60512/Downloads/spring-5.2.13.RELEASE-dist/spring-framework-5.2.13.RELEASE/
 ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source/
 </code></pre>
 <p>ls ./libs/  : 显示目录先的文件名</p>
@@ -147,7 +147,7 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source
 <p>| xargs -i     :传递符合条件的文件目录,拼接进 cp命令中.</p>
 <p>cp -r ./libs/{}  ./libs/source/    : 拷贝拼接好的命令,并执行拷贝.</p>
 <h2 id="ls-命令"><a href="#ls-命令" class="headerlink" title="ls 命令"></a>ls 命令</h2><p>列出目前工作目录所含之文件及子目录</p>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>ls [-alrtAFR] [name...]
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code class="bash">ls [-alrtAFR] [name...]
 </code></pre>
 <h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
 <li>-a 显示所有文件及目录 (<strong>.</strong> 开头的隐藏文件也会列出)</li>
@@ -159,7 +159,7 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source
 <li>-R 若目录下有文件，则以下之文件亦皆依序列出</li>
 </ul>
 <h2 id="grep-命令"><a href="#grep-命令" class="headerlink" title="grep 命令"></a>grep 命令</h2><p>查找文件里符合条件的字符串。</p>
-<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><pre><code>grep [-abcEFGhHilLnqrsvVwxy][-A&lt;显示行数&gt;][-B&lt;显示列数&gt;][-C&lt;显示列数&gt;][-d&lt;进行动作&gt;][-e&lt;范本样式&gt;][-f&lt;范本文件&gt;][--help][范本样式][文件或目录...]
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><pre><code class="bash">grep [-abcEFGhHilLnqrsvVwxy][-A&lt;显示行数&gt;][-B&lt;显示列数&gt;][-C&lt;显示列数&gt;][-d&lt;进行动作&gt;][-e&lt;范本样式&gt;][-f&lt;范本文件&gt;][--help][范本样式][文件或目录...]
 </code></pre>
 <h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
 <li><strong>-a 或 –text</strong> : 不要忽略二进制的数据。</li>
@@ -194,7 +194,7 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source
 <li>捕获一个命令的输出，然后传递给另外一个命令.</li>
 <li>文件的输出中读取数据.默认的命令是 echo，会替换换行与空白成空格.</li>
 </ul>
-<h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><pre><code>somecommand |xargs -item  command
+<h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><pre><code class="bash">somecommand |xargs -item  command
 </code></pre>
 <h3 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h3><ul>
 <li>-a file 从文件中读入作为 stdin</li>
@@ -212,7 +212,7 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source
 <li>-P 修改最大的进程数，默认是1，为0时候为as many as it can ，这个例子我没有想到，应该平时都用不到的吧。</li>
 </ul>
 <h2 id="cp-命令"><a href="#cp-命令" class="headerlink" title="cp 命令"></a>cp 命令</h2><p>复制文件或目录</p>
-<h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><pre><code>cp [options] source dest
+<h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><pre><code class="bash">cp [options] source dest
 </code></pre>
 <h3 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h3><ul>
 <li>-a：此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。其作用等于dpR参数组合。</li>
