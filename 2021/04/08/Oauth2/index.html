@@ -5,12 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hello World - 空痕影的从头再来</title>
+    <title> - 空痕影的从头再来</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any pr,"> 
+    <meta name="description" content="title: Oauth2 理解
+tags: 
+    - 概念
+categories: 概念
+date: 2021-3-30 00:42:13
+
+Oauth2 理解1. 什么是Oauth2​   ,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -57,7 +63,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://localhost:4000">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">Hello World</h3>
+        <h3 class="subtitle"></h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -87,25 +93,24 @@
         <div class="else">
             <p class="animated fadeInDown">
                 
-                <a href="/categories/helloword"><b>「
-                    </b>HELLOWORD<b> 」</b></a>
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
                 
-                十月 30, 2020
+                四月 08, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2020/10/30/hello-world/" title="Hello World" class="">Hello World</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/04/08/Oauth2/" title="Untitled" class="">Untitled</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    1.5k
+                    3.3k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    1 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -117,8 +122,6 @@
                 
             </p>
             
-            
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/hello/" rel="tag">hello</a></li></ul>
             
         </div>
     </div>
@@ -139,19 +142,60 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+            <pre><code>title: Oauth2 理解
+tags: 
+    - 概念
+categories: 概念
+date: 2021-3-30 00:42:13
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+<h1 id="Oauth2-理解"><a href="#Oauth2-理解" class="headerlink" title="Oauth2 理解"></a>Oauth2 理解</h1><h2 id="1-什么是Oauth2"><a href="#1-什么是Oauth2" class="headerlink" title="1. 什么是Oauth2"></a>1. 什么是Oauth2</h2><p>​     Oauth是一套开放授权的标准/协议.  旨在让用户允许第三方应用去访问该用户存储在另外服务提供者上的用户信息,而不需要将用户名与密码提供给第三方应用. OAuth 2.0是OAuth协议的下一版本, 但不向后兼容OAuth 1.0. </p>
+<p>用一句话来讲:</p>
+<p>​    Oauth解决的问题是使用<em>授权服务器</em>提供一个<em>访问凭据</em>给到<em>第三方应用</em>，让第三方应用可以在<em>不知道资源所有者</em>在<em>资源服务器上的账号和密码</em>的情况下，能获取到<em>资源所有者</em>在<em>资源服务器上的受保护资源</em>.</p>
+<h2 id="2-应用场景"><a href="#2-应用场景" class="headerlink" title="2. 应用场景"></a>2. 应用场景</h2><p>第三方应用授权登录: 当app或者网页接入一些第三方应用时,一般需要用户登录另一个合作平台, 比如QQ,微信,github的登录授权.</p>
+<p>前后端分离应用: 前后端分离框架,前端请求后端数据,需要通过认证. 比如使用vue,react或h5开发的app.</p>
+<h2 id="3-名词说明"><a href="#3-名词说明" class="headerlink" title="3. 名词说明"></a>3. 名词说明</h2><ol>
+<li>Third-party application: 第三方应用程序, 比如打开知乎, 使用第三方QQ授权登录, 这时候知乎就是客户端.</li>
+<li>HTTP service: HTTP服务提供商, 本文中简称”服务提供商”, 即用于授权登录的qq.</li>
+<li>client: 代表资源所有者及其授权进行受保护资源请求的应用程序. 术语“客户端”并不暗示任何特定的实现特征(例如, 应用程序是在服务器, 台式机还是其他设备上执行).</li>
+<li>Resource Owner: 资源所有者,即登录用户.</li>
+<li>Authorization server: 认证服务器, 即服务提供商专门用来处理认证的服务器.</li>
+<li>Resource server: 资源服务器, 即服务提供商存放用户生成的资源的服务器. </li>
+</ol>
+<h2 id="4-运行过程"><a href="#4-运行过程" class="headerlink" title="4. 运行过程"></a>4. 运行过程</h2><pre><code class="bash">     +--------+                               +---------------+
+     |        |--(A)- Authorization Request -&gt;|   Resource    |
+     |        |                               |     Owner     |
+     |        |&lt;-(B)-- Authorization Grant ---|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(C)-- Authorization Grant --&gt;| Authorization |
+     | Client |                               |     Server    |
+     |        |&lt;-(D)----- Access Token -------|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(E)----- Access Token ------&gt;|    Resource   |
+     |        |                               |     Server    |
+     |        |&lt;-(F)--- Protected Resource ---|               |
+     +--------+                               +---------------+
+                  Figure 1: Abstract Protocol Flow
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>A.  客户端请求资源所有者授权. 该授权请求可以直接直接呈现给资源拥有者, 也可间接地通过授权服务器进行(例如弹出嵌套的第三方登录页面,跳转到授权服务器).</p>
+<p>B.客户端收到授权许可. (用户点击授权,并提供一些能支持认证的信息).</p>
+<p>C. 客户端通过向授权服务器进行认证并呈现用户赋予的权限来请求<code>access token</code>.</p>
+<p>D. 授权服务器验证客户端并验证用户赋予的权限，如果有效，则颁发<code>access token</code>.</p>
+<p>E. 客户端从资源服务器请求受保护资源，并通过呈现<code>access token</code>进行身份验证.</p>
+<p>F. 资源服务器验证<code>access token</code>，如果有效，则为该请求提供服务.</p>
+<h2 id="5-授权模式"><a href="#5-授权模式" class="headerlink" title="5. 授权模式"></a>5. 授权模式</h2><ul>
+<li><p>授权码模式(authorization code)</p>
+</li>
+<li><p>简化模式(implicit)</p>
+</li>
+<li><p>密码模式(resource owner password credentials)</p>
+</li>
+<li><p>客户端模式(client credentials)</p>
+<h3 id="5-1-授权码模式"><a href="#5-1-授权码模式" class="headerlink" title="5.1 授权码模式"></a>5.1 授权码模式</h3></li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -197,7 +241,7 @@
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oauth2-%E7%90%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Oauth2 理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFOauth2"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是Oauth2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.</span> <span class="toc-text">2. 应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%90%8D%E8%AF%8D%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.</span> <span class="toc-text">3. 名词说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">4. 运行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">5. 授权模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%8E%88%E6%9D%83%E7%A0%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 授权码模式</span></a></li></ol></li></ol></li></ol>
                 </div>
             </div>
             

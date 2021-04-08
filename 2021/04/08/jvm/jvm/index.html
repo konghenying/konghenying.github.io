@@ -96,9 +96,9 @@ perparation准备 :静态成员变量赋初始,">
                 <a href="/categories/jvm"><b>「
                     </b>JVM<b> 」</b></a>
                 
-                三月 18, 2021
+                四月 08, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/03/18/jvm/jvm/" title="jvm" class="">jvm</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/04/08/jvm/jvm/" title="jvm" class="">jvm</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
@@ -195,7 +195,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.72-b15, mixed mode)
 <li>对齐 8的倍数</li>
 </ol>
 <p>注: markword结构</p>
-<p><img src="/images/markword32.jpeg" alt="img"> </p>
+<p><img src="%5Cimages%5Cjvm%5Cjvm.assets%5Cmarkword32.jpeg" alt="img"> </p>
 <h3 id="验证对象大小步骤"><a href="#验证对象大小步骤" class="headerlink" title="验证对象大小步骤"></a>验证对象大小步骤</h3><ol>
 <li><p>新建项目ObjectSize</p>
 </li>
@@ -422,22 +422,22 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)
 </ol>
 </li>
 </ol>
-<h3 id="5-常见的垃圾回收器"><a href="#5-常见的垃圾回收器" class="headerlink" title="5.常见的垃圾回收器"></a>5.常见的垃圾回收器</h3><p><img src="/images/GC.png" alt="GC"></p>
+<h3 id="5-常见的垃圾回收器"><a href="#5-常见的垃圾回收器" class="headerlink" title="5.常见的垃圾回收器"></a>5.常见的垃圾回收器</h3><p><img src="%5Cimages%5Cjvm%5Cjvm.assets%5CGC.png" alt="GC"></p>
 <p>– jdk诞生Serial追随提高效率,诞生了PS,为了配合CMS,</p>
 <ol>
 <li><p>Serial: a stop-the-word(STW),copying collector which uses a single GC thread.(单线程清理垃圾) 年轻代 串行回收</p>
 <blockquote>
 <p>——–&gt;|                |——–&gt;|                |</p>
-<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|<font color=#FF8C00>—–&gt;</font>|</p>
+<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>        |——–&gt;|<font color=#FF8C00>—–&gt;</font>       |</p>
 <p>——–&gt;|                |——–&gt;|                |</p>
 </blockquote>
 </li>
 <li><p>Parallel Scavenge: a stop-the-word,copying collector which users multiple GC threads.(多线程清理垃圾)年轻代 并行回收</p>
 <blockquote>
-<p>——–&gt;|                |——–&gt;|                |</p>
-<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|<font color=#FF8C00>—–&gt;</font>|</p>
-<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|<font color=#FF8C00>—–&gt;</font>|</p>
-<p>——–&gt;|                |——–&gt;|                |</p>
+<p>——–&gt;|                |——–&gt;|                 |</p>
+<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>        |——–&gt;|<font color=#FF8C00>—–&gt;</font>        |</p>
+<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>        |——–&gt;|<font color=#FF8C00>—–&gt;</font>        |</p>
+<p>——–&gt;|                |——–&gt;|                 |</p>
 </blockquote>
 </li>
 <li><p>ParNew: </p>
@@ -445,9 +445,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)
 <li><p>CMS: concurrent mark sweep.a mostly concurrent,low-pause collector. 老年代 </p>
 <blockquote>
 <p>——–&gt;|                |——–&gt;|                |——–&gt;|</p>
-<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|</p>
-<p>——–&gt;|                |——–&gt;|<font color=#FF8C00>—–&gt;</font>|——–&gt;|</p>
-<p>​                        |                |<font color=#FF8C00>—–&gt;</font>        |                |<font color=#FF8C00>—–&gt;</font>        |</p>
+<p>——–&gt;|<font color=#FF8C00>—–&gt;</font>        |——–&gt;|<font color=#FF8C00>—–&gt;</font>       |——–&gt;|</p>
+<p>——–&gt;|                |——–&gt;|<font color=#FF8C00>—–&gt;       </font>|——–&gt;|</p>
+<p>​            |                |<font color=#FF8C00>—–&gt;</font>    |                |<font color=#FF8C00>—–&gt;</font>   |</p>
 <p>​                         初始标记  并发标记         重新标记   并发清理</p>
 <ol>
 <li><p>初始标记: 标记根对象</p>
@@ -722,9 +722,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)
                     </dl>
                 </div>
                 <ul>
-                    <li><a href="/">3 <p>文章</p></a></li>
-                    <li><a href="/categories">3 <p>分类</p></a></li>
-                    <li><a href="/tags">3 <p>标签</p></a></li>
+                    <li><a href="/">8 <p>文章</p></a></li>
+                    <li><a href="/categories">4 <p>分类</p></a></li>
+                    <li><a href="/tags">5 <p>标签</p></a></li>
                 </ul>
             </div>
             
