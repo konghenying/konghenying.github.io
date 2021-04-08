@@ -66,7 +66,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.72-b15, mixed mode)
 
 注: markword结构
 
-![img](/images/jvm/jvm.assets/markword32.jpeg) 
+![img](jvm.assets/markword32.jpeg) 
 
 ### 验证对象大小步骤
 
@@ -343,7 +343,7 @@ add,sub,mul,div  增减乘除   eg: iadd 将栈顶两个int型数据出栈,相�
 
 ### 5.常见的垃圾回收器
 
-![GC](/images/jvm/jvm.assets/GC.png)
+![GC](jvm.assets/GC.png)
 
 -- jdk诞生Serial追随提高效率,诞生了PS,为了配合CMS,
 

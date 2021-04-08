@@ -1,3 +1,10 @@
+---
+title: frp搭建
+tags: linux
+category: linux
+date: 2021-2-28 00:42:13
+---
+
 # 搭建frp内网穿透连接win10子系统
 
 frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控主机实现反向代理，用户通过访问frps（中转服务器）来实现对frpc（被控主机）的远程访问。
@@ -14,7 +21,7 @@ frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控
 
 ### 2.1. 下载frp安装包
 
-![下载frp安装包](img\下载frp安装包.png)
+![下载frp安装包](/images/linux/frp搭建.assets/下载frp安装包.png)
 
 我这里都是用的linux系统,所以直接下载了一个linux安装包.
 
@@ -22,7 +29,7 @@ frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控
 
 目录结构如图:
 
-![image-20210407234735160](img\frp目录结构.png)
+![image-20210407234735160](/images/linux/frp搭建.assets/frp目录结构.png)
 
 其中`frpc.ini`是客户端(被控主机端)配置的参数,`frpc`是启动客户端的命令.
 
@@ -72,11 +79,11 @@ dashboard_pwd = amdin123
 
 这时候可以浏览器访问`ip:24842` (ip为服务器ip)来打开看板页面.
 
-![](img\看板1.png)
+![](/images/linux/frp搭建.assets/看板1.png)
 
 如果无法打开可以去阿里云控制面板开放相关的端口.
 
-![image-20210408000338477](img\开放阿里云端口1.png)
+![image-20210408000338477](/images/linux/frp搭建.assets/开放阿里云端口1.png)
 
 
 
@@ -123,7 +130,7 @@ local_port = 22
 
 登录看板可以观察到ssh的映射记录已经在TCP目录下上线.
 
-![image-20210408002318991](D:\workspace\blog\source\_posts\linux\frp搭建\img\ssh上线.png)
+![image-20210408002318991](/images/linux/frp搭建.assets/ssh上线.png)
 
 *同时保证子系统中的ssh服务开启,并对外可以访问. `service ssh start`*
 
@@ -131,17 +138,17 @@ local_port = 22
 
 需要再进入阿里云控制面板,将刚刚映射的ssh端口开启
 
-![image-20210408002925080](img\开端口2.png)
+![image-20210408002925080](/images/linux/frp搭建.assets/开端口2.png)
 
 ## 3. 连接
 
 打开xshell,新建一个连接,主机为服务器ip,端口为ssh映射的端口.用户名密码为win10子系统的用户.这里只是通过跳板机连接到win10子系统中的ssh服务.
 
-![image-20210408003244210](img\连接验证1.png)
+![image-20210408003244210](/images/linux/frp搭建.assets/连接验证1.png)
 
-![image-20210408003827499](img\连接验证2.png)
+![image-20210408003827499](/images/linux/frp搭建.assets/连接验证2.png)
 
-成功连接.\(^o^)/~
+成功连接./(^o^)/~
 
 
 

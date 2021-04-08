@@ -1,8 +1,8 @@
 ---
 title: linux 通过正则来复制文件
+date: 2021年2月28日17:08:26
 tags: linux
 category: linux
-date: 2021-2-28 00:42:13
 ---
 
 # 批量复制spring的sources源码包到指定目录

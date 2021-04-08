@@ -4,7 +4,6 @@ tags:
 	- java
 	- openresty
 categories: openresty
-date: 2021-3-30 00:42:13
 ---
 
 #  Openresty => Nginx + Lua
