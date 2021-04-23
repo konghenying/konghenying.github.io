@@ -56,7 +56,7 @@
 <div id="top" style="display: block;">
     <div class="bar" style="width: 0;"></div>
     <div class="navigation animated fadeIn fast delay-1s">
-        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://localhost:4000">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
         <h3 class="subtitle">spring源码下载编译阅读</h3>
         <div class="social">
@@ -100,13 +100,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    4.8k
+                    5k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    4 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -148,12 +148,12 @@
 <p>或者</p>
 <p>官方地址: <a target="_blank" rel="noopener" href="https://services.gradle.org/distributions/">https://services.gradle.org/distributions/</a> </p>
 <p>下载zip压缩包,解压到指定目录.并在idea中配置gradle环境.</p>
-<p><img src="/images/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle%E9%85%8D%E7%BD%AE.png" alt="gradle配置"></p>
+<p><img src="/images/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle%E9%85%8D%E7%BD%AE.png" alt="gradle配置"></p>
 <p>通过源码中的 <a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/tree/5.2.x">spring-framework</a>/<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/tree/5.2.x/gradle">gradle</a>/<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/tree/5.2.x/gradle/wrapper">wrapper</a>/gradle-wrapper.properties 配置可以查看spring官方使用的是哪个版本的gradle.</p>
-<p><img src="/images/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle%E7%89%88%E6%9C%AC.png" alt="gradle版本.png"></p>
+<p><img src="/images/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle%E7%89%88%E6%9C%AC.png" alt="gradle版本.png"></p>
 <p>我这里随手下了一个6.0的,但能正常构建.</p>
 <h3 id="2-3-导入spring源码进行编译"><a href="#2-3-导入spring源码进行编译" class="headerlink" title="2.3. 导入spring源码进行编译"></a>2.3. 导入spring源码进行编译</h3><p>导入Spring源码或打开源码项目.点击右侧的gradle模块里的rebulid.</p>
-<p><img src="/images/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle_reload.png" alt="gradle_reload.png"></p>
+<p><img src="/images/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle_reload.png" alt="gradle_reload.png"></p>
 <p>等待将所有的依赖下载完成并构建好后.</p>
 <h2 id="3-优化与问题"><a href="#3-优化与问题" class="headerlink" title="3. 优化与问题"></a>3. 优化与问题</h2><h3 id="3-1-gradle使用阿里源加速"><a href="#3-1-gradle使用阿里源加速" class="headerlink" title="3.1. gradle使用阿里源加速"></a>3.1. gradle使用阿里源加速</h3><p>全局: 在USER_HOME/.gradle/下新增<code>init.gradle</code>文件, </p>
 <p>当前项目: 在project/.gradle/下编辑init.gradle文件,</p>
@@ -174,14 +174,14 @@
     &#125;
 &#125;
 </code></pre>
-<p>或在项目下的build.gradle文件中添加阿里源:<img src="/images/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle_%E5%8A%A0%E9%80%9F.png" alt="gradle_加速"></p>
+<p>或在项目下的build.gradle文件中添加阿里源:<img src="/images/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/gradle_%E5%8A%A0%E9%80%9F.png" alt="gradle_加速"></p>
 <h3 id="3-2-jdk-jfr-不存在"><a href="#3-2-jdk-jfr-不存在" class="headerlink" title="3.2. jdk.jfr 不存在"></a>3.2. jdk.jfr 不存在</h3><p>java complier中 project bytecode version 使用jdk11版本及以上</p>
 <h3 id="3-3-com-ibm-wsspi-uow不存在"><a href="#3-3-com-ibm-wsspi-uow不存在" class="headerlink" title="3.3. com.ibm.wsspi.uow不存在"></a>3.3. com.ibm.wsspi.uow不存在</h3><p>build.gradle文件中添加阿里源的时候将默认源注释导致没有下载到uow包.</p>
 <h3 id="3-4-找不到符号-变量-CoroutinesUtils"><a href="#3-4-找不到符号-变量-CoroutinesUtils" class="headerlink" title="3.4 . 找不到符号 变量 CoroutinesUtils"></a>3.4 . 找不到符号 变量 CoroutinesUtils</h3><p> Error:(354, 51) java: 找不到符号</p>
 <p>符号: 变量 CoroutinesUtils<br>位置: 类 org.springframework.core.ReactiveAdapterRegistry.CoroutinesRegistrar</p>
 <p>构建的时候没有将spring-core中依赖的kotlin-coroutines构建进去.需要手动加包.</p>
 <p>添加依赖包 该包项目中有 在源码目录项目spring-core/kotlin-coroutines/build/libs下</p>
-<p><img src="/images/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/%E5%AF%BC%E5%85%A5kotlin%E5%8C%85.png" alt="image-20210330022227719"></p>
+<p><img src="/images/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB.assets/%E5%AF%BC%E5%85%A5kotlin%E5%8C%85.png" alt="image-20210330022227719"></p>
 <h3 id="3-5-Kotlin-warnings-found-and-Weeror-specified"><a href="#3-5-Kotlin-warnings-found-and-Weeror-specified" class="headerlink" title="3.5. Kotlin: warnings found and -Weeror specified"></a>3.5. Kotlin: warnings found and -Weeror specified</h3><ol>
 <li><p>给自己的测试项目添加kotlin依赖.</p>
 </li>
