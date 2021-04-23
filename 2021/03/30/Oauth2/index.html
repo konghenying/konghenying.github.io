@@ -5,18 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> - 空痕影的从头再来</title>
+    <title>Oauth2 理解 - 空痕影的从头再来</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
-    <meta name="description" content="title: Oauth2 理解
-tags: 
-    - 概念
-categories: 概念
-date: 2021-3-30 00:42:13
-
-Oauth2 理解1. 什么是Oauth2​   ,"> 
+    <meta name="description" content="Oauth2 理解1. 什么是Oauth2​     Oauth是一套开放授权的标准/协议.  旨在让用户允许第三方应用去访问该用户存储在另外服务提供者上的用户信息,而不需要将用户名与密码提供给第三,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -63,7 +57,7 @@ Oauth2 理解1. 什么是Oauth2​   ,">
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://localhost:4000">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle"></h3>
+        <h3 class="subtitle">Oauth2 理解</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -93,18 +87,19 @@ Oauth2 理解1. 什么是Oauth2​   ,">
         <div class="else">
             <p class="animated fadeInDown">
                 
-                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                <a href="/categories/概念"><b>「
+                    </b>概念<b> 」</b></a>
                 
-                四月 08, 2021
+                三月 30, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/04/08/Oauth2/" title="Untitled" class="">Untitled</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/Oauth2/" title="Oauth2 理解" class="">Oauth2 理解</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    3.3k
+                    3.2k
                 </span>
                 
                 
@@ -122,6 +117,8 @@ Oauth2 理解1. 什么是Oauth2​   ,">
                 
             </p>
             
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E6%A6%82%E5%BF%B5/" rel="tag">概念</a></li></ul>
             
         </div>
     </div>
@@ -142,13 +139,7 @@ Oauth2 理解1. 什么是Oauth2​   ,">
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <pre><code>title: Oauth2 理解
-tags: 
-    - 概念
-categories: 概念
-date: 2021-3-30 00:42:13
-</code></pre>
-<h1 id="Oauth2-理解"><a href="#Oauth2-理解" class="headerlink" title="Oauth2 理解"></a>Oauth2 理解</h1><h2 id="1-什么是Oauth2"><a href="#1-什么是Oauth2" class="headerlink" title="1. 什么是Oauth2"></a>1. 什么是Oauth2</h2><p>​     Oauth是一套开放授权的标准/协议.  旨在让用户允许第三方应用去访问该用户存储在另外服务提供者上的用户信息,而不需要将用户名与密码提供给第三方应用. OAuth 2.0是OAuth协议的下一版本, 但不向后兼容OAuth 1.0. </p>
+            <h1 id="Oauth2-理解"><a href="#Oauth2-理解" class="headerlink" title="Oauth2 理解"></a>Oauth2 理解</h1><h2 id="1-什么是Oauth2"><a href="#1-什么是Oauth2" class="headerlink" title="1. 什么是Oauth2"></a>1. 什么是Oauth2</h2><p>​     Oauth是一套开放授权的标准/协议.  旨在让用户允许第三方应用去访问该用户存储在另外服务提供者上的用户信息,而不需要将用户名与密码提供给第三方应用. OAuth 2.0是OAuth协议的下一版本, 但不向后兼容OAuth 1.0. </p>
 <p>用一句话来讲:</p>
 <p>​    Oauth解决的问题是使用<em>授权服务器</em>提供一个<em>访问凭据</em>给到<em>第三方应用</em>，让第三方应用可以在<em>不知道资源所有者</em>在<em>资源服务器上的账号和密码</em>的情况下，能获取到<em>资源所有者</em>在<em>资源服务器上的受保护资源</em>.</p>
 <h2 id="2-应用场景"><a href="#2-应用场景" class="headerlink" title="2. 应用场景"></a>2. 应用场景</h2><p>第三方应用授权登录: 当app或者网页接入一些第三方应用时,一般需要用户登录另一个合作平台, 比如QQ,微信,github的登录授权.</p>
@@ -231,8 +222,8 @@ date: 2021-3-30 00:42:13
                 </div>
                 <ul>
                     <li><a href="/">8 <p>文章</p></a></li>
-                    <li><a href="/categories">5 <p>分类</p></a></li>
-                    <li><a href="/tags">6 <p>标签</p></a></li>
+                    <li><a href="/categories">6 <p>分类</p></a></li>
+                    <li><a href="/tags">7 <p>标签</p></a></li>
                 </ul>
             </div>
             
