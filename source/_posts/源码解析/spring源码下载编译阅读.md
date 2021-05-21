@@ -33,11 +33,11 @@ github地址: https://github.com/gradle/gradle
 
 下载zip压缩包,解压到指定目录.并在idea中配置gradle环境.
 
-![gradle配置](/images/spring源码下载编译阅读.assets/gradle配置.png)
+![gradle配置](/images/源码解析/spring源码下载编译阅读.assets/gradle配置.png)
 
 通过源码中的 [spring-framework](https://github.com/spring-projects/spring-framework/tree/5.2.x)/[gradle](https://github.com/spring-projects/spring-framework/tree/5.2.x/gradle)/[wrapper](https://github.com/spring-projects/spring-framework/tree/5.2.x/gradle/wrapper)/gradle-wrapper.properties 配置可以查看spring官方使用的是哪个版本的gradle.
 
-![gradle版本.png](/images/spring源码下载编译阅读.assets/gradle版本.png)
+![gradle版本.png](/images/源码解析/spring源码下载编译阅读.assets/gradle版本.png)
 
 我这里随手下了一个6.0的,但能正常构建.
 
@@ -45,7 +45,7 @@ github地址: https://github.com/gradle/gradle
 
 导入Spring源码或打开源码项目.点击右侧的gradle模块里的rebulid.
 
-![gradle_reload.png](/images/spring源码下载编译阅读.assets/gradle_reload.png)
+![gradle_reload.png](/images/源码解析/spring源码下载编译阅读.assets/gradle_reload.png)
 
 等待将所有的依赖下载完成并构建好后.
 
@@ -77,7 +77,7 @@ allprojects {
 
 ```
 
-或在项目下的build.gradle文件中添加阿里源:![gradle_加速](/images/spring源码下载编译阅读.assets/gradle_加速.png)
+或在项目下的build.gradle文件中添加阿里源:![gradle_加速](/images/源码解析/spring源码下载编译阅读.assets/gradle_加速.png)
 
 ### 3.2. jdk.jfr 不存在
 
@@ -100,7 +100,7 @@ build.gradle文件中添加阿里源的时候将默认源注释导致没有下�
 
 添加依赖包 该包项目中有 在源码目录项目spring-core/kotlin-coroutines/build/libs下
 
-![image-20210330022227719](/images/spring源码下载编译阅读.assets/导入kotlin包.png)
+![image-20210330022227719](/images/源码解析/spring源码下载编译阅读.assets/导入kotlin包.png)
 
 ### 3.5. Kotlin: warnings found and -Weeror specified
 
