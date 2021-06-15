@@ -60,9 +60,113 @@
                 <div class="content animated fadeIn">
                     <div class="set">
                         <h1 style="text-align: center">归档</h1>
-                        <p style="text-align: center">「 8 」</p>
+                        <p style="text-align: center">「 14 」</p>
                         <ul class="timeline timeline-centered">
                             
+                            
+                                
+                                <li class="timeline-item period">
+                                    <div class="timeline-info"></div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h2 class="timeline-title">六月 2021</h2>
+                                    </div>
+                                </li>
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">六月 15, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/06/15/mysql/mysql%20performschema/">mysql perform schema</a>
+                                        <p>
+                                            performance schemaMySQL的performance schema 用于监控MySQL server在一个较低级别的运行过程中的资源消耗、资源等待等情况。
+特点:  &lt;https://dev.mysql.com/doc/refman/5.7/en/performance-schema.html&gt;
+
+提供了一种在数据库运行时实时检查server的内部执行情况的方法...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">六月 15, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/06/15/mysql/4%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">MySQL执行计划</a>
+                                        <p>
+                                            MySQL执行计划​       在企业的应用场景中，为了知道优化SQL语句的执行，需要查看SQL语句的具体执行过程，以加快SQL语句的执行效率。
+​       可以使用explain+SQL语句来模拟优化器执行SQL查询语句，从而知道mysql是如何处理sql语句的。
+ 官方地址： https://dev.mysql.com/doc/refman/5.7/en/explain-outpu...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">六月 15, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/06/15/mysql/3%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96/">schema与数据类型优化</a>
+                                        <p>
+                                            schema与数据类型优化数据类型优化优化原则
+更小的通常更好
+应该尽量使用可以正确存储数据的最小数据类型，更小的数据类型通常更快，因为它们占用更少的磁盘、内存和CPU缓存，并且处理时需要的CPU周期更少，但是要确保没有低估需要存储的值的范围，如果无法确认哪个数据类型，就选择你认为不会超过范围的最小类型。
+
+简单就好
+简单数据类型的操作通常需要更少的CPU周期，例如，
+1、整型比字符操作代价...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">六月 15, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/">性能监控</a>
+                                        <p>
+                                            性能监控show profile**使用show profile查询剖析工具，可以指定具体的type   **
+官方文档：https://dev.mysql.com/doc/refman/5.7/en/show-profile.html
+开启工具此工具默认是禁用的，可以通过服务器变量在会话级别动态的修改
+set profiling=1;
+查询语句当设置完成之后，在服务器上执行的所有语句，都会...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">六月 15, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/">MySQL的基本架构</a>
+                                        <p>
+                                            MySQL的基本架构
+连接器负责跟客户端建立连接，获取权限，维持和管理连接
+
+用户名密码验证
+查询权限信息，分配对应的权限
+show processlist 查看现在的连接
+wait_time控制维持连接的时长，默认八小时
+
+连接分两种:
+
+长连接：长连接是相对于短连接来说的。长连接指在一个连接上可以连续发送多个数据包，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。
+客户端连接–...
+                                        </p>
+                                    </div>
+                                </li>
                             
                                 
                                 <li class="timeline-item period">
@@ -186,11 +290,9 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/sourc.
                                     <div class="timeline-content">
                                         <a class="timeline-title" target="_self" href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/">win10子系统搭建</a>
                                         <p>
-                                            
-
-
-
-
+                                            WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
+这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.
+下载Ubuntu系统在Microsoft store中找到Ubuntu.并选择...
                                         </p>
                                     </div>
                                 </li>
@@ -208,6 +310,31 @@ ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/sourc.
 如今买了台matebook轻薄办公,之前的游戏本就一直闲置着.想想浪费.不如把它穿透了当个服务器用,性能非常好.
 1. 前期准备中转服务器: 一台阿里云服务器,(配置没啥要求,但带宽最好能好些)
 被控主...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">二月 28, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/02/28/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/">删除文件不释放空间</a>
+                                        <p>
+                                            linux删除日志但没有释放空间问题溯源删除正在被占用的日志文件时,存储空间没有被释放.
+rm filename 
+命令删除文件后,
+df -h 
+按G查看磁盘使用情况.发现空间没有被释放掉.
+lsof |grep delete
+通过上述命令可以查看删除文件被占用情况.第二列为对应应用的PID.
+
+kill掉相应的应用后文件被占用的空间被释放.
+
+总结:
+当log文件过大,被错误日志塞满磁盘...
                                         </p>
                                     </div>
                                 </li>

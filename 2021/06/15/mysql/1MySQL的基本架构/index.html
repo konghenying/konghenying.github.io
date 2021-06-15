@@ -5,13 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>win10子系统搭建 - 空痕影的从头再来</title>
+    <title>MySQL的基本架构 - 空痕影的从头再来</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
-    <meta name="description" content="WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
-这时,win10子系统就突,"> 
+    <meta name="description" content="MySQL的基本架构
+连接器负责跟客户端建立连接，获取权限，维持和管理连接
+
+用户名密码验证
+查询权限信息，分配对应的权限
+show processlist 查看现在的连接
+wait_time控制维,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -58,7 +63,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">win10子系统搭建</h3>
+        <h3 class="subtitle">MySQL的基本架构</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -88,25 +93,25 @@
         <div class="else">
             <p class="animated fadeInDown">
                 
-                <a href="/categories/linux"><b>「
-                    </b>LINUX<b> 」</b></a>
+                <a href="/categories/mysql"><b>「
+                    </b>MYSQL<b> 」</b></a>
                 
-                二月 28, 2021
+                六月 15, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="win10子系统搭建" class="">win10子系统搭建</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/" title="MySQL的基本架构" class="">MySQL的基本架构</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    9.1k
+                    1.7k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    8 mins.
+                    2 mins.
                 </span>
                 
                 
@@ -119,7 +124,7 @@
             </p>
             
             
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
             
         </div>
     </div>
@@ -140,169 +145,52 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h1 id="WIN10子系统使用"><a href="#WIN10子系统使用" class="headerlink" title="WIN10子系统使用"></a>WIN10子系统使用</h1><p>   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.</p>
-<p>这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.</p>
-<h2 id="下载Ubuntu系统"><a href="#下载Ubuntu系统" class="headerlink" title="下载Ubuntu系统"></a>下载Ubuntu系统</h2><p>在Microsoft store中找到Ubuntu.并选择需要的版本,点击安装.等待安装完成后,能在开始的所有应用中找到.</p>
-<h2 id="开启-linux子系统功能"><a href="#开启-linux子系统功能" class="headerlink" title="开启 linux子系统功能"></a>开启 linux子系统功能</h2><p>点击后出现如下图所示问题,这是因为我们没有在功能中开启win10 子系统.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E5%BC%82%E5%B8%B8.png" alt="win10异常"></p>
-<p>位置: 设置-&gt;应用-&gt;应用与功能-&gt;可选功能-&gt;相关设置/更多windows功能.</p>
-<p>勾选 适用于linux的windows子系统 并确定.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%89%93%E5%BC%80win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png" alt="打开win10子系统功能"></p>
-<h2 id="设置账户"><a href="#设置账户" class="headerlink" title="设置账户"></a>设置账户</h2><p>在首次进入时,需要设置一个用户名与密码来表示默认登入账户,此账户在win10本地进入不需要密码.</p>
-<p>但,我们安装一些应用时难免想用root密码.但当键入su时,需要输入密码. 第一次登入哪里知道什么密码,设置都没设置过.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%B2%A1%E6%9C%89root%E5%AF%86%E7%A0%81.png" alt="没有root密码"></p>
-<p>所以需要键入<code>sudo passwd</code> 来更改root密码, 首先输入当前用户的密码,再输入两遍要设置的root密码.更改就完成了.在通过su键入设置的密码就可以进入root账户.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E8%AE%BE%E7%BD%AEroot%E5%AF%86%E7%A0%81.png" alt="设置root密码"></p>
-<h2 id="ssh服务建立"><a href="#ssh服务建立" class="headerlink" title="ssh服务建立"></a>ssh服务建立</h2><ol>
-<li><p>如果没有ssh服务,安装:<br><code>sudo apt install openssh-server</code></p>
+            <h1 id="MySQL的基本架构"><a href="#MySQL的基本架构" class="headerlink" title="MySQL的基本架构"></a>MySQL的基本架构</h1><p><img src="/images/mysql/MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84.assets/%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="基本架构图"></p>
+<h2 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h2><p>负责跟客户端建立连接，获取权限，维持和管理连接</p>
+<ul>
+<li>用户名密码验证</li>
+<li>查询权限信息，分配对应的权限</li>
+<li>show processlist 查看现在的连接</li>
+<li>wait_time控制维持连接的时长，默认八小时</li>
+</ul>
+<p>连接分两种:</p>
+<ul>
+<li><p>长连接：长连接是相对于短连接来说的。长连接指在一个连接上可以连续发送多个数据包，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。</p>
+<p>客户端连接–创建socket认证连接–维护连接–数据传输–维护连接–数据传输…..-关闭连接</p>
+<p>在频繁的与数据库服务通信，并且又非高并发的情况下，使用长连接更合适；</p>
 </li>
-<li><p>更改配置</p>
-<pre><code class="bash">vi /etc/ssh/sshd_config
-
-#端口
-prot 22
-HostKey /etc/ssh/ssh_host_rsa_key
-# 关闭root登入
-PermitRootLogin no
-PasswordAuthentication yes
-</code></pre>
+<li><p>短连接：是指通讯双方有数据交互时，就建立一个连接，数据发送完成后，则断开此连接，即每次连接只完成一项业务的发送</p>
+<p>客户端连接–创建socket认证连接–维护连接–数据传输–关闭连接</p>
+<p>太多持久连接，大部分是sleep状态的，或者系统是高并发的，使用短连接更合适。</p>
 </li>
-<li><p>启动服务</p>
-<p>service ssh restart<br>就可以连接非root用户</p>
-</li>
-<li><p>开启自启</p>
-<p>为了安全,子系统的ssh只是在使用的时候才开启.当然如果要实现开机自启,这里来提供一个解决方案.</p>
-<p>4.1. 在win10系统中创建计划,使之开机启动</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E4%BB%BB%E5%8A%A1%E8%AE%A1%E5%88%92.png" alt="任务计划"></p>
-<p>4.2. 键入启动命令并保存</p>
-<p><code>C:\Windows\System32\bash.exe -c &quot;sudo /etc/init.d/ssh start&quot;</code></p>
-<p>4.3. 错误解决 no hostkeys available</p>
-<p>​        重新生成key</p>
-<pre><code class="bash"> root@空痕影的matebook:/etc/ssh# service ssh start
- * Starting OpenBSD Secure Shell server sshd                                                                            sshd: no hostkeys available -- exiting.
-[fail]
-                                                                                                                     
-root@空痕影的matebook:/etc/ssh# dpkg-reconfigure openssh-server
-Creating SSH2 RSA key; this may take some time ...
-3072 SHA256:ved2QjrhcRDVdkpzurWUsB/OWuCsTeAGCcPr+I4UBU8 root@空痕影的matebook (RSA)
-Creating SSH2 ECDSA key; this may take some time ...
-256 SHA256:l1KPGReYMwfeM25m30OQ2t82ta/aQSa7JxdrNWg51Q4 root@空痕影的matebook (ECDSA)
-Creating SSH2 ED25519 key; this may take some time ...
-256 SHA256:pz9Ly8iAY4nsJFb9Qfa4y2Zb8+eK0okUjgNV3aK28UQ root@空痕影的matebook (ED25519)
-invoke-rc.d: could not determine current runlevel
-root@空痕影的matebook:/etc/ssh# service ssh start
- * Starting OpenBSD Secure Shell server sshd                                                                     [ OK ]                                                                                                                  
-</code></pre>
-<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/make%E5%91%BD%E4%BB%A4%E7%BC%BA%E5%B0%91.png" alt="make命令缺少"></p>
-<pre><code>root@空痕影的matebook:~/redis-5.0.12# make
-
-Command &#39;make&#39; not found, but can be installed with:
-
-apt install make        # version 4.2.1-1.2, or
-apt install make-guile  # version 4.2.1-1.2
-
-root@空痕影的matebook:~/redis-5.0.12# apt install make
-Reading package lists... Done
-Building dependency tree
-Reading state information... Done
-Suggested packages:
-  make-doc
-The following NEW packages will be installed:
-  make
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 162 kB of archives.
-After this operation, 393 kB of additional disk space will be used.
-Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 make amd64 4.2.1-1.2 [162 kB]
-Fetched 162 kB in 1s (115 kB/s)
-Selecting previously unselected package make.
-(Reading database ... 32745 files and directories currently installed.)
-Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
-Unpacking make (4.2.1-1.2) ...
-Setting up make (4.2.1-1.2) ...
-Processing triggers for man-db (2.9.1-1) ...
-root@空痕影的matebook:~/redis-5.0.12# ls
-00-RELEASENOTES  COPYING    Makefile   redis.conf       runtest-moduleapi  src
-BUGS             INSTALL    README.md  runtest          runtest-sentinel   tests
-CONTRIBUTING     MANIFESTO  deps       runtest-cluster  sentinel.conf      utils
-root@空痕影的matebook:~/redis-5.0.12# make PREFIX=/usr/local/redis install
-cd src &amp;&amp; make install
-make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
-    CC Makefile.dep
-rm -rf redis-server redis-sentinel redis-cli redis-benchmark redis-check-rdb redis-check-aof *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep dict-benchmark
-(cd ../deps &amp;&amp; make distclean)
-make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
-(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
-(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
-(cd lua &amp;&amp; make clean) &gt; /dev/null || true
-(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
-(rm -f .make-*)
-make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
-(rm -f .make-*)
-echo STD=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; &gt;&gt; .make-settings
-echo WARN=-Wall -W -Wno-missing-field-initializers &gt;&gt; .make-settings
-echo OPT=-O2 &gt;&gt; .make-settings
-echo MALLOC=jemalloc &gt;&gt; .make-settings
-echo CFLAGS= &gt;&gt; .make-settings
-echo LDFLAGS= &gt;&gt; .make-settings
-echo REDIS_CFLAGS= &gt;&gt; .make-settings
-echo REDIS_LDFLAGS= &gt;&gt; .make-settings
-echo PREV_FINAL_CFLAGS=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; -Wall -W -Wno-missing-field-initializers -O2 -g -ggdb   -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -DUSE_JEMALLOC -I../deps/jemalloc/include &gt;&gt; .make-settings
-echo PREV_FINAL_LDFLAGS=  -g -ggdb -rdynamic &gt;&gt; .make-settings
-(cd ../deps &amp;&amp; make hiredis linenoise lua jemalloc)
-make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
-(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
-(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
-(cd lua &amp;&amp; make clean) &gt; /dev/null || true
-(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
-(rm -f .make-*)
-(echo &quot;&quot; &gt; .make-cflags)
-(echo &quot;&quot; &gt; .make-ldflags)
-MAKE hiredis
-cd hiredis &amp;&amp; make static
-make[3]: Entering directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
-gcc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  net.c
-make[3]: gcc: Command not found
-make[3]: *** [Makefile:156: net.o] Error 127
-make[3]: Leaving directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
-make[2]: *** [Makefile:46: hiredis] Error 2
-make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
-make[1]: [Makefile:209: persist-settings] Error 2 (ignored)
-    CC adlist.o
-/bin/sh: 1: cc: not found
-make[1]: *** [Makefile:257: adlist.o] Error 127
-make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
-make: *** [Makefile:9: install] Error 2
-</code></pre>
-</li>
+</ul>
+<h2 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h2><p>当执行查询语句的时候，会先去查询缓存中查看结果，之前执行过的sql语句及其结果可能以key-value的形式存储在缓存中，如果能找到则直接返回，如果找不到，就继续执行后续的阶段。</p>
+<p>一般不用查询缓存，同时在8.0版本已经将此功能删除:</p>
+<ol>
+<li>查询缓存的失效比较频繁，只要表更新，缓存就失效。</li>
+<li>缓存对应新更新的数据命中率比较低。</li>
 </ol>
-<p>更新apt包:</p>
-<p>apt-get update</p>
-<p>安装gcc:</p>
-<p>apt-get install build-essential</p>
-<p>重新编译:</p>
-<p>make </p>
-<p>缺少 jemalloc ,可以用libc替代 带上参数</p>
-<p><code>make MALLOC=libc</code></p>
-<pre><code class="bash"> make
-cd src &amp;&amp; make all
-make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
-    CC adlist.o
-In file included from adlist.c:34:
-zmalloc.h:50:10: fatal error: jemalloc/jemalloc.h: No such file or directory
-   50 | #include &lt;jemalloc/jemalloc.h&gt;
-      |          ^~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [Makefile:257: adlist.o] Error 1
-make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
-make: *** [Makefile:6: all] Error 2
-root@空痕影的matebook:~/redis-5.0.12# make MALLOC=libc
-</code></pre>
-<p>安装到指定位置</p>
-<p><code>make PREFIX=/usr/local/redis install</code></p>
-<h2 id="win10与linux文件互通"><a href="#win10与linux文件互通" class="headerlink" title="win10与linux文件互通"></a>win10与linux文件互通</h2><p>linux文件在win10系统中的位置:C:\Users\xxx\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\LocalState\rootfs</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/linux%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="linux文件位置"></p>
-<p>win10文件在Ubuntu系统中的位置: /mnt/</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="win10文件位置"></p>
+<h2 id="分析器"><a href="#分析器" class="headerlink" title="分析器"></a>分析器</h2><ul>
+<li><p>词法分析： 把输入的字符串进行识别每个部分代表什么意思</p>
+</li>
+<li><p>语法分析： 根据语法规则判断这个sql语句是否满足mysql的语法，如果不符合就会报错</p>
+</li>
+</ul>
+<h2 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h2><p> 在具体执行sql之前，要先经过优化器的处理</p>
+<ul>
+<li>决定表中使用哪个索引</li>
+<li>多表关联时，表的连接顺序</li>
+</ul>
+<p>不同的优化方式对sql语句的执行效率有很大的影响</p>
+<ul>
+<li>RBO：基于规则的优化</li>
+<li>CBO： 基于成本的优化</li>
+</ul>
+<h2 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h2><p>当选择了执行方案后，mysql就准备开始执行了。</p>
+<ul>
+<li>执行前会校验该用户有没有权限，如果没有权限，就会返回错误信息，</li>
+<li>如果有权限，就会去调用引擎的接口，返回接口执行的结果。</li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -348,7 +236,7 @@ root@空痕影的matebook:~/redis-5.0.12# make MALLOC=libc
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WIN10%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">WIN10子系统使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDUbuntu%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text">下载Ubuntu系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.</span> <span class="toc-text">开启 linux子系统功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%B4%A6%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">设置账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E6%9C%8D%E5%8A%A1%E5%BB%BA%E7%AB%8B"><span class="toc-number">1.4.</span> <span class="toc-text">ssh服务建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">1.5.</span> <span class="toc-text">redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#win10%E4%B8%8Elinux%E6%96%87%E4%BB%B6%E4%BA%92%E9%80%9A"><span class="toc-number">1.6.</span> <span class="toc-text">win10与linux文件互通</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">MySQL的基本架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">连接器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="toc-number">1.2.</span> <span class="toc-text">查询缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">分析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">优化器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">执行器</span></a></li></ol></li></ol>
                 </div>
             </div>
             

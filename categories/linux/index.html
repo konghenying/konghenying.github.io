@@ -201,13 +201,13 @@ ls ./libs...</code></pre>
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        603
+                        9.1k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        1 mins.
+                        8 mins.
                     </span>
                 
                 
@@ -218,11 +218,12 @@ ls ./libs...</code></pre>
         
         <div class="md-content animated fadeIn">
             
-                <p></p>
+                <p>   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.</p>
+<p>这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.</p>
+<p>在Microsoft store中找到Ubuntu.并选择需要的版本,点击安装.等待安装完成后,能在开始的所有应用中找到.</p>
+<p>点击后出现如下图所示问题,这是因为我们没有在功能中开启win10 子系统.</p>
 <p></p>
-<p></p>
-<p></p>
-
+<p>位置:...</p>
             
             <span class="read-more"><a href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
@@ -276,6 +277,64 @@ ls ./libs...</code></pre>
 <p>我这里都是用的linux系统,所以直...</p>
             
             <span class="read-more"><a href="/2021/02/28/linux/frp%E6%90%AD%E5%BB%BA/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/linux">
+                  <b>「 </b>LINUX<b> 」</b>
+                </a>
+            
+            二月 28, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/02/28/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/" title="删除文件不释放空间" class="posttitle">删除文件不释放空间</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        1.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>删除正在被占用的日志文件时,存储空间没有被释放.</p>
+<p>rm filename </p>
+<p>命令删除文件后,</p>
+<p>df -h </p>
+<p>按G查看磁盘使用情况.发现空间没有被释放掉.</p>
+<p>lsof |grep delete</p>
+<p>通过上述命令可以查看删除文件被占用情况.第二列为对应应用的PID.</p>
+<p></p>
+<p>kill掉相应的应用后文件被占用的空间被释放.</p>
+<p></p>
+<p><strong>总结:</strong></p>
+<p>当log文件过大,被错误日志塞满磁盘时,使用rm删除文件无法清除被占用的文件空间.需要停止占用的应用.</p>
+<p>若想不停止服务来清理空间,可以使用 <code>echo &quot;&quot; &gt...</code></p>
+            
+            <span class="read-more"><a href="/2021/02/28/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>

@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>win10子系统搭建 - 空痕影的从头再来</title>
+    <title>性能监控 - 空痕影的从头再来</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
-    <meta name="description" content="WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
-这时,win10子系统就突,"> 
+    <meta name="description" content="性能监控show profile**使用show profile查询剖析工具，可以指定具体的type   **
+官方文档：https://dev.mysql.com/doc/refman/5.7/e,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -58,7 +58,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">win10子系统搭建</h3>
+        <h3 class="subtitle">性能监控</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -88,25 +88,25 @@
         <div class="else">
             <p class="animated fadeInDown">
                 
-                <a href="/categories/linux"><b>「
-                    </b>LINUX<b> 」</b></a>
+                <a href="/categories/mysql"><b>「
+                    </b>MYSQL<b> 」</b></a>
                 
-                二月 28, 2021
+                六月 15, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="win10子系统搭建" class="">win10子系统搭建</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/" title="性能监控" class="">性能监控</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    9.1k
+                    3.8k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    8 mins.
+                    3 mins.
                 </span>
                 
                 
@@ -119,7 +119,7 @@
             </p>
             
             
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
             
         </div>
     </div>
@@ -140,169 +140,69 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h1 id="WIN10子系统使用"><a href="#WIN10子系统使用" class="headerlink" title="WIN10子系统使用"></a>WIN10子系统使用</h1><p>   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.</p>
-<p>这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.</p>
-<h2 id="下载Ubuntu系统"><a href="#下载Ubuntu系统" class="headerlink" title="下载Ubuntu系统"></a>下载Ubuntu系统</h2><p>在Microsoft store中找到Ubuntu.并选择需要的版本,点击安装.等待安装完成后,能在开始的所有应用中找到.</p>
-<h2 id="开启-linux子系统功能"><a href="#开启-linux子系统功能" class="headerlink" title="开启 linux子系统功能"></a>开启 linux子系统功能</h2><p>点击后出现如下图所示问题,这是因为我们没有在功能中开启win10 子系统.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E5%BC%82%E5%B8%B8.png" alt="win10异常"></p>
-<p>位置: 设置-&gt;应用-&gt;应用与功能-&gt;可选功能-&gt;相关设置/更多windows功能.</p>
-<p>勾选 适用于linux的windows子系统 并确定.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%89%93%E5%BC%80win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png" alt="打开win10子系统功能"></p>
-<h2 id="设置账户"><a href="#设置账户" class="headerlink" title="设置账户"></a>设置账户</h2><p>在首次进入时,需要设置一个用户名与密码来表示默认登入账户,此账户在win10本地进入不需要密码.</p>
-<p>但,我们安装一些应用时难免想用root密码.但当键入su时,需要输入密码. 第一次登入哪里知道什么密码,设置都没设置过.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%B2%A1%E6%9C%89root%E5%AF%86%E7%A0%81.png" alt="没有root密码"></p>
-<p>所以需要键入<code>sudo passwd</code> 来更改root密码, 首先输入当前用户的密码,再输入两遍要设置的root密码.更改就完成了.在通过su键入设置的密码就可以进入root账户.</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E8%AE%BE%E7%BD%AEroot%E5%AF%86%E7%A0%81.png" alt="设置root密码"></p>
-<h2 id="ssh服务建立"><a href="#ssh服务建立" class="headerlink" title="ssh服务建立"></a>ssh服务建立</h2><ol>
-<li><p>如果没有ssh服务,安装:<br><code>sudo apt install openssh-server</code></p>
-</li>
-<li><p>更改配置</p>
-<pre><code class="bash">vi /etc/ssh/sshd_config
-
-#端口
-prot 22
-HostKey /etc/ssh/ssh_host_rsa_key
-# 关闭root登入
-PermitRootLogin no
-PasswordAuthentication yes
+            <h1 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h1><h2 id="show-profile"><a href="#show-profile" class="headerlink" title="show profile"></a>show profile</h2><p>**使用show profile查询剖析工具，可以指定具体的type   **</p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/show-profile.html">https://dev.mysql.com/doc/refman/5.7/en/show-profile.html</a></p>
+<h3 id="开启工具"><a href="#开启工具" class="headerlink" title="开启工具"></a>开启工具</h3><p>此工具默认是禁用的，可以通过服务器变量在会话级别动态的修改</p>
+<p><strong>set profiling=1;</strong></p>
+<h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>当设置完成之后，在服务器上执行的所有语句，都会测量其耗费的时间和其他一些查询执行状态变更相关的数据。</p>
+<p><strong>select * from test;</strong></p>
+<h3 id="使用工具分析查询语句各个阶段耗时"><a href="#使用工具分析查询语句各个阶段耗时" class="headerlink" title="使用工具分析查询语句各个阶段耗时"></a>使用工具分析查询语句各个阶段耗时</h3><p>在mysql的命令行模式下只能显示两位小数的时间，可以使用如下命令查看具体的执行时间</p>
+<p><strong>show profiles;</strong></p>
+<p><img src="/images/mysql/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.assets/showprofiles.png" alt="showprofiles"></p>
+<p>执行如下命令可以查看详细的每个步骤的时间：</p>
+<p><strong>show profile for query 19;</strong></p>
+<p><img src="/images/mysql/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.assets/showprofileforquery19.png" alt="showprofileforquery19"></p>
+<h3 id="使用工具分析查询语句各个阶段具体类型资源的消耗"><a href="#使用工具分析查询语句各个阶段具体类型资源的消耗" class="headerlink" title="使用工具分析查询语句各个阶段具体类型资源的消耗"></a>使用工具分析查询语句各个阶段具体类型资源的消耗</h3><pre><code class="sql">SHOW PROFILE [type [, type] ... ]
+    [FOR QUERY n]
+    [LIMIT row_count [OFFSET offset]]
+    
 </code></pre>
-</li>
-<li><p>启动服务</p>
-<p>service ssh restart<br>就可以连接非root用户</p>
-</li>
-<li><p>开启自启</p>
-<p>为了安全,子系统的ssh只是在使用的时候才开启.当然如果要实现开机自启,这里来提供一个解决方案.</p>
-<p>4.1. 在win10系统中创建计划,使之开机启动</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E4%BB%BB%E5%8A%A1%E8%AE%A1%E5%88%92.png" alt="任务计划"></p>
-<p>4.2. 键入启动命令并保存</p>
-<p><code>C:\Windows\System32\bash.exe -c &quot;sudo /etc/init.d/ssh start&quot;</code></p>
-<p>4.3. 错误解决 no hostkeys available</p>
-<p>​        重新生成key</p>
-<pre><code class="bash"> root@空痕影的matebook:/etc/ssh# service ssh start
- * Starting OpenBSD Secure Shell server sshd                                                                            sshd: no hostkeys available -- exiting.
-[fail]
-                                                                                                                     
-root@空痕影的matebook:/etc/ssh# dpkg-reconfigure openssh-server
-Creating SSH2 RSA key; this may take some time ...
-3072 SHA256:ved2QjrhcRDVdkpzurWUsB/OWuCsTeAGCcPr+I4UBU8 root@空痕影的matebook (RSA)
-Creating SSH2 ECDSA key; this may take some time ...
-256 SHA256:l1KPGReYMwfeM25m30OQ2t82ta/aQSa7JxdrNWg51Q4 root@空痕影的matebook (ECDSA)
-Creating SSH2 ED25519 key; this may take some time ...
-256 SHA256:pz9Ly8iAY4nsJFb9Qfa4y2Zb8+eK0okUjgNV3aK28UQ root@空痕影的matebook (ED25519)
-invoke-rc.d: could not determine current runlevel
-root@空痕影的matebook:/etc/ssh# service ssh start
- * Starting OpenBSD Secure Shell server sshd                                                                     [ OK ]                                                                                                                  
+<pre><code class="bash">type: &#123;
+    ALL                      显示所有开销信息
+  | BLOCK IO                显示块IO相关开销
+  | CONTEXT SWITCHES        显示上下文切换相关开销
+  | CPU                        显示cup开销
+  | IPC                        显示发送与接受相关开销
+  | MEMORY                    显示内存相关开销
+  | PAGE FAULTS                显示也买你错误相关开销
+  | SOURCE                    显示和source_function,source_file,source_line相关的开销
+  | SWAPS                    显示交换次数相关开销
+&#125;
 </code></pre>
-<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/make%E5%91%BD%E4%BB%A4%E7%BC%BA%E5%B0%91.png" alt="make命令缺少"></p>
-<pre><code>root@空痕影的matebook:~/redis-5.0.12# make
-
-Command &#39;make&#39; not found, but can be installed with:
-
-apt install make        # version 4.2.1-1.2, or
-apt install make-guile  # version 4.2.1-1.2
-
-root@空痕影的matebook:~/redis-5.0.12# apt install make
-Reading package lists... Done
-Building dependency tree
-Reading state information... Done
-Suggested packages:
-  make-doc
-The following NEW packages will be installed:
-  make
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 162 kB of archives.
-After this operation, 393 kB of additional disk space will be used.
-Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 make amd64 4.2.1-1.2 [162 kB]
-Fetched 162 kB in 1s (115 kB/s)
-Selecting previously unselected package make.
-(Reading database ... 32745 files and directories currently installed.)
-Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
-Unpacking make (4.2.1-1.2) ...
-Setting up make (4.2.1-1.2) ...
-Processing triggers for man-db (2.9.1-1) ...
-root@空痕影的matebook:~/redis-5.0.12# ls
-00-RELEASENOTES  COPYING    Makefile   redis.conf       runtest-moduleapi  src
-BUGS             INSTALL    README.md  runtest          runtest-sentinel   tests
-CONTRIBUTING     MANIFESTO  deps       runtest-cluster  sentinel.conf      utils
-root@空痕影的matebook:~/redis-5.0.12# make PREFIX=/usr/local/redis install
-cd src &amp;&amp; make install
-make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
-    CC Makefile.dep
-rm -rf redis-server redis-sentinel redis-cli redis-benchmark redis-check-rdb redis-check-aof *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep dict-benchmark
-(cd ../deps &amp;&amp; make distclean)
-make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
-(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
-(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
-(cd lua &amp;&amp; make clean) &gt; /dev/null || true
-(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
-(rm -f .make-*)
-make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
-(rm -f .make-*)
-echo STD=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; &gt;&gt; .make-settings
-echo WARN=-Wall -W -Wno-missing-field-initializers &gt;&gt; .make-settings
-echo OPT=-O2 &gt;&gt; .make-settings
-echo MALLOC=jemalloc &gt;&gt; .make-settings
-echo CFLAGS= &gt;&gt; .make-settings
-echo LDFLAGS= &gt;&gt; .make-settings
-echo REDIS_CFLAGS= &gt;&gt; .make-settings
-echo REDIS_LDFLAGS= &gt;&gt; .make-settings
-echo PREV_FINAL_CFLAGS=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; -Wall -W -Wno-missing-field-initializers -O2 -g -ggdb   -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -DUSE_JEMALLOC -I../deps/jemalloc/include &gt;&gt; .make-settings
-echo PREV_FINAL_LDFLAGS=  -g -ggdb -rdynamic &gt;&gt; .make-settings
-(cd ../deps &amp;&amp; make hiredis linenoise lua jemalloc)
-make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
-(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
-(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
-(cd lua &amp;&amp; make clean) &gt; /dev/null || true
-(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
-(rm -f .make-*)
-(echo &quot;&quot; &gt; .make-cflags)
-(echo &quot;&quot; &gt; .make-ldflags)
-MAKE hiredis
-cd hiredis &amp;&amp; make static
-make[3]: Entering directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
-gcc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  net.c
-make[3]: gcc: Command not found
-make[3]: *** [Makefile:156: net.o] Error 127
-make[3]: Leaving directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
-make[2]: *** [Makefile:46: hiredis] Error 2
-make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
-make[1]: [Makefile:209: persist-settings] Error 2 (ignored)
-    CC adlist.o
-/bin/sh: 1: cc: not found
-make[1]: *** [Makefile:257: adlist.o] Error 127
-make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
-make: *** [Makefile:9: install] Error 2
-</code></pre>
+<p>eg:  show profile cpu,block io  for query 28; </p>
+<p><img src="/images/mysql/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.assets/showprofilestforquery28.png" alt="showprofilestforquery28"></p>
+<h3 id="分析数据定性sql的优化方向"><a href="#分析数据定性sql的优化方向" class="headerlink" title="分析数据定性sql的优化方向"></a>分析数据定性sql的优化方向</h3><p>如果show profile … for query id；出现了如下四个，则必须优化这条sql。</p>
+<ul>
+<li><strong>converting HEAP to MyISAM</strong> 查询结果太大， 内存都不够用了转而使用磁盘存储结果</li>
+<li><strong>Creating tmp table</strong> 创建了临时表。</li>
+<li><strong>Copying to tmp table on disk</strong> 把内存中临时表复制到磁盘.</li>
+<li><strong>locked</strong></li>
+</ul>
+<p>查询的临时表大小超过了tmp_table_size设置的值（默认16M），导致基于内存的临时表变更成基于磁盘的临时表。读写速度剧降。</p>
+<h2 id="show-processlist"><a href="#show-processlist" class="headerlink" title="show  processlist"></a>show  processlist</h2><p>使用show processlist查看连接的线程个数，来观察是否有大量线程处于不正常的状态或者其他不正常的特征。</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/show-processlist.html">https://dev.mysql.com/doc/refman/5.7/en/show-processlist.html</a></p>
+<p><img src="/images/mysql/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.assets/showprocesslist.png" alt="showprocesslist"></p>
+<h3 id="属性说明"><a href="#属性说明" class="headerlink" title="属性说明"></a>属性说明</h3><ul>
+<li>id: session id</li>
+<li>user: 操作的用户</li>
+<li>host: 操作的主机</li>
+<li>db: 操作的数据库</li>
+<li>command: 当前状态<ul>
+<li>sleep：线程正在等待客户端发送新的请求</li>
+<li>query：线程正在执行查询或正在将结果发送给客户端</li>
+<li>locked：在mysql的服务层，该线程正在等待表锁</li>
+<li>analyzing and statistics：线程正在收集存储引擎的统计信息，并生成查询的执行计划</li>
+<li>Copying to tmp table：线程正在执行查询，并且将其结果集都复制到一个临时表中</li>
+<li>sorting result：线程正在对结果集进行排序</li>
+<li>sending data：线程可能在多个状态之间传送数据，或者在生成结果集或者向客户端返回数据</li>
+</ul>
 </li>
-</ol>
-<p>更新apt包:</p>
-<p>apt-get update</p>
-<p>安装gcc:</p>
-<p>apt-get install build-essential</p>
-<p>重新编译:</p>
-<p>make </p>
-<p>缺少 jemalloc ,可以用libc替代 带上参数</p>
-<p><code>make MALLOC=libc</code></p>
-<pre><code class="bash"> make
-cd src &amp;&amp; make all
-make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
-    CC adlist.o
-In file included from adlist.c:34:
-zmalloc.h:50:10: fatal error: jemalloc/jemalloc.h: No such file or directory
-   50 | #include &lt;jemalloc/jemalloc.h&gt;
-      |          ^~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [Makefile:257: adlist.o] Error 1
-make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
-make: *** [Makefile:6: all] Error 2
-root@空痕影的matebook:~/redis-5.0.12# make MALLOC=libc
-</code></pre>
-<p>安装到指定位置</p>
-<p><code>make PREFIX=/usr/local/redis install</code></p>
-<h2 id="win10与linux文件互通"><a href="#win10与linux文件互通" class="headerlink" title="win10与linux文件互通"></a>win10与linux文件互通</h2><p>linux文件在win10系统中的位置:C:\Users\xxx\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\LocalState\rootfs</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/linux%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="linux文件位置"></p>
-<p>win10文件在Ubuntu系统中的位置: /mnt/</p>
-<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="win10文件位置"></p>
+<li>time: 相应命令执行时间</li>
+<li>state: 命令执行状态</li>
+<li>info: 详细的sql语句</li>
+</ul>
+<p>可以手动删除status是query且时间过长时连接。</p>
+<p>kill ID id编号；</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -348,7 +248,7 @@ root@空痕影的matebook:~/redis-5.0.12# make MALLOC=libc
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WIN10%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">WIN10子系统使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDUbuntu%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text">下载Ubuntu系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.</span> <span class="toc-text">开启 linux子系统功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%B4%A6%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">设置账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E6%9C%8D%E5%8A%A1%E5%BB%BA%E7%AB%8B"><span class="toc-number">1.4.</span> <span class="toc-text">ssh服务建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">1.5.</span> <span class="toc-text">redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#win10%E4%B8%8Elinux%E6%96%87%E4%BB%B6%E4%BA%92%E9%80%9A"><span class="toc-number">1.6.</span> <span class="toc-text">win10与linux文件互通</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7"><span class="toc-number">1.</span> <span class="toc-text">性能监控</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#show-profile"><span class="toc-number">1.1.</span> <span class="toc-text">show profile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.1.</span> <span class="toc-text">开启工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.1.2.</span> <span class="toc-text">查询语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E5%90%84%E4%B8%AA%E9%98%B6%E6%AE%B5%E8%80%97%E6%97%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">使用工具分析查询语句各个阶段耗时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E5%90%84%E4%B8%AA%E9%98%B6%E6%AE%B5%E5%85%B7%E4%BD%93%E7%B1%BB%E5%9E%8B%E8%B5%84%E6%BA%90%E7%9A%84%E6%B6%88%E8%80%97"><span class="toc-number">1.1.4.</span> <span class="toc-text">使用工具分析查询语句各个阶段具体类型资源的消耗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E5%AE%9A%E6%80%A7sql%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="toc-number">1.1.5.</span> <span class="toc-text">分析数据定性sql的优化方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#show-processlist"><span class="toc-number">1.2.</span> <span class="toc-text">show  processlist</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.1.</span> <span class="toc-text">属性说明</span></a></li></ol></li></ol></li></ol>
                 </div>
             </div>
             
