@@ -127,19 +127,18 @@
     <div id="post0" class="else">
         <p class="animated fadeInDown">
             
-            <a href="/categories/mysql"><b>「
-                </b>MYSQL<b> 」</b></a>
+            <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
             
-            六月 15, 2021
+            十月 12, 2021
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/06/15/mysql/mysql%20performschema/" title="mysql perform schema" class="posttitle">mysql perform schema</a></h3>
+            <a href="/2021/10/12/es/2%20%E5%88%86%E8%AF%8D%E5%99%A8/" title="分词器" class="posttitle">分词器</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                5.5k
+                6k
             </span>
             
             
@@ -152,14 +151,17 @@
         </p>
         
         
-        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
         
         <div class="md-content animated fadeIn">
             
-            <p><strong>MySQL的performance schema 用于监控MySQL server在一个较低级别的运行过程中的资源消耗、资源等待等情况</strong>。</p>
-<p>特点:  <code>&lt;https://dev.mysql.com/doc...</code></p>
+            <p> 分词之前的预处理，过滤无用字符</p>
+<p> 切词用</p>
+<h3 id="常见的分词器"><a href="#常见的分词器" class="headerlink" title="常见的分词器"></a>常见的分词器</h3><ul>
+<li>standard analyzer：默认分词器，中文支持的不理想，会逐字拆分。</li>
+<li>pattern tokenizer：以正则匹配分隔符，把文本拆...</li></ul>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/mysql%20performschema/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2021/10/12/es/2%20%E5%88%86%E8%AF%8D%E5%99%A8/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -189,54 +191,98 @@
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
-                </a>
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
             
-            六月 15, 2021
+            十月 12, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/4%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/" title="MySQL执行计划" class="posttitle">MySQL执行计划</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/10/12/es/3%20%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2/" title="聚合查询" class="posttitle">聚合查询</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        1.9k
+                        2.8k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        2 mins.
+                        3 mins.
                     </span>
                 
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <p>​       在企业的应用场景中，为了知道优化SQL语句的执行，需要查看SQL语句的具体执行过程，以加快SQL语句的执行效率。</p>
-<p>​       可以使用explain+SQL语句来模拟优化器执行SQL查询语句，从而知道mysql是如何处理sql语句的。</p>
-<p> 官方地址： <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html">https://dev.mysql.com/doc/refman/5.7/en/explain-output.html</a></p>
-<h3 id="1、执行计划中包含的信息"><a href="#1、执行计划中包含的信息" class="headerlink" title="1、执行计划中包含的信息"></a>1、执行计划中包含的信息</h3><p></p>
-<table>
-<thead>
-<tr>
-<th align="center">Column</th>
-<th align="center">Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">id</td>
-<td align="center">The <code>SELECT</code> identifier</td>
-</tr>
-<tr>
-<td align="center">select_type...</td></tr></tbody></table>
+                <p>聚合（aggs）查询中,<strong>进行聚合的字段必须是exact value，分词字段不可进行聚合</strong>，对于text字段如果需要使用聚合，需要开启fielddata，但是通常不建议，因为fielddata是将聚合使用的数据结构由磁盘（doc_values）变为了堆内存（field_data），大数据的聚合操作很容易导致OOM，详细原理会在进阶篇中阐述。</p>
+<p><strong>三种聚合分类</strong></p>
+<ol>
+<li><p>分桶聚合（Bucket agregations）：类比SQL中的group by的作用，主要用于统计不同类型数据的数量</p>
+<p>函数：terms</p>
+<p>注意...</p></li></ol>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/4%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/10/12/es/3%20%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            十月 10, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/10/10/es/1%20%E6%90%9C%E7%B4%A2%E4%B8%8E%E6%9F%A5%E8%AF%A2/" title="搜索与查询" class="posttitle">搜索与查询</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        20k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        18 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <h3 id="查询示例"><a href="#查询示例" class="headerlink" title="查询示例"></a>查询示例</h3><pre><code class="json">GET kibana_sample_data_ecommerce/_search
+&#123;
+  &quot;size&quot;: 1
+&#125;
+
+
+&#123;
+  &quot;took&quot; : 0,
+  &quot;timed_out&quot; : false,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 1,
+    &quot;successful&quot; : 1,
+    &quot;skipped&quot; : 0,
+    &quot;...</code></pre>
+            
+            <span class="read-more"><a href="/2021/10/10/es/1%20%E6%90%9C%E7%B4%A2%E4%B8%8E%E6%9F%A5%E8%AF%A2/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -255,21 +301,21 @@
                   <b>「 </b>MYSQL<b> 」</b>
                 </a>
             
-            六月 15, 2021
+            九月 07, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/3%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96/" title="schema与数据类型优化" class="posttitle">schema与数据类型优化</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/11%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%B8%8E%E9%9B%86%E7%BE%A4/" title="MySQL(十一)读写分离与集群" class="posttitle">MySQL(十一)读写分离与集群</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        7.3k
+                        607
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        7 mins.
+                        1 mins.
                     </span>
                 
                 
@@ -280,16 +326,16 @@
         
         <div class="md-content animated fadeIn">
             
-                <h3 id="优化原则"><a href="#优化原则" class="headerlink" title="优化原则"></a>优化原则</h3><ol>
-<li><p>更小的通常更好</p>
-<p>应该尽量使用可以正确存储数据的最小数据类型，更小的数据类型通常更快，因为它们占用更少的磁盘、内存和CPU缓存，并且处理时需要的CPU周期更少，但是要确保没有低估需要存储的值的范围，如果无法确认哪个数据类型，就选择你认为不会超过范围的最小类型。</p>
-</li>
-<li><p>简单就好</p>
-<p>简单数据类型的操作通常需要更少的CPU周期，例如，</p>
-<p>1、整型比字符操作代价更低，因为字符集和校对规则是字符比较比整型比较更复杂，</p>
-<p>2、使用mysql自建类型而不是字符串来存储日期和时间   eg：创建两张相同的表，改变日期...</p></li></ol>
+                <p>MySQL读写分离基本原理是让master数据库处理写操作，slave数据库处理读操作。master将写操作的变更同步到各个slave节点。</p>
+<ol>
+<li>物理服务器增加，机器处理能力提升。拿硬件换性能。</li>
+<li>主从只负责各自的读和写，极大程度缓解X锁和S锁争用。</li>
+<li>slave可以配置myiasm引擎，提升查询性能以及节约系统开销。</li>
+<li>master直接写是并发的，slave通过主库发送来的binlog恢复数据是异步。</li>
+<li>slave可以单独设置一些参数来提升其读的性能,与master不一样的规则.</li>
+<li>增加冗余，提高可用性。...</li></ol>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/3%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/09/07/mysql/11%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%B8%8E%E9%9B%86%E7%BE%A4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -308,9 +354,105 @@
                   <b>「 </b>MYSQL<b> 」</b>
                 </a>
             
-            六月 15, 2021
+            九月 07, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/" title="性能监控" class="posttitle">性能监控</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/10%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL(十)主从复制" class="posttitle">MySQL(十)主从复制</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        6.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li>在业务复杂的系统中，有这么一个情景，有一句sql语句需要锁表，导致暂时不能使用读的服务，那么就很影响运行中的业务，使用主从复制，让主库负责写，从库负责读，这样，即使主库出现了锁表的情景，通过读从库也可以保证业务的正常运作。</li>
+<li>做数据的热备</li>
+<li>架构的扩展。业务量越来越大，I/O访问频率过高，单机无法满足，此时做多库的存储，降低磁盘I/O访问的频率，提高单个机器的I/O性能。</li>
+</ul>
+<p>​    MySQL 主从复制是指数据可以从一个MySQL数据库服务器主节点复制到一个或多个从节点。MySQL 默认采用异步复制方...</p>
+            
+            <span class="read-more"><a href="/2021/09/07/mysql/10%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 07, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/9%E9%94%81/" title="MySQL(九)锁机制" class="posttitle">MySQL(九)锁机制</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        13k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        12 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>​    <strong>锁是计算机协调多个进程或线程并发访问某一资源的机制。</strong>在数据库中，除传统的 计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一 个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。</p>
+<p>​    相对其他数据库而言，MySQL的锁机制比较简单，其最 显著的特点是不同的<strong>存储引擎</strong>支持不同的锁机制。比如，MyISAM和MEMORY存储引擎采用的是表级锁（table...</p>
+            
+            <span class="read-more"><a href="/2021/09/07/mysql/9%E9%94%81/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            九月 06, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/06/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="Untitled" class="posttitle">Untitled</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
@@ -328,20 +470,20 @@
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-            
         
         <div class="md-content animated fadeIn">
             
-                <p>**使用show profile查询剖析工具，可以指定具体的type   **</p>
-<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/show-profile.html">https://dev.mysql.com/doc/refman/5.7/en/show-profile.html</a></p>
-<h3 id="开启工具"><a href="#开启工具" class="headerlink" title="开启工具"></a>开启工具</h3><p>此工具默认是禁用的，可以通过服务器变量在会话级别动态的修改</p>
-<p><strong>set profiling=1;</strong></p>
-<h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>当设置完成之后，在服务器上执行的所有语句，都会测量其耗费的时间和其他一些查询执行状态变更相关的数据。</p>
-<p><strong>select * from test;</strong></p>
-<h3 id="使用工具分析查询语句各个阶段耗时"><a href="#使用工具分析查询语句各个阶段耗时" class="headerlink" title="使用工具分析查询语句各个阶段耗时"></a>使用工具分析查询语句各个阶段耗时</h3><p>在mysql的...</p>
+                <p>A  原子性  –undolog实现</p>
+<p>C 一致性  –通过其他三个(AID)来实现</p>
+<p>I  隔离性   –通过锁实现</p>
+<p>D 持久性   –redolog实现</p>
+<p>确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。</p>
+<ul>
+<li><p>当发生数据修改的时候, innodb 引擎会先将记录写到 redo log 中，并更新内存，此时更新就算是完成了，同时 innodb 引擎会在合适的时机将记录操作到磁盘中</p>
+</li>
+<li><p>redolog 是固定大小的，是循...</p></li></ul>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/09/06/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -360,21 +502,21 @@
                   <b>「 </b>MYSQL<b> 」</b>
                 </a>
             
-            六月 15, 2021
+            九月 06, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/" title="MySQL的基本架构" class="posttitle">MySQL的基本架构</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/06/mysql/8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE/" title="MySQL(八)服务器参数设置" class="posttitle">MySQL(八)服务器参数设置</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        1.7k
+                        4.7k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        2 mins.
+                        4 mins.
                     </span>
                 
                 
@@ -385,21 +527,20 @@
         
         <div class="md-content animated fadeIn">
             
-                <p></p>
-<p>负责跟客户端建立连接，获取权限，维持和管理连接</p>
-<ul>
-<li>用户名密码验证</li>
-<li>查询权限信息，分配对应的权限</li>
-<li>show processlist 查看现在的连接</li>
-<li>wait_time控制维持连接的时长，默认八小时</li>
-</ul>
-<p>连接分两种:</p>
-<ul>
-<li><p>长连接：长连接是相对于短连接来说的。长连接指在一个连接上可以连续发送多个数据包，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。</p>
-<p>客户端连接–创建socket认证连接–维护连接–数据传输–维护连接–数据传输…..-关闭连接</p>
-<p>在频繁的与数据库服务通信，并且又非高并发的情况下，...</p></li></ul>
+                <ul>
+<li><p>datadir=/var/lib/mysql 数据文件存放的目录</p>
+</li>
+<li><p>socket=/var/lib/mysql/mysql.sock  mysql.socket表示server和client在同一台服务器，并且使用localhost进行连接，就会使用socket进行连接</p>
+</li>
+<li><p>pid_file=/var/lib/mysql/mysql.pid  存储mysql的pid</p>
+</li>
+<li><p>port=3306  mysql服务的端口号</p>
+</li>
+<li><p>default_storage_engine=InnoDB  mysql默认存储引擎</p>
+</li>
+...</ul>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/09/06/mysql/8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -414,56 +555,40 @@
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/jvm">
-                  <b>「 </b>JVM<b> 」</b>
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
                 </a>
             
-            四月 08, 2021
+            九月 03, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/04/08/jvm/jvm/" title="jvm" class="posttitle">jvm</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="MySQL(七)分区表" class="posttitle">MySQL(七)分区表</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        17k
+                        6.4k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        15 mins.
+                        6 mins.
                     </span>
                 
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/jvm/" rel="tag">jvm</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <ol>
-<li><p>calss loading 加载</p>
-</li>
-<li><p>calss linking连接</p>
+                <p>对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。<br>mysql在创建表时使用partition by子句定义每个分区存放的数据，在执行查询的时候，优化器会根据分区定义过滤那些没有我们需要数据的分区，这样查询就无须扫描所有分区。<br>分区的主要目的是将数据安好一个较粗的力度分在不同的表中，这样可以将相关的数据存放在一起。</p>
 <ol>
-<li>verification 验证:验证文件是否符合jvm规范 </li>
-<li>perparation准备 :静态成员变量赋初始值</li>
-<li>resloution解析:将类、方法、属性等符号引用解析为直接引用 常量池中的各种符号引用解析为指针、偏移量等内存地址的直接引用</li>
-</ol>
-</li>
-<li><p>class initializing 初始化: 将类的静态变量设置初始值,调用静态代码块</p>
-</li>
-<li><p>申请对象内存.</p>
-</li>
-<li><p> 成员变量赋默认值 </p>
-</li>
-<li><p>调用构造方法<init></init></p>
-<p>6.1 成员变量顺序赋初始值</p>
-<p>6...</p></li></ol>
+<li>表非常大以至于无法全部都放在内存中，或者只在表...</li></ol>
             
-            <span class="read-more"><a href="/2021/04/08/jvm/jvm/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -478,192 +603,68 @@
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/openresty">
-                  <b>「 </b>OPENRESTY<b> 」</b>
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
                 </a>
             
-            三月 30, 2021
+            九月 03, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="openresty 入门" class="posttitle">openresty 入门</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="MySQL(六)查询优化" class="posttitle">MySQL(六)查询优化</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        5.2k
+                        7.1k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        5 mins.
+                        6 mins.
                     </span>
                 
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/openresty/" rel="tag">openresty</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <p>Nginx 是一个主进程配合多个工作进程的工作模式.每个进程由单个线程来处理多个连接.</p>
-<p>通过将cpu内核绑定到工作进程上,来提升性能.</p>
-<h3 id="预编译安装"><a href="#预编译安装" class="headerlink" title="预编译安装"></a>预编译安装</h3><p>参照: <a target="_blank" rel="noopener" href="http://openresty.org/cn/installation.html">http://openresty.org/cn/installation.html</a></p>
-<p>先在centos系统中添加openresty仓库.</p>
+                <ul>
+<li><p>网络</p>
+</li>
+<li><p>CPU</p>
+</li>
+<li><p>IO</p>
+</li>
+<li><p>上下文切换</p>
+</li>
+<li><p>系统调用</p>
+</li>
+<li><p>生成统计信息</p>
+</li>
+<li><p>锁等待时间</p>
+</li>
+</ul>
 <ul>
-<li><code>yum install yum-utils</code>   管理repository及扩展包的工具 (主要是针对repository)</li>
-<li><code>yum-config-manager --add-repo https://openresty...</code></li></ul>
+<li>减少访问数据量的方式进行优化<ul>
+<li>确认应用程序是否在检索大量超过需要的数据</li>
+<li>确认mysql服务器层是否在分析大量超过需要的数据行</li>
+</ul>
+</li>
+<li>是否向数据库请求了不需要的数据<ul>
+<li>查询不需要的记录,优化:使用limit限制查询的列.</li>
+<li>多表关联时返回全部列,优化:取用到的字段</li>
+<li>总是取出全部列,优化:取用到的字段</li>
+<li>重复查询相同的数据,优化:在外部缓存起来.</li>
+</ul>
+</li>
+</ul>
+<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>  如果查询缓存是打开的，那么mysql会优先检查这个查询是否...</p>
             
-            <span class="read-more"><a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/概念">
-                  <b>「 </b>概念<b> 」</b>
-                </a>
-            
-            三月 30, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/Oauth2/" title="Oauth2 理解" class="posttitle">Oauth2 理解</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        3.2k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        3 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E6%A6%82%E5%BF%B5/" rel="tag">概念</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>​     Oauth是一套开放授权的标准/协议.  旨在让用户允许第三方应用去访问该用户存储在另外服务提供者上的用户信息,而不需要将用户名与密码提供给第三方应用. OAuth 2.0是OAuth协议的下一版本, 但不向后兼容OAuth 1.0. </p>
-<p>用一句话来讲:</p>
-<p>​    Oauth解决的问题是使用<em>授权服务器</em>提供一个<em>访问凭据</em>给到<em>第三方应用</em>，让第三方应用可以在<em>不知道资源所有者</em>在<em>资源服务器上的账号和密码</em>的情况下，能获取到<em>资源所有者</em>在<em>资源服务器上的受保护资源</em>.</p>
-<p>第三方应用授权登录: 当app或者网页接入一些第三方应...</p>
-            
-            <span class="read-more"><a href="/2021/03/30/Oauth2/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/spring">
-                  <b>「 </b>SPRING<b> 」</b>
-                </a>
-            
-            三月 30, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB/" title="spring源码下载编译阅读" class="posttitle">spring源码下载编译阅读</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        5k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        5 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/spring/" rel="tag">spring</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>​    经过了两年多的工作沉淀, 该掌握的技术体系已经能过熟练运用了.但很多时候,都是知道具体的解决方法,至于为什么可以用此方法解决问题却一知半解.</p>
-<p>​    之前也有尝试着看过源码,但debug模式,一步步执行下去后,就被绕晕了.执行到哪了都不知道,有时候又感觉绕回了原来的地方.当然,没有添加自己的注释也是一个很大的原因.给自己当时理解了的地方打上注释,等下次运行到时查看注释帮助理解,再去理解下一步执行的代码.稳扎稳打才是更有效的学习方法.</p>
-<h3 id="2-1-下载spring源码"><a href="#2-1-下载spring源码" class="headerlink" title="2.1. 下载spring源码"></a>2.1. 下载spring源码</h3><p>​    github源码地址: <a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework">https...</a></p>
-            
-            <span class="read-more"><a href="/2021/03/30/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/spring%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E7%BC%96%E8%AF%91%E9%98%85%E8%AF%BB/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/linux">
-                  <b>「 </b>LINUX<b> 」</b>
-                </a>
-            
-            二月 28, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/02/28/linux/%E6%89%B9%E9%87%8Fcopy/" title="linux 通过正则来复制文件" class="posttitle">linux 通过正则来复制文件</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        5.2k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        5 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <pre><code class="bash">cd /mnt/c/Users/60512/Downloads/spring-5.2.13.RELEASE-dist/spring-framework-5.2.13.RELEASE/
-ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/source/
-</code></pre>
-<p>ls ./libs/  : 显示目录先的文件名</p>
-<p>| grep source.jar    : 查找文件里符合条件的字符串.</p>
-<p>| xargs -i     :传递符合条...</p>
-            
-            <span class="read-more"><a href="/2021/02/28/linux/%E6%89%B9%E9%87%8Fcopy/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/09/03/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>

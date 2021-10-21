@@ -59,6 +59,10 @@ pre code .language-mark b {
   width: 100%;
 }
 .CodeMirror .CodeMirror-lines {
+  line-hight: 1;
   font-size: 0.8rem;
+  font-family: Rubik, Lato, lucida grande, lucida sans unicode, Tahoma, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
+}
+.CodeMirror .CodeMirror-lines .CodeMirror-line {
   font-family: Rubik, Lato, lucida grande, lucida sans unicode, Tahoma, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
 }

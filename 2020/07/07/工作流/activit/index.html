@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>activit工作流(一) 概念 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="activit工作流(一) 概念activiti介绍引擎service接口
+RespositoryService: 流程仓库Service,用于管理流程仓库.eg:部署,删除,读取流程资源
+iden,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">activit工作流(一) 概念</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                
+                七月 07, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/07/07/%E5%B7%A5%E4%BD%9C%E6%B5%81/activit/" title="activit工作流(一) 概念" class="">activit工作流(一) 概念</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    21k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    19 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" rel="tag">工作流</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="activit工作流-一-概念"><a href="#activit工作流-一-概念" class="headerlink" title="activit工作流(一) 概念"></a>activit工作流(一) 概念</h1><h2 id="activiti介绍"><a href="#activiti介绍" class="headerlink" title="activiti介绍"></a>activiti介绍</h2><h3 id="引擎service接口"><a href="#引擎service接口" class="headerlink" title="引擎service接口"></a>引擎service接口</h3><ol>
+<li>RespositoryService: 流程仓库Service,用于管理流程仓库.eg:部署,删除,读取流程资源</li>
+<li>identifyService: 身份Service, 可以管理和查询用户,组之间的关系.(版本7之后删除)</li>
+<li>RuntimeService: 运行时Service,可以处理所有正在运行状态的流程实例,任务等.</li>
+<li>TaskService: 任务Service,用于管理,查询任务, eg:签收,办理,指派等.</li>
+<li>FormService: 表单Service,用于读取和流程任务相关的表单数据(版本7之后删除)</li>
+<li>HistoryService: 历史Service, 可以查询所有历史数据, 例如：流程实例，任务，活动，变量，附件等</li>
+<li>ManagementService: 引擎管理Service, 和具体业务无关，主要是可以查询引擎配置，数据库，作业等</li>
+</ol>
+<h3 id="流程设计器"><a href="#流程设计器" class="headerlink" title="流程设计器"></a>流程设计器</h3><ul>
+<li>Eclipse Designer</li>
+<li>Activiti Modeler</li>
+</ul>
+<h3 id="架构与组件"><a href="#架构与组件" class="headerlink" title="架构与组件"></a>架构与组件</h3><ul>
+<li>activiti Engine(最核心模块): 解析,执行,创建,管理(任务流程实例), 查询历史记录.</li>
+<li>activiti modeler: 模型设计器</li>
+<li>activiti designer: 流程设计器</li>
+<li>activiti explorer: 用来管理仓库,用户,组,启动流程, 任务管理等,提供rest风格的api</li>
+<li>activiti rest: 提供restful风格的服务，允许客户端以json的方式，语音穷拐的rest api交互，以此跨平台，跨语言</li>
+</ul>
+<h3 id="运行第一个activiti程序-springboot"><a href="#运行第一个activiti程序-springboot" class="headerlink" title="运行第一个activiti程序(springboot)"></a>运行第一个activiti程序(springboot)</h3><h3 id="流程绘制"><a href="#流程绘制" class="headerlink" title="流程绘制"></a>流程绘制</h3><ul>
+<li>idea2019版及之前版本去<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/%E5%AF%BB%E6%89%BEactiBPM%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%E5%90%8E%E7%BB%98%E5%88%B6">https://plugins.jetbrains.com/寻找actiBPM插件安装后绘制</a>,</li>
+<li>idea2020版后安装 activiti BPMN visualizer 插件安装后绘制</li>
+<li>eclipse 安装插件后绘制</li>
+<li>在线编辑流程图生成bpmn文件</li>
+</ul>
+<h3 id="生成springboot项目"><a href="#生成springboot项目" class="headerlink" title="生成springboot项目"></a>生成springboot项目</h3><p>生成空的springboot项目</p>
+<p>pom文件添加依赖</p>
+<pre><code class="xml">&lt;-- activiti 引擎依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.activiti&lt;/groupId&gt;
+    &lt;artifactId&gt;activiti-spring-boot-starter-basic&lt;/artifactId&gt;
+    &lt;version&gt;6.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;-- mysql 数据源依赖 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>配置文件添加数据源与activiti配置.</p>
+<pre><code class="yaml">server:
+  port: 8090
+spring:
+  activiti:
+#    database-schema-update: true
+    check-process-definitions: false
+    historyLevel: audit
+    db-history-used: true
+  application:
+    name: konghenying-activiti
+  datasource:
+    username: konghenying
+    password: 123456
+    url: jdbc:mysql://localhost:3306/activiti?allowMultiQueries=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+</code></pre>
+<p>配置项说明:</p>
+<ul>
+<li><p>database-schema-update 是否更新数据库</p>
+<ul>
+<li>false: 默认值。activiti在启动时，会对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常。（生产环境常用）</li>
+<li>activiti: 会对数据库中所有表进行更新操作。如果表不存在，则自动创建。（开发时常用）</li>
+<li>create_drop: 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）。（单元测试常用）</li>
+<li>drop-create: 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）。</li>
+</ul>
+</li>
+<li><p>historyLevel 历史数据等级</p>
+<ul>
+<li>none: 不保存任何的历史数据，因此，在流程执行过程中，这是最高效的</li>
+<li>activity: 级别高于none，保存流程实例与流程行为，其他数据不保存</li>
+<li>audit: 除activity级别会保存的数据外，还会保存全部的流程任务及其属性。audit为history的默认值</li>
+<li>full: 保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等</li>
+</ul>
+</li>
+<li><p>db-history-used 检测历史表是否存在(activiti6默认启用,activiti7默认关闭)</p>
+</li>
+<li><p>check-process-definitions 启动的时候是否自动部署流程</p>
+</li>
+</ul>
+<h3 id="实装流程图"><a href="#实装流程图" class="headerlink" title="实装流程图"></a>实装流程图</h3><p>将生成的bpmn文件放入/resources/processes文件夹下.通过代码或者自动部署流程.</p>
+<h3 id="常用功能案例-以请假为例"><a href="#常用功能案例-以请假为例" class="headerlink" title="常用功能案例:以请假为例"></a>常用功能案例:以请假为例</h3><h4 id="第一步-流程部署"><a href="#第一步-流程部署" class="headerlink" title="第一步: 流程部署"></a>第一步: 流程部署</h4><pre><code class="java">@Resource
+private RepositoryService repositoryService;
+@Test
+public void deploy()&#123;
+    String bpmnNameAndKey = &quot;first&quot;;
+    Deployment deploy = repositoryService.createDeployment()
+        .addClasspathResource(&quot;processes/first.bpmn&quot;)
+//        .addClasspathResource(&quot;processes/first.png&quot;)
+        .key(bpmnNameAndKey)
+        .category(&quot;HR&quot;)
+        .deploy();
+    System.out.println(&quot;流程部署ID\t&quot; + deploy.getId());
+    System.out.println(&quot;流程keyID\t&quot; + deploy.getKey());
+    System.out.println(&quot;流程名称ID\t&quot; + deploy.getName());
+    System.out.println(&quot;流程分类ID\t&quot; + deploy.getCategory());
+&#125;
+</code></pre>
+<h4 id="第二步-启动流程实例"><a href="#第二步-启动流程实例" class="headerlink" title="第二步: 启动流程实例"></a>第二步: 启动流程实例</h4><p>本例中相当于提交一次请假申请</p>
+<pre><code class="java">@Resource
+private RuntimeService runtimeService;
+@Test
+public void start()&#123;
+    String bpmnNameAndKey = &quot;first&quot;;
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(bpmnNameAndKey);
+    System.out.println(&quot;流程实例ID\t&quot; + processInstance.getId());
+    System.out.println(&quot;流程定义ID\t&quot; + processInstance.getProcessDefinitionId());
+    System.out.println(&quot;流程定义key\t&quot; + processInstance.getProcessDefinitionKey());
+&#125;
+</code></pre>
+<h4 id="第三步-查找个人代办任务列表"><a href="#第三步-查找个人代办任务列表" class="headerlink" title="第三步: 查找个人代办任务列表"></a>第三步: 查找个人代办任务列表</h4><pre><code class="java">@Resource
+private TaskService taskService;
+@Test
+public void findMyTask()&#123;
+    String assignee = &quot;张三&quot;;
+    List&lt;Task&gt; taskList = taskService.createTaskQuery().taskAssignee(assignee).list();
+    if (!taskList.isEmpty()) &#123;
+        for (Task task : taskList) &#123;
+            System.out.println(&quot;任务ID\t&quot; + task.getId());
+            System.out.println(&quot;任务名称\t&quot; + task.getName());
+            System.out.println(&quot;任务执行人\t&quot; + task.getAssignee());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="第四步-执行代办任务"><a href="#第四步-执行代办任务" class="headerlink" title="第四步: 执行代办任务"></a>第四步: 执行代办任务</h4><pre><code class="java">@Resource
+private TaskService taskService;
+@Test
+public void complet()&#123;
+    String taskId = &quot;2505&quot;;
+    taskService.complete(taskId);
+    System.out.println(&quot;任务执行完成&quot;);
+&#125;
+</code></pre>
+<h4 id="第五步-查看历史流程实例"><a href="#第五步-查看历史流程实例" class="headerlink" title="第五步: 查看历史流程实例"></a>第五步: 查看历史流程实例</h4><pre><code class="java">@Resource
+private HistoryService historyService;
+@Test
+public void history()&#123;
+    String bpmnNameAndKey = &quot;first&quot;;
+    List&lt;HistoricProcessInstance&gt; historicProcessInstances=    historyService.createHistoricProcessInstanceQuery().processDefinitionKey(bpmnNameAndKey).list();
+    if (!historicProcessInstances.isEmpty()) &#123;
+        for (HistoricProcessInstance historicProcessInstance : historicProcessInstances) &#123;
+            System.out.println(&quot;业务系统key\t&quot; + historicProcessInstance.getBusinessKey());
+            System.out.println(&quot;部署对象ID\t&quot; + historicProcessInstance.getDeploymentId());
+            System.out.println(&quot;执行时长\t&quot; + historicProcessInstance.getDurationInMillis());
+            System.out.println(&quot;流程定义ID\t&quot; + historicProcessInstance.getProcessDefinitionId());
+            System.out.println(&quot;流程定义的key\t&quot; + historicProcessInstance.getProcessDefinitionKey());
+            System.out.println(&quot;流程定义名称\t&quot; + historicProcessInstance.getProcessDefinitionName());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="第六步-查看历史任务"><a href="#第六步-查看历史任务" class="headerlink" title="第六步: 查看历史任务"></a>第六步: 查看历史任务</h4><pre><code class="java">@Resource
+private HistoryService historyService;
+@Test
+public void historyTask()&#123;
+    List&lt;HistoricTaskInstance&gt; historicTaskInstanceList =  historyService.createHistoricTaskInstanceQuery().list();
+    if (!historicTaskInstanceList.isEmpty())&#123;
+        for (HistoricTaskInstance historicTaskInstance : historicTaskInstanceList) &#123;
+            System.out.println(&quot;任务执行人\t&quot; + historicTaskInstance.getAssignee());
+            System.out.println(&quot;任务名称\t&quot; + historicTaskInstance.getName());
+            System.out.println(&quot;任务ID\t&quot; + historicTaskInstance.getId());
+            System.out.println(&quot;流程实例ID\t&quot; + historicTaskInstance.getProcessInstanceId());
+            System.out.println(&quot;*****************&quot;);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="查询功能案例-以用户为例"><a href="#查询功能案例-以用户为例" class="headerlink" title="查询功能案例:以用户为例"></a>查询功能案例:以用户为例</h3><h4 id="插入测试数据"><a href="#插入测试数据" class="headerlink" title="插入测试数据"></a>插入测试数据</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void insert() &#123;
+    for (int i = 0; i &lt; 10; i++) &#123;
+        User user = identityService.newUser(String.valueOf(i));
+        user.setLastName(&quot;张三&quot; + i);
+        user.setFirstName(&quot;法外狂徒&quot; + i);
+        user.setEmail(&quot;邮件&quot; + i);
+        identityService.saveUser(user);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="查询指定用户名的用户数据"><a href="#查询指定用户名的用户数据" class="headerlink" title="查询指定用户名的用户数据"></a>查询指定用户名的用户数据</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void querySingle() &#123;
+    User user = identityService.createUserQuery().userFirstName(&quot;法外狂徒1&quot;).singleResult();
+    System.out.println(user.getFirstName()+&quot;   :   &quot; + user.getEmail());
+&#125;
+</code></pre>
+<h4 id="查询用户列表数据"><a href="#查询用户列表数据" class="headerlink" title="查询用户列表数据"></a>查询用户列表数据</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void queryList() &#123;
+    List&lt;User&gt; list = identityService.createUserQuery()
+            .list();
+    if (!list.isEmpty()) &#123;
+        for (User user : list) &#123;
+            System.out.println(user.getFirstName() + &quot;\t&quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="查询用户列表的分页数据"><a href="#查询用户列表的分页数据" class="headerlink" title="查询用户列表的分页数据"></a>查询用户列表的分页数据</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void pageList()&#123;
+    // .listPage(firstResult,maxResults)
+    List&lt;User&gt; users = identityService.createUserQuery().listPage(5,5);
+    if (!users.isEmpty())&#123;
+        for (User user : users) &#123;
+            System.out.println(user.getFirstName()+&quot;   :   &quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="查询用户数量"><a href="#查询用户数量" class="headerlink" title="查询用户数量"></a>查询用户数量</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void userListCount()&#123;
+    Long count = identityService.createUserQuery().count();
+    System.out.println(count);
+&#125;
+</code></pre>
+<h4 id="单个字段排序"><a href="#单个字段排序" class="headerlink" title="单个字段排序"></a>单个字段排序</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void querySingleSort() &#123;
+    List&lt;User&gt; list = identityService.createUserQuery().orderByUserId().asc().list();
+    if (list.isEmpty()) &#123;
+        for (User user : list) &#123;
+            System.out.println(user.getFirstName() + &quot;\t&quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="多个字段排序"><a href="#多个字段排序" class="headerlink" title="多个字段排序"></a>多个字段排序</h4><p>注意:一个排序字段后需要加升降序条件.不可省略.否则会被后面的排序条件覆盖.</p>
+<pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void queryMultiSort() &#123;
+    UserQuery userQuery = identityService.createUserQuery().orderByUserId().desc().orderByUserEmail().asc();
+    List&lt;User&gt; list = userQuery.list();
+    if (!CollectionUtils.isEmpty(list)) &#123;
+        for (User user : list) &#123;
+            System.out.println(user.getFirstName() + &quot;\t&quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="根据条件查询"><a href="#根据条件查询" class="headerlink" title="根据条件查询"></a>根据条件查询</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void queryCondition() &#123;
+    String firstName = &quot;法外狂徒5&quot;;
+    String firstNameLike = &quot;法外狂徒&quot;;
+    //        List&lt;User&gt; list = identityService.createUserQuery().userFirstName(firstName).list();
+    List&lt;User&gt; list = identityService.createUserQuery().userFirstNameLike(&quot;%&quot;+firstNameLike+&quot;%&quot;).list();
+    if (!CollectionUtils.isEmpty(list)) &#123;
+        for (User user : list) &#123;
+            System.out.println(user.getFirstName() + &quot;\t&quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="自定义查询"><a href="#自定义查询" class="headerlink" title="自定义查询"></a>自定义查询</h4><pre><code class="java">@Resource
+private IdentityService identityService;
+@Test
+public void queryNative() &#123;
+    String sql = &quot;select  * from ACT_ID_USER&quot;;
+    List&lt;User&gt; list = identityService.createNativeUserQuery().sql(sql).list();
+    if (!CollectionUtils.isEmpty(list)) &#123;
+        for (User user : list) &#123;
+            System.out.println(user.getFirstName() + &quot;\t&quot; + user.getEmail());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>底层为mybatis查询,mapper文件在org.activiti.db.mapping.entity.User.xml</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt; 
+
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt; 
+  
+&lt;mapper namespace=&quot;org.activiti.engine.impl.persistence.entity.UserEntityImpl&quot;&gt;
+
+  &lt;!-- USER INSERT --&gt;
+
+  &lt;insert id=&quot;insertUser&quot; parameterType=&quot;org.activiti.engine.impl.persistence.entity.UserEntityImpl&quot;&gt;
+    insert into $&#123;prefix&#125;ACT_ID_USER (ID_, REV_, FIRST_, LAST_, EMAIL_, PWD_)
+    values (
+      #&#123;id ,jdbcType=VARCHAR&#125;,
+      1,
+      #&#123;firstName ,jdbcType=VARCHAR&#125;,
+      #&#123;lastName ,jdbcType=VARCHAR&#125;,
+      #&#123;email ,jdbcType=VARCHAR&#125;,
+      #&#123;password ,jdbcType=VARCHAR&#125;
+    )
+  &lt;/insert&gt;
+
+  &lt;insert id=&quot;bulkInsertUser&quot; parameterType=&quot;java.util.List&quot;&gt;
+    INSERT INTO $&#123;prefix&#125;ACT_ID_USER (ID_, REV_, FIRST_, LAST_, EMAIL_, PWD_) VALUES 
+      &lt;foreach collection=&quot;list&quot; item=&quot;user&quot; index=&quot;index&quot; separator=&quot;,&quot;&gt;
+        (#&#123;user.id ,jdbcType=VARCHAR&#125;,
+         1,
+         #&#123;user.firstName ,jdbcType=VARCHAR&#125;,
+         #&#123;user.lastName ,jdbcType=VARCHAR&#125;,
+         #&#123;user.email ,jdbcType=VARCHAR&#125;,
+         #&#123;user.password ,jdbcType=VARCHAR&#125;)
+      &lt;/foreach&gt;
+  &lt;/insert&gt;
+
+  &lt;insert id=&quot;bulkInsertUser&quot; databaseId=&quot;oracle&quot; parameterType=&quot;java.util.List&quot;&gt;
+    INSERT ALL 
+      &lt;foreach collection=&quot;list&quot; item=&quot;user&quot; index=&quot;index&quot;&gt;
+        INTO $&#123;prefix&#125;ACT_ID_USER (ID_, REV_, FIRST_, LAST_, EMAIL_, PWD_) VALUES 
+        (#&#123;user.id ,jdbcType=VARCHAR&#125;,
+         1,
+         #&#123;user.firstName ,jdbcType=VARCHAR&#125;,
+         #&#123;user.lastName ,jdbcType=VARCHAR&#125;,
+         #&#123;user.email ,jdbcType=VARCHAR&#125;,
+         #&#123;user.password ,jdbcType=VARCHAR&#125;)
+      &lt;/foreach&gt;
+    SELECT * FROM dual
+  &lt;/insert&gt;
+
+  &lt;!-- USER UPDATE --&gt;
+
+  &lt;update id=&quot;updateUser&quot; parameterType=&quot;org.activiti.engine.impl.persistence.entity.UserEntityImpl&quot;&gt;
+    update $&#123;prefix&#125;ACT_ID_USER set
+      REV_ = #&#123;revisionNext ,jdbcType=INTEGER&#125;,
+      FIRST_ = #&#123;firstName ,jdbcType=VARCHAR&#125;,
+      LAST_ = #&#123;lastName ,jdbcType=VARCHAR&#125;,
+      EMAIL_ = #&#123;email ,jdbcType=VARCHAR&#125;,
+      PWD_ = #&#123;password ,jdbcType=VARCHAR&#125;,
+      PICTURE_ID_ = #&#123;pictureByteArrayRef ,typeHandler=ByteArrayRefTypeHandler&#125;
+    where ID_ = #&#123;id&#125;
+      and REV_ = #&#123;revision&#125;
+  &lt;/update&gt;
+  
+  &lt;!-- USER DELETE --&gt;
+
+  &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;org.activiti.engine.impl.persistence.entity.UserEntityImpl&quot;&gt;
+    delete from $&#123;prefix&#125;ACT_ID_USER where ID_ = #&#123;id&#125; and REV_ = #&#123;revision&#125;
+  &lt;/delete&gt;
+
+  &lt;!-- USER RESULTMAP --&gt;
+
+  &lt;resultMap id=&quot;userResultMap&quot; type=&quot;org.activiti.engine.impl.persistence.entity.UserEntityImpl&quot;&gt;
+    &lt;id property=&quot;id&quot; column=&quot;ID_&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result property=&quot;revision&quot; column=&quot;REV_&quot; jdbcType=&quot;INTEGER&quot; /&gt;
+    &lt;result property=&quot;firstName&quot; column=&quot;FIRST_&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result property=&quot;lastName&quot; column=&quot;LAST_&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result property=&quot;email&quot; column=&quot;EMAIL_&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result property=&quot;password&quot; column=&quot;PWD_&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result property=&quot;pictureByteArrayRef&quot; column=&quot;PICTURE_ID_&quot; typeHandler=&quot;ByteArrayRefTypeHandler&quot; /&gt;
+  &lt;/resultMap&gt;
+  
+  &lt;!-- USER SELECT --&gt;
+
+  &lt;select id=&quot;selectUser&quot; parameterType=&quot;string&quot; resultMap=&quot;userResultMap&quot;&gt;
+    select * from $&#123;prefix&#125;ACT_ID_USER where ID_ = #&#123;id,jdbcType=VARCHAR&#125;
+  &lt;/select&gt;
+    
+  &lt;select id=&quot;selectUserByQueryCriteria&quot; parameterType=&quot;org.activiti.engine.impl.UserQueryImpl&quot; resultMap=&quot;userResultMap&quot;&gt;
+   $&#123;limitBefore&#125;
+    select RES.* $&#123;limitBetween&#125;
+    &lt;include refid=&quot;selectUserByQueryCriteriaSql&quot; /&gt;
+    $&#123;orderBy&#125;
+    $&#123;limitAfter&#125;
+  &lt;/select&gt;
+  
+   &lt;select id=&quot;selectUserCountByQueryCriteria&quot; parameterType=&quot;org.activiti.engine.impl.UserQueryImpl&quot; resultType=&quot;long&quot;&gt;
+    select count(RES.ID_)
+    &lt;include refid=&quot;selectUserByQueryCriteriaSql&quot; /&gt;
+  &lt;/select&gt;
+  
+  &lt;sql id=&quot;selectUserByQueryCriteriaSql&quot;&gt;
+    from $&#123;prefix&#125;ACT_ID_USER RES 
+    &lt;if test=&quot;groupId != null&quot;&gt;
+      inner join $&#123;prefix&#125;ACT_ID_MEMBERSHIP M on RES.ID_ = M.USER_ID_
+      inner join $&#123;prefix&#125;ACT_ID_GROUP G on M.GROUP_ID_ = G.ID_
+    &lt;/if&gt;
+    &lt;where&gt;
+      &lt;if test=&quot;id != null&quot;&gt;
+        RES.ID_ = #&#123;id&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;firstName != null&quot;&gt;
+        and RES.FIRST_ = #&#123;firstName&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;firstNameLike != null&quot;&gt;
+        and RES.FIRST_ like #&#123;firstNameLike&#125;$&#123;wildcardEscapeClause&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;lastName != null&quot;&gt;
+        and RES.LAST_ = #&#123;lastName&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;lastNameLike != null&quot;&gt;
+        and RES.LAST_ like #&#123;lastNameLike&#125;$&#123;wildcardEscapeClause&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;fullNameLike != null&quot;&gt;
+        and (RES.FIRST_ like #&#123;fullNameLike&#125;$&#123;wildcardEscapeClause&#125; or RES.LAST_ like #&#123;fullNameLike&#125;$&#123;wildcardEscapeClause&#125;)
+      &lt;/if&gt;
+      &lt;if test=&quot;email != null&quot;&gt;
+        and RES.EMAIL_ = #&#123;email&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;emailLike != null&quot;&gt;
+        and RES.EMAIL_ like #&#123;emailLike&#125;$&#123;wildcardEscapeClause&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;groupId != null&quot;&gt;
+        and G.ID_ = #&#123;groupId&#125;
+      &lt;/if&gt;
+      &lt;if test=&quot;procDefId != null&quot;&gt;
+        and exists (select ID_ from $&#123;prefix&#125;ACT_RU_IDENTITYLINK where PROC_DEF_ID_ = #&#123;procDefId&#125; and USER_ID_=RES.ID_ )
+      &lt;/if&gt;
+      
+    &lt;/where&gt;
+  &lt;/sql&gt;
+
+  &lt;select id=&quot;selectUserByNativeQuery&quot; parameterType=&quot;java.util.Map&quot; resultMap=&quot;userResultMap&quot;&gt;
+    &lt;include refid=&quot;org.activiti.engine.db.common.selectByNativeQuery&quot;/&gt;
+  &lt;/select&gt;
+
+  &lt;select id=&quot;selectUserCountByNativeQuery&quot; parameterType=&quot;java.util.Map&quot; resultType=&quot;long&quot;&gt;
+    $&#123;sql&#125;
+  &lt;/select&gt;
+  
+&lt;/mapper&gt;
+</code></pre>
+<h2 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h2><p><img src="/images/%E5%B7%A5%E4%BD%9C%E6%B5%81/activit.assets/%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt="表结构"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">45 <p>文章</p></a></li>
+                    <li><a href="/categories">9 <p>分类</p></a></li>
+                    <li><a href="/tags">12 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#activit%E5%B7%A5%E4%BD%9C%E6%B5%81-%E4%B8%80-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">activit工作流(一) 概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#activiti%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">activiti介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E6%93%8Eservice%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.1.1.</span> <span class="toc-text">引擎service接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1%E5%99%A8"><span class="toc-number">1.1.2.</span> <span class="toc-text">流程设计器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">架构与组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%AC%AC%E4%B8%80%E4%B8%AAactiviti%E7%A8%8B%E5%BA%8F-springboot"><span class="toc-number">1.1.4.</span> <span class="toc-text">运行第一个activiti程序(springboot)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E7%BB%98%E5%88%B6"><span class="toc-number">1.1.5.</span> <span class="toc-text">流程绘制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90springboot%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.6.</span> <span class="toc-text">生成springboot项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%A3%85%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.1.7.</span> <span class="toc-text">实装流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%A1%88%E4%BE%8B-%E4%BB%A5%E8%AF%B7%E5%81%87%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.1.8.</span> <span class="toc-text">常用功能案例:以请假为例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD%E6%A1%88%E4%BE%8B-%E4%BB%A5%E7%94%A8%E6%88%B7%E4%B8%BA%E4%BE%8B"><span class="toc-number">1.1.9.</span> <span class="toc-text">查询功能案例:以用户为例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">表结构</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2021
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

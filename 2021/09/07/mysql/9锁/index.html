@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL(九)锁机制 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="锁机制基本介绍​    锁是计算机协调多个进程或线程并发访问某一资源的机制。在数据库中，除传统的 计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">MySQL(九)锁机制</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/mysql"><b>「
+                    </b>MYSQL<b> 」</b></a>
+                
+                九月 07, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/9%E9%94%81/" title="MySQL(九)锁机制" class="">MySQL(九)锁机制</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    13k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    12 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>​    <strong>锁是计算机协调多个进程或线程并发访问某一资源的机制。</strong>在数据库中，除传统的 计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一 个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。</p>
+<p>​    相对其他数据库而言，MySQL的锁机制比较简单，其最 显著的特点是不同的<strong>存储引擎</strong>支持不同的锁机制。比如，MyISAM和MEMORY存储引擎采用的是表级锁（table-level locking）；InnoDB存储引擎既支持行级锁（row-level locking），也支持表级锁，但默认情况下是采用行级锁。 </p>
+<p>​    <strong>表级锁：</strong>开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低。<br>​    <strong>行级锁：</strong>开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。  </p>
+<p>表级锁更适合于以查询为主，只有少量按索引条件更新数据的应用，如Web应用；而行级锁则更适合于有大量按索引条件并发更新少量不同数据，同时又有 并发查询的应用，如一些在线事务处理（OLTP）系统。 </p>
+<h2 id="MyISAM表锁"><a href="#MyISAM表锁" class="headerlink" title="MyISAM表锁"></a>MyISAM表锁</h2><p>有两种模式:</p>
+<p>​    表共享读锁: 对MyISAM表的读操作，不会阻塞其他用户对同一表的读请求，但会阻塞对同一表的写请求.</p>
+<p>​    表独占写锁: 对 MyISAM表的写操作，则会阻塞其他用户对同一表的读和写操作.</p>
+<p>所以, MyISAM表的读操作与写操作之间，以及写操作之间是串行的！ </p>
+<p>MyISAM在执行查询语句之前，会自动给涉及的所有表加读锁，在执行更新操作前，会自动给涉及的表加写锁，这个过程并不需要用户干预，因此用户一般不需要使用命令来显式加锁，</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子:"></a>例子:</h3><pre><code class="sql">-- 建表语句
+CREATE TABLE `mylock` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `mylock` (`id`, `NAME`) VALUES (&#39;1&#39;, &#39;a&#39;);
+INSERT INTO `mylock` (`id`, `NAME`) VALUES (&#39;2&#39;, &#39;b&#39;);
+INSERT INTO `mylock` (`id`, `NAME`) VALUES (&#39;3&#39;, &#39;c&#39;);
+INSERT INTO `mylock` (`id`, `NAME`) VALUES (&#39;4&#39;, &#39;d&#39;);
+</code></pre>
+<h4 id="MyISAM写锁阻塞读的案例："><a href="#MyISAM写锁阻塞读的案例：" class="headerlink" title="MyISAM写锁阻塞读的案例："></a>MyISAM写锁阻塞读的案例：</h4><p>当一个线程获得对一个表的写锁之后，只有持有锁的线程可以对表进行更新操作。其他线程的读写操作都会等待，直到锁释放为止。</p>
+<table>
+<thead>
+<tr>
+<th align="center">session1</th>
+<th align="center">session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">lock table mylock write;(获取写锁)</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">select * from mylock;<br/>insert into mylock(5,’e’);<br/>读写操作可以正常执行</td>
+<td align="center">select * from mylock；<br/>(被阻塞,等待session1释放锁)</td>
+</tr>
+<tr>
+<td align="center">unlock tables；(释放锁)</td>
+<td align="center">(执行查询语句,返回结果)</td>
+</tr>
+</tbody></table>
+<h4 id="MyISAM读阻塞写案例"><a href="#MyISAM读阻塞写案例" class="headerlink" title="MyISAM读阻塞写案例:"></a>MyISAM读阻塞写案例:</h4><p>​    一个session使用lock table给表加读锁，这个session可以锁定表中的记录，但更新和访问其他表都会提示错误，同时，另一个session可以查询表中的记录，但更新就会出现锁等待。</p>
+<table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lock table mylock read;(获取读锁)</td>
+<td></td>
+</tr>
+<tr>
+<td>select * from mylock;(正常执行)</td>
+<td>select * from mylock;(正常执行)</td>
+</tr>
+<tr>
+<td>select * from category;<br/>(由于只锁了mylock,所以只能查询mylock表,无法查询category表)</td>
+<td>select * from category;<br/>insert into category(category_id,name) value(18,konghenying)<br/>(没有加读锁,可以查询或修改未锁定的表)</td>
+</tr>
+<tr>
+<td>insert into mylock value(6,’f’);<br/>update mylock set name=’z’ where id = 1;<br/>插入或更新都无法执行</td>
+<td><br />insert into mylock values(6,’f’);<br/>被阻塞,等待session1释放锁</td>
+</tr>
+<tr>
+<td>unlock tables;(释放锁)</td>
+<td>执行被阻塞的插入或更新语句,返回结果</td>
+</tr>
+</tbody></table>
+<p>可以通过检查table_locks_waited和table_locks_immediate状态变量来分析系统上的表锁定争夺： <code>show status like &#39;table%&#39;</code></p>
+<h2 id="innoDB锁"><a href="#innoDB锁" class="headerlink" title="innoDB锁"></a>innoDB锁</h2><h3 id="事务及其ACID属性"><a href="#事务及其ACID属性" class="headerlink" title="事务及其ACID属性"></a>事务及其ACID属性</h3><p>事务: 由一组SQL语句组成的逻辑处理单元，事务具有4属性，通常称为事务的ACID属性。</p>
+<p>原子性（Actomicity）：事务是一个原子操作单元，其对数据的修改，要么全都执行，要么全都不执行。<br>一致性（Consistent）：在事务开始和完成时，数据都必须保持一致状态。<br>隔离性（Isolation）：数据库系统提供一定的隔离机制，保证事务在不受外部并发操作影响的“独立”环境执行。<br>持久性（Durable）：事务完成之后，它对于数据的修改是永久性的，即使出现系统故障也能够保持。</p>
+<h3 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h3><p>​    相对于串行处理来说，并发事务处理能大大增加数据库资源的利用率，提高数据库系统的事务吞吐量，从而可以支持更多用户的并发操作，但与此同时，会带来一下问题：</p>
+<p><strong>脏读</strong>： 一个事务正在对一条记录做修改，在这个事务并提交前，这条记录的数据就处于不一致状态；这时，另一个事务也来读取同一条记录，如果不加控制，第二个事务读取了这些“脏”的数据，并据此做进一步的处理，就会产生未提交的数据依赖关系。这种现象被形象地叫做“脏读” </p>
+<p><strong>不可重复读</strong>：一个事务在读取某些数据已经发生了改变、或某些记录已经被删除了！这种现象叫做“不可重复读”。 </p>
+<p><strong>幻读</strong>： 一个事务按相同的查询条件重新读取以前检索过的数据，却发现其他事务插入了满足其查询条件的新数据，这种现象就称为“幻读” </p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>注意:数据库的事务隔离越严格，并发副作用就越小，但付出的代价也就越大，因为事务隔离本质上就是使事务在一定程度上串行化，需要根据具体的业务需求来决定使用哪种隔离级别</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">read uncommitted(读未提交)</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">read committed(读已提交)</td>
+<td align="center"></td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">repeatable read(可重复读)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">serializable(序列化执行，串行执行)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>可以通过检查InnoDB_row_lock状态变量来分析系统上的行锁的争夺情况：<code>show status like &#39;innodb_row_lock%&#39;;</code></p>
+<p>如果发现锁争用比较严重，如InnoDB_row_lock_waits和InnoDB_row_lock_time_avg的值比较高</p>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p><strong>前提</strong>:</p>
+<ol>
+<li><p>打开mysql的命令行，将自动提交事务给关闭</p>
+<pre><code class="sql">--查看是否是自动提交 1表示开启，0表示关闭
+select @@autocommit;
+--设置关闭
+set autocommit = 0;    
+</code></pre>
+</li>
+<li><p>准备数据</p>
+<pre><code class="sql">--创建数据库
+create database tran;
+--切换数据库 两个窗口都执行
+use tran;
+--准备数据
+ create table psn(id int primary key,name varchar(10)) engine=innodb;
+--插入数据
+insert into psn values(1,&#39;zhangsan&#39;);
+insert into psn values(2,&#39;lisi&#39;);
+insert into psn values(3,&#39;wangwu&#39;);
+commit;
+</code></pre>
+</li>
+</ol>
+<h4 id="read-uncommitted-–脏读"><a href="#read-uncommitted-–脏读" class="headerlink" title="read uncommitted –脏读"></a>read uncommitted –脏读</h4><table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+</tr>
+<tr>
+<td>update psn set name=’khy’;</td>
+<td></td>
+</tr>
+<tr>
+<td>selecet * from psn;<br/>读取结果为khy,同一事务下,改变及时生效.</td>
+<td>select * from psn;<br/>读取的结果khy。产生脏读<br/>因为session1并没有commit，读取到了不存在的数据</td>
+</tr>
+<tr>
+<td>commit;</td>
+<td>select * from psn;<br/>读取结果为khy,因为session1已经提交事务.数据被永久修改.</td>
+</tr>
+</tbody></table>
+<h4 id="read-committed-–-不可重复读"><a href="#read-committed-–-不可重复读" class="headerlink" title="read committed – 不可重复读"></a>read committed – 不可重复读</h4><table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+</tr>
+<tr>
+<td>update psn set name =’zhangsan’ where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>select * from psn;<br/>读取到更新的记录</td>
+<td>select * from psn;<br/>由于session1事务未提交<br/>session2读取不到session事务中改变的记录.</td>
+</tr>
+<tr>
+<td>commit;</td>
+<td></td>
+</tr>
+<tr>
+<td>select * from psn;</td>
+<td>select * from psn;<br/>session2在同一个事务中两次查询数据不一致.<br/>这两次查询分别出现的session1的事务提交前后.</td>
+</tr>
+</tbody></table>
+<h4 id="repeatable-read-–-幻读"><a href="#repeatable-read-–-幻读" class="headerlink" title="repeatable read – 幻读"></a>repeatable read – 幻读</h4><table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+<td>set session transaction isolation level read uncommitted;<br/>start transaction;<br/>select * from psn;</td>
+</tr>
+<tr>
+<td>insert into psn values(4,’sisi’);</td>
+<td></td>
+</tr>
+<tr>
+<td>commit;</td>
+<td></td>
+</tr>
+<tr>
+<td>select * from psn;<br/>读取到了添加的数据</td>
+<td>select * from psn;<br/>没有读取到添加的数据</td>
+</tr>
+<tr>
+<td></td>
+<td>insert into psn values(4,’sisi’);<br/>无法插入记录,但当前事务中无法查到插入记录冲突.<br/>需要推出事务重新开.</td>
+</tr>
+</tbody></table>
+<h3 id="InnoDB的行锁模式及加锁方法"><a href="#InnoDB的行锁模式及加锁方法" class="headerlink" title="InnoDB的行锁模式及加锁方法"></a>InnoDB的行锁模式及加锁方法</h3><ul>
+<li>共享锁(s): 又称读锁。允许一个事务去读一行，阻止其他事务获得相同数据集的排他锁。若事务T对数据对象A加上S锁，则事务T可以读A但不能修改A，其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。</li>
+<li>排他锁(x): 又称写锁。允许获取排他锁的事务更新数据，阻止其他事务取得相同的数据集共享读锁和排他写锁。若事务T对数据对象A加上X锁，事务T可以读A也可以修改A，其他事务不能再对A加任何锁，直到T释放A上的锁。</li>
+</ul>
+<p>​    InnoDB引擎默认的修改数据语句：<strong>update,delete,insert都会自动给涉及到的数据加上排他锁，select语句默认不会加任何锁类型</strong>，如果加排他锁可以使用select …for update语句，加共享锁可以使用select … lock in share mode语句。<strong>所以加过排他锁的数据行在其他事务种是不能修改数据的，也不能通过for update和lock in share mode锁的方式查询数据，但可以直接通过select …from…查询数据，因为普通查询没有任何锁机制。</strong> </p>
+<h4 id="InnoDB行锁实现方式"><a href="#InnoDB行锁实现方式" class="headerlink" title="InnoDB行锁实现方式"></a><strong>InnoDB行锁实现方式</strong></h4><p>通过给<strong>索引</strong>上的索引项加锁来实现的，这一点MySQL与Oracle不同，后者是通过在数据块中对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：只有通过索引条件检索数据，InnoDB才使用行级锁，<strong>否则，InnoDB将使用表锁！</strong>  </p>
+<h4 id="场景1-在不通过索引条件查询的时候，innodb使用的是表锁而不是行锁"><a href="#场景1-在不通过索引条件查询的时候，innodb使用的是表锁而不是行锁" class="headerlink" title="场景1: 在不通过索引条件查询的时候，innodb使用的是表锁而不是行锁"></a>场景1: 在不通过索引条件查询的时候，innodb使用的是表锁而不是行锁</h4><pre><code class="sql">create table tab_no_index(id int,name varchar(10)) engine=innodb;
+insert into tab_no_index values(1,&#39;1&#39;),(2,&#39;2&#39;),(3,&#39;3&#39;),(4,&#39;4&#39;);    
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set autocommit=0(关闭自动提交)<br />select * from tab_no_index where id = 1;</td>
+<td>set autocommit=0(关闭自动提交)<br />select * from tab_no_index where id =2</td>
+</tr>
+<tr>
+<td>select * from tab_no_index where id = 1 for update;<br/>正常执行</td>
+<td>select * from tab_no_index where id = 2 for update;<br/>被阻塞, 由于查询条件没有索引,表被session1加了表锁.</td>
+</tr>
+<tr>
+<td>commit;</td>
+<td>session1事务完成.释放了表锁.执行被阻塞sql,返回结果.</td>
+</tr>
+</tbody></table>
+<h4 id="场景2-创建带索引的表进行条件查询，innodb使用的是行锁"><a href="#场景2-创建带索引的表进行条件查询，innodb使用的是行锁" class="headerlink" title="场景2: 创建带索引的表进行条件查询，innodb使用的是行锁"></a>场景2: 创建带索引的表进行条件查询，innodb使用的是行锁</h4><pre><code class="sql">create table tab_with_index(id int,name varchar(10)) engine=innodb;
+alter table tab_with_index add index id(id);
+insert into tab_with_index values(1,&#39;1&#39;),(2,&#39;2&#39;),(3,&#39;3&#39;),(4,&#39;4&#39;);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set autocommit=0<br />select * from tab_with_indexwhere id = 1;</td>
+<td>set autocommit=0<br />select * from tab_with_indexwhere id =2</td>
+</tr>
+<tr>
+<td>select * from tab_with_indexwhere id = 1 for update<br/>正常执行,对表中的id为1的记录加了锁</td>
+<td>select * from tab_with_indexwhere id = 2 for update<br/>正常执行,对表中的id为2的记录加了锁,<br/>而session1事务中加的是id为2的记录加了锁.</td>
+</tr>
+<tr>
+<td></td>
+<td>select * from tab_with_indexwhere id = 1 for update<br/>被阻塞,session1事务中加了该行的锁.</td>
+</tr>
+</tbody></table>
+<h4 id="场景3-由于mysql的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然是访问不同行的记录，但是依然无法访问到具体的数据"><a href="#场景3-由于mysql的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然是访问不同行的记录，但是依然无法访问到具体的数据" class="headerlink" title="场景3: 由于mysql的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然是访问不同行的记录，但是依然无法访问到具体的数据"></a>场景3: 由于mysql的行锁是针对索引加的锁，不是针对记录加的锁，所以虽然是访问不同行的记录，但是依然无法访问到具体的数据</h4><table>
+<thead>
+<tr>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set autocommit=0</td>
+<td>set autocommit=0</td>
+</tr>
+<tr>
+<td>select * from tab_with_index where id = 1 and name=’1’ for update</td>
+<td>select * from tab_with_index where id = 1 and name=’4’ for update<br />虽然session2访问的是和session1不同的记录<br/>但是因为使用了相同的索引，所以需要等待锁,<br/>此锁是行锁,但非单行,而是索引id为1的所有行.</td>
+</tr>
+<tr>
+<td>commit</td>
+<td>执行被阻塞的sql.</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>对于MyISAM的表锁，主要讨论了以下几点：</strong><br>（1）共享读锁（S）之间是兼容的，但共享读锁（S）与排他写锁（X）之间，以及排他写锁（X）之间是互斥的，也就是说读和写是串行的。<br>（2）在一定条件下，MyISAM允许查询和插入并发执行，我们可以利用这一点来解决应用中对同一表查询和插入的锁争用问题。<br>（3）MyISAM默认的锁调度机制是写优先，这并不一定适合所有应用，用户可以通过设置LOW_PRIORITY_UPDATES参数，或在INSERT、UPDATE、DELETE语句中指定LOW_PRIORITY选项来调节读写锁的争用。<br>（4）由于表锁的锁定粒度大，读写之间又是串行的，因此，如果更新操作较多，MyISAM表可能会出现严重的锁等待，可以考虑采用InnoDB表来减少锁冲突。</p>
+<p><strong>对于InnoDB表，本文主要讨论了以下几项内容：</strong><br>（1）InnoDB的行锁是基于索引实现的，如果不通过索引访问数据，InnoDB会使用表锁。<br>（2）在不同的隔离级别下，InnoDB的锁机制和一致性读策略不同。</p>
+<p>在了解InnoDB锁特性后，用户可以通过设计和SQL调整等措施减少锁冲突和死锁，包括：</p>
+<ul>
+<li>尽量使用较低的隔离级别； 精心设计索引，并尽量使用索引访问数据，使加锁更精确，从而减少锁冲突的机会；</li>
+<li>选择合理的事务大小，小事务发生锁冲突的几率也更小；</li>
+<li>给记录集显式加锁时，最好一次性请求足够级别的锁。比如要修改数据的话，最好直接申请排他锁，而不是先申请共享锁，修改时再请求排他锁，这样容易产生死锁；</li>
+<li>不同的程序访问一组表时，应尽量约定以相同的顺序访问各表，对一个表而言，尽可能以固定的顺序存取表中的行。这样可以大大减少死锁的机会；</li>
+<li>尽量用相等条件访问数据，这样可以避免间隙锁对并发插入的影响； 不要申请超过实际需要的锁级别；除非必须，查询时不要显示加锁；</li>
+<li>对于一些特定的事务，可以使用表锁来提高处理速度或减少死锁的可能。</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">45 <p>文章</p></a></li>
+                    <li><a href="/categories">9 <p>分类</p></a></li>
+                    <li><a href="/tags">12 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%94%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM%E8%A1%A8%E9%94%81"><span class="toc-number">1.2.</span> <span class="toc-text">MyISAM表锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">例子:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#innoDB%E9%94%81"><span class="toc-number">1.3.</span> <span class="toc-text">innoDB锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%85%B6ACID%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.1.</span> <span class="toc-text">事务及其ACID属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E4%BA%8B%E5%8A%A1%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.2.</span> <span class="toc-text">并发事务带来的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">1.3.3.</span> <span class="toc-text">事务隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">1.3.4.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB%E7%9A%84%E8%A1%8C%E9%94%81%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8A%A0%E9%94%81%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.5.</span> <span class="toc-text">InnoDB的行锁模式及加锁方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2021
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

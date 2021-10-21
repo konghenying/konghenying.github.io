@@ -130,22 +130,22 @@
             <a href="/categories/mysql"><b>「
                 </b>MYSQL<b> 」</b></a>
             
-            六月 15, 2021
+            九月 07, 2021
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/06/15/mysql/mysql%20performschema/" title="mysql perform schema" class="posttitle">mysql perform schema</a></h3>
+            <a href="/2021/09/07/mysql/11%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%B8%8E%E9%9B%86%E7%BE%A4/" title="MySQL(十一)读写分离与集群" class="posttitle">MySQL(十一)读写分离与集群</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                5.5k
+                607
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                5 mins.
+                1 mins.
             </span>
             
             
@@ -156,10 +156,12 @@
         
         <div class="md-content animated fadeIn">
             
-            <p><strong>MySQL的performance schema 用于监控MySQL server在一个较低级别的运行过程中的资源消耗、资源等待等情况</strong>。</p>
-<p>特点:  <code>&lt;https://dev.mysql.com/doc...</code></p>
+            <p>MySQL读写分离基本原理是让master数据库处理写操作，slave数据库处理读操作。master将写操作的变更同步到各个slave节点。</p>
+<ol>
+<li>物理服务器增加，机器处理能力提升。拿硬件换性能。</li>
+<li>主从只...</li></ol>
             
-            <span class="read-more"><a href="/2021/06/15/mysql/mysql%20performschema/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2021/09/07/mysql/11%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%B8%8E%E9%9B%86%E7%BE%A4/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -180,6 +182,403 @@
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 07, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/10%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL(十)主从复制" class="posttitle">MySQL(十)主从复制</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        6.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li>在业务复杂的系统中，有这么一个情景，有一句sql语句需要锁表，导致暂时不能使用读的服务，那么就很影响运行中的业务，使用主从复制，让主库负责写，从库负责读，这样，即使主库出现了锁表的情景，通过读从库也可以保证业务的正常运作。</li>
+<li>做数据的热备</li>
+<li>架构的扩展。业务量越来越大，I/O访问频率过高，单机无法满足，此时做多库的存储，降低磁盘I/O访问的频率，提高单个机器的I/O性能。</li>
+</ul>
+<p>​    MySQL 主从复制是指数据可以从一个MySQL数据库服务器主节点复制到一个或多个从节点。MySQL 默认采用异步复制方...</p>
+            
+            <span class="read-more"><a href="/2021/09/07/mysql/10%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 07, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/07/mysql/9%E9%94%81/" title="MySQL(九)锁机制" class="posttitle">MySQL(九)锁机制</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        13k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        12 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>​    <strong>锁是计算机协调多个进程或线程并发访问某一资源的机制。</strong>在数据库中，除传统的 计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一 个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。</p>
+<p>​    相对其他数据库而言，MySQL的锁机制比较简单，其最 显著的特点是不同的<strong>存储引擎</strong>支持不同的锁机制。比如，MyISAM和MEMORY存储引擎采用的是表级锁（table...</p>
+            
+            <span class="read-more"><a href="/2021/09/07/mysql/9%E9%94%81/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 06, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/06/mysql/8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE/" title="MySQL(八)服务器参数设置" class="posttitle">MySQL(八)服务器参数设置</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        4.7k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        4 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li><p>datadir=/var/lib/mysql 数据文件存放的目录</p>
+</li>
+<li><p>socket=/var/lib/mysql/mysql.sock  mysql.socket表示server和client在同一台服务器，并且使用localhost进行连接，就会使用socket进行连接</p>
+</li>
+<li><p>pid_file=/var/lib/mysql/mysql.pid  存储mysql的pid</p>
+</li>
+<li><p>port=3306  mysql服务的端口号</p>
+</li>
+<li><p>default_storage_engine=InnoDB  mysql默认存储引擎</p>
+</li>
+...</ul>
+            
+            <span class="read-more"><a href="/2021/09/06/mysql/8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 03, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="MySQL(七)分区表" class="posttitle">MySQL(七)分区表</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        6.4k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。<br>mysql在创建表时使用partition by子句定义每个分区存放的数据，在执行查询的时候，优化器会根据分区定义过滤那些没有我们需要数据的分区，这样查询就无须扫描所有分区。<br>分区的主要目的是将数据安好一个较粗的力度分在不同的表中，这样可以将相关的数据存放在一起。</p>
+<ol>
+<li>表非常大以至于无法全部都放在内存中，或者只在表...</li></ol>
+            
+            <span class="read-more"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 03, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="MySQL(六)查询优化" class="posttitle">MySQL(六)查询优化</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        7.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li><p>网络</p>
+</li>
+<li><p>CPU</p>
+</li>
+<li><p>IO</p>
+</li>
+<li><p>上下文切换</p>
+</li>
+<li><p>系统调用</p>
+</li>
+<li><p>生成统计信息</p>
+</li>
+<li><p>锁等待时间</p>
+</li>
+</ul>
+<ul>
+<li>减少访问数据量的方式进行优化<ul>
+<li>确认应用程序是否在检索大量超过需要的数据</li>
+<li>确认mysql服务器层是否在分析大量超过需要的数据行</li>
+</ul>
+</li>
+<li>是否向数据库请求了不需要的数据<ul>
+<li>查询不需要的记录,优化:使用limit限制查询的列.</li>
+<li>多表关联时返回全部列,优化:取用到的字段</li>
+<li>总是取出全部列,优化:取用到的字段</li>
+<li>重复查询相同的数据,优化:在外部缓存起来.</li>
+</ul>
+</li>
+</ul>
+<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>  如果查询缓存是打开的，那么mysql会优先检查这个查询是否...</p>
+            
+            <span class="read-more"><a href="/2021/09/03/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            八月 29, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/08/29/mysql/5%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" title="MySQL索引优化" class="posttitle">MySQL索引优化</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        8.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        7 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>B+Tree是在BTree的基础上做的一种优化</p>
+<ul>
+<li><p>B+Tree每个节点可以包含更多的节点.</p>
+<p>作用:</p>
+<ol>
+<li><p>降低树的高度.</p>
+</li>
+<li><p>将数据范围变为多个区间,区间越多,数据检索越快.</p>
+</li>
+</ol>
+</li>
+<li><p>非叶子节点存储key,叶子节点存储key和数据,</p>
+</li>
+<li><p>叶子节点两两指针相互连接,顺序查找性能越高.</p>
+</li>
+</ul>
+<h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><ul>
+<li>大大减少服务器需要扫描的数据量</li>
+<li>帮助服务器避免排序和临时表</li>
+<li>将随机io变成顺序io</li>
+</ul>
+<h3 id="索引的用处"><a href="#索引的用处" class="headerlink" title="索引的用处"></a>索引的用处</h3><ul>
+<li>快速查找匹配where子句的行</li>
+<li>从consideration中消除行,如果可以在多个索引之间进行选择,mysql...</li></ul>
+            
+            <span class="read-more"><a href="/2021/08/29/mysql/5%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            六月 15, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/4.1mysql%20performschema/" title="mysql perform schema" class="posttitle">mysql perform schema</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        5.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        5 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p><strong>MySQL的performance schema 用于监控MySQL server在一个较低级别的运行过程中的资源消耗、资源等待等情况</strong>。</p>
+<p>特点:  <code>&lt;https://dev.mysql.com/doc/refman/5.7/en/performance-schema.html&gt;</code></p>
+<ol>
+<li><p>提供了一种在数据库运行时实时检查server的内部执行情况的方法。performance_schema 数据库中的表使用performance_schema存储引擎。该数据库主要关注数据库运行过程中的性能相关...</p></li></ol>
+            
+            <span class="read-more"><a href="/2021/06/15/mysql/4.1mysql%20performschema/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
 <div class="post" id="post">
     <div class="post-cover animated fadeIn" style="
             background-image:
@@ -295,117 +694,9 @@
 </div>
 
 
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
     </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
-                </a>
-            
-            六月 15, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/" title="性能监控" class="posttitle">性能监控</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        3.8k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        3 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>**使用show profile查询剖析工具，可以指定具体的type   **</p>
-<p>官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/show-profile.html">https://dev.mysql.com/doc/refman/5.7/en/show-profile.html</a></p>
-<h3 id="开启工具"><a href="#开启工具" class="headerlink" title="开启工具"></a>开启工具</h3><p>此工具默认是禁用的，可以通过服务器变量在会话级别动态的修改</p>
-<p><strong>set profiling=1;</strong></p>
-<h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>当设置完成之后，在服务器上执行的所有语句，都会测量其耗费的时间和其他一些查询执行状态变更相关的数据。</p>
-<p><strong>select * from test;</strong></p>
-<h3 id="使用工具分析查询语句各个阶段耗时"><a href="#使用工具分析查询语句各个阶段耗时" class="headerlink" title="使用工具分析查询语句各个阶段耗时"></a>使用工具分析查询语句各个阶段耗时</h3><p>在mysql的...</p>
-            
-            <span class="read-more"><a href="/2021/06/15/mysql/2%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
-                </a>
-            
-            六月 15, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/" title="MySQL的基本架构" class="posttitle">MySQL的基本架构</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        1.7k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        2 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p></p>
-<p>负责跟客户端建立连接，获取权限，维持和管理连接</p>
-<ul>
-<li>用户名密码验证</li>
-<li>查询权限信息，分配对应的权限</li>
-<li>show processlist 查看现在的连接</li>
-<li>wait_time控制维持连接的时长，默认八小时</li>
-</ul>
-<p>连接分两种:</p>
-<ul>
-<li><p>长连接：长连接是相对于短连接来说的。长连接指在一个连接上可以连续发送多个数据包，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。</p>
-<p>客户端连接–创建socket认证连接–维护连接–数据传输–维护连接–数据传输…..-关闭连接</p>
-<p>在频繁的与数据库服务通信，并且又非高并发的情况下，...</p></li></ul>
-            
-            <span class="read-more"><a href="/2021/06/15/mysql/1MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-    </div>
+    
+    <div id="pager"><a href="/tags/mysql/page/2/" class="more" data-loading="加载中..." data-load-more="加载更多">加载更多</a></div>
     
 </div>
 <div id="preview"></div>

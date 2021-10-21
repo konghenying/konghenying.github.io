@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL索引优化 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="Mysql索引优化mysql索引数据结构 B+TreeB+Tree是在BTree的基础上做的一种优化
+
+B+Tree每个节点可以包含更多的节点.
+作用:
+
+降低树的高度.
+
+将数据范围变为多个区间,,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">MySQL索引优化</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/mysql"><b>「
+                    </b>MYSQL<b> 」</b></a>
+                
+                八月 29, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/08/29/mysql/5%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" title="MySQL索引优化" class="">MySQL索引优化</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    8.1k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    7 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Mysql索引优化"><a href="#Mysql索引优化" class="headerlink" title="Mysql索引优化"></a>Mysql索引优化</h1><h2 id="mysql索引数据结构-B-Tree"><a href="#mysql索引数据结构-B-Tree" class="headerlink" title="mysql索引数据结构 B+Tree"></a>mysql索引数据结构 B+Tree</h2><p>B+Tree是在BTree的基础上做的一种优化</p>
+<ul>
+<li><p>B+Tree每个节点可以包含更多的节点.</p>
+<p>作用:</p>
+<ol>
+<li><p>降低树的高度.</p>
+</li>
+<li><p>将数据范围变为多个区间,区间越多,数据检索越快.</p>
+</li>
+</ol>
+</li>
+<li><p>非叶子节点存储key,叶子节点存储key和数据,</p>
+</li>
+<li><p>叶子节点两两指针相互连接,顺序查找性能越高.</p>
+</li>
+</ul>
+<h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><ul>
+<li>大大减少服务器需要扫描的数据量</li>
+<li>帮助服务器避免排序和临时表</li>
+<li>将随机io变成顺序io</li>
+</ul>
+<h3 id="索引的用处"><a href="#索引的用处" class="headerlink" title="索引的用处"></a>索引的用处</h3><ul>
+<li>快速查找匹配where子句的行</li>
+<li>从consideration中消除行,如果可以在多个索引之间进行选择,mysql通常会使用找到最少行的索引.</li>
+<li>如果表具有多列索引,则优化器可以使用索引的任何最左前缀来查找行.</li>
+<li>当有表连接的时候,从其他表检索行数据.</li>
+<li>查找特定索引列的min或max值</li>
+<li>如果排序或分组时在可用索引的最左前缀上完成时,则对表进行排序和分组.</li>
+<li>可以优化查询以检索值二无需查询数据行.</li>
+</ul>
+<h3 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h3><ol>
+<li><p>主键索引.(主键:唯一且非空,所以数据库建数据库并非给主键建的.而是给唯一键建的.)</p>
+</li>
+<li><p>唯一索引,(该列字段每行都唯一,索引类型为unique)</p>
+</li>
+<li><p>普通索引, 给普通列创建一个普通索引</p>
+</li>
+<li><p>全文索引,给字符串字段建立的索引.char,varchar,text</p>
+</li>
+<li><p>组合索引,将多个列合并成一个索引.由于查询的时候一般是多条件组合查询.</p>
+<p>会涉及到多个技术名词</p>
+<p>​    回表:  通过索引条件查询周到叶子节点上的值,其值为主键列的值;再通过这个值去主键的B+Tree获取其叶子节点的值.此值为该行记录的完整数据.</p>
+<p>​    覆盖索引: 不存在回表的查询则为索引覆盖.当查询字段都存在于当前索引中.则不需要再去主键的B+Tree获取完整数据.最常见的是关联查询的时候查询id.</p>
+<p>​    最左匹配: 在使用组合索引的时候,where要按照组合索引的顺序来写where查询.</p>
+<p>​        eg: 组合索引为ename和job两个字段,则where可以为 只查询enmae或查询ename与job,或更多;但不可以没有ename查询条件,顺序无所谓,优化器会帮助优化.</p>
+<p>​        小技巧: 当需要创建组合索引且又要单独建立普通索引的时候,在满足业务场景需求的情况下,选择存储量少的索引建立.</p>
+<p>​    eg: age 与 name 建立索引</p>
+<ol>
+<li><p>age_name索引 name索引</p>
+</li>
+<li><p>name_age索引 age索引</p>
+<p>选用第二种,第二种索引消耗的内存少.但两者都能实现满足相同的查询.</p>
+</li>
+</ol>
+<p>​    索引下推: 对组合索引中包含的字段先做判断，过滤掉不符合条件的记录，减少回表字数。(在mysql5.6版本引入)</p>
+</li>
+</ol>
+<h2 id="其他索引结构"><a href="#其他索引结构" class="headerlink" title="其他索引结构"></a>其他索引结构</h2><h3 id="HASH"><a href="#HASH" class="headerlink" title="HASH"></a>HASH</h3><p>基于哈希表的实现，只有精确匹配索引所有列的查询才有效;</p>
+<p>在mysql中，只有memory的存储引擎显式支持哈希索引;</p>
+<p>哈希索引自身只需存储对应的hash值，所以索引的结构十分紧凑，这让哈希索引查找的速度非常快;</p>
+<p>限制:</p>
+<ul>
+<li>哈希索引只包含哈希值和行指针，而不存储字段值，索引不能使用索引中的值来避免读取行.</li>
+<li>哈希索引数据并不是按照索引值顺序存储的，所以无法进行排序</li>
+<li>哈希索引不支持部分列匹配查找，哈希索引是使用索引列的全部内容来计算哈希值</li>
+<li>哈希索引支持等值比较查询，也不支持任何范围查询</li>
+<li>访问哈希索引的数据非常快，除非有很多哈希冲突，当出现哈希冲突的时候，存储引擎必须遍历链表中的所有行指针，逐行进行比较，直到找到所有符合条件的行</li>
+<li>哈希冲突比较多的话，维护的代价也会很高(所以需要优秀的hash算法)</li>
+</ul>
+<h2 id="索引匹配方式"><a href="#索引匹配方式" class="headerlink" title="索引匹配方式"></a>索引匹配方式</h2><p>eg:</p>
+<p>create table staffs(<br>    id int primary key auto_increment,<br>    name varchar(24) not null default ‘’ comment ‘姓名’,<br>    age int not null default 0 comment ‘年龄’,<br>    pos varchar(20) not null default ‘’ comment ‘职位’,<br>    add_time timestamp not null default current_timestamp comment ‘入职时间’<br>  ) charset utf8 comment ‘员工记录表’;</p>
+<p>alter table staffs add index idx_nap(name, age, pos);</p>
+<h3 id="全值匹配"><a href="#全值匹配" class="headerlink" title="全值匹配"></a>全值匹配</h3><p>和索引中的所有列进行匹配</p>
+<p>eg: explain select * from staffs where name = ‘July’ and age = ‘23’ and pos = ‘dev’;</p>
+<h3 id="匹配最左前缀"><a href="#匹配最左前缀" class="headerlink" title="匹配最左前缀"></a>匹配最左前缀</h3><p>只匹配前面几列.</p>
+<p>explain select * from staffs where name = ‘July’ and age = ‘23’;</p>
+<p>explain select * from staffs where name = ‘July’ ;</p>
+<h3 id="匹配列前缀"><a href="#匹配列前缀" class="headerlink" title="匹配列前缀"></a>匹配列前缀</h3><p>匹配某一列的值的开头部分</p>
+<p>explain select * from staffs where name like ‘J%’;</p>
+<p>explain select * from staffs where name like ‘%y’; 将进行全表扫面</p>
+<h3 id="匹配范围值"><a href="#匹配范围值" class="headerlink" title="匹配范围值"></a>匹配范围值</h3><p>查找某一个范围的数据,如果为字符串则匹配字符串的hash值.</p>
+<p>explain select * from staffs where name &gt; ‘Mary’;</p>
+<h3 id="精确匹配某一列并范围匹配另一列"><a href="#精确匹配某一列并范围匹配另一列" class="headerlink" title="精确匹配某一列并范围匹配另一列"></a>精确匹配某一列并范围匹配另一列</h3><p>可以查询第一列的全部和第二列的部分</p>
+<p>explain select * from staffs where name = ‘July’ and age &gt; 25;</p>
+<h3 id="只访问索引的查询"><a href="#只访问索引的查询" class="headerlink" title="只访问索引的查询"></a>只访问索引的查询</h3><p>查询的时候只需要访问索引，不需要访问数据行，本质上就是覆盖索引</p>
+<p>explain select name,age,pos from staffs where name = ‘July’ and age = 25 and pos = ‘dev’;</p>
+<h2 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h2><h3 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h3><p>不是单独的索引类型，而是一种数据存储方式，指的是数据行跟相邻的键值紧凑的存储在一起.innoDB属于聚簇索引.</p>
+<p>优点: </p>
+<ol>
+<li>可以把相关数据保存在一起</li>
+<li>数据访问更快，因为索引和数据保存在同一个树中</li>
+<li>使用覆盖索引扫描的查询可以直接使用页节点中的主键值</li>
+</ol>
+<p>缺点:</p>
+<ol>
+<li>聚簇数据最大限度地提高了IO密集型应用的性能，如果数据全部在内存，那么聚簇索引就没有什么优势</li>
+<li>插入速度严重依赖于插入顺序，按照主键的顺序插入是最快的方式</li>
+<li>更新聚簇索引列的代价很高，因为会强制将每个被更新的行移动到新的位置</li>
+<li>基于聚簇索引的表在插入新行，或者主键被更新导致需要移动行的时候，可能面临页分裂的问题</li>
+<li>聚簇索引可能导致全表扫描变慢，尤其是行比较稀疏，或者由于页分裂导致数据存储不连续的时候</li>
+</ol>
+<p>小技巧:当导入大量数据的时候可以先将数据库表索引关闭,导入后再打开.</p>
+<p>关闭：<code>ALTER TABLE test DISABLE KEYS </code><br>开启：<code>ALTER TABLE test ENABLE KEYS</code></p>
+<p>查看索引信息: <code>show INDEX FROM test</code></p>
+<h3 id="非聚簇索引"><a href="#非聚簇索引" class="headerlink" title="非聚簇索引"></a>非聚簇索引</h3><p>数据文件跟索引文件分开存放.MYISAM属于非聚簇索引.</p>
+<h2 id="索引覆盖"><a href="#索引覆盖" class="headerlink" title="索引覆盖"></a>索引覆盖</h2><ol>
+<li>如果一个索引包含所有需要查询的字段的值，我们称之为覆盖索引</li>
+<li>不是所有类型的索引都可以称为覆盖索引，覆盖索引必须要存储索引列的值</li>
+<li>不同的存储实现覆盖索引的方式不同，不是所有的引擎都支持覆盖索引，memory不支持覆盖索引</li>
+</ol>
+<p>优势:</p>
+<ol>
+<li>索引条目通常远小于数据行大小，如果只需要读取索引，那么mysql就会极大的较少数据访问量</li>
+<li>因为索引是按照列值顺序存储的，所以对于IO密集型的范围查询会比随机从磁盘读取每一行数据的IO要少的多</li>
+<li>一些存储引擎如MYISAM在内存中只缓存索引，数据则依赖于操作系统来缓存，因此要访问数据需要一次系统调用，这可能会导致严重的性能问题</li>
+<li>由于INNODB的聚簇索引，覆盖索引对INNODB表特别有用</li>
+</ol>
+<h2 id="细小优化"><a href="#细小优化" class="headerlink" title="细小优化"></a>细小优化</h2><ul>
+<li><p>当使用索引列进行查询的时候尽量不要使用表达式，把计算放到业务层而不是数据库层</p>
+</li>
+<li><p>尽量使用主键查询，而不是其他索引，因为主键查询不会触发回表查询</p>
+</li>
+<li><p><a href="5.1%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95.md">使用前缀索引</a>,给字符串类型的字段设置前缀索引,来优化查询速度.</p>
+</li>
+<li><p>使用索引扫描来排序,</p>
+<p>explan中的type为index时,使用了索引扫描来做排序.</p>
+<p>只有当索引的列顺序和order by子句的顺序完全一致，并且所有列的排序方式都一样时，mysql才能够使用索引来对结果进行排序，</p>
+<p>如果查询需要关联多张表，则只有当orderby子句引用的字段全部为第一张表时，才能使用索引做排序。</p>
+</li>
+<li><p>union all,in,or都能够使用索引，但是推荐使用in.</p>
+<p>union all :  explan时会两阶段执行.(union 会去重,union all不会)</p>
+<p>in : explan时与or相同,但show profiles时执行时间比or小.</p>
+<p>or : explan时与in相同.但由于or需要一句一句判断,时间会比in这样集合中筛选来的慢.</p>
+</li>
+<li><p>范围列可以用到索引</p>
+<p>范围条件: &lt;,&lt;=,&gt;,&gt;=,between</p>
+<p>范围列可以用到索引,但范围列后面的列无法用到索引,索引最多用于一个范围列.</p>
+</li>
+<li><p>强制类型转换会全表扫描</p>
+<p>where条件中的值类型必须与字段类型一致.</p>
+</li>
+<li><p>更新十分频繁，数据区分度不高的字段上不宜建立索引</p>
+<ul>
+<li>更新会变更B+树，更新频繁的字段建议索引会大大降低数据库性能</li>
+<li>类似于性别这类区分不大的属性，建立索引是没有意义的，不能有效的过滤数据，</li>
+<li>一般区分度在80%以上的时候就可以建立索引，区分度可以使用 count(distinct(列名))/count(*) 来计算</li>
+</ul>
+</li>
+<li><p>创建索引的列，不允许为null，可能会得到不符合预期的结果</p>
+</li>
+<li><p>当需要进行表连接的时候，最好不要超过三张表，因为需要join的字段，数据类型必须一致</p>
+<p>join的三种方式</p>
+<ul>
+<li><p>simple nested_loop join:</p>
+</li>
+<li><p>index nested_loop join: </p>
+<ul>
+<li>这个要求非驱动表上有索引,可以通过索引来减少比较,加速查询.</li>
+<li>在查询时,驱动表会根据关联字段的索引进行查询,只有到匹配到索引后才进行回表查询.</li>
+</ul>
+</li>
+<li><p>block netsted_loop join:</p>
+<ul>
+<li>如果join列没有索引,时将驱动表的所有join相关的列都缓存到joinbuffer中,然后批量匹配.</li>
+<li>将第一种多次比较合并成一次,降低了非驱动表的访问频率.</li>
+<li>join_buffer_size默认为256K.会将select的列也存放在buffer中,如果存不下需要适当调高值.</li>
+<li>在一个n个join关联的sql中,会在执行时候分配N-1个join buffer.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>能使用limit的时候尽量使用limit,在明确只有一条语句的时候 带上limit1.</p>
+</li>
+<li><p>单表索引建议控制在5个以内,会增加树的大小,增加io量.</p>
+</li>
+<li><p>组合索引中,单索引字段数不超过5个,由于最左匹配原则,过多的字段需要满足的条件过多,增加了io量,还增加了限制条件.</p>
+</li>
+</ul>
+<h2 id="索引监控"><a href="#索引监控" class="headerlink" title="索引监控"></a>索引监控</h2><p>sql: <code>show status like &#39;Handler_read%&#39;;</code></p>
+<p>参数解释:</p>
+<ol>
+<li>Handler_read_first：读取索引第一个条目的次数</li>
+<li>Handler_read_key：通过index获取数据的次数</li>
+<li>Handler_read_last：读取索引最后一个条目的次数</li>
+<li>Handler_read_next：通过索引读取下一条数据的次数</li>
+<li>Handler_read_prev：通过索引读取上一条数据的次数</li>
+<li>Handler_read_rnd：从固定位置读取数据的次数</li>
+<li>Handler_read_rnd_next：从数据节点读取下一条数据的次数</li>
+</ol>
+<p>只是个大致的索引信息,展示的整体索引使用情况.</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">45 <p>文章</p></a></li>
+                    <li><a href="/categories">9 <p>分类</p></a></li>
+                    <li><a href="/tags">12 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">Mysql索引优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E7%B4%A2%E5%BC%95%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-B-Tree"><span class="toc-number">1.1.</span> <span class="toc-text">mysql索引数据结构 B+Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">索引的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">索引的用处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">索引的分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">其他索引结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HASH"><span class="toc-number">1.2.1.</span> <span class="toc-text">HASH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%8C%B9%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">索引匹配方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%80%BC%E5%8C%B9%E9%85%8D"><span class="toc-number">1.3.1.</span> <span class="toc-text">全值匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80"><span class="toc-number">1.3.2.</span> <span class="toc-text">匹配最左前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E5%88%97%E5%89%8D%E7%BC%80"><span class="toc-number">1.3.3.</span> <span class="toc-text">匹配列前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E8%8C%83%E5%9B%B4%E5%80%BC"><span class="toc-number">1.3.4.</span> <span class="toc-text">匹配范围值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E6%9F%90%E4%B8%80%E5%88%97%E5%B9%B6%E8%8C%83%E5%9B%B4%E5%8C%B9%E9%85%8D%E5%8F%A6%E4%B8%80%E5%88%97"><span class="toc-number">1.3.5.</span> <span class="toc-text">精确匹配某一列并范围匹配另一列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E8%AE%BF%E9%97%AE%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">只访问索引的查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="toc-number">1.4.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">聚簇索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="toc-number">1.4.2.</span> <span class="toc-text">非聚簇索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96"><span class="toc-number">1.5.</span> <span class="toc-text">索引覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%86%E5%B0%8F%E4%BC%98%E5%8C%96"><span class="toc-number">1.6.</span> <span class="toc-text">细小优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9B%91%E6%8E%A7"><span class="toc-number">1.7.</span> <span class="toc-text">索引监控</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2021
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>
