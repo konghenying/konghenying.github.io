@@ -75,6 +75,65 @@
                                 
                                 <li class="timeline-item">
                                     <div class="timeline-info">
+                                        <span class="gradient-text">十月 24, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/">MySQL(八)日志文件</a>
+                                        <p>
+                                            日志文件A  原子性  –undolog实现
+C 一致性  –通过其他三个(AID)来实现
+I  隔离性   –通过锁实现
+D 持久性   –redolog实现
+redolog确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。
+
+当发生数据修改的时候, innodb 引擎会先将记录写到 red...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十月 24, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/10/24/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">MySQL(六)查询优化</a>
+                                        <p>
+                                            查询慢的原因
+网络
+
+CPU
+
+IO
+
+上下文切换
+
+系统调用
+
+生成统计信息
+
+锁等待时间
+
+
+优化数据访问
+减少访问数据量的方式进行优化
+确认应用程序是否在检索大量超过需要的数据
+确认mysql服务器层是否在分析大量超过需要的数据行
+
+
+是否向数据库请求了不需要的数据
+查询不需要的记录,优化:使用limit限制查询的列.
+多表关联时返回全部列,优化:取用到的字段
+总是取出全部列,优化:取...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
                                         <span class="gradient-text">十月 12, 2021</span>
                                     </div>
                                     <div class="timeline-marker"></div>
@@ -198,26 +257,6 @@ master直接写是并发...
                                     </div>
                                     <div class="timeline-marker"></div>
                                     <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/09/06/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/"></a>
-                                        <p>
-                                            日志文件A  原子性  –undolog实现
-C 一致性  –通过其他三个(AID)来实现
-I  隔离性   –通过锁实现
-D 持久性   –redolog实现
-redolog确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。
-
-当发生数据修改的时候, innodb 引擎会先将记录写到 red...
-                                        </p>
-                                    </div>
-                                </li>
-                            
-                                
-                                <li class="timeline-item">
-                                    <div class="timeline-info">
-                                        <span class="gradient-text">九月 06, 2021</span>
-                                    </div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
                                         <a class="timeline-title" target="_self" href="/2021/09/06/mysql/8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE/">MySQL(八)服务器参数设置</a>
                                         <p>
                                             MySQL(八)服务器参数设置general(基础)
@@ -240,45 +279,6 @@ pid_file=/var/lib/mysql/mysql.pid...
                                         <a class="timeline-title" target="_self" href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/">MySQL(七)分区表</a>
                                         <p>
                                             MySQL(七)分区表对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。mysql在创建表时使用partition by子句定义每个分区存放的数据，在执行查询的时候，优化器会根据分区定义过滤那些没有我们需要数据的分区，这样查询就无须扫描所有分区。分区的主要...
-                                        </p>
-                                    </div>
-                                </li>
-                            
-                                
-                                <li class="timeline-item">
-                                    <div class="timeline-info">
-                                        <span class="gradient-text">九月 03, 2021</span>
-                                    </div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/09/03/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">MySQL(六)查询优化</a>
-                                        <p>
-                                            查询优化查询慢的原因
-网络
-
-CPU
-
-IO
-
-上下文切换
-
-系统调用
-
-生成统计信息
-
-锁等待时间
-
-
-优化数据访问
-减少访问数据量的方式进行优化
-确认应用程序是否在检索大量超过需要的数据
-确认mysql服务器层是否在分析大量超过需要的数据行
-
-
-是否向数据库请求了不需要的数据
-查询不需要的记录,优化:使用limit限制查询的列.
-多表关联时返回全部列,优化:取用到的字段
-总是取出全部列,...
                                         </p>
                                     </div>
                                 </li>
