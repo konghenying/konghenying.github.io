@@ -5,14 +5,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ORACLE VM VIRTUALBOX 扩容 - 空痕影的从头再来</title>
+    <title>win10 子系统忘记密码 - 空痕影的从头再来</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="TriDiamond Obsidian,"> 
-    <meta name="description" content="ORACLE VM VIRTUALBOX 扩容由于创建虚拟机时没有申请大些的磁盘.导致虚拟机没怎么用就磁盘满了.
-磁盘满了.
-VirtualBox 4以上后可以用VBoxManage来处理配置.程序,"> 
+    <meta name="description" content="win10 子系统忘记密码方法一: 通过wsl直接进入
+
+cmd命令键入 wsl -u root 
+直接进入子系统的root账户.
+
+
+passwd 命令更改密码
+
+
+
+方法二: 找到shadow文,"> 
     <meta name="author" content="空痕影"> 
     <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -59,7 +67,7 @@ VirtualBox 4以上后可以用VBoxManage来处理配置.程序,">
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">ORACLE VM VIRTUALBOX 扩容</h3>
+        <h3 class="subtitle">win10 子系统忘记密码</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -92,22 +100,22 @@ VirtualBox 4以上后可以用VBoxManage来处理配置.程序,">
                 <a href="/categories/linux"><b>「
                     </b>LINUX<b> 」</b></a>
                 
-                五月 25, 2023
+                二月 28, 2021
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/ORACLE%20VM%20VIRTUALBOX%20%E6%89%A9%E5%AE%B9/" title="ORACLE VM VIRTUALBOX 扩容" class="">ORACLE VM VIRTUALBOX 扩容</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81/" title="win10 子系统忘记密码" class="">win10 子系统忘记密码</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    2.5k
+                    653
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    2 mins.
+                    1 mins.
                 </span>
                 
                 
@@ -141,57 +149,19 @@ VirtualBox 4以上后可以用VBoxManage来处理配置.程序,">
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h1 id="ORACLE-VM-VIRTUALBOX-扩容"><a href="#ORACLE-VM-VIRTUALBOX-扩容" class="headerlink" title="ORACLE VM VIRTUALBOX 扩容"></a>ORACLE VM VIRTUALBOX 扩容</h1><h4 id="由于创建虚拟机时没有申请大些的磁盘-导致虚拟机没怎么用就磁盘满了"><a href="#由于创建虚拟机时没有申请大些的磁盘-导致虚拟机没怎么用就磁盘满了" class="headerlink" title="由于创建虚拟机时没有申请大些的磁盘.导致虚拟机没怎么用就磁盘满了."></a>由于创建虚拟机时没有申请大些的磁盘.导致虚拟机没怎么用就磁盘满了.</h4><p><img src="/images/linux/other.assets/image-9.png"></p>
-<p>磁盘满了.</p>
-<p>VirtualBox 4以上后可以用VBoxManage来处理配置.程序位置在安装目录下</p>
-<p><img src="/images/linux/other.assets/image-10.png" alt="img"></p>
-<p>在当前目录下打开cmd框.并使用.</p>
-<p>1.列出虚拟机磁盘找到需要扩容的磁盘并记下uuid</p>
-<pre><code>VBoxManage list hdds
-</code></pre>
-<p><img src="/images/linux/other.assets/image-11.png" alt="img"></p>
-<p>我需要扩容第一条记录的磁盘.所以键入命令:</p>
-<pre><code>VBoxManage modifyhd 556ddec7-1a72-4bb5-9eef-0d61726bb89f --resize 30720
-</code></pre>
-<p><img src="/images/linux/other.assets/image-12.png" alt="img"></p>
-<p>但发现报错,查询原因是因为路径问题.找不到uuid所在的磁盘.想写个全路径但路径上存在空格比较麻烦.改变个策略:</p>
-<pre><code>C:\software\Oracle\VirtualBox\VBoxManage modifyhd 57d39877-b23b-4309-b624-34513958754d --resize 30720
-</code></pre>
-<p><img src="/images/linux/%E5%A4%87%E4%BB%BD.assets/image-14.png" alt="img"></p>
-<p>这样扩容即完成.在virtualBox上查看.管理-&gt;虚拟介质管理</p>
-<p><img src="/images/linux/other.assets/image-15.png" alt="img"></p>
-<p><strong>当然也可以直接UI操作.</strong></p>
-<p>选中需要扩容的虚拟磁盘,调出属性即可调整大小.</p>
-<p><img src="/images/linux/other.assets/image-16.png" alt="img"></p>
-<p>但是当我们启动虚拟机,再通过df -h查看磁盘情况发现并没有增加.这是因为我们还需要挂载磁盘.步骤如下:</p>
-<p>先查看磁盘情况</p>
-<pre><code>dfisk -l
-</code></pre>
-<p><img src="/images/linux/other.assets/image-17.png" alt="img"></p>
-<p>因为是直接在原虚拟磁盘上扩容,所以可以看到sda盘的大小增大到设定的值了,若是另起一块磁盘则是出现sdb,sdc的字眼.只是名称不同罢了.</p>
-<p>新增扇区并分配分区号与扇区起止.</p>
-<pre><code>fdisk /dev/sda
-</code></pre>
-<p><img src="/images/linux/other.assets/image-18.png" alt="img"></p>
-<p>更改扇区类型</p>
-<p><img src="/images/linux/other.assets/image-19.png" alt="img"></p>
-<p>创建物理卷</p>
-<pre><code>pvcreate /dev/sda3
-</code></pre>
-<p><img src="/images/linux/other.assets/image-21.png" alt="img"></p>
-<p>向centos卷组中添加卷</p>
-<pre><code>vgextend centos /dev/sda3
-</code></pre>
-<p><img src="/images/linux/other.assets/image-22.png" alt="img"></p>
-<p>进行卷扩容</p>
-<pre><code>lvextend -l +100%FREE /dev/maper/centos-root
-</code></pre>
-<p><img src="/images/linux/other.assets/image-23.png" alt="img"></p>
-<p>调整卷分区大小</p>
-<pre><code>xfs_growfs /dev/mapper/centos-root
-</code></pre>
-<p><img src="/images/linux/other.assets/image-24.png" alt="img"></p>
-<p>查看磁盘情况发现扩容完毕</p>
+            <h1 id="win10-子系统忘记密码"><a href="#win10-子系统忘记密码" class="headerlink" title="win10 子系统忘记密码"></a>win10 子系统忘记密码</h1><p>方法一: 通过wsl直接进入</p>
+<ol>
+<li><p>cmd命令键入 <strong>wsl -u root</strong> </p>
+<p>直接进入子系统的root账户.</p>
+<p><img src="/images/linux/other.assets/image-20220524164003008.png" alt="image-20220524164003008"></p>
+</li>
+<li><p>passwd 命令更改密码</p>
+<p><img src="/images/linux/other.assets/image-20220524164047321.png" alt="image-20220524164047321"></p>
+</li>
+</ol>
+<p>方法二: 找到shadow文件</p>
+<p>我的文件位置 <code>C:\Users\60***\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\LocalState\rootfs\etc\shadow</code></p>
+<p>里面存有所有账户密码</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -227,7 +197,7 @@ VirtualBox 4以上后可以用VBoxManage来处理配置.程序,">
                 </div>
                 <ul>
                     <li><a href="/">69 <p>文章</p></a></li>
-                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/categories">15 <p>分类</p></a></li>
                     <li><a href="/tags">15 <p>标签</p></a></li>
                 </ul>
             </div>
@@ -237,7 +207,7 @@ VirtualBox 4以上后可以用VBoxManage来处理配置.程序,">
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ORACLE-VM-VIRTUALBOX-%E6%89%A9%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">ORACLE VM VIRTUALBOX 扩容</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#win10-%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">win10 子系统忘记密码</span></a></li></ol>
                 </div>
             </div>
             
