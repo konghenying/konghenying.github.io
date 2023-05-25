@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>docker常用命令 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="docker 常用命令基本命令镜像查询与下载docker search &amp;#123;镜像名称&amp;#125;
+
+eg:
+root@空痕影的matebook:~# docker search elasti,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">docker常用命令</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                
+                五月 25, 2023
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/docker/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="docker常用命令" class="">docker常用命令</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    11k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    10 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="docker-常用命令"><a href="#docker-常用命令" class="headerlink" title="docker 常用命令"></a>docker 常用命令</h1><h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><h4 id="镜像查询与下载"><a href="#镜像查询与下载" class="headerlink" title="镜像查询与下载"></a>镜像查询与下载</h4><pre><code class="shell">docker search &#123;镜像名称&#125;
+
+eg:
+root@空痕影的matebook:~# docker search elasticsearch
+NAME                                               DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+elasticsearch                                      Elasticsearch is a powerful open source sear…   5622      [OK]
+kibana                                             Kibana gives shape to any kind of data — str…   2402      [OK]
+bitnami/elasticsearch                              Bitnami Docker Image for Elasticsearch          52                   [OK]
+bitnami/elasticsearch-exporter                     Bitnami Elasticsearch Exporter Docker Image     4                    [OK]
+</code></pre>
+<p>参数说明：</p>
+<p><strong>NAME:</strong> 镜像仓库源的名称</p>
+<p><strong>DESCRIPTION:</strong> 镜像的描述</p>
+<p><strong>OFFICIAL:</strong> 是否 docker 官方发布</p>
+<p><strong>stars:</strong> 类似 Github 里面的 star，表示点赞、喜欢的意思。</p>
+<p><strong>AUTOMATED:</strong> 自动构建。</p>
+<p><strong>官方镜像查看版本</strong></p>
+<pre><code class="shell"># 1. 可以通过访问镜像官网查看版本信息
+https://hub.docker.com/_/elasticsearch?tab=tags
+# 2. 通过脚本查看
+创建脚本:
+docker-show-tags.sh
+内容:
+#!/bin/sh
+#
+# Simple script that will display docker repository tags.
+#
+# Usage:
+#   $ docker-show-tags.sh ubuntu centos
+for Repo in $* ; do
+  curl -s -S &quot;https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/&quot; | \
+    sed -e &#39;s/,/,\n/g&#39; -e &#39;s/\[/\[\n/g&#39; | \
+    grep &#39;&quot;name&quot;&#39; | \
+    awk -F\&quot; &#39;&#123;print $4;&#125;&#39; | \
+    sort -fu | \
+    sed -e &quot;s/^/$&#123;Repo&#125;:/&quot;
+done
+
+查询:
+./docker-show-tags.sh elasticsearch kibana
+
+结果:
+elasticsearch:7.17.1
+elasticsearch:7.17.2
+elasticsearch:7.17.3
+elasticsearch:8.0.0
+elasticsearch:8.0.1
+elasticsearch:8.1.0
+elasticsearch:8.1.1
+elasticsearch:8.1.2
+elasticsearch:8.1.3
+elasticsearch:8.2.0
+kibana:7.17.1
+kibana:7.17.2
+kibana:7.17.3
+kibana:8.0.0
+kibana:8.0.1
+kibana:8.1.0
+kibana:8.1.1
+kibana:8.1.2
+kibana:8.1.3
+kibana:8.2.0
+</code></pre>
+<p><strong>镜像下载</strong></p>
+<pre><code class="shell">docker pull &#123;镜像名称&#125;:&#123;镜像版本tag&#125;
+
+#eg:
+docker pull elasticsearch:8.2.0
+
+# 结果:
+root@空痕影的matebook:~# docker pull elasticsearch:8.2.0
+8.2.0: Pulling from library/elasticsearch
+e0b25ef51634: Pull complete
+860caabdf263: Pull complete
+9fbe6bc43ac5: Pull complete
+9d4f6737f430: Downloading [================&gt;                                  ]  180.7MB/536.1MB
+10f01841fd3e: Download complete
+dae1e3bba098: Download complete
+0a3767e40ef9: Download complete
+7d786dfd085d: Download complete
+7ce904f28ed3: Download complete
+</code></pre>
+<p><strong>部署镜像</strong></p>
+<pre><code class="shell">docker run [option] image [command] [arg ...]
+
+# OPTIONS说明：
+-a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；
+-d: 后台运行容器，并返回容器ID；
+-i: 以交互模式运行容器，通常与 -t 同时使用；
+-P: 随机端口映射，容器内部端口随机映射到主机的端口
+-p: 指定端口映射，格式为：主机(宿主)端口:容器端口
+-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+--name=&quot;nginx-lb&quot;: 为容器指定一个名称；
+--dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；
+--dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；
+-h &quot;mars&quot;: 指定容器的hostname；
+-e username=&quot;ritchie&quot;: 设置环境变量；
+--env-file=[]: 从指定文件读入环境变量；
+--cpuset=&quot;0-2&quot; or --cpuset=&quot;0,1,2&quot;: 绑定容器到指定CPU运行；
+-m :设置容器使用内存最大值；
+--net=&quot;bridge&quot;: 指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型；
+--link=[]: 添加链接到另一个容器；
+--expose=[]: 开放一个端口或一组端口；
+--volume , -v: 绑定一个卷
+# 更多参数可以通过docker run --help 查看
+
+#eg:
+# 使用docker镜像id为3f43f72cb283,以后台模式启动一个容器,并将容器命名为mynginx。
+docker run --name myzookeeper1 -d 3f43f72cb283
+# 结果:
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                                                                                              NAMES
+72cd29028594   3f43f72cb283   &quot;/bin/sh -c &#39;/usr/sb…&quot;   2 minutes ago   Up 2 minutes   22/tcp, 2181/tcp, 2888/tcp, 3888/tcp                                                               myzookeeper1
+
+
+# 使用docker镜像id为3f43f72cb283,以后台模式启动一个容器,并将容器的端口映射到主机随机端口。
+docker run -P -d 3f43f72cb283
+# 结果:
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                                                                                              NAMES
+d378045a412d   3f43f72cb283   &quot;/bin/sh -c &#39;/usr/sb…&quot;   5 seconds ago   Up 3 seconds   0.0.0.0:49156-&gt;22/tcp, 0.0.0.0:49155-&gt;2181/tcp, 0.0.0.0:49154-&gt;2888/tcp, 0.0.0.0:49153-&gt;3888/tcp   affectionate_poitras
+
+# 使用docker镜像id为3f43f72cb283,以后台模式启动一个容器,将容器的2181端口映射到主机的2181端口,并设置环境变量内存使用情况,并将容器的tmp目录挂在到主机的/data/applogs目录下, 并将网络设置到kafkaSingle中.
+docker run -p 2181:2181 -d --name zookeeper -e &quot;ES_JAVA_OPTS=-Xms256m -Xmx256m&quot; -v /tmp:/data/applogs  --network  kafkaSingle  3f43f72cb283
+</code></pre>
+<h4 id="查看容器运行"><a href="#查看容器运行" class="headerlink" title="查看容器运行"></a>查看容器运行</h4><pre><code class="shell"># 查看运行中的容器
+docker ps
+# 查看所有创建的容器,包括未运行的容器
+docker ps -a
+# 查看所有的镜像
+docker images 
+</code></pre>
+<h4 id="停用与删除容器-镜像"><a href="#停用与删除容器-镜像" class="headerlink" title="停用与删除容器/镜像"></a>停用与删除容器/镜像</h4><pre><code class="shell"># 停止容器
+docker stop &#123;容器id&#125;
+# 删除容器
+docker rm &#123;容器id&#125;
+# 删除镜像
+docker rmi &#123;镜像id&#125;
+
+# 进阶 停止所有运行中的容器
+docker stop $(docker ps -q)
+# 进阶 删除所有容器
+docker rm $(docker ps -aq)
+# 进阶组合 停止并删除容器
+docker stop $(docker ps -q) &amp; docker rm $(docker ps -aq)
+
+# 进阶 删除所有镜像
+docker rmi $(docker images -q) -f
+</code></pre>
+<h4 id="创建容器并在特定网络下执行"><a href="#创建容器并在特定网络下执行" class="headerlink" title="创建容器并在特定网络下执行"></a>创建容器并在特定网络下执行</h4><pre><code class="shell">create netwrok create elk
+
+docker run -p 9200:9200 -p 9300:9300 -d --name elasticsearch -e &quot;discovery.type=single-node&quot; --network elk -e &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot; 121454ddad72
+
+docker run -p 5601:5601 -d --name kibana  --network elk   -e &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;  df0a0da46dd1
+</code></pre>
+<h4 id="网络环境"><a href="#网络环境" class="headerlink" title="网络环境"></a>网络环境</h4><pre><code class="shell"># 查看网络环境
+docker network ls
+# 创建网络环境
+docker network create &#123;网络名&#125;
+# 删除网络环境
+docker netwrok rm &#123;网络名称/网络id&#125;
+
+# 将容器连接到网络
+docker network connect [OPTIONS] NETWORK CONTAINER
+# eg: docker network connect elk es
+
+# 将容器从网络中移除
+docker network disconnect [OPTIONS] NETWORK CONTAINER
+
+# 查看网络详情
+docker network inspect NETWORK
+
+# 注:只会显示当前启动着的容器
+eg: docker network inspect elk
+root@空痕影的matebook:/mnt/c/Users/60512# docker network inspect elk
+[
+    &#123;
+        &quot;Name&quot;: &quot;elk&quot;,
+        &quot;Id&quot;: &quot;b3027e542d18b7e53ee658a16a064c16f6bf1087a8101e5f4cee97e8810ff9ef&quot;,
+        &quot;Created&quot;: &quot;2022-05-22T06:50:27.395267062Z&quot;,
+        &quot;Scope&quot;: &quot;local&quot;,
+        &quot;Driver&quot;: &quot;bridge&quot;,
+        &quot;EnableIPv6&quot;: false,
+        &quot;IPAM&quot;: &#123;
+            &quot;Driver&quot;: &quot;default&quot;,
+            &quot;Options&quot;: &#123;&#125;,
+            &quot;Config&quot;: [
+                &#123;
+                    &quot;Subnet&quot;: &quot;172.19.0.0/16&quot;,
+                    &quot;Gateway&quot;: &quot;172.19.0.1&quot;
+                &#125;
+            ]
+        &#125;,
+        &quot;Internal&quot;: false,
+        &quot;Attachable&quot;: false,
+        &quot;Ingress&quot;: false,
+        &quot;ConfigFrom&quot;: &#123;
+            &quot;Network&quot;: &quot;&quot;
+        &#125;,
+        &quot;ConfigOnly&quot;: false,
+        &quot;Containers&quot;: &#123; 
+            &quot;1d29e930904f51d70b1154eea2dafc59b3299005288ce4e47d7de06cbf2f97c1&quot;: &#123;
+                &quot;Name&quot;: &quot;kibana&quot;,
+                &quot;EndpointID&quot;: &quot;0a88301e73efdda02836476f24f337696b1b115393acbbdaf463ca43798fc695&quot;,
+                &quot;MacAddress&quot;: &quot;02:42:ac:13:00:03&quot;,
+                &quot;IPv4Address&quot;: &quot;172.19.0.3/16&quot;,
+                &quot;IPv6Address&quot;: &quot;&quot;
+            &#125;,
+            &quot;61ef5be570d0a25a829bf3c6e4e5bfbcf27c6a3810a37fee4b639519d0b7bfac&quot;: &#123;
+                &quot;Name&quot;: &quot;es&quot;,
+                &quot;EndpointID&quot;: &quot;c2a8441d8b2a5ae58bcf25e75086526bfddfdc1cbce6801d3335d1205cad0ce6&quot;,
+                &quot;MacAddress&quot;: &quot;02:42:ac:13:00:02&quot;,
+                &quot;IPv4Address&quot;: &quot;172.19.0.2/16&quot;,
+                &quot;IPv6Address&quot;: &quot;&quot;
+            &#125;
+        &#125;,
+        &quot;Options&quot;: &#123;&#125;,
+        &quot;Labels&quot;: &#123;&#125;
+    &#125;
+]
+</code></pre>
+<h4 id="docker-inspect-查看详细信息"><a href="#docker-inspect-查看详细信息" class="headerlink" title="docker inspect 查看详细信息"></a>docker inspect 查看详细信息</h4><pre><code class="shell"># 查看容器详情
+docker inspect &#123;容器名称&#125;
+# 查看镜像详情 
+docker image inspect &#123;镜像名称&#125;
+# 查看网络详情, 可以查看网络中存在的容器
+docker network inspect &#123;网络名称&#125;
+</code></pre>
+<h4 id="docker-exec-在运行的容器中执行命令"><a href="#docker-exec-在运行的容器中执行命令" class="headerlink" title="docker exec 在运行的容器中执行命令"></a>docker exec 在运行的容器中执行命令</h4><pre><code class="shell">docker exec &#123;容器名称&#125; &#123;命令&#125;
+
+# eg:
+# 最常用的是打开终端
+docker exec -it &#123;容器名称&#125; bash
+# 查看指定目录下的文件
+docker exec &#123;容器名称&#125; ls /root
+# 查看容器内的网络情况
+docker exec &#123;容器名称&#125; ip a s
+</code></pre>
+<h4 id="docker-attach-进入容器"><a href="#docker-attach-进入容器" class="headerlink" title="docker  attach 进入容器"></a>docker  attach 进入容器</h4><pre><code class="shell"># 进入一个可执行容器,否则会进入黑洞
+docker attach &#123;容器名称&#125;
+
+# 退出时.可使用ctrl+p+q 来保持容器的运行.
+</code></pre>
+<h4 id="docker-top-容器中进程信息"><a href="#docker-top-容器中进程信息" class="headerlink" title="docker top 容器中进程信息"></a>docker top 容器中进程信息</h4><pre><code class="shell">docker top &#123;容器名称&#125;
+</code></pre>
+<p>eg: docker top redis</p>
+<table>
+<thead>
+<tr>
+<th>UID</th>
+<th>PID</th>
+<th>PPID</th>
+<th>C</th>
+<th>STIME</th>
+<th>TTY</th>
+<th>TIME</th>
+<th>CMD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>999</td>
+<td>1804</td>
+<td>1784</td>
+<td>0</td>
+<td>18:20</td>
+<td>?</td>
+<td>00:00:00</td>
+<td>redis-server *:6379</td>
+</tr>
+</tbody></table>
+<p>输出说明<br>UID 容器中运行的命令用户ID<br>PID 容器中运行的命令PID<br>PPID 容器中运行的命令父PID，由于PPID是一个容器，此可指为容器在Docker Host中进程ID<br>C     占用CPU百分比<br>STIME 启动时间<br>TTY   运行所在的终端<br>TIME  运行时间<br>CMD   执行的命令</p>
+<h3 id="补充命令"><a href="#补充命令" class="headerlink" title="补充命令"></a>补充命令</h3><p> docker exec -it {容器名称或ID} /bin/bash</p>
+<h4 id="复制文件进入容器"><a href="#复制文件进入容器" class="headerlink" title="复制文件进入容器"></a>复制文件进入容器</h4><p>docker container  cp FILE_PATH  容器ID:FILE_PATH2</p>
+<p>docker container cp ~/es/ 611ec73460e5:/usr/share/elasticsearch</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">69 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">15 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">docker 常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.1.</span> <span class="toc-text">基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%91%BD%E4%BB%A4"><span class="toc-number">1.0.2.</span> <span class="toc-text">补充命令</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>
