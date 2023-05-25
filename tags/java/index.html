@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2021 空痕影.
+        &copy; 2023 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -127,19 +127,18 @@
     <div id="post0" class="else">
         <p class="animated fadeInDown">
             
-            <a href="/categories/openresty"><b>「
-                </b>OPENRESTY<b> 」</b></a>
+            <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
             
-            三月 30, 2021
+            十月 01, 2022
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="openresty 入门" class="posttitle">openresty 入门</a></h3>
+            <a href="/2022/10/01/java/lombook%E4%B9%8B%E5%9D%91/" title="lombook注意点1" class="posttitle">lombook注意点1</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                5.2k
+                5.4k
             </span>
             
             
@@ -152,15 +151,16 @@
         </p>
         
         
-        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/openresty/" rel="tag">openresty</a></li></ul>
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
         
         <div class="md-content animated fadeIn">
             
-            <p>Nginx 是一个主进程配合多个工作进程的工作模式.每个进程由单个线程来处理多个连接.</p>
-<p>通过将cpu内核绑定到工作进程上,来提升性能.</p>
-<h3 id="预编译安装"><a href="#预编译安装" class="headerlink" title="预编译安装"></a>预编译安装</h3><p>参照: <a target="_blank" rel="noopener" href="http://openresty.org/cn/installation.html">http://openresty.org/cn...</a></p>
+            <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>   一个实体类存有pId,即第一个字母小写,第二个字母大写的情况.</p>
+<pre><code class="java">public class Department &#123;
+    private Long id;
+    private Long pId...</code></pre>
             
-            <span class="read-more"><a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2022/10/01/java/lombook%E4%B9%8B%E5%9D%91/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -181,6 +181,255 @@
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            十月 01, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/01/java/maven/" title="maven 上传私服" class="posttitle">maven 上传私服</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        3.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <h3 id="1-配置maven的settings配置-其中包含私服地址-账户等信息"><a href="#1-配置maven的settings配置-其中包含私服地址-账户等信息" class="headerlink" title="1.配置maven的settings配置.其中包含私服地址,账户等信息."></a>1.配置maven的settings配置.其中包含私服地址,账户等信息.</h3><h3 id="2-在idea中关联maven配置文件settings"><a href="#2-在idea中关联maven配置文件settings" class="headerlink" title="2.在idea中关联maven配置文件settings"></a>2.在idea中关联maven配置文件settings</h3><p>关联settings</p>
+<h3 id="3-pom中配置私服地址"><a href="#3-pom中配置私服地址" class="headerlink" title="3.pom中配置私服地址"></a>3.pom中配置私服地址</h3><pre><code>  &lt;!-- 使用分发管理将本项目打成jar包，直接上传到指定服务器 --&gt; 
+  &lt;distributionManagement&gt; 
+    &lt;!--正式版本--&gt; 
+    &lt;repository&gt; 
+      &lt;!-- nexus服务器中用户名：在settings.xml中&lt;server&gt;的id...</code></pre>
+            
+            <span class="read-more"><a href="/2022/10/01/java/maven/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/spring">
+                  <b>「 </b>SPRING<b> 」</b>
+                </a>
+            
+            五月 04, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/05/04/java/stopwatch%E4%BC%98%E9%9B%85%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/" title="stopwatch优雅打印执行时间" class="posttitle">stopwatch优雅打印执行时间</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        5.8k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        5 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>在开发过程中, 有时需要记录一段代码的执行时间,或任务执行的时间.传统用法是在执行开始于结束各记录一次时间,两次时间相减就是执行时间.但这每次计算都需要设置两个变量放于首位.且随着业务改动,调整较大. 而目前有这么一类秒表工具类stopwatch.一次定义,多次使用. 提供者有spring-framework,apache与google.</p>
+<p>在业务开始与结束分别获取一次系统时间,并在最后两值相减获取执行时间,并按照自己的格式输出.</p>
+<pre><code class="java">
+    public static void main(String[]...</code></pre>
+            
+            <span class="read-more"><a href="/2022/05/04/java/stopwatch%E4%BC%98%E9%9B%85%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/spring">
+                  <b>「 </b>SPRING<b> 」</b>
+                </a>
+            
+            五月 04, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/05/04/java/%E6%97%A5%E6%9C%9F%E6%B3%A8%E8%A7%A3/" title="日期注解" class="posttitle">日期注解</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        263
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <pre><code class="java">@JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+接口输出所用到的格式化日期注解
+@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+接口接收日期字段所用到的格式化日期注解
+</code></pre>
+
+            
+            <span class="read-more"><a href="/2022/05/04/java/%E6%97%A5%E6%9C%9F%E6%B3%A8%E8%A7%A3/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            八月 13, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/08/13/java/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%94%9F%E6%88%90%E7%9A%84CLASS%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B/" title="JDK动态代理生成的CLASS文件" class="posttitle">JDK动态代理生成的CLASS文件</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        1.5k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>在学习代理模式的时候,想看看动态代理生成的文件长啥样.只需要在程序启动时设置生成配置.</p>
+<p>源码中可以看出文件输出是通过 saveGeneratedFiles 控制的.</p>
+<p></p>
+<p>而saveGeneratedFiles的生成是通过GetBooleanAction方法读取系统变量由来.</p>
+<pre><code>private static final boolean saveGeneratedFiles = (Boolean)AccessController.doPrivileged(new GetBooleanAction(&quot...</code></pre>
+            
+            <span class="read-more"><a href="/2021/08/13/java/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%94%9F%E6%88%90%E7%9A%84CLASS%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/openresty">
+                  <b>「 </b>OPENRESTY<b> 」</b>
+                </a>
+            
+            三月 30, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="openresty 入门" class="posttitle">openresty 入门</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        5.2k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        5 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/openresty/" rel="tag">openresty</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>Nginx 是一个主进程配合多个工作进程的工作模式.每个进程由单个线程来处理多个连接.</p>
+<p>通过将cpu内核绑定到工作进程上,来提升性能.</p>
+<h3 id="预编译安装"><a href="#预编译安装" class="headerlink" title="预编译安装"></a>预编译安装</h3><p>参照: <a target="_blank" rel="noopener" href="http://openresty.org/cn/installation.html">http://openresty.org/cn/installation.html</a></p>
+<p>先在centos系统中添加openresty仓库.</p>
+<ul>
+<li><code>yum install yum-utils</code>   管理repository及扩展包的工具 (主要是针对repository)</li>
+<li><code>yum-config-manager --add-repo https://openresty...</code></li></ul>
+            
+            <span class="read-more"><a href="/2021/03/30/%E4%BA%BF%E7%BA%A7%E6%B5%81%E9%87%8F/openresty/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
     </div>
     
 </div>
@@ -195,7 +444,7 @@
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2021
+        &copy; 2023
         <span class="gradient-text">
             空痕影
         </span>.

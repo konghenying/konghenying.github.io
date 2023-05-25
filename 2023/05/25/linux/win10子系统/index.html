@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>win10子系统使用 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
+这时,win10子系统就突,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">win10子系统使用</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/linux"><b>「
+                    </b>LINUX<b> 」</b></a>
+                
+                五月 25, 2023
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="win10子系统使用" class="">win10子系统使用</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    10k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    9 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="WIN10子系统使用"><a href="#WIN10子系统使用" class="headerlink" title="WIN10子系统使用"></a>WIN10子系统使用</h1><p>   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.</p>
+<p>这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.</p>
+<h2 id="下载Ubuntu系统"><a href="#下载Ubuntu系统" class="headerlink" title="下载Ubuntu系统"></a>下载Ubuntu系统</h2><p>在Microsoft store中找到Ubuntu.并选择需要的版本,点击安装.等待安装完成后,能在开始的所有应用中找到.</p>
+<h2 id="开启-linux子系统功能"><a href="#开启-linux子系统功能" class="headerlink" title="开启 linux子系统功能"></a>开启 linux子系统功能</h2><p>点击后出现如下图所示问题,这是因为我们没有在功能中开启win10 子系统.</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E5%BC%82%E5%B8%B8.png" alt="image-20210330143103412"></p>
+<p>位置: 设置-&gt;应用-&gt;应用与功能-&gt;可选功能-&gt;相关设置/更多windows功能.</p>
+<p>勾选 适用于linux的windows子系统 并确定.</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%89%93%E5%BC%80win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD.png" alt="image-20210330143217255"></p>
+<h2 id="设置账户"><a href="#设置账户" class="headerlink" title="设置账户"></a>设置账户</h2><p>在首次进入时,需要设置一个用户名与密码来表示默认登入账户,此账户在win10本地进入不需要密码.</p>
+<p>但,我们安装一些应用时难免想用root密码.但当键入su时,需要输入密码. 第一次登入哪里知道什么密码,设置都没设置过.</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/%E6%B2%A1%E6%9C%89root%E5%AF%86%E7%A0%81.png" alt="image-20210330151741190"></p>
+<p>所以需要键入<code>sudo passwd</code> 来更改root密码, 首先输入当前用户的密码,再输入两遍要设置的root密码.更改就完成了.在通过su键入设置的密码就可以进入root账户.</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets%5C%E8%AE%BE%E7%BD%AEroot%E5%AF%86%E7%A0%81.png" alt="image-20210330151920824"></p>
+<h2 id="ssh服务建立"><a href="#ssh服务建立" class="headerlink" title="ssh服务建立"></a>ssh服务建立</h2><ol>
+<li><p>如果没有ssh服务,安装:<br><code>sudo apt install openssh-server</code></p>
+</li>
+<li><p>更改配置</p>
+<pre><code class="bash">vi /etc/ssh/sshd_config
+
+#端口
+prot 22
+HostKey /etc/ssh/ssh_host_rsa_key
+# 关闭root登入
+PermitRootLogin no
+PasswordAuthentication yes
+</code></pre>
+</li>
+<li><p>启动服务</p>
+<p>service ssh restart<br>就可以连接非root用户</p>
+</li>
+<li><p>开启自启</p>
+<p>为了安全,子系统的ssh只是在使用的时候才开启.当然如果要实现开机自启,这里来提供一个解决方案.</p>
+<p>4.1. 在win10系统中创建计划,使之开机启动</p>
+<p><img src="D:\workspace\blog\md\linux\win10子系统.assets\任务计划.png" alt="image-20210423143326998"></p>
+<p>4.2. 键入启动命令并保存</p>
+<p><code>C:\Windows\System32\bash.exe -c &quot;sudo /etc/init.d/ssh start&quot;</code></p>
+<p>4.3. 错误解决 no hostkeys available</p>
+<p>​        重新生成key</p>
+<pre><code class="bash"> root@空痕影的matebook:/etc/ssh# service ssh start
+ * Starting OpenBSD Secure Shell server sshd                                                                            sshd: no hostkeys available -- exiting.
+[fail]
+                                                                                                                     
+root@空痕影的matebook:/etc/ssh# dpkg-reconfigure openssh-server
+Creating SSH2 RSA key; this may take some time ...
+3072 SHA256:ved2QjrhcRDVdkpzurWUsB/OWuCsTeAGCcPr+I4UBU8 root@空痕影的matebook (RSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 SHA256:l1KPGReYMwfeM25m30OQ2t82ta/aQSa7JxdrNWg51Q4 root@空痕影的matebook (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 SHA256:pz9Ly8iAY4nsJFb9Qfa4y2Zb8+eK0okUjgNV3aK28UQ root@空痕影的matebook (ED25519)
+invoke-rc.d: could not determine current runlevel
+root@空痕影的matebook:/etc/ssh# service ssh start
+ * Starting OpenBSD Secure Shell server sshd                                                                     [ OK ]                                                                                                                  
+</code></pre>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p><img src="D:\workspace\blog\md\linux\win10子系统.assets\make命令缺少.png" alt="image-20210423161356865"></p>
+<pre><code>root@空痕影的matebook:~/redis-5.0.12# make
+
+Command &#39;make&#39; not found, but can be installed with:
+
+apt install make        # version 4.2.1-1.2, or
+apt install make-guile  # version 4.2.1-1.2
+
+root@空痕影的matebook:~/redis-5.0.12# apt install make
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Suggested packages:
+  make-doc
+The following NEW packages will be installed:
+  make
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 162 kB of archives.
+After this operation, 393 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 make amd64 4.2.1-1.2 [162 kB]
+Fetched 162 kB in 1s (115 kB/s)
+Selecting previously unselected package make.
+(Reading database ... 32745 files and directories currently installed.)
+Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
+Unpacking make (4.2.1-1.2) ...
+Setting up make (4.2.1-1.2) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@空痕影的matebook:~/redis-5.0.12# ls
+00-RELEASENOTES  COPYING    Makefile   redis.conf       runtest-moduleapi  src
+BUGS             INSTALL    README.md  runtest          runtest-sentinel   tests
+CONTRIBUTING     MANIFESTO  deps       runtest-cluster  sentinel.conf      utils
+root@空痕影的matebook:~/redis-5.0.12# make PREFIX=/usr/local/redis install
+cd src &amp;&amp; make install
+make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
+    CC Makefile.dep
+rm -rf redis-server redis-sentinel redis-cli redis-benchmark redis-check-rdb redis-check-aof *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep dict-benchmark
+(cd ../deps &amp;&amp; make distclean)
+make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
+(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
+(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
+(cd lua &amp;&amp; make clean) &gt; /dev/null || true
+(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
+(rm -f .make-*)
+make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
+(rm -f .make-*)
+echo STD=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; &gt;&gt; .make-settings
+echo WARN=-Wall -W -Wno-missing-field-initializers &gt;&gt; .make-settings
+echo OPT=-O2 &gt;&gt; .make-settings
+echo MALLOC=jemalloc &gt;&gt; .make-settings
+echo CFLAGS= &gt;&gt; .make-settings
+echo LDFLAGS= &gt;&gt; .make-settings
+echo REDIS_CFLAGS= &gt;&gt; .make-settings
+echo REDIS_LDFLAGS= &gt;&gt; .make-settings
+echo PREV_FINAL_CFLAGS=-std=c99 -pedantic -DREDIS_STATIC=&#39;&#39; -Wall -W -Wno-missing-field-initializers -O2 -g -ggdb   -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -DUSE_JEMALLOC -I../deps/jemalloc/include &gt;&gt; .make-settings
+echo PREV_FINAL_LDFLAGS=  -g -ggdb -rdynamic &gt;&gt; .make-settings
+(cd ../deps &amp;&amp; make hiredis linenoise lua jemalloc)
+make[2]: Entering directory &#39;/root/redis-5.0.12/deps&#39;
+(cd hiredis &amp;&amp; make clean) &gt; /dev/null || true
+(cd linenoise &amp;&amp; make clean) &gt; /dev/null || true
+(cd lua &amp;&amp; make clean) &gt; /dev/null || true
+(cd jemalloc &amp;&amp; [ -f Makefile ] &amp;&amp; make distclean) &gt; /dev/null || true
+(rm -f .make-*)
+(echo &quot;&quot; &gt; .make-cflags)
+(echo &quot;&quot; &gt; .make-ldflags)
+MAKE hiredis
+cd hiredis &amp;&amp; make static
+make[3]: Entering directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
+gcc -std=c99 -pedantic -c -O3 -fPIC  -Wall -W -Wstrict-prototypes -Wwrite-strings -g -ggdb  net.c
+make[3]: gcc: Command not found
+make[3]: *** [Makefile:156: net.o] Error 127
+make[3]: Leaving directory &#39;/root/redis-5.0.12/deps/hiredis&#39;
+make[2]: *** [Makefile:46: hiredis] Error 2
+make[2]: Leaving directory &#39;/root/redis-5.0.12/deps&#39;
+make[1]: [Makefile:209: persist-settings] Error 2 (ignored)
+    CC adlist.o
+/bin/sh: 1: cc: not found
+make[1]: *** [Makefile:257: adlist.o] Error 127
+make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
+make: *** [Makefile:9: install] Error 2
+</code></pre>
+</li>
+</ol>
+<p>更新apt包:</p>
+<p>apt-get update</p>
+<p>安装gcc:</p>
+<p>apt-get install build-essential</p>
+<p>重新编译:</p>
+<p>make </p>
+<p>缺少 jemalloc ,可以用libc替代 带上参数</p>
+<p><code>make MALLOC=libc</code></p>
+<pre><code class="bash"> make
+cd src &amp;&amp; make all
+make[1]: Entering directory &#39;/root/redis-5.0.12/src&#39;
+    CC adlist.o
+In file included from adlist.c:34:
+zmalloc.h:50:10: fatal error: jemalloc/jemalloc.h: No such file or directory
+   50 | #include &lt;jemalloc/jemalloc.h&gt;
+      |          ^~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [Makefile:257: adlist.o] Error 1
+make[1]: Leaving directory &#39;/root/redis-5.0.12/src&#39;
+make: *** [Makefile:6: all] Error 2
+root@空痕影的matebook:~/redis-5.0.12# make MALLOC=libc
+</code></pre>
+<p>安装到指定位置</p>
+<p><code>make PREFIX=/usr/local/redis install</code></p>
+<h2 id="win10与linux文件互通"><a href="#win10与linux文件互通" class="headerlink" title="win10与linux文件互通"></a>win10与linux文件互通</h2><p>linux文件在win10系统中的位置:C:\Users\xxx\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\LocalState\rootfs</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/linux%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="image-20210423193156335"></p>
+<p>win10文件在Ubuntu系统中的位置: /mnt/</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/win10%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE.png" alt="image-20210423193402565"></p>
+<h2 id="更新wsl2"><a href="#更新wsl2" class="headerlink" title="更新wsl2"></a>更新wsl2</h2><p>由于虚拟机默认使用wsl1.无法使用systemctl.</p>
+<p><img src="/images/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F.assets/systemctl%E5%A4%B1%E6%95%88.png" alt="image-20230326135957820"></p>
+<pre><code class="bash">root@空痕影的matebook:/etc/caddy# systemctl status caddy
+System has not been booted with systemd as init system (PID 1). Can&#39;t operate.
+Failed to connect to bus: Host is down
+
+
+C:\Users\60512&gt;wsl --list --verbose
+  NAME            STATE           VERSION
+* Ubuntu-22.04    Running         1
+
+C:\Users\60512&gt;
+</code></pre>
+<p>升级到wsl2即可开启命令.</p>
+<pre><code class="bash">C:\Users\60512&gt;wsl --set-version Ubuntu-22.04 2
+正在进行转换，这可能需要几分钟时间...
+有关与 WSL 2 的主要区别的信息，请访问 https://aka.ms/wsl2
+WSL 2 需要更新其内核组件。有关信息，请访问 https://aka.ms/wsl2kernel
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">65 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WIN10%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">WIN10子系统使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDUbuntu%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text">下载Ubuntu系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-number">1.2.</span> <span class="toc-text">开启 linux子系统功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%B4%A6%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">设置账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E6%9C%8D%E5%8A%A1%E5%BB%BA%E7%AB%8B"><span class="toc-number">1.4.</span> <span class="toc-text">ssh服务建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">1.5.</span> <span class="toc-text">redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#win10%E4%B8%8Elinux%E6%96%87%E4%BB%B6%E4%BA%92%E9%80%9A"><span class="toc-number">1.6.</span> <span class="toc-text">win10与linux文件互通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0wsl2"><span class="toc-number">1.7.</span> <span class="toc-text">更新wsl2</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>搭建frp内网穿透连接win10子系统 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="搭建frp内网穿透连接win10子系统frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控主机实现反向代理，用户通过访问frps（中转服务器）来实现对frpc（被控主机）的远程访问。
+如今买,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">搭建frp内网穿透连接win10子系统</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/linux"><b>「
+                    </b>LINUX<b> 」</b></a>
+                
+                五月 25, 2023
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/frp%E6%90%AD%E5%BB%BA/" title="搭建frp内网穿透连接win10子系统" class="">搭建frp内网穿透连接win10子系统</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    5.2k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="搭建frp内网穿透连接win10子系统"><a href="#搭建frp内网穿透连接win10子系统" class="headerlink" title="搭建frp内网穿透连接win10子系统"></a>搭建frp内网穿透连接win10子系统</h1><p>frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控主机实现反向代理，用户通过访问frps（中转服务器）来实现对frpc（被控主机）的远程访问。</p>
+<p>如今买了台matebook轻薄办公,之前的游戏本就一直闲置着.想想浪费.不如把它穿透了当个服务器用,性能非常好.</p>
+<h2 id="1-前期准备"><a href="#1-前期准备" class="headerlink" title="1. 前期准备"></a>1. 前期准备</h2><p>中转服务器: 一台阿里云服务器,(配置没啥要求,但带宽最好能好些)</p>
+<p>被控主机: 一台连着家用宽带的闲置电脑(安装上win10 子系统Ubuntu并安装好了ssh服务)</p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h2><h3 id="2-1-下载frp安装包"><a href="#2-1-下载frp安装包" class="headerlink" title="2.1. 下载frp安装包"></a>2.1. 下载frp安装包</h3><p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/%E4%B8%8B%E8%BD%BDfrp%E5%AE%89%E8%A3%85%E5%8C%85.png" alt="下载frp安装包"></p>
+<p>我这里都是用的linux系统,所以直接下载了一个linux安装包.</p>
+<p>分别传到<code>中转服务器</code>与<code>被控主机</code>的合适目录下,解压.</p>
+<p>目录结构如图:</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/frp%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt="image-20210407234735160"></p>
+<p>其中<code>frpc.ini</code>是客户端(被控主机端)配置的参数,<code>frpc</code>是启动客户端的命令.</p>
+<p>下面<code>frps.ini</code>是服务端(中转服务器)配置的参数,<code>frps</code>是启动服务端的命令.</p>
+<p>它们都有带<code>_full</code>的后缀配置,这里包含了可配置的所有参数.需要添加配置是可以在里面寻找.</p>
+<h2 id="2-2-配置服务端参数并启动"><a href="#2-2-配置服务端参数并启动" class="headerlink" title="2.2 配置服务端参数并启动"></a>2.2 配置服务端参数并启动</h2><h3 id="2-2-1-更改配置文件"><a href="#2-2-1-更改配置文件" class="headerlink" title="2.2.1 更改配置文件"></a>2.2.1 更改配置文件</h3><p>登录到阿里云服务器,更改frps.ini配置</p>
+<pre><code class="bash">[common]
+# 服务器端端口
+bind_port = 24841
+# 客户端连接凭证
+privilege_token = k3481
+# 最大连接数
+max_pool_count = 5                                                                                                           # 客户端映射的端口
+vhost_http_port = 80                                                                                                         # 服务器看板的访问端口(可视化界面的访问接口)
+dashboard_port = 24842
+# 服务器看板账户(之后登入可视化界面的账户)
+dashboard_user = admin
+dashboard_pwd = amdin123  
+</code></pre>
+<h3 id="2-2-2-启动服务"><a href="#2-2-2-启动服务" class="headerlink" title="2.2.2 启动服务"></a>2.2.2 启动服务</h3><p>更改好后:eq保存退出并启动服务端服务</p>
+<pre><code class="bash">./frps -c frps.ini
+
+2021/04/07 23:02:10 [I] [root.go:200] frps uses config file: frps.ini
+2021/04/07 23:02:10 [I] [service.go:192] frps tcp listen on 0.0.0.0:24841
+2021/04/07 23:02:10 [I] [service.go:235] http service listen on 0.0.0.0:80
+2021/04/07 23:02:10 [I] [service.go:294] Dashboard listen on 0.0.0.0:24842
+2021/04/07 23:02:10 [I] [root.go:209] frps started successfully
+</code></pre>
+<p>看到上述日志则表示服务已经正常启动.</p>
+<h3 id="2-2-3-阿里云控制面板中开启端口"><a href="#2-2-3-阿里云控制面板中开启端口" class="headerlink" title="2.2.3 阿里云控制面板中开启端口"></a>2.2.3 阿里云控制面板中开启端口</h3><p>这时候可以浏览器访问<code>ip:24842</code> (ip为服务器ip)来打开看板页面.</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/%E7%9C%8B%E6%9D%BF1.png"></p>
+<p>如果无法打开可以去阿里云控制面板开放相关的端口.</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/%E5%BC%80%E6%94%BE%E9%98%BF%E9%87%8C%E4%BA%91%E7%AB%AF%E5%8F%A31.png" alt="image-20210408000338477"></p>
+<h2 id="2-3-配置客户端参数并启动"><a href="#2-3-配置客户端参数并启动" class="headerlink" title="2.3 配置客户端参数并启动"></a>2.3 配置客户端参数并启动</h2><h3 id="2-3-1-更改配置文件"><a href="#2-3-1-更改配置文件" class="headerlink" title="2.3.1 更改配置文件"></a>2.3.1 更改配置文件</h3><p>进入win10子系统,更改frpc.ini配置</p>
+<pre><code class="bash">[common]
+# 服务器ip地址
+server_addr = 45.94.175.69
+# 服务器端端口
+server_port = 24841
+# 服务端设置的连接凭证
+privilege_token = k3481
+
+[ssh]
+# 映射到服务端的端口
+remote_port = 6051
+#连接类型
+type = tcp
+# 客户端所在环境的ip
+local_ip = 192.168.3.12
+# 客户端ssh服务的端口
+local_port = 22
+</code></pre>
+<h3 id="2-3-2-启动服务"><a href="#2-3-2-启动服务" class="headerlink" title="2.3.2 启动服务"></a>2.3.2 启动服务</h3><p>更改好后:eq保存退出并启动客户端服务</p>
+<pre><code class="bash">./frpc -c frpc.ini
+
+
+2021/04/08 00:17:05 [I] [service.go:304] [ab0e6f44745eac11] login to server success, get run id [ab0e6f44745eac11], server udp port [0]
+2021/04/08 00:17:05 [I] [proxy_manager.go:144] [ab0e6f44745eac11] proxy added: [ssh]
+2021/04/08 00:17:05 [I] [control.go:180] [ab0e6f44745eac11] [ssh] start proxy success
+</code></pre>
+<p>看到上述日志则表示服务已经正常启动.</p>
+<p>登录看板可以观察到ssh的映射记录已经在TCP目录下上线.</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/ssh%E4%B8%8A%E7%BA%BF.png" alt="image-20210408002318991"></p>
+<p><em>同时保证子系统中的ssh服务开启,并对外可以访问. <code>service ssh start</code></em></p>
+<h3 id="2-3-3-阿里云控制面板中开启端口"><a href="#2-3-3-阿里云控制面板中开启端口" class="headerlink" title="2.3.3 阿里云控制面板中开启端口"></a>2.3.3 阿里云控制面板中开启端口</h3><p>需要再进入阿里云控制面板,将刚刚映射的ssh端口开启</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/%E5%BC%80%E7%AB%AF%E5%8F%A32.png" alt="image-20210408002925080"></p>
+<h2 id="3-连接"><a href="#3-连接" class="headerlink" title="3. 连接"></a>3. 连接</h2><p>打开xshell,新建一个连接,主机为服务器ip,端口为ssh映射的端口.用户名密码为win10子系统的用户.这里只是通过跳板机连接到win10子系统中的ssh服务.</p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets/%E8%BF%9E%E6%8E%A5%E9%AA%8C%E8%AF%811.png" alt="image-20210408003244210"></p>
+<p><img src="/images/linux/frp%E6%90%AD%E5%BB%BA.assets.%E8%BF%9E%E6%8E%A5%E9%AA%8C%E8%AF%812.png" alt="image-20210408003827499"></p>
+<p>成功连接.(^o^)/~</p>
+<h3 id="4-使用事项"><a href="#4-使用事项" class="headerlink" title="4 使用事项"></a>4 使用事项</h3><p>配置中默认的超时时间为90秒.当ssh连接长时间不活动,会被服务主动关闭连接,不是网络波动的原因.</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">65 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BAfrp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E8%BF%9E%E6%8E%A5win10%E5%AD%90%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">搭建frp内网穿透连接win10子系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-number">1.1.</span> <span class="toc-text">1. 前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">2. 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%8B%E8%BD%BDfrp%E5%AE%89%E8%A3%85%E5%8C%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1. 下载frp安装包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%82%E6%95%B0%E5%B9%B6%E5%90%AF%E5%8A%A8"><span class="toc-number">1.3.</span> <span class="toc-text">2.2 配置服务端参数并启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.2.1 更改配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2.2 启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E9%98%BF%E9%87%8C%E4%BA%91%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E4%B8%AD%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.2.3 阿里云控制面板中开启端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%82%E6%95%B0%E5%B9%B6%E5%90%AF%E5%8A%A8"><span class="toc-number">1.4.</span> <span class="toc-text">2.3 配置客户端参数并启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.3.1 更改配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.3.2 启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-3-%E9%98%BF%E9%87%8C%E4%BA%91%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E4%B8%AD%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.4.3.</span> <span class="toc-text">2.3.3 阿里云控制面板中开启端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.5.</span> <span class="toc-text">3. 连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.5.1.</span> <span class="toc-text">4 使用事项</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

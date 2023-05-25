@@ -1,0 +1,1007 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>springboot-启动流程 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="springboot启动流程大致流程图
+springboot的入口程序@SpringBootApplication
+public class SampleWebServicesApplication,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">springboot-启动流程</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                
+                三月 30, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/03/30/springboot/springboot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="springboot-启动流程" class="">springboot-启动流程</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    29k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    26 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/springboot/" rel="tag">springboot</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="springboot启动流程"><a href="#springboot启动流程" class="headerlink" title="springboot启动流程"></a>springboot启动流程</h1><h2 id="大致流程图"><a href="#大致流程图" class="headerlink" title="大致流程图"></a>大致流程图</h2><p><img src="/images/springboot/springboot.assets/springboot_run%E6%96%B9%E6%B3%95.png" alt="springboot_run方法"></p>
+<h2 id="springboot的入口程序"><a href="#springboot的入口程序" class="headerlink" title="springboot的入口程序"></a>springboot的入口程序</h2><pre><code class="java">@SpringBootApplication
+public class SampleWebServicesApplication &#123;
+
+    public static void main(String[] args) &#123;
+        SpringApplication.run(SampleWebServicesApplication.class, args);
+    &#125;
+
+&#125;
+</code></pre>
+<p>run静态方法会先创建一个spring应用对象.再执行具体的应用对象的run方法.</p>
+<pre><code class="java">public static ConfigurableApplicationContext run(Class&lt;?&gt;[] primarySources, String[] args) &#123;
+        return new SpringApplication(primarySources).run(args);
+    &#125;
+</code></pre>
+<h3 id="创建springboot应用对象"><a href="#创建springboot应用对象" class="headerlink" title="创建springboot应用对象"></a>创建springboot应用对象</h3><pre><code class="java">    public SpringApplication(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources) &#123;
+        // 1. 资源初始化资源加载器，默认为null
+        this.resourceLoader = resourceLoader;
+        Assert.notNull(primarySources, &quot;PrimarySources must not be null&quot;);
+        // 2. 初始化主要加载资源类集合并去重
+        this.primarySources = new LinkedHashSet&lt;&gt;(Arrays.asList(primarySources));
+        // 3. 推断当前 WEB 应用类型，一共有三种：NONE,SERVLET,REACTIVE
+        this.webApplicationType = WebApplicationType.deduceFromClasspath();
+        // 4. 初始化 引导注册表初始化后增强器
+        this.bootstrapRegistryInitializers = getBootstrapRegistryInitializersFromSpringFactories();
+        // 5. 设置应用初始化器, 从MATE-INF/spring.factories中读取ApplicationContextInitializer类的实例名称集合并去重.(七个)
+        setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
+        // 6. 设置监听器, 从MATE-INF/spring.factories中读取ApplicationListener类的实例名称集合并去重.(十一个)
+        setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+        // 7. 推断主入口应用类，通过当前调用栈，获取Main方法所在类，并赋值给mainApplicationClass
+        this.mainApplicationClass = deduceMainApplicationClass();
+    &#125;
+</code></pre>
+<h4 id="3-判断web应用类型"><a href="#3-判断web应用类型" class="headerlink" title="3. 判断web应用类型"></a>3. 判断web应用类型</h4><p>  通过判断是否存在特定类来标识程序类型.</p>
+<pre><code class="java">
+private static final String[] SERVLET_INDICATOR_CLASSES = &#123; &quot;javax.servlet.Servlet&quot;,
+            &quot;org.springframework.web.context.ConfigurableWebApplicationContext&quot; &#125;;
+
+private static final String WEBMVC_INDICATOR_CLASS = &quot;org.springframework.web.servlet.DispatcherServlet&quot;;
+
+private static final String WEBFLUX_INDICATOR_CLASS = &quot;org.springframework.web.reactive.DispatcherHandler&quot;;
+
+private static final String JERSEY_INDICATOR_CLASS = &quot;org.glassfish.jersey.servlet.ServletContainer&quot;;
+
+static WebApplicationType deduceFromClasspath() &#123;
+    // 存在响应式调度器对象,且不存在服务调度程序对象与程序容器类. 则是响应式程序.
+   if (ClassUtils.isPresent(WEBFLUX_INDICATOR_CLASS, null) &amp;&amp; !ClassUtils.isPresent(WEBMVC_INDICATOR_CLASS, null)
+         &amp;&amp; !ClassUtils.isPresent(JERSEY_INDICATOR_CLASS, null)) &#123;
+      return WebApplicationType.REACTIVE;
+   &#125;
+   // 如果不存在servlet程序对象或者web服务容器对象. 则是啥也不是.
+   for (String className : SERVLET_INDICATOR_CLASSES) &#123;
+      if (!ClassUtils.isPresent(className, null)) &#123;
+         return WebApplicationType.NONE;
+      &#125;
+   &#125;
+    // 否则为web程序.
+   return WebApplicationType.SERVLET;
+&#125;
+</code></pre>
+<h4 id="4-初始化-应道注册表初始化后增强器"><a href="#4-初始化-应道注册表初始化后增强器" class="headerlink" title="4. 初始化 应道注册表初始化后增强器"></a>4. 初始化 应道注册表初始化后增强器</h4><p>用于提前创意一些初始化时用到的必要参数与对象.比如springcloud会在bootstrap.yml中定义配置中心地址,来远程获取并加载后续初始化用到的参数.</p>
+<pre><code class="java">private List&lt;BootstrapRegistryInitializer&gt; getBootstrapRegistryInitializersFromSpringFactories() &#123;
+        ArrayList&lt;BootstrapRegistryInitializer&gt; initializers = new ArrayList&lt;&gt;();
+        // 是否存在bootstrapper类型的class类,若存在则实例化后,生成初始化器,并加入列表.
+        getSpringFactoriesInstances(Bootstrapper.class).stream()
+                .map((bootstrapper) -&gt; ((BootstrapRegistryInitializer) bootstrapper::initialize))
+                .forEach(initializers::add);
+         // 是否存在bootstrap的注册初始化器的class类.若存在则创建对象并加入列表.
+        initializers.addAll(getSpringFactoriesInstances(BootstrapRegistryInitializer.class));
+        return initializers;
+    &#125;
+
+
+private &lt;T&gt; Collection&lt;T&gt; getSpringFactoriesInstances(Class&lt;T&gt; type, Class&lt;?&gt;[] parameterTypes, Object... args) &#123;
+        ClassLoader classLoader = getClassLoader();
+        // Use names and ensure unique to protect against duplicates
+        // 通过calss类型来去重获取具体实现类名称,通过扫描所有jar包中的META-INF/spring.factories文件.
+        Set&lt;String&gt; names = new LinkedHashSet&lt;&gt;(SpringFactoriesLoader.loadFactoryNames(type, classLoader));
+        // 实例化实现类. 
+        List&lt;T&gt; instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);
+        // 将实现类对象排序.
+        AnnotationAwareOrderComparator.sort(instances);
+        return instances;
+    &#125;
+
+/**
+* 接收calss名称列表.类加载器找寻指定类,并通过反射来实例化对象输出.
+*/
+private &lt;T&gt; List&lt;T&gt; createSpringFactoriesInstances(Class&lt;T&gt; type, Class&lt;?&gt;[] parameterTypes,
+            ClassLoader classLoader, Object[] args, Set&lt;String&gt; names) &#123;
+        List&lt;T&gt; instances = new ArrayList&lt;&gt;(names.size());
+        for (String name : names) &#123;
+            try &#123;
+                // 通过class类名来获取class对象.
+                Class&lt;?&gt; instanceClass = ClassUtils.forName(name, classLoader);
+                Assert.isAssignable(type, instanceClass);
+                // 获取calss对象中的构造器.
+                Constructor&lt;?&gt; constructor = instanceClass.getDeclaredConstructor(parameterTypes);
+                // 实例化对象,通过构造函数与指定参数.
+                T instance = (T) BeanUtils.instantiateClass(constructor, args);
+                instances.add(instance);
+            &#125;
+            catch (Throwable ex) &#123;
+                throw new IllegalArgumentException(&quot;Cannot instantiate &quot; + type + &quot; : &quot; + name, ex);
+            &#125;
+        &#125;
+    // 返回实例化对象列表.
+        return instances;
+    &#125;
+</code></pre>
+<h4 id="5-设置应用初始化器"><a href="#5-设置应用初始化器" class="headerlink" title="5. 设置应用初始化器"></a>5. 设置应用初始化器</h4><p>通过反射将各个包中的ApplicationContextInitializer类找出并初始化后添加进集合.</p>
+<p>一般是七个加载器:</p>
+<ul>
+<li><p>org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer</p>
+<p>创建一个SpringBoot和ConfigurationClassPostProcessor共用的CachingMetadataReaderFactory对象。</p>
+<p>实现类为：ConcurrentReferenceCachingMetadataReaderFactory</p>
+</li>
+<li><p>org.springframework.boot.context.config.DelegatingApplicationContextInitializer</p>
+<p> 委派处理ApplicationContext初始化器.</p>
+</li>
+</ul>
+<p>  其需要委派处理的初始化器来自Spring环境中的context.initializer.classes属性，该属性可以使用逗号分隔多个初始化器。</p>
+<ul>
+<li> org.springframework.boot.context.ContextIdApplicationContextInitializer</li>
+</ul>
+<p>  为ApplicationContext设置id。</p>
+<p>  根据以下的配置顺序来设置，spring.application.name、vcap.application.name、spring.config.name，如果环境配置中都没有这些配置，则默认使用“application”来表示，另外还会将profiles也加入到id中去。</p>
+<ul>
+<li> org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener</li>
+</ul>
+<p>  将ConditionEvaluationReport写入日志。</p>
+<ul>
+<li> org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer</li>
+</ul>
+<p>  对于一般配置错误在日志中作出警告</p>
+<ul>
+<li> org.springframework.boot.rsocket.context.RSocketPortInfoApplicationContextInitializer</li>
+</ul>
+<p>  为RSocketServer服务器实际监听的端口设置环境属性。</p>
+<ul>
+<li> org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer</li>
+</ul>
+<p>  其主要作用是在环境Environment中添加一个属性源，将应用的本地端口号添加进去.</p>
+<h4 id="6-设置监听器"><a href="#6-设置监听器" class="headerlink" title="6. 设置监听器"></a>6. 设置监听器</h4><p>通过反射将各个包中的ApplicationListener类找出并初始化后添加进集合.</p>
+<ul>
+<li><p>org.springframework.boot.cloud.CloudFoundryVcapEnvironmentPostProcessor</p>
+<p>CloudFoundryVcap环境变量的后置处理器.</p>
+</li>
+<li><p> org.springframework.boot.context.config.ConfigFileApplicationListener</p>
+</li>
+</ul>
+<p>  配置文件解析的监听器.</p>
+<ul>
+<li> org.springframework.boot.context.config.AnsiOutputApplicationListener</li>
+</ul>
+<p>  Ansi输出应用监听器. 应用环境准备就绪事件时，对Ansi输出的相关状态进行设置.</p>
+<ul>
+<li><p>org.springframework.boot.context.logging.LoggingApplicationListener</p>
+<p>初始化sb的logging级别，根据环境变量初始化系统，确定最终的logging等级，注册shutdown的钩子方法。</p>
+</li>
+<li><p>org.springframework.boot.context.logging.ClasspathLoggingApplicationListener</p>
+</li>
+<li><p>org.springframework.boot.autoconfigure.BackgroundPreinitializer</p>
+<p>后台初始化ConversionServiceInitializer、ValidationInitializer、MessageConverterInitializer、JacksonInitializer、CharsetInitializer组件</p>
+</li>
+<li><p>org.springframework.boot.context.config.DelegatingApplicationListener</p>
+<p>通过环境中的配置的context.listener.classes，去搜集相应的监听器。如果收集到，就会创建一个简单事件广播器实例，放到类属性上，同时，还会把收集到的监听器，绑定到该广播器上。</p>
+</li>
+<li><p> org.springframework.boot.builder.ParentContextCloserApplicationListener</p>
+</li>
+<li><p> org.springframework.boot.ClearCachesApplicationListener</p>
+</li>
+<li><p>org.springframework.boot.context.FileEncodingApplicationListener</p>
+<p>文件编码应用监听器。该监听器实质作用是在收到应用环境准备就绪事件时，对配置中关于文件编码的配置作一个校验，判断配置中的文件编码是否和JVM系统的file.encoding一致。无配置或JVM系统的file.encoding无效的情况下，都不会报异常，但是，当JVM中的file.encoding有效，且在配置中包含了spring.mandatory-file-encoding，而二者又不一致时报IllegalStateException异常。</p>
+</li>
+<li><p> org.springframework.boot.liquibase.LiquibaseServiceLocatorApplicationListener</p>
+</li>
+</ul>
+<h4 id="7-寻找程序主方法"><a href="#7-寻找程序主方法" class="headerlink" title="7.  寻找程序主方法"></a>7.  寻找程序主方法</h4><p>通过异常栈,遍历栈,寻找出main的class类并返回.</p>
+<pre><code class="java">
+    private Class&lt;?&gt; deduceMainApplicationClass() &#123;
+        try &#123;
+            // 获取run方法执行的堆栈信息
+            StackTraceElement[] stackTrace = new RuntimeException().getStackTrace();
+            // 遍历堆栈信息
+            for (StackTraceElement stackTraceElement : stackTrace) &#123;
+                // 寻找方法名称为main的所在类.
+                if (&quot;main&quot;.equals(stackTraceElement.getMethodName())) &#123;
+                    return Class.forName(stackTraceElement.getClassName());
+                &#125;
+            &#125;
+        &#125;
+        catch (ClassNotFoundException ex) &#123;
+            // Swallow and continue
+        &#125;
+        return null;
+    &#125;
+</code></pre>
+<h3 id="执行应用对象的run方法"><a href="#执行应用对象的run方法" class="headerlink" title="执行应用对象的run方法."></a>执行应用对象的run方法.</h3><pre><code class="java">public ConfigurableApplicationContext run(String... args) &#123;
+        // 1.记录启动时的时间.
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        // 2.创建引导上下文
+        DefaultBootstrapContext bootstrapContext = createBootstrapContext();
+        // 3.初始化应用上下文
+        ConfigurableApplicationContext context = null;
+        // 4.设置系统属性“java.awt.headless”的值，默认为true，
+        // 用于运行headless服务器，进行简单的图像处理，多用于在缺少显示屏、键盘或者鼠标时的系统配置，很多监控工具如jconsole 需要将该值设置为true
+        configureHeadlessProperty();
+        // 5.创建所有spring运行监听器并发布应用启动事件.
+        SpringApplicationRunListeners listeners = getRunListeners(args);
+        listeners.starting(bootstrapContext, this.mainApplicationClass);
+        try &#123;
+            // 6.初始化默认应用参数类
+            ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+            // 7.根据运行监听器和应用参数来准备spring环境
+            ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);
+            // 8.配置bean忽略参数,默认为true.
+            configureIgnoreBeanInfo(environment);
+            //  9.创建banner打印机,并打印banner.
+            Banner printedBanner = printBanner(environment);
+            // 10.创建应用上下文.
+            context = createApplicationContext();
+            // 11.设置应用上下文启动程序.
+            context.setApplicationStartup(this.applicationStartup);
+            // 12.准备应用上下文. 关键步骤:将启动类注入容器,为后续启动话提供基础.
+            prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
+            // 13.刷新应用上下文
+            refreshContext(context);
+            // 14.应用上下文刷新后置处理,为空可自行扩展.
+            afterRefresh(context, applicationArguments);
+            // 15.标志服务初始化完毕.停止计时监控对象.
+            stopWatch.stop();
+            // 16.记录启动信息状态为true时,打印出日志记录执行主类名.时间.信息.
+            if (this.logStartupInfo) &#123;
+                new StartupInfoLogger(this.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);
+            &#125;
+            // 17.应用上下文监听事件创建与置状态到就绪.
+            listeners.started(context);
+            // 18.执行所有的runner运行器.
+            callRunners(context, applicationArguments);
+        &#125;
+        catch (Throwable ex) &#123;
+            handleRunFailure(context, ex, listeners);
+            throw new IllegalStateException(ex);
+        &#125;
+
+        try &#123;
+            // 19.运行所有就绪的应用上下文监听事件
+            listeners.running(context);
+        &#125;
+        catch (Throwable ex) &#123;
+            handleRunFailure(context, ex, null);
+            throw new IllegalStateException(ex);
+        &#125;
+        // 20.返回上下文.
+        return context;
+    &#125;
+</code></pre>
+<h4 id="2-创建引导上下文"><a href="#2-创建引导上下文" class="headerlink" title="2.创建引导上下文"></a>2.创建引导上下文</h4><p>​        Spring Boot 启动开始阶段，需要初始化一些东西，这个时候并不会直接创建ApplicationContext，而是先创建BootstrapContext，在ApplicationContext完全创建好之前负责启动和准备环境（Environment）的一些操作。</p>
+<p>​        其本身是一个简单的ioc容器,提供了bean注册与获取的方法, 作用是在启动阶段，创建一个引导性质的容器，先去负责一些初始化操作。</p>
+<pre><code class="java">private DefaultBootstrapContext createBootstrapContext() &#123;
+           // 创建DefaultBootstrapContext 对象
+        DefaultBootstrapContext bootstrapContext = new DefaultBootstrapContext();
+        // 循环调用BootstrapRegistryInitializer对象的初始化方法
+        this.bootstrapRegistryInitializers.forEach((initializer) -&gt; initializer.initialize(bootstrapContext));
+        return bootstrapContext;
+    &#125;
+</code></pre>
+<p><strong>DefaultBootstrapContext</strong></p>
+<p>类图如下显示,<code>DefaultBootstrapContext</code>实现了<code>BootstrapRegistry</code>和<code>BootstrapContext</code>接口.</p>
+<p><code>BootstrapRegistry</code> 就提供了在启动开始阶段，<code>ApplicationContext</code>完全创建好之前，负责Bean 实例注册的功能。</p>
+<p><code>BootstrapContext</code> 是提供bean对象的获取接口,通过反射的形式.</p>
+<p><img src="springboot.assets/defaultBootstrapContext.png" alt="defaultBootstrapContext"></p>
+<h4 id="5-创建所有spring运行监听器并发布应用启动事件"><a href="#5-创建所有spring运行监听器并发布应用启动事件" class="headerlink" title="5.创建所有spring运行监听器并发布应用启动事件"></a>5.创建所有spring运行监听器并发布应用启动事件</h4><pre><code class="java">// org.springframework.boot.SpringApplication#run(java.lang.String...)
+// 创建所有spring运行监听器具体实例
+SpringApplicationRunListeners listeners = getRunListeners(args);
+// 执行监听并发布应用启动事件.
+listeners.starting(bootstrapContext, this.mainApplicationClass);
+
+</code></pre>
+<pre><code class="java">/**
+*    org.springframework.boot.SpringApplication实现方法
+*/
+private SpringApplicationRunListeners getRunListeners(String[] args) &#123;
+    // 创建一个数组，存放SpringApplication.class、String[].class
+    Class&lt;?&gt;[] types = new Class&lt;?&gt;[] &#123; SpringApplication.class, String[].class &#125;;
+    //  通过SPI机制，从spring.factories 中获取SpringApplicationRunListener实例,并保存在SpringApplicationRunListeners对象中.
+    return new SpringApplicationRunListeners(logger,
+                                             getSpringFactoriesInstances(SpringApplicationRunListener.class, types, this, args),
+                                             this.applicationStartup);
+&#125;
+
+
+/**
+    * org.springframework.boot.SpringApplicationRunListeners类
+    */
+SpringApplicationRunListeners(Log log, Collection&lt;? extends SpringApplicationRunListener&gt; listeners,
+                              ApplicationStartup applicationStartup) &#123;
+    this.log = log;
+    this.listeners = new ArrayList&lt;&gt;(listeners);
+    this.applicationStartup = applicationStartup;
+&#125;
+
+/**
+* 开启监听器.声明listenerAction函数与stepAction函数
+*/
+void starting(ConfigurableBootstrapContext bootstrapContext, Class&lt;?&gt; mainApplicationClass) &#123;
+    doWithListeners(&quot;spring.boot.application.starting&quot;, (listener) -&gt; listener.starting(bootstrapContext),
+                    (step) -&gt; &#123;
+                        if (mainApplicationClass != null) &#123;
+                            step.tag(&quot;mainApplicationClass&quot;, mainApplicationClass.getName());
+                        &#125;
+                    &#125;);
+&#125;
+// doWithListeners
+/**
+* 遍历在创建appicationContext时,通过spi机制获取到的监听器对象.
+*/
+private void doWithListeners(String stepName, Consumer&lt;SpringApplicationRunListener&gt; listenerAction,
+                             Consumer&lt;StartupStep&gt; stepAction) &#123;
+    StartupStep step = this.applicationStartup.start(stepName);
+    this.listeners.forEach(listenerAction);
+    if (stepAction != null) &#123;
+        stepAction.accept(step);
+    &#125;
+    step.end();
+&#125;
+</code></pre>
+<h4 id="7-9-根据运行监听器和应用参数来准备spring环境"><a href="#7-9-根据运行监听器和应用参数来准备spring环境" class="headerlink" title="7~9. 根据运行监听器和应用参数来准备spring环境"></a>7~9. 根据运行监听器和应用参数来准备spring环境</h4><pre><code class="java">// 6.初始化默认应用参数类
+ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+// 7.根据运行监听器和应用参数来准备spring环境
+ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);
+// 8.配置bean忽略参数,默认为true.
+configureIgnoreBeanInfo(environment);
+//  9.创建banner打印机,并打印banner.
+Banner printedBanner = printBanner(environment);
+</code></pre>
+<h5 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h5><p>创建参数获取接口对象.</p>
+<pre><code class="java">// org.springframework.boot.ApplicationArguments
+public interface ApplicationArguments &#123;
+    // 返回传递给应用程序的原始未处理参数
+    String[] getSourceArgs();
+    // 返回所有选项参数的名称
+    Set&lt;String&gt; getOptionNames();
+    // 返回从参数解析的选项参数集是否包含具有给定名称的选项
+    boolean containsOption(String name);
+    // 返回与具有给定名称的参数选项关联的值的集合
+    List&lt;String&gt; getOptionValues(String name);
+    // 返回已解析的非选项参数的集合
+    List&lt;String&gt; getNonOptionArgs();
+&#125;
+</code></pre>
+<p>spring环境接口对象</p>
+<pre><code class="java">public interface ConfigurableEnvironment extends Environment, ConfigurablePropertyResolver &#123;
+    // 设置当前激活的配置文件
+    void setActiveProfiles(String... profiles);
+
+    // 增加profile
+    void addActiveProfile(String profile);
+
+    // 设置默认的profile
+    void setDefaultProfiles(String... profiles);
+
+    // 获取PropertySource键值组合的集合
+    MutablePropertySources getPropertySources();
+
+    // 获取系统属性
+    Map&lt;String, Object&gt; getSystemProperties();
+    // 获取系统环境变量
+    Map&lt;String, Object&gt; getSystemEnvironment();
+    // 合并其他 ConfigurableEnvironment
+    void merge(ConfigurableEnvironment parent);
+
+&#125;
+</code></pre>
+<h5 id="创建环境"><a href="#创建环境" class="headerlink" title="创建环境"></a>创建环境</h5><pre><code class="java">private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners,
+      DefaultBootstrapContext bootstrapContext, ApplicationArguments applicationArguments) &#123;
+   // 1.创建环境,
+   ConfigurableEnvironment environment = getOrCreateEnvironment();
+    // 2.配置环境
+   configureEnvironment(environment, applicationArguments.getSourceArgs());
+    // 3.连接
+   ConfigurationPropertySources.attach(environment);
+    // 4.调用监听器
+   listeners.environmentPrepared(bootstrapContext, environment);
+    // 5.将 defaultProperties 移到最后位置
+   DefaultPropertiesPropertySource.moveToEnd(environment);
+   Assert.state(!environment.containsProperty(&quot;spring.main.environment-prefix&quot;),
+         &quot;Environment prefix cannot be set via properties.&quot;);
+    // 6. 绑定信息
+   bindToSpringApplication(environment);
+    // 没有设置 isCustomEnvironment 属性，
+   if (!this.isCustomEnvironment) &#123;
+       // 环境转换
+      environment = convertEnvironment(environment);
+   &#125;
+    // 重新连接
+   ConfigurationPropertySources.attach(environment);
+   return environment;
+&#125;
+</code></pre>
+<ol>
+<li><p>创建环境</p>
+<pre><code class="java">private ConfigurableEnvironment getOrCreateEnvironment() &#123;
+    // 如果环境已经初始化,则直接返回 
+    if (this.environment != null) &#123;
+        return this.environment;
+    &#125;
+    // 判断环境的类型,更具不同的类型返回不同的实例对象.
+    switch (this.webApplicationType) &#123;
+        case SERVLET:
+            return new ApplicationServletEnvironment();
+        case REACTIVE:
+            return new ApplicationReactiveWebEnvironment();
+        default:
+            return new ApplicationEnvironment();
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>配置环境</p>
+<p>对属性、Profile 进行配置</p>
+<pre><code class="java">protected void configureEnvironment(ConfigurableEnvironment environment, String[] args) &#123;
+    // 设置转换服务
+    if (this.addConversionService) &#123;
+        environment.setConversionService(new ApplicationConversionService());
+    &#125;
+    // 配置属性
+    configurePropertySources(environment, args);
+    // 配置profile
+    configureProfiles(environment, args);
+&#125;
+
+// 配置属性
+protected void configurePropertySources(ConfigurableEnvironment environment, String[] args) &#123;
+    // 获取所有的属性源
+    MutablePropertySources sources = environment.getPropertySources();
+    if (!CollectionUtils.isEmpty(this.defaultProperties)) &#123;
+        DefaultPropertiesPropertySource.addOrMerge(this.defaultProperties, sources);
+    &#125;
+    // 是否添加启动命令参数，默认True
+    if (this.addCommandLineProperties &amp;&amp; args.length &gt; 0) &#123;
+        String name = CommandLinePropertySource.COMMAND_LINE_PROPERTY_SOURCE_NAME;
+        if (sources.contains(name)) &#123;
+            PropertySource&lt;?&gt; source = sources.get(name);
+            CompositePropertySource composite = new CompositePropertySource(name);
+            composite.addPropertySource(
+                new SimpleCommandLinePropertySource(&quot;springApplicationCommandLineArgs&quot;, args));
+            composite.addPropertySource(source);
+            sources.replace(name, composite);
+        &#125;
+        else &#123;
+            sources.addFirst(new SimpleCommandLinePropertySource(args));
+        &#125;
+    &#125;
+&#125;
+// configureProfiles则是一个空的方法，没有实现，所以配置环境这一步主要也是获取其他方面的属性。
+protected void configureProfiles(ConfigurableEnvironment environment, String[] args) &#123;
+&#125;
+</code></pre>
+</li>
+<li><p>连接</p>
+<p>将环境中的<code> PropertySources</code> 封装到一个名称为<code>configurationProperties</code>的<code>PropertySource</code>中.</p>
+<pre><code class="java">public static void attach(Environment environment) &#123;
+    Assert.isInstanceOf(ConfigurableEnvironment.class, environment);
+    // 获取环境中的 PropertySources
+    MutablePropertySources sources = ((ConfigurableEnvironment) environment).getPropertySources();
+    // 判断 是否有configurationProperties，之前加载的四个是没有这个名字的所以为NULL 
+    PropertySource&lt;?&gt; attached = getAttached(sources);
+    if (attached == null || !isUsingSources(attached, sources)) &#123;
+        // 创建一个configurationProperties。
+        attached = new ConfigurationPropertySourcesPropertySource(ATTACHED_PROPERTY_SOURCE_NAME,
+                                                                  new SpringConfigurationPropertySources(sources));
+    &#125;
+    sources.remove(ATTACHED_PROPERTY_SOURCE_NAME);
+    // 将configurationProperties 设置到第一位置
+    sources.addFirst(attached);
+&#125;
+</code></pre>
+</li>
+<li><p>调用监听器</p>
+<pre><code class="java">// 调用监听器
+// [org.springframework.boot.context.event.EventPublishingRunListener@434a63ab]
+listeners.environmentPrepared(bootstrapContext, environment);
+
+
+// org.springframework.boot.context.event.EventPublishingRunListener
+@Override
+public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
+                                ConfigurableEnvironment environment) &#123;
+    // 创建指定事件给监听器执行.
+    this.initialMulticaster.multicastEvent(
+        new ApplicationEnvironmentPreparedEvent(bootstrapContext, this.application, this.args, environment));
+&#125;
+
+// org.springframework.context.event.SimpleApplicationEventMulticaster
+@Override
+    public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) &#123;
+        ResolvableType type = (eventType != null ? eventType : resolveDefaultEventType(event));
+        Executor executor = getTaskExecutor();
+        // 支持事件的监听器,执行事件.
+        for (ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;
+            if (executor != null) &#123;
+                executor.execute(() -&gt; invokeListener(listener, event));
+            &#125;
+            else &#123;
+                invokeListener(listener, event);
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
+<p>该阶段对应的事件类型为<code>ApplicationEnvironmentPreparedEvent</code>，</p>
+<p>支持该事件的监听器有六种：</p>
+<ul>
+<li> org.springframework.boot.env.EnvironmentPostProcessorApplicationListener</li>
+<li> org.springframework.boot.context.config.AnsiOutputApplicationListener</li>
+<li> org.springframework.boot.context.logging.LoggingApplicationListener</li>
+<li> org.springframework.boot.autoconfigure.BackgroundPreinitializer</li>
+<li> org.springframework.boot.context.config.DelegatingApplicationListener</li>
+<li> org.springframework.boot.context.FileEncodingApplicationListener</li>
+</ul>
+<p>主要处理逻辑在EnvironmentPostProcessorApplicationListener中</p>
+<pre><code class="java">
+private void onApplicationEnvironmentPreparedEvent(ApplicationEnvironmentPreparedEvent event) &#123;
+    // 获取当前环境和SpringApplication 
+    ConfigurableEnvironment environment = event.getEnvironment();
+    SpringApplication application = event.getSpringApplication();
+    // SPI 获取环境后置处理器，并调用处理
+    for (EnvironmentPostProcessor postProcessor : getEnvironmentPostProcessors(application.getResourceLoader(),
+                                                                               event.getBootstrapContext())) &#123;
+        postProcessor.postProcessEnvironment(environment, application);
+    &#125;
+&#125;
+List&lt;EnvironmentPostProcessor&gt; getEnvironmentPostProcessors(ResourceLoader resourceLoader,
+                                                            ConfigurableBootstrapContext bootstrapContext) &#123;
+    ClassLoader classLoader = (resourceLoader != null) ? resourceLoader.getClassLoader() : null;
+    EnvironmentPostProcessorsFactory postProcessorsFactory = this.postProcessorsFactory.apply(classLoader);
+    return postProcessorsFactory.getEnvironmentPostProcessors(this.deferredLogs, bootstrapContext);
+&#125;
+</code></pre>
+<p>环境后置处理器:</p>
+<ul>
+<li><p>org.springframework.boot.env.RandomValuePropertySourceEnvironmentPostProcessor</p>
+<p>添加<code>RandomValuePropertySource</code>属性源，可以通过<code>environment.getProperty(&quot;random.*&quot;)</code>返回各种随机值。</p>
+</li>
+<li><p>org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor</p>
+<p>将之前加载的系统属性对象<code>SystemEnvironmentPropertySource</code>替换为一个新的对象<code>OriginAwareSystemEnvironmentPropertySource</code></p>
+</li>
+<li><p>org.springframework.boot.env.SpringApplicationJsonEnvironmentPostProcessor</p>
+<p>解析 <code>spring.application.json</code> 或 <code>SPRING_APPLICATION_JSON</code> 配置的 json 字符串。</p>
+</li>
+<li><p>org.springframework.boot.cloud.CloudFoundryVcapEnvironmentPostProcessor</p>
+<p>配置<code>Cloud Foundry</code>开源PaaS云平台相关属性源。</p>
+</li>
+<li><p>org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</p>
+<p>启用 Reactor 调试代理（如果可用）。</p>
+</li>
+<li><p>org.springframework.boot.autoconfigure.integration.IntegrationPropertiesEnvironmentPostProcessor</p>
+<p>将<code>META-INF/spring.integration.properties</code>中的属性映射为属性源。</p>
+</li>
+<li><p>org.springframework.boot.reactor.DebugAgentEnvironmentPostProcessor</p>
+<p>将<code>application.yml</code>文件中的属性加载到环境中的</p>
+</li>
+</ul>
+<p>其中最重要的就是<code>ConfigDataEnvironmentPostProcessor</code>，就是用它将<code>application.yml</code>文件中的属性加载到环境中的，加载完成后可以看到你在<code>application.yml</code>文件中配置的所有属性.</p>
+</li>
+<li><p>将 defaultProperties 移到最后位置</p>
+<pre><code class="java"> // 5.将 defaultProperties 移到最后位置
+DefaultPropertiesPropertySource.moveToEnd(environment);
+
+// 查找配置文件源中的defaultProperties,删除它,
+// 如果没找到说明程序没有启用properties配置文件,则需要返回null,来避免下一步的添加默认Properties配置.
+public static void moveToEnd(MutablePropertySources propertySources) &#123;
+    PropertySource&lt;?&gt; propertySource = propertySources.remove(NAME);
+    // 如果配置列表不为null,并在最后重新添加.
+    if (propertySource != null) &#123;
+        propertySources.addLast(propertySource);
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>绑定信息</p>
+<pre><code class="java"> protected void bindToSpringApplication(ConfigurableEnvironment environment) &#123;
+        try &#123;
+            Binder.get(environment).bind(&quot;spring.main&quot;, Bindable.ofInstance(this));
+        &#125; catch (Exception var3) &#123;
+            throw new IllegalStateException(&quot;Cannot bind to SpringApplication&quot;, var3);
+        &#125;
+    &#125;
+</code></pre>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">65 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#springboot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">springboot启动流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">大致流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot%E7%9A%84%E5%85%A5%E5%8F%A3%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">springboot的入口程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAspringboot%E5%BA%94%E7%94%A8%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建springboot应用对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%BA%94%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84run%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">执行应用对象的run方法.</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

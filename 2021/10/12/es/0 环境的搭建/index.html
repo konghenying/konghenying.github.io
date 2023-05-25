@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>环境搭建 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="docker单机安装
+下载elasticsearch镜像
+docker pull elasticsearch:8.2.0
+
+root@空痕影的matebook:~# docker pull elas,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">环境搭建</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                
+                十月 12, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/10/12/es/0%20%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/" title="环境搭建" class="">环境搭建</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    5.2k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="docker单机安装"><a href="#docker单机安装" class="headerlink" title="docker单机安装"></a>docker单机安装</h2><ol>
+<li><p>下载elasticsearch镜像</p>
+<pre><code class="shell">docker pull elasticsearch:8.2.0
+
+root@空痕影的matebook:~# docker pull elasticsearch:8.2.0
+8.2.0: Pulling from library/elasticsearch
+e0b25ef51634: Pull complete
+860caabdf263: Pull complete
+9fbe6bc43ac5: Pull complete
+9d4f6737f430: Pull complete
+10f01841fd3e: Pull complete
+dae1e3bba098: Pull complete
+0a3767e40ef9: Pull complete
+7d786dfd085d: Pull complete
+7ce904f28ed3: Pull complete
+Digest: sha256:6bd33a35f529d349d8d385856b138d73241555abf2851287c055665494680b8d
+Status: Downloaded newer image for elasticsearch:8.2.0
+docker.io/library/elasticsearch:8.2.0
+</code></pre>
+</li>
+<li><p>启动容器</p>
+<pre><code class="shell">docker run -p 9200:9200 -p 9300:9300 -d --name es -e &quot;discovery.type=single-node&quot; -e &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot; f75ee9faf718
+
+root@空痕影的matebook:~# docker run -p 9200:9200 -p 9300:9300 -d --name es -e &quot;discovery.type=single-node&quot; -e &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot; f75ee9faf718
+61ef5be570d0a25a829bf3c6e4e5bfbcf27c6a3810a37fee4b639519d0b7bfac
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                            NAMES
+61ef5be570d0   f75ee9faf718   &quot;/bin/tini -- /usr/l…&quot;   18 seconds ago   Up 16 seconds   0.0.0.0:9200-&gt;9200/tcp, 0.0.0.0:9300-&gt;9300/tcp   es
+</code></pre>
+</li>
+<li><p>安装可视化es管理工具kibana</p>
+<pre><code class="shell">docker pull kibana:8.2.0
+
+root@空痕影的matebook:~# docker pull kibana:8.2.0
+8.2.0: Pulling from library/kibana
+e0b25ef51634: Already exists
+16168a059524: Pull complete
+a7c5b97fb1b3: Pull complete
+b4997d90f2a3: Pull complete
+08edfcb77367: Pull complete
+162b89073472: Pull complete
+c27ed485e628: Pull complete
+c8ec5118d07e: Pull complete
+3098c58d1611: Pull complete
+f0cd89b25439: Pull complete
+90247f6ea1db: Pull complete
+3bdda07522a2: Pull complete
+36a9ec86c178: Pull complete
+Digest: sha256:0ba5d3d3ddab3212eadd15bcc701c24a2baafe2f8bd7ced9d2a750cf227b8a06
+Status: Downloaded newer image for kibana:8.2.0
+docker.io/library/kibana:8.2.0
+
+docker run -p 5601:5601 -d --name kibana -e &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;  58a692253df4
+
+root@空痕影的matebook:~# docker logs -fn 200 kibana
+[2022-05-22T06:42:51.682+00:00][INFO ][plugins-service] Plugin &quot;cloudSecurityPosture&quot; is disabled.
+[2022-05-22T06:42:51.725+00:00][INFO ][plugins-service] Plugin &quot;metricsEntities&quot; is disabled.
+[2022-05-22T06:42:51.842+00:00][INFO ][http.server.Preboot] http server running at http://0.0.0.0:5601
+[2022-05-22T06:42:51.896+00:00][INFO ][plugins-system.preboot] Setting up [1] plugins: [interactiveSetup]
+[2022-05-22T06:42:51.898+00:00][INFO ][preboot] &quot;interactiveSetup&quot; plugin is holding setup: Validating Elasticsearch connection configuration…
+[2022-05-22T06:42:51.942+00:00][INFO ][root] Holding setup until preboot stage is completed.
+
+
+i Kibana has not been configured.
+
+Go to http://0.0.0.0:5601/?code=376144 to get started.
+</code></pre>
+</li>
+<li><p>创建网络环境,并将两个应用配置</p>
+<pre><code class="shell">root@空痕影的matebook:~# docker network create elk
+b3027e542d18b7e53ee658a16a064c16f6bf1087a8101e5f4cee97e8810ff9ef
+
+root@空痕影的matebook:~# docker network connect elk kibana
+root@空痕影的matebook:~# docker network connect elk es
+</code></pre>
+</li>
+<li><p>配置kibana环境与账号</p>
+<p>首次进入的时候需要我们去es中获取token.</p>
+<p><img src="/images/es/es.assets/kibanna-start.png" alt="kibana-start"></p>
+<pre><code class="shell">root@空痕影的matebook:~# docker exec -it es /bin/bash
+elasticsearch@61ef5be570d0:~$ bin/elasticsearch-create-enrollment-token --s kibana
+WARNING: Owner of file [/usr/share/elasticsearch/config/users] used to be [root], but now is [elasticsearch]
+WARNING: Owner of file [/usr/share/elasticsearch/config/users_roles] used to be [root], but now is [elasticsearch]
+eyJ2ZXIiOiI4LjIuMCIsImFkciI6WyIxNzIuMTcuMC4yOjkyMDAiXSwiZmdyIjoiYzUxZTI0OWRlYmQyNTIyNDY1ODFkZGZhMjZjMzEwY2Y1Njg4ZDllNjQ5M2E0MGNmYmU0MjUzZTk1OThhZjIyYSIsImtleSI6InVSQ1A2b0FCckRTX19GdGlXdWVZOkx1NHRwVDFoUlh1b2tSdUw3TGVRY1EifQ==
+</code></pre>
+<p>将生成的token输入到页面并点击configure Elastic</p>
+<p><img src="/images/es/es.assets/kibanna-configure.png" alt="kibana-configure"></p>
+<p>等到配置好后即可进入登入界面.但这时候我们不知道登入的账户/密码.需要再次生成.</p>
+<pre><code class="shell">root@空痕影的matebook:~# docker exec -it es /bin/bash
+elasticsearch@61ef5be570d0:~$ ./bin/elasticsearch-reset-password  -u elastic
+This tool will reset the password of the [elastic] user to an autogenerated value.
+The password will be printed in the console.
+Please confirm that you would like to continue [y/N]y
+
+
+Password for the [elastic] user successfully reset.
+New value: h_pTyICNVR+8nYpGf0Ny
+</code></pre>
+<p>创建出用户名为elastic,密码为h_pTyICNVR+8nYpGf0Ny的一个账户.</p>
+<p>可在右上角自行更改密码.</p>
+</li>
+<li><p>更换中文</p>
+<p>kibana在6.x之后就存在中文匹配.只需要在kibana.yml中设置默认语言为中文即可.</p>
+<pre><code class="shell">root@空痕影的matebook:~# docker exec -it kibana /bin/bash
+kibana@1d29e930904f:~$ cd config/
+kibana@1d29e930904f:~/config$ echo i18n.locale: &quot;zh-CN&quot; &gt;&gt; kibana.yml
+</code></pre>
+<p>这样就可以放心的测试使用了.</p>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">65 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E5%8D%95%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">docker单机安装</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

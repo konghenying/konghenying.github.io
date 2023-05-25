@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2021 空痕影.
+        &copy; 2023 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -130,22 +130,22 @@
             <a href="/categories/mysql"><b>「
                 </b>MYSQL<b> 」</b></a>
             
-            十月 24, 2021
+            十二月 06, 2021
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="MySQL(八)日志文件" class="posttitle">MySQL(八)日志文件</a></h3>
+            <a href="/2021/12/06/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="MySQL(六)查询优化" class="posttitle">MySQL(六)查询优化</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                3.8k
+                7.1k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                3 mins.
+                6 mins.
             </span>
             
             
@@ -156,13 +156,28 @@
         
         <div class="md-content animated fadeIn">
             
-            <p>A  原子性  –undolog实现</p>
-<p>C 一致性  –通过其他三个(AID)来实现</p>
-<p>I  隔离性   –通过锁实现</p>
-<p>D 持久性   –redolog实现</p>
-<p>确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，...</p>
+            <ul>
+<li><p>网络</p>
+</li>
+<li><p>CPU</p>
+</li>
+<li><p>IO</p>
+</li>
+<li><p>上下文切换</p>
+</li>
+<li><p>系统调用</p>
+</li>
+<li><p>生成统计信息</p>
+</li>
+<li><p>锁等待时间</p>
+</li>
+</ul>
+<ul>
+<li>减少访问数据量的方式进行优化<ul>
+<li>确认应用程序是否在检索大量超过需要的数据</li>
+<li>确认mysql服务器层是否在分析大量超过...</li></ul></li></ul>
             
-            <span class="read-more"><a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2021/12/06/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -198,19 +213,19 @@
             
             十月 24, 2021
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/10/24/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="MySQL(六)查询优化" class="posttitle">MySQL(六)查询优化</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="MySQL(八)日志文件" class="posttitle">MySQL(八)日志文件</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        7k
+                        3.8k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        6 mins.
+                        3 mins.
                     </span>
                 
                 
@@ -221,39 +236,17 @@
         
         <div class="md-content animated fadeIn">
             
-                <ul>
-<li><p>网络</p>
-</li>
-<li><p>CPU</p>
-</li>
-<li><p>IO</p>
-</li>
-<li><p>上下文切换</p>
-</li>
-<li><p>系统调用</p>
-</li>
-<li><p>生成统计信息</p>
-</li>
-<li><p>锁等待时间</p>
-</li>
-</ul>
+                <p>A  原子性  –undolog实现</p>
+<p>C 一致性  –通过其他三个(AID)来实现</p>
+<p>I  隔离性   –通过锁实现</p>
+<p>D 持久性   –redolog实现</p>
+<p>确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。</p>
 <ul>
-<li>减少访问数据量的方式进行优化<ul>
-<li>确认应用程序是否在检索大量超过需要的数据</li>
-<li>确认mysql服务器层是否在分析大量超过需要的数据行</li>
-</ul>
+<li><p>当发生数据修改的时候, innodb 引擎会先将记录写到 redo log 中，并更新内存，此时更新就算是完成了，同时 innodb 引擎会在合适的时机将记录操作到磁盘中</p>
 </li>
-<li>是否向数据库请求了不需要的数据<ul>
-<li>查询不需要的记录,优化:使用limit限制查询的列.</li>
-<li>多表关联时返回全部列,优化:取用到的字段</li>
-<li>总是取出全部列,优化:取用到的字段</li>
-<li>重复查询相同的数据,优化:在外部缓存起来.</li>
-</ul>
-</li>
-</ul>
-<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>  如果查询缓存是打开的，那么mysql会优先检查这个查询是否...</p>
+<li><p>redolog 是固定大小的，是循...</p></li></ul>
             
-            <span class="read-more"><a href="/2021/10/24/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -711,7 +704,7 @@
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2021
+        &copy; 2023
         <span class="gradient-text">
             空痕影
         </span>.

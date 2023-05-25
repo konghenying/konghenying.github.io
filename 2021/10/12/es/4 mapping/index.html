@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>mapping - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="Mapping​        mapping就是ES数据字段field的type元数据，ES在创建索引的时候，dynamic mapping会自动为不同的数据指定相应mapping，mapping,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">mapping</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+                
+                十月 12, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/10/12/es/4%20mapping/" title="mapping" class="">mapping</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    5.3k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h1><p>​        mapping就是ES数据字段field的type元数据，ES在创建索引的时候，dynamic mapping会自动为不同的数据指定相应mapping，mapping中包含了字段的类型、搜索方式（exact value或者full text）、分词器等。</p>
+<h2 id="查看mapping"><a href="#查看mapping" class="headerlink" title="查看mapping"></a>查看mapping</h2><ol>
+<li><p>在dev tools中命令查询</p>
+<p>GET user/_mapping</p>
+</li>
+<li><p>在索引管理界面中查看</p>
+<p>stack management -&gt;index mamagement -&gt;(select table) -&gt;mappings</p>
+<p><img src="/images/es/es.assets/mapping%E4%BD%8D%E7%BD%AE.png" alt="mapping位置"></p>
+</li>
+</ol>
+<h2 id="ES-数据类型"><a href="#ES-数据类型" class="headerlink" title="ES 数据类型"></a>ES 数据类型</h2><ol>
+<li><p>常见数据类型</p>
+<ol>
+<li><p>数字类型</p>
+<p>long integer short byte double float half_float scaled_fload unsigned_long</p>
+</li>
+<li><p>keywords</p>
+<p>适用于索引结构化字段,可以用于过滤排序聚合,只能通过精确值(exact value)搜索到.eg:id</p>
+<p>constant_keyword:始终包含相同值的关键字字段.</p>
+<p>wildcard:可以针对类似grep的通配符查询优化日志行和类似的关键字值.</p>
+</li>
+<li><p>Dates: 包含date与date_nanos. es内部存储时间使用毫米.若还需要精确,用nanos来精确到纳秒.</p>
+</li>
+<li><p>alias: 为现有字段定义别名</p>
+</li>
+<li><p>binary: 二进制数据</p>
+</li>
+<li><p>range: 区间类型, integer_range, float_range, long_range, double_range, date_range.</p>
+</li>
+<li><p>text: 默认生成倒排索引,不生成正排索引.</p>
+<p>对于需要全文搜索的字段,其内容需要被解析, 在生成倒排索引前,字符串会被分析器分成一个一个词项.</p>
+<p>text类型不用于排序,很少用于聚合. 因为加载text字段需要大量堆空间用于正排索引,资源消耗过大,可能出现延迟等问题.</p>
+</li>
+</ol>
+</li>
+<li><p>对象关系类型</p>
+<ol>
+<li>object: 用于单个json对象</li>
+<li>nested: 用于json对象数组</li>
+<li>flattened: 允许将整个json对象索引为单个字段.</li>
+</ol>
+</li>
+<li><p>结构化类型</p>
+<p>geo-point: 经纬度</p>
+<p>geo-shape: 多边形</p>
+<p>point: 坐标点</p>
+<p>shape: 笛卡尔多边形</p>
+</li>
+<li><p>特殊类型</p>
+<p>ip地址: 用于ipv4,ipv6</p>
+<p>completion: 提供自动完成建议</p>
+<p>tocken_count: 计算字符串中令牌数量</p>
+<p>murmur3: 在索引时计算值的哈希并存于索引中.</p>
+<p>annotared-text: 索引包含特殊标记的文本.</p>
+<p>percolator: </p>
+<p>join: 为同一索引内的文档提供父子关系.</p>
+</li>
+<li><p>array: 无需专用的字段数据类型,任意字段都可以包含零个或者多个值.只要满足数据的结构一致即可.</p>
+</li>
+</ol>
+<h2 id="两种映射类型"><a href="#两种映射类型" class="headerlink" title="两种映射类型"></a>两种映射类型</h2><h3 id="dynamic-field-mapping"><a href="#dynamic-field-mapping" class="headerlink" title="dynamic field mapping:"></a>dynamic field mapping:</h3><ul>
+<li><p>整形 -&gt; long</p>
+</li>
+<li><p>浮点型 -&gt; float</p>
+</li>
+<li><p>true/false -&gt; boolean</p>
+</li>
+<li><p>日期 -&gt; date</p>
+</li>
+<li><p>数组 -&gt; 取决于数字中的第一个有效值</p>
+</li>
+<li><p>对象 -&gt; object</p>
+</li>
+<li><p>字符串 -&gt; 映射成text和keyword两个类型</p>
+<p>除了以上类型外,其他数据类型需要显示映射.</p>
+</li>
+</ul>
+<h3 id="expllcit-field-mapping-手动映射"><a href="#expllcit-field-mapping-手动映射" class="headerlink" title="expllcit field mapping 手动映射"></a>expllcit field mapping 手动映射</h3><pre><code class="elm">put /[table]
+&#123;
+  &quot;mappings&quot;: &#123;
+    &quot;properties&quot;: &#123;
+      &quot;[field]&quot; :&#123;
+        &quot;[mapping_parameter]&quot;: &quot;[mapping_vales]&quot;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+# eg:  设置描述字段类型
+PUT /mapping_1
+&#123;
+  &quot;mappings&quot;: &#123;
+    &quot;properties&quot;: &#123;
+      &quot;描述&quot; :&#123; // 字段名称
+        &quot;type&quot;: &quot;text&quot;, // 字段类型
+        &quot;analyzer&quot;: &quot;standard&quot;, // 分词器选择
+        &quot;fields&quot;: &#123; 
+          &quot;keyword&quot;:&#123; 
+            &quot;type&quot;:&quot;keyword&quot;,
+            &quot;ignore_above&quot;:255
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h3 id="映射参数"><a href="#映射参数" class="headerlink" title="映射参数"></a>映射参数</h3><ul>
+<li><p>index: 是否创建倒排索引,若不创建,该字段不会通过索引被搜索到.元数据中任然存在.</p>
+</li>
+<li><p>analyzer: 指定分析器(character filter,tokenizer,token filters).</p>
+</li>
+<li><p>boost: 当前字段相关度的评分权重,默认1. 在联合搜索时,计算出相关度的先后位置.</p>
+</li>
+<li><p>coerce: 是否允许强制类型转换. 可以自动转换字符串数字为数字.</p>
+</li>
+<li><p>copy_to: 允许将多个字段的值复制到数字字段中.然后作为单个字段进行查询.</p>
+</li>
+<li><p>doc_values: 正排索引开关.可以提升排序与聚合效率.若不需要对字段进行排序聚合与访问,可以禁用doc值来节省磁盘空间.不支持text类型的字段.</p>
+</li>
+<li><p>dynamic: 是否可以动态添加新字段.默认true</p>
+<p>true: 检测到的新字段将自动添加到映射中.</p>
+<p>false: 检测到的新字段不会存在mapping中.但数据还是会保存.只是没有索引,无法搜索该字段.需要在mapping中显示添加新字段.</p>
+<p>strict: 如果检测到新字段.将抛出异常并拒绝文档.需要提前显示添加新字段.</p>
+</li>
+<li><p>eager_global_ordinals: 用于聚合的字段上,优化聚合性能.</p>
+</li>
+<li><p>enable: 是否创建倒排索引.可以对单字段设置,也可以对全局设置.该状态一旦设置无法修改.</p>
+</li>
+<li><p>fielddate: 在索引关闭的情况下,因业务变更需要重新使用索引,可设置此参数.在jvm中动态的添加索引,用于排序或聚合.</p>
+</li>
+<li><p>fields: 给field创建多个字段, 用于不同目的.eg:text添加keyword.达到搜索目的.</p>
+</li>
+<li><p>ignore_above: 超过长度将忽略.</p>
+</li>
+<li><p>ignore_malformed: 类型错误忽略.</p>
+</li>
+<li><p>index_options: </p>
+</li>
+<li><p>index_prefixes: 前缀索引</p>
+</li>
+<li><p>mate: 附加元数据</p>
+</li>
+<li><p>normalizer:</p>
+</li>
+<li><p>norms: 是否禁用评分.</p>
+</li>
+<li><p>null_value: 为null时设置的默认值</p>
+</li>
+<li><p>search_analyzer: 设置单独的查询时分析器</p>
+</li>
+<li><p>similarity: 相关度算法设置</p>
+</li>
+<li><p>store: 设置字段是否仅查询.</p>
+</li>
+<li><p>term_vector:运维参数</p>
+</li>
+</ul>
+<h2 id="更新mapping语句"><a href="#更新mapping语句" class="headerlink" title="更新mapping语句"></a>更新mapping语句</h2><pre><code class="elm">
+GET ip_address/_mapping
+
+PUT ip_address/_mapping/_doc
+&#123;
+  &quot;properties&quot;:&#123;
+       &quot;ip&quot; : &#123;
+            &quot;type&quot; : &quot;keyword&quot;
+       &#125;,
+       &quot;province&quot;: &#123;
+          &quot;type&quot; : &quot;keyword&quot;
+       &#125;,
+       &quot;city&quot;: &#123;
+          &quot;type&quot; : &quot;keyword&quot;
+       &#125;
+  &#125;
+&#125;
+
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">65 <p>文章</p></a></li>
+                    <li><a href="/categories">12 <p>分类</p></a></li>
+                    <li><a href="/tags">14 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mapping"><span class="toc-number">1.</span> <span class="toc-text">Mapping</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bmapping"><span class="toc-number">1.1.</span> <span class="toc-text">查看mapping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">ES 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">两种映射类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dynamic-field-mapping"><span class="toc-number">1.3.1.</span> <span class="toc-text">dynamic field mapping:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#expllcit-field-mapping-%E6%89%8B%E5%8A%A8%E6%98%A0%E5%B0%84"><span class="toc-number">1.3.2.</span> <span class="toc-text">expllcit field mapping 手动映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.3.3.</span> <span class="toc-text">映射参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0mapping%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.4.</span> <span class="toc-text">更新mapping语句</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2023
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

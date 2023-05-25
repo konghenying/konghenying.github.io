@@ -60,9 +60,416 @@
                 <div class="content animated fadeIn">
                     <div class="set">
                         <h1 style="text-align: center">归档</h1>
-                        <p style="text-align: center">「 45 」</p>
+                        <p style="text-align: center">「 65 」</p>
                         <ul class="timeline timeline-centered">
                             
+                            
+                                
+                                <li class="timeline-item period">
+                                    <div class="timeline-info"></div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h2 class="timeline-title">五月 2023</h2>
+                                    </div>
+                                </li>
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/kafka/kafka(%E4%B8%80)%20%E6%A6%82%E8%BF%B0/">kafka(一) 概述</a>
+                                        <p>
+                                            kafka(一) 概述​       Kafka是由Apache软件基金会开发的一个开源流处理平台，由Scala和Java编写。Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以收集并处理用户在网站中的所有动作流数据以及物联网设备的采样信息。
+基本组成部分
+broker 
+  集群的基本单位,一台kafka服务器即为一个broker.多个broker组成一个kafka集群,broker...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/kafka/kafka(%E4%BA%8C)%20%E7%94%9F%E4%BA%A7%E8%80%85/">kafka(二) 生产者</a>
+                                        <p>
+                                            kafka(二) 生产者Kafka发送消息的主要步骤
+序列化ProducerRecord.
+
+如果ProducerRecord中指定了Partition.则分区器(Partitioner)不做任何事情.否则分区器根据消息的key得到一个Partition。
+
+消息被添加到相应的batch中,独立的线程将这些batch发送到broker上.
+
+broker收到消息会返回一个响应. 
+  成功写...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/">CENTOS7后通用配置</a>
+                                        <p>
+                                            虚拟机安装CENTOS7后通用配置1.先关闭防火墙#关闭防火墙                                                                  
+systemctl stop firewalld
+#禁止开机自启
+systemctl disabled firewalld
+
+2.配置网卡信息
+保存退出后输入: service network re...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/">删除文件不释放空间</a>
+                                        <p>
+                                            linux删除日志但没有释放空间问题溯源删除正在被占用的日志文件时,存储空间没有被释放.
+rm filename 
+命令删除文件后,
+df -h 
+按G查看磁盘使用情况.发现空间没有被释放掉.
+lsof |grep delete
+通过上述命令可以查看删除文件被占用情况.第二列为对应应用的PID.
+
+kill掉相应的应用后文件被占用的空间被释放.
+
+总结:
+当log文件过大,被错误日志塞满磁盘...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/%E6%89%B9%E9%87%8Fcopy/">linux 通过正则来复制文件</a>
+                                        <p>
+                                            批量复制spring的sources源码包到指定目录cd /mnt/c/Users/60512/Downloads/spring-5.2.13.RELEASE-dist/spring-framework-5.2.13.RELEASE/
+ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/sourc...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81/">win10 子系统忘记密码</a>
+                                        <p>
+                                            win10 子系统忘记密码方法一: 通过wsl直接进入
+
+cmd命令键入 wsl -u root 
+直接进入子系统的root账户.
+
+
+passwd 命令更改密码
+
+
+
+方法二: 找到shadow文件
+我的文件位置 C:\Users\60***\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1f...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85docker/"></a>
+                                        <p>
+                                            
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/">win10子系统使用</a>
+                                        <p>
+                                            WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
+这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.
+下载Ubuntu系统在Microsoft store中找到Ubuntu.并选择...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/ORACLE%20VM%20VIRTUALBOX%20%E6%89%A9%E5%AE%B9/">ORACLE VM VIRTUALBOX 扩容</a>
+                                        <p>
+                                            ORACLE VM VIRTUALBOX 扩容由于创建虚拟机时没有申请大些的磁盘.导致虚拟机没怎么用就磁盘满了.
+磁盘满了.
+VirtualBox 4以上后可以用VBoxManage来处理配置.程序位置在安装目录下
+
+在当前目录下打开cmd框.并使用.
+1.列出虚拟机磁盘找到需要扩容的磁盘并记下uuid
+VBoxManage list hdds
+
+
+我需要扩容第一条记录的磁盘.所以键入命令:...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/frp%E6%90%AD%E5%BB%BA/">搭建frp内网穿透连接win10子系统</a>
+                                        <p>
+                                            搭建frp内网穿透连接win10子系统frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控主机实现反向代理，用户通过访问frps（中转服务器）来实现对frpc（被控主机）的远程访问。
+如今买了台matebook轻薄办公,之前的游戏本就一直闲置着.想想浪费.不如把它穿透了当个服务器用,性能非常好.
+1. 前期准备中转服务器: 一台阿里云服务器,(配置没啥要求,但带宽最好能好些)
+被控主...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/linux/%E6%8A%93%E5%8C%85%E5%91%BD%E4%BB%A4/">抓包命令</a>
+                                        <p>
+                                            抓包命令格式~# tcpdump -h
+tcpdump version 4.9.3
+libpcap version 1.8.1
+OpenSSL 1.0.2u  20 Dec 2019
+Usage: tcpdump [-aAbdDefhHIJKlLnNOpqStuUvxX#] [ -B size ] [ -c count ]
+        [ -C file_size ] [ -E algo...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/git/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/">git常用命名速查</a>
+                                        <p>
+                                            git结构概览
+初始化git init
+git init --bare repo_name.git    #创建一个名为repo_name的裸仓库，作为远程仓库使用
+
+查看状态git status
+
+添加文件至暂存区git add filename #添加某个文件
+git add . #添加工作区中的所有文件
+
+提交至本地仓库git commit -m &quot;本次提交的说明&quot;...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/docker/docker/"></a>
+                                        <p>
+                                            dockerdocker存在一定的虚拟化职能。利用docker不仅可以创建容器，也可以向物理机申请相应的资源，方便程序的迁移与扩展。docker提供了标准的应用打包的方式，形成集装箱式的镜像文件。这个镜像文件中包含了应用所需要的的所有资源与外部引用，同时还描述运行应用所需要硬件上的需求，在部署时还可以灵活的调整。运维工程师使用docker可以方便的对应用进行扩展与还原，得到一个与之前相同的运...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 25, 2023</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2023/05/25/docker/docker%20%E7%BC%96%E6%8E%92%E4%B9%8Bcomponse/"></a>
+                                        <p>
+                                            
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item period">
+                                    <div class="timeline-info"></div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h2 class="timeline-title">十月 2022</h2>
+                                    </div>
+                                </li>
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十月 01, 2022</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2022/10/01/java/lombook%E4%B9%8B%E5%9D%91/">lombook注意点1</a>
+                                        <p>
+                                            lombook注意点11. pId格式的值传递成pid问题.问题描述   一个实体类存有pId,即第一个字母小写,第二个字母大写的情况.
+public class Department &#123;
+    private Long id;
+    private Long pId;
+    private String name;
+&#125;
+
+如果走idea自动生成的get/set方法...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十月 01, 2022</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2022/10/01/java/maven/">maven 上传私服</a>
+                                        <p>
+                                            maven 上传私服1.配置maven的settings配置.其中包含私服地址,账户等信息.2.在idea中关联maven配置文件settings关联settings
+3.pom中配置私服地址  &lt;!-- 使用分发管理将本项目打成jar包，直接上传到指定服务器 --&gt; 
+  &lt;distributionManagement&gt; 
+    &lt;!--正式版本--&gt;...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item period">
+                                    <div class="timeline-info"></div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h2 class="timeline-title">五月 2022</h2>
+                                    </div>
+                                </li>
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 04, 2022</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2022/05/04/java/stopwatch%E4%BC%98%E9%9B%85%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/">stopwatch优雅打印执行时间</a>
+                                        <p>
+                                            stopwatch优雅打印执行时间背景在开发过程中, 有时需要记录一段代码的执行时间,或任务执行的时间.传统用法是在执行开始于结束各记录一次时间,两次时间相减就是执行时间.但这每次计算都需要设置两个变量放于首位.且随着业务改动,调整较大. 而目前有这么一类秒表工具类stopwatch.一次定义,多次使用. 提供者有spring-framework,apache与google.
+简单方法在业务...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">五月 04, 2022</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2022/05/04/java/%E6%97%A5%E6%9C%9F%E6%B3%A8%E8%A7%A3/">日期注解</a>
+                                        <p>
+                                            日期注解@JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+接口输出所用到的格式化日期注解
+@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+接口接收日期字段所用到的格式化日期注解
+
+
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item period">
+                                    <div class="timeline-info"></div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h2 class="timeline-title">十二月 2021</h2>
+                                    </div>
+                                </li>
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十二月 06, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/12/06/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">MySQL(六)查询优化</a>
+                                        <p>
+                                            查询优化查询慢的原因
+网络
+
+CPU
+
+IO
+
+上下文切换
+
+系统调用
+
+生成统计信息
+
+锁等待时间
+
+
+优化数据访问
+减少访问数据量的方式进行优化
+确认应用程序是否在检索大量超过需要的数据
+确认mysql服务器层是否在分析大量超过需要的数据行
+
+
+是否向数据库请求了不需要的数据
+查询不需要的记录,优化:使用limit限制查询的列.
+多表关联时返回全部列,优化:取用到的字段
+总是取出全部列,...
+                                        </p>
+                                    </div>
+                                </li>
                             
                                 
                                 <li class="timeline-item period">
@@ -88,45 +495,6 @@ D 持久性   –redolog实现
 redolog确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。
 
 当发生数据修改的时候, innodb 引擎会先将记录写到 red...
-                                        </p>
-                                    </div>
-                                </li>
-                            
-                                
-                                <li class="timeline-item">
-                                    <div class="timeline-info">
-                                        <span class="gradient-text">十月 24, 2021</span>
-                                    </div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/10/24/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">MySQL(六)查询优化</a>
-                                        <p>
-                                            查询慢的原因
-网络
-
-CPU
-
-IO
-
-上下文切换
-
-系统调用
-
-生成统计信息
-
-锁等待时间
-
-
-优化数据访问
-减少访问数据量的方式进行优化
-确认应用程序是否在检索大量超过需要的数据
-确认mysql服务器层是否在分析大量超过需要的数据行
-
-
-是否向数据库请求了不需要的数据
-查询不需要的记录,优化:使用limit限制查询的列.
-多表关联时返回全部列,优化:取用到的字段
-总是取出全部列,优化:取...
                                         </p>
                                     </div>
                                 </li>
@@ -163,6 +531,46 @@ simple pattern tokenizer：以正则匹配词项，...
 三种聚合分类
 
 分桶聚合（Bucket ag...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十月 12, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/10/12/es/0%20%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/">环境搭建</a>
+                                        <p>
+                                            docker单机安装
+下载elasticsearch镜像
+docker pull elasticsearch:8.2.0
+
+root@空痕影的matebook:~# docker pull elasticsearch:8.2.0
+8.2.0: Pulling from library/elasticsearch
+e0b25ef51634: Pull complete
+860caabdf263...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">十月 12, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/10/12/es/4%20mapping/">mapping</a>
+                                        <p>
+                                            Mapping​        mapping就是ES数据字段field的type元数据，ES在创建索引的时候，dynamic mapping会自动为不同的数据指定相应mapping，mapping中包含了字段的类型、搜索方式（exact value或者full text）、分词器等。
+查看mapping
+在dev tools中命令查询
+GET user/_mapping
+
+在索引管理界面中...
                                         </p>
                                     </div>
                                 </li>
@@ -334,6 +742,24 @@ B+Tree每个节点可以包含更多的节点.
 索引的优点
 大大减少服务器需要扫描的数据量
 帮助服务器避免排序...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">八月 13, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/08/13/java/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%94%9F%E6%88%90%E7%9A%84CLASS%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B/">JDK动态代理生成的CLASS文件</a>
+                                        <p>
+                                            JDK动态代理生成的CLASS文件查看在学习代理模式的时候,想看看动态代理生成的文件长啥样.只需要在程序启动时设置生成配置.
+源码中可以看出文件输出是通过 saveGeneratedFiles 控制的.
+
+而saveGeneratedFiles的生成是通过GetBooleanAction方法读取系统变量由来.
+private static final boolean saveGenerate...
                                         </p>
                                     </div>
                                 </li>
@@ -843,26 +1269,15 @@ yum install yum-utils ...
                                 </li>
                             
                                 
-                                <li class="timeline-item period">
-                                    <div class="timeline-info"></div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
-                                        <h2 class="timeline-title">二月 2021</h2>
-                                    </div>
-                                </li>
-                                
                                 <li class="timeline-item">
                                     <div class="timeline-info">
-                                        <span class="gradient-text">二月 28, 2021</span>
+                                        <span class="gradient-text">三月 30, 2021</span>
                                     </div>
                                     <div class="timeline-marker"></div>
                                     <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/02/28/linux/frp%E6%90%AD%E5%BB%BA/">frp搭建</a>
+                                        <a class="timeline-title" target="_self" href="/2021/03/30/springboot/spi%E6%9C%BA%E5%88%B6/">java spi 机制</a>
                                         <p>
-                                            搭建frp内网穿透连接win10子系统frp内网穿透是通过一个带有公网IP的服务器进行中转，对被控主机实现反向代理，用户通过访问frps（中转服务器）来实现对frpc（被控主机）的远程访问。
-如今买了台matebook轻薄办公,之前的游戏本就一直闲置着.想想浪费.不如把它穿透了当个服务器用,性能非常好.
-1. 前期准备中转服务器: 一台阿里云服务器,(配置没啥要求,但带宽最好能好些)
-被控主...
+                                            java spi 机制​        SPI 全称为 (Service Provider Interface) ，是JDK内置的一种服务提供发现机制。SPI是一种动态替换发现的机制， 比如有个接口，想运行时动态的给它添加实现，你只需要添加一个实现。我们经常遇到的就是java.sql.Driver接口，其他不同厂商可以针对同一接口做出不同的实现，mysql和postgresql都有不同的实现...
                                         </p>
                                     </div>
                                 </li>
@@ -870,55 +1285,42 @@ yum install yum-utils ...
                                 
                                 <li class="timeline-item">
                                     <div class="timeline-info">
-                                        <span class="gradient-text">二月 28, 2021</span>
+                                        <span class="gradient-text">三月 30, 2021</span>
                                     </div>
                                     <div class="timeline-marker"></div>
                                     <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/02/28/linux/%E6%89%B9%E9%87%8Fcopy/">linux 通过正则来复制文件</a>
+                                        <a class="timeline-title" target="_self" href="/2021/03/30/springboot/springboot(%E4%B8%80)%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">springboot-配置文件</a>
                                         <p>
-                                            批量复制spring的sources源码包到指定目录cd /mnt/c/Users/60512/Downloads/spring-5.2.13.RELEASE-dist/spring-framework-5.2.13.RELEASE/
-ls ./libs/ | grep sources.jar | xargs -i cp -r ./libs/&#123;&#125; ./libs/sourc...
-                                        </p>
-                                    </div>
-                                </li>
-                            
-                                
-                                <li class="timeline-item">
-                                    <div class="timeline-info">
-                                        <span class="gradient-text">二月 28, 2021</span>
-                                    </div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/02/28/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F/">win10子系统搭建</a>
-                                        <p>
-                                            WIN10子系统使用   在工作中,难免想本地搭建个测试环境,但由于自己是windows系统,又要找一堆安装包来替换,有些还不是官方的包比如redis windows版.
-这时,win10子系统就突出了他的优势.它允许在windows系统中使用Ubuntu 终端来执行Ubuntu命令.且与win10共用一套端口.
-下载Ubuntu系统在Microsoft store中找到Ubuntu.并选择...
-                                        </p>
-                                    </div>
-                                </li>
-                            
-                                
-                                <li class="timeline-item">
-                                    <div class="timeline-info">
-                                        <span class="gradient-text">二月 28, 2021</span>
-                                    </div>
-                                    <div class="timeline-marker"></div>
-                                    <div class="timeline-content">
-                                        <a class="timeline-title" target="_self" href="/2021/02/28/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/">删除文件不释放空间</a>
-                                        <p>
-                                            linux删除日志但没有释放空间问题溯源删除正在被占用的日志文件时,存储空间没有被释放.
-rm filename 
-命令删除文件后,
-df -h 
-按G查看磁盘使用情况.发现空间没有被释放掉.
-lsof |grep delete
-通过上述命令可以查看删除文件被占用情况.第二列为对应应用的PID.
+                                            springboot 配置文件更改启动显示resource目录下创建banner.txt文件.在里面替换想要的文案.
+可以在中生成想要的文案
 
-kill掉相应的应用后文件被占用的空间被释放.
+https://www.bootschool.net/ascii
 
-总结:
-当log文件过大,被错误日志塞满磁盘...
+https://patorjk.com/software/taag/#p=testall&amp;f=3D%20Diagonal&amp;t=
+
+
+
+配置文件类型
+propertie...
+                                        </p>
+                                    </div>
+                                </li>
+                            
+                                
+                                <li class="timeline-item">
+                                    <div class="timeline-info">
+                                        <span class="gradient-text">三月 30, 2021</span>
+                                    </div>
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <a class="timeline-title" target="_self" href="/2021/03/30/springboot/springboot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">springboot-启动流程</a>
+                                        <p>
+                                            springboot启动流程大致流程图
+springboot的入口程序@SpringBootApplication
+public class SampleWebServicesApplication &#123;
+
+    public static void main(String[] args) &#123;
+        SpringApplication.run(SampleWeb...
                                         </p>
                                     </div>
                                 </li>
@@ -1006,7 +1408,7 @@ RuntimeService: 运行时Service,可以处理所有正在运行状态的流程�
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2021
+        &copy; 2023
         <span class="gradient-text">
             空痕影
         </span>.
