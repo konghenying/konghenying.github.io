@@ -1,0 +1,928 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Category: 中间件 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div class="nav">
+    <ul id="menu-menu" class="menu">
+        
+        <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/categories/" title="分类" external="false">分类</a>
+        </li>
+        
+        <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/tags/" title="标签" external="false">标签</a>
+        </li>
+        
+        <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/archives/" title="归档" external="false">归档</a>
+        </li>
+        
+    </ul>
+    <p class="copyright" id="copyright">
+        &copy; 2024 空痕影.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+    </p>
+</div>
+
+<div id="container">
+    
+<div class="search-box">
+    <form class="site-search-form">
+        <span class="iconfont icon-search"></span>
+        <input type="text" id="local-search-input" class="st-search-input" />
+        <div class="iconfont icon-cross search-box-close"></div>
+    </form>
+    <div class="search-scrollable">
+        <div id="local-search-result" class="local-search-result-cls" data-initialise="首次搜索，正在载入索引文件，请稍后……"
+            data-start="输入关键词搜索。" data-empty="没有找到内容，请尝试更换检索词。">
+            <span>输入关键词搜索。</span>
+        </div>
+    </div>
+</div>
+<div id="header">
+    <div>
+        <div class="logo animated fadeInDown">
+            <img src="/img/favicon.png" alt="">
+            <a class="image-logo" href="/"></a>
+        </div>
+        <ul id="menu-menu" class="menu text-menu">
+            
+            <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="/categories/" title="分类" external="false" class="menu-link">分类</a>
+            </li>
+            
+            <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="/tags/" title="标签" external="false" class="menu-link">标签</a>
+            </li>
+            
+            <li class="animated fadeInDown menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="/archives/" title="归档" external="false" class="menu-link">归档</a>
+            </li>
+            
+            
+        </ul>
+        <div class="iconfont icon-menu switchmenu gradient-text animated fadeInDown"></div>
+    </div>
+</div>
+<div id="screen">
+    <div id="mark">
+        <div class="cover animated fadeIn" style="
+            animation-delay: 900ms;
+            animation-duration: 2.8s;
+            background-image:
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.56), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+    </div>
+    
+    <div id="post0" class="else">
+        <p class="animated fadeInDown">
+            
+            <a href="/categories/中间件"><b>「
+                </b>中间件<b> 」</b></a>
+            
+            十月 21, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown">
+            <a href="/2022/10/21/zookeeper/zookeeper%20(%E5%9B%9B)/" title="zookeeper（四） 使用" class="posttitle">zookeeper（四） 使用</a></h3>
+        
+        <p class="post-count animated fadeInDown">
+            
+            <span>
+                <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                611
+            </span>
+            
+            
+            <span>
+                <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                1 mins.
+            </span>
+            
+            
+        </p>
+        
+        
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li></ul>
+        
+        <div class="md-content animated fadeIn">
+            
+            <ul>
+<li><p>六十花甲纳音歌</p>
+</li>
+<li><p>十天干所属</p>
+</li>
+<li><p>十二地支所属</p>
+</li>
+<li><p>五行相生相克</p>
+</li>
+<li><p>六亲相生相克</p>
+</li>
+<li><p>天干地址八卦方位图 </p>
+<ul>
+<li>先天八卦</li>
+<li>后天八卦</li>
+</ul>
+</li>
+<li><p>天干相合</p>
+</li>
+<li><p>地支相合</p>
+</li>
+<li><p>五行次序</p>
+</li>
+<li><p>八卦次序</p>
+</li>
+<li><p>八宫所属</p>
+</li>
+<li><p>以钱代蓍法...</p></li></ul>
+            
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%20(%E5%9B%9B)/" title="查看全文" class="posttitle">查看全文</a>
+                <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+    
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="typed-text"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="primary">
+        
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            十月 21, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%80%EF%BC%89%E6%A6%82%E8%BF%B0/" title="zookeeper（一） 概述" class="posttitle">zookeeper（一） 概述</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        5.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        5 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>  <a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">zookeeper</a>是一种分布式应用程序的分布式协调服务，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。</p>
+<p>  zookeeper设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</p>
+<p>  zookeeper将数据保存在内存中，保证了高吞吐与低延迟，同时Zk规定节点的数据大小不能超过1M，我们实际使用时节点存储的数据...</p>
+            
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%80%EF%BC%89%E6%A6%82%E8%BF%B0/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            十月 21, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AE%89%E8%A3%85/" title="zookeeper（二） 安装" class="posttitle">zookeeper（二） 安装</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        11k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        10 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><pre><code class="shell"># 默认拉取最新的版本，如要指定版本 zookeeeper:版本号
+docker pull zookeeper
+</code></pre>
+<p></p>
+<h3 id="创建并运行容器"><a href="#创建并运行容器" class="headerlink" title="创建并运行容器"></a>创建并运行容器</h3><pre><code class="shell">docker run --name zookeeper -e JAMFLAGS=&quot;-Xmx256m&quot; -v /mysoft/zookeeper/data/:/data/ -d -p 2181:2181 --privileged zookeeper
+</code></pre>
+<p></p>
+<h3 id="使用zk客户端创建节点"><a href="#使用zk客户端创建节点" class="headerlink" title="使用zk客户端创建节点"></a>使用zk客户端创建节点</h3><pre><code class="shell"># 进入容器
+docker exec -it acf2ec660c0e...</code></pre>
+            
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AE%89%E8%A3%85/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            十月 21, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE/" title="zookeeper（三） 协议" class="posttitle">zookeeper（三） 协议</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        9.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        8 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ol>
+<li>先启动node01<ul>
+<li>会建立一个2888的服务端口与3888的选举端口。</li>
+<li>此时只有一个服务启动，所以没有其他关联。</li>
+</ul>
+</li>
+<li>再启动node02<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>同时查找集群配置，发现能联通node1，并建立socket连接，将随机分配一个端口与node1的3888选举端口映射。</li>
+</ul>
+</li>
+<li>然后是node03<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>查找集群配置，发现能联通node1与node2，并建立两条socket连接，随机分配端口与node1与node2...</li></ul></li></ol>
+            
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/0.redis%E5%AE%89%E8%A3%85/" title="redis (零) 安装" class="posttitle">redis (零) 安装</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        30k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        28 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p><a target="_blank" rel="noopener" href="https://snapcraft.io/install/redis/centos">snap 安装方式</a></p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/redis/redis-hashes">github地址redis-hashes</a> 选择5.0的最新版本.5.0.14 </p>
+<h3 id="单节点"><a href="#单节点" class="headerlink" title="单节点"></a>单节点</h3><pre><code class="shell"># 1.下载安装包
+wget http://download.redis.io/releases/redis-5.0.14.tar.gz
+# 2.解压
+tar -zxf redis-5.0.14.tar.gz
+# 3.进入文件夹,可以查看readme.md来查看安装步骤与参数设置.
+# make本质时读取makefile文件里的命令集,所以可以通过阅读具体的makefile来了解具体的安装...</code></pre>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/0.redis%E5%AE%89%E8%A3%85/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/1.%E6%A6%82%E5%BF%B5/" title="redis (一) 概念" class="posttitle">redis (一) 概念</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        6.3k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li><p>磁盘</p>
+<ul>
+<li>寻址速度为毫秒ms级别</li>
+<li>带宽为G/M级别</li>
+<li>磁盘,磁道,扇区512Byte.</li>
+<li>操作系统中读多少都是以4K为最小单位.</li>
+</ul>
+</li>
+<li><p>内存</p>
+<ul>
+<li>寻址速度为纳秒ns级别.</li>
+<li>带宽无太多限制</li>
+</ul>
+<p>数据库引擎网站 <code>https://db-engines.com/en</code> 可以查看排名与使用量.等信息</p>
+</li>
+</ul>
+<h3 id="BIO-NIO知识"><a href="#BIO-NIO知识" class="headerlink" title="BIO,NIO知识"></a>BIO,NIO知识</h3><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><p></p>
+<ol>
+<li>创建两个阻塞的socket连接.</li>
+<li>两个client连接接入,发送了文件描述为fd8与fd9,应用分别开启俩个线程来读取文件描述符,获取状态.</li>
+<li>当fd8连接的数据还未到达时,线程获取到cpu...</li></ol>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/1.%E6%A6%82%E5%BF%B5/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/2.%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" title="redis (二) 配置文件" class="posttitle">redis (二) 配置文件</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        7.2k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        7 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <pre><code class="shell"># 绑定IP: 指定 redis 只接收来自于该IP地址的请求，如果不进行设置，那么将处理所有请求
+bind 127.0.0.1
+
+# 保护模式: 只允许绑定的IP验证密码后访问.
+# 要是配置里没有指定bind或密码, 开启该参数后，redis只会本地进行访问，拒绝外部访问。
+# 如果想任意客户端都能访问需要关闭保护模式
+protected-mode yes
+
+# 服务端口号
+port 6379
+
+# 客户端空闲超时等待时间,0 则为不主动断开连接.
+timeout 0
+</code></pre>
+<pre><code class="shell">
+# 是否后台执行
+deamonize...</code></pre>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/2.%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/3.%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8D%B3%E7%94%A8%E6%B3%95/" title="redis (三) 数据类型即用法" class="posttitle">redis (三) 数据类型即用法</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        29k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        27 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li>REDIS_ENCODING_INT（long 类型的整数）</li>
+<li>REDIS_ENCODING_EMBSTR embstr （编码的简单动态字符串）</li>
+<li>REDIS_ENCODING_RAW （简单动态字符串）</li>
+<li>REDIS_ENCODING_HT （字典）</li>
+<li>REDIS_ENCODING_LINKEDLIST （双端链表）</li>
+<li>REDIS_ENCODING_ZIPLIST （压缩列表）</li>
+<li>REDIS_ENCODING_INTSET （整数集合）</li>
+<li>REDIS_ENCODING_SKIPLIST （跳跃表和字典）...</li></ul>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/3.%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8D%B3%E7%94%A8%E6%B3%95/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/4.RDB&AOF%E6%97%A5%E5%BF%97/" title="redis (四) RDB&amp;AOF日志" class="posttitle">redis (四) RDB&amp;AOF日志</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        4.3k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        4 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>​        Redis 是一种内存数据库，将数据保存在内存中，读写效率要比传统的将数据保存在磁盘上的数据库要快很多。但是一旦进程退出，Redis 的数据就会丢失。</p>
+<p>​        为了解决这个问题，Redis 提供了 RDB 和 AOF 两种持久化方案，将内存中的数据保存到磁盘中，避免数据丢失。</p>
+<p>​        把当前 Redis 进程的数据生成时间点快照( point-in-time snapshot ) 保存到存储设备的过程,为redis默认持久化方式.</p>
+<h3 id="持久化简单过程"><a href="#持久化简单过程" class="headerlink" title="持久化简单过程"></a>持久化简单过程</h3><p></p>
+<ol>
+<li>调用bgsave命令,父进程接收命令判断是否可持续...</li></ol>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/4.RDB&AOF%E6%97%A5%E5%BF%97/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            七月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/5.RDB%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3/" title="redis (五) RDB日志详解" class="posttitle">redis (五) RDB日志详解</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        27k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        25 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>本文中的源码来自 Redis 5.0 ，RDB持久化过程的相关源码都在 rdb.c 文件中.</p>
+<p></p>
+<p>​        上图表明了三种触发 RDB 持久化的手段之间的整体关系。通过 serverCron 自动触发的 RDB 相当于直接调用了 bgsave 指令的流程进行处理。而 bgsave 的处理流程启动子进程后，调用了 save 指令的处理流程。</p>
+<h3 id="serverCron-自动触发持久化逻辑"><a href="#serverCron-自动触发持久化逻辑" class="headerlink" title="serverCron(自动触发持久化逻辑)"></a>serverCron(自动触发持久化逻辑)</h3><p>redisServer 结构体的 save_params指向拥有三个值的数组，该数组的值与 redis.conf 文件中 save...</p>
+            
+            <span class="read-more"><a href="/2022/07/10/redis/5.RDB%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+    
+    <div id="pager"><a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/page/2/" class="more" data-loading="加载中..." data-load-more="加载更多">加载更多</a></div>
+    
+</div>
+<div id="preview"></div>
+
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

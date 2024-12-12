@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zookeeper（三） 协议 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="协议集群启动顺序（演示图与实际图node数值相差1）
+先启动node01
+会建立一个2888的服务端口与3888的选举端口。
+此时只有一个服务启动，所以没有其他关联。
+
+
+再启动node02
+同样建,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">zookeeper（三） 协议</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                十月 21, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE/" title="zookeeper（三） 协议" class="">zookeeper（三） 协议</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    9.1k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    8 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><h2 id="集群启动顺序（演示图与实际图node数值相差1）"><a href="#集群启动顺序（演示图与实际图node数值相差1）" class="headerlink" title="集群启动顺序（演示图与实际图node数值相差1）"></a>集群启动顺序（演示图与实际图node数值相差1）</h2><ol>
+<li>先启动node01<ul>
+<li>会建立一个2888的服务端口与3888的选举端口。</li>
+<li>此时只有一个服务启动，所以没有其他关联。</li>
+</ul>
+</li>
+<li>再启动node02<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>同时查找集群配置，发现能联通node1，并建立socket连接，将随机分配一个端口与node1的3888选举端口映射。</li>
+</ul>
+</li>
+<li>然后是node03<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>查找集群配置，发现能联通node1与node2，并建立两条socket连接，随机分配端口与node1与node2的3888选举端口映射。</li>
+</ul>
+</li>
+<li>最后是node04<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>查找集群配置，发现能联通node1，node2与node3，并建立三条socket连接，随机分配端口与node1，node2与node3的3888选举端口映射。</li>
+</ul>
+</li>
+</ol>
+<p>当启动完后，会发现如下一张图，其每个节点都有一条与其他node连接。又由于是socket连接，可以互通，所以达到了每个节点都能与其他通信的可能。</p>
+<p><img src="/images/zookeeper/zookeeper.assets/zookeeper%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E6%BC%94%E7%A4%BA.png" alt="zookeeper启动顺序演示"></p>
+<p><img src="/images/zookeeper/zookeeper.assets/%E9%9B%86%E7%BE%A4%E9%80%9A%E4%BF%A13888.png" alt="集群通信3888"></p>
+<h2 id="paxos-算法"><a href="#paxos-算法" class="headerlink" title="paxos 算法"></a>paxos 算法</h2><h3 id="场景描述"><a href="#场景描述" class="headerlink" title="场景描述"></a>场景描述</h3><ul>
+<li><p>有一个叫做Paxos的小岛(Island)上面住了一批居民，岛上面所有的事情由一些特殊的人决定，他们叫做议员(Senator)。</p>
+</li>
+<li><p>议员的总数(Senator Count)是确定的，不能更改。</p>
+</li>
+<li><p>岛上每次环境事务的变更都需要通过一个提议(Proposal)。</p>
+</li>
+<li><p>每个提议都有一个编号(PID)，这个编号是一直增长的，不能倒退。</p>
+</li>
+<li><p>每个提议都需要超过半数((Senator Count)/2 +1)的议员同意才能生效。</p>
+</li>
+<li><p>每个议员只会同意大于当前编号的提议，包括已生效的和未生效的。</p>
+</li>
+<li><p>如果议员收到小于等于当前编号的提议，他会拒绝，并告知对方：你的提议已经有人提过了。这里的当前编号是每个议员在自己记事本上面记录的编号，他不断更新这个编号。</p>
+</li>
+<li><p>整个议会不能保证所有议员记事本上的编号总是相同的。现在议会有一个目标：保证所有的议员对于提议都能达成一致的看法。</p>
+</li>
+</ul>
+<h3 id="协议运行"><a href="#协议运行" class="headerlink" title="协议运行"></a>协议运行</h3><h4 id="正常场景"><a href="#正常场景" class="headerlink" title="正常场景"></a>正常场景</h4><ul>
+<li>所有议员一开始记事本上面记录的编号都是0。</li>
+<li>有一个议员发了一个提议：将电费设定为1元/度。他首先看了一下记事本，嗯，当前提议编号是0，那么我的这个提议的编号就是1，于是他给所有议员发消息：1号提议，设定电费1元/度。</li>
+<li>其他议员收到消息以后查了一下记事本，哦，当前提议编号是0，这个提议可接受，于是他记录下这个提议并回复：我接受你的1号提议，同时他在记事本上记录：当前提议编号为1。发起提议的议员收到了超过半数的回复，立即给所有人发通知：1号提议生效！</li>
+<li>收到的议员会修改他的记事本，将1好提议由记录改成正式的法令，当有人问他电费为多少时，他会查看法令并告诉对方：1元/度。</li>
+</ul>
+<h4 id="冲突场景"><a href="#冲突场景" class="headerlink" title="冲突场景"></a>冲突场景</h4><ul>
+<li>S1和S2同时发起了一个提议:1号提议，设定电费。S1想设为1元/度, S2想设为2元/度。</li>
+<li>S3先收到了S1的提议，于是他做了和前面同样的操作。紧接着他又收到了S2的提议，结果他一查记事本，咦，这个提议的编号小于等于我的当前编号1，于是他拒绝了这个提议：对不起，这个提议先前提过了。于是S2的提议被拒绝，</li>
+<li>S1正式发布了提议: 1号提议生效。S2向S1或者S3打听并更新了1号法令的内容，然后他可以选择继续发起2号提议。</li>
+</ul>
+<h2 id="zab协议"><a href="#zab协议" class="headerlink" title="zab协议"></a>zab协议</h2><p>Zab协议 的全称是 <strong>Zookeeper Atomic Broadcast</strong> （Zookeeper原子广播）。</p>
+<p>与paxos相似，但paxos中的角色都是平等的，但zab协议中的角色是有区别的，多了一个总统的概念。可以说zab是paxos的变种。</p>
+<h3 id="角色映射"><a href="#角色映射" class="headerlink" title="角色映射"></a>角色映射</h3><ul>
+<li><p>小岛(Island)——ZK Server Cluster</p>
+</li>
+<li><p>议员(Senator)——ZK Server</p>
+</li>
+<li><p>提议(Proposal)——ZNode Change(Create/Delete/SetData…)</p>
+</li>
+<li><p>提议编号(PID)——Zxid(ZooKeeper Transaction Id)</p>
+</li>
+<li><p>居民（client）– ZK clint</p>
+</li>
+</ul>
+<h3 id="协议运行-1"><a href="#协议运行-1" class="headerlink" title="协议运行"></a>协议运行</h3><h4 id="场景一（查）"><a href="#场景一（查）" class="headerlink" title="场景一（查）"></a>场景一（查）</h4><ul>
+<li>居民（client）到其中一个议员（zk server）那询问（get）某条法令的情况（znode数据）。</li>
+<li>议员拿出记事本（local storage）查阅法令并告诉他结果。但会声明，这条法令虽然是有效的，但未必是最新的。</li>
+<li>居民如果强调需要最新的法令，议员会让居民等待，与总统（leader）询问法令数据（sync）后，返回正确的法令情况给居民。</li>
+</ul>
+<h4 id="场景二（增删改）"><a href="#场景二（增删改）" class="headerlink" title="场景二（增删改）"></a>场景二（增删改）</h4><ul>
+<li>居民（client）到其中一个议员（zk server）那里要求更改（set）某条法令。</li>
+<li>议员让其等待，并将更改要求反馈给总统，总统发起提议更改法令，议员收到提议后有半数接受提议并反馈给总统。</li>
+<li>总统正式更改了法令后，将新的法令让议员通知到居民。</li>
+<li>居民拿着变更后的法令返回了。</li>
+</ul>
+<h3 id="具体执行步骤"><a href="#具体执行步骤" class="headerlink" title="具体执行步骤"></a>具体执行步骤</h3><h4 id="增演示"><a href="#增演示" class="headerlink" title="增演示"></a>增演示</h4><ol>
+<li>client客户端，连接一个follower，并发送一条创建节点语句。</li>
+<li>follower接收到请求后，向leader发送创建节点语句。</li>
+<li>leader收到follower的请求后，给该创建节点的语句编唯一序号zxid（控制版本用）。</li>
+<li>leader通过队列向follower发送创建节点的日志。<ol>
+<li>follower接收到消息后保存日志（还未启用），并向leader回执，表示收到。</li>
+<li>leader监听到半数follower回执完成日志记录后，再发送生效命令。</li>
+<li>follower收到生效命令，把保存日志的记录读取到内存生效，并回执。</li>
+</ol>
+</li>
+<li>leader返回follower响应。</li>
+<li>follower返回client响应。</li>
+</ol>
+<p><img src="/images/zookeeper/zookeeper.assets/zookeeper%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9%E6%BC%94%E7%A4%BA.png" alt="zookeeper创建节点演示"></p>
+<h4 id="查演示"><a href="#查演示" class="headerlink" title="查演示"></a>查演示</h4><ul>
+<li>client连接follower，查询节点信息。follower返回当前节点的数据，但未必是最新的。</li>
+<li>client连接follower，查询节点信息，要求是最新的。follower先同步节点信息，再返回节点数据，保证返回的数据最新。</li>
+</ul>
+<h3 id="leader选举"><a href="#leader选举" class="headerlink" title="leader选举"></a>leader选举</h3><p><strong>选举原理</strong></p>
+<ul>
+<li>zookeeper集群中只有超过半数以上的服务器启动，集群才可以对外服务。</li>
+<li>myid小的服务器给myid大的服务器投票，直到选出leader。</li>
+<li>如果是恢复模式下，myid小的投票给myid大的前提是两者保存的都是最新数据（zxid），否则，谁的数据新，谁获得票。</li>
+</ul>
+<h4 id="场景一：第一次启动集群"><a href="#场景一：第一次启动集群" class="headerlink" title="场景一：第一次启动集群"></a>场景一：第一次启动集群</h4><ol>
+<li>启动node01：<ul>
+<li>node01未找到集群中的leader，发起投票，先给自己投一票。</li>
+<li>由于没有其他联通的服务器，等待计票时没有一个票数超过半数，所以保持looking状态。等待其他服务的上线与选举。</li>
+</ul>
+</li>
+<li>启动node02：<ul>
+<li>node02未找到集群leader,发起投票，票箱里是空的，所以投自己一票，并广播出去自己选了的leader信息。</li>
+<li>node01接收到node02发送的广播信息，将node02选出的leader(node02)信息与自己选择的leader（node01）做比较,发现node02的myid比自己选择的leader大，将自己的leader更改为node02的leader，保存进票箱，并广播。</li>
+<li>node02收到广播，发现node01变更的leader与自己的leader一致，写入票箱。</li>
+<li>由于没有其他联通的服务器，等待计票时没有一个票数超过半数，所以保持looking状态。等待其他服务的上线与选举。</li>
+</ul>
+</li>
+<li>启动node03：<ul>
+<li>node03未找到集群leader,发起投票，票箱里是空的，所以投自己一票，并广播出去自己选了的leader信息。</li>
+<li>node02与node01接受到广播消息，将node03选出的leader（node03）信息与自己选出的leader（node02）作比较，发现node03的myid比自己选的ldeader大，将自己的leader更改为node03的leader，保存进票箱，并广播。</li>
+<li>node01收到node02的广播，发现与自己现在选的leader一致，保存进票箱，不再广播。</li>
+<li>node02收到node01的广播，发现与自己现在选的leader一致，保存进票箱，不再广播。</li>
+<li>node03收到node01，node02的广播，发现与自己现在选的leader一致，保存进票箱，不再广播。</li>
+<li>最终归票，发现node03的票数为3，过半，node03将身份变为leader，node01，node02将身份变为follower。</li>
+</ul>
+</li>
+<li>启动node04：<ul>
+<li>node04发现集群中存在leader是node03，不再进行投票，直接变成follower身份，并关联leader。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/zookeeper/zookeeper.assets/%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8%E9%80%89%E4%B8%BE.png" alt="集群启动选举"></p>
+<h4 id="场景二：中途leader菪机"><a href="#场景二：中途leader菪机" class="headerlink" title="场景二：中途leader菪机"></a>场景二：中途leader菪机</h4><ol>
+<li><p>node03菪机：</p>
+<ul>
+<li>由于某些原因，node03服务器上的zookeeper服务挂了。</li>
+</ul>
+</li>
+<li><p>node02发现leader挂了：</p>
+<ul>
+<li><p>node02未找到集群leader，发起投票，将自己作为leader进行广播。</p>
+</li>
+<li><p>node04收到node02的广播，与自己做比对，发现是自己的zxid新，则将给自己投一票，并广播。</p>
+<p>node01收到node02的广播，与自己做比对，发现是自己的zxid新，则将给自己投一票，并广播。</p>
+</li>
+<li><p>node01与node02收到node04的广播，与自生当前leader做比较，发现node04的leader胜选，将票记下，并更改leader为node4的leader并广播。</p>
+</li>
+<li><p>node01收到node02的广播，发现leader一致，将票记下，不广播。</p>
+<p>node02收到node01的广播，发现leader一致，将票记下，不广播。</p>
+<p>node04收到node01，node02的广播，发现leader一致，将票记下，不广播。</p>
+</li>
+<li><p>最终归票，发现node03的票数为3，过半，node03将身份变为leader，node01，node02将身份变为follower。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/zookeeper/zookeeper.assets/%E9%9B%86%E7%BE%A4leader%E8%8F%AA%E6%9C%BA%E9%80%89%E4%B8%BE.png" alt="集群leader菪机选举"></p>
+<h2 id="算法核心"><a href="#算法核心" class="headerlink" title="算法核心"></a>算法核心</h2><p><strong>1、自增选举轮次</strong>。Zookeeper规定所有有效的投票都必须在同一轮次中，在开始新一轮投票时，会首先对logicalclock进行自增操作。</p>
+<p><strong>2、初始化选票</strong>。在开始进行新一轮投票之前，每个服务器都会初始化自身的选票，并且在初始化阶段，每台服务器都会将自己推举为Leader。</p>
+<p><strong>3、发送初始化选票</strong>。完成选票的初始化后，服务器就会发起第一次投票。Zookeeper会将刚刚初始化好的选票放入sendqueue中，由发送器WorkerSender负责发送出去。</p>
+<p><strong>4、接收外部投票</strong>。每台服务器会不断地从recvqueue队列中获取外部选票。如果服务器发现无法获取到任何外部投票，那么就会立即确认自己是否和集群中其他服务器保持着有效的连接，如果没有连接，则马上建立连接，如果已经建立了连接，则再次发送自己当前的内部投票。</p>
+<p><strong>5、判断选举轮次</strong>。在发送完初始化选票之后，接着开始处理外部投票。在处理外部投票时，会根据选举轮次来进行不同的处理。</p>
+<ul>
+<li><strong>外部投票的选举轮次大于内部投票</strong>。若服务器自身的选举轮次落后于该外部投票对应服务器的选举轮次，那么就会立即更新自己的选举轮次(logicalclock)，并且清空所有已经收到的投票，然后使用初始化的投票来进行PK以确定是否变更内部投票。最终再将内部投票发送出去。</li>
+<li><strong>外部投票的选举轮次小于内部投票</strong>。若服务器接收的外选票的选举轮次落后于自身的选举轮次，那么Zookeeper就会直接忽略该外部投票，不做任何处理，并返回步骤4。</li>
+<li><strong>外部投票的选举轮次等于内部投票</strong>。此时可以开始进行选票PK。</li>
+</ul>
+<p><strong>6、选票PK</strong>。在进行选票PK时，符合任意一个条件就需要变更投票。</p>
+<ul>
+<li>若外部投票中推举的Leader服务器的选举轮次大于内部投票，那么需要变更投票。</li>
+<li>若选举轮次一致，那么就对比两者的ZXID，若外部投票的ZXID大，那么需要变更投票。</li>
+<li>若两者的ZXID一致，那么就对比两者的SID，若外部投票的SID大，那么就需要变更投票。</li>
+</ul>
+<p><strong>7、变更投票</strong>。经过PK后，若确定了外部投票优于内部投票，那么就变更投票，即使用外部投票的选票信息来覆盖内部投票，变更完成后，再次将这个变更后的内部投票发送出去。</p>
+<p><strong>8、选票归档</strong>。无论是否变更了投票，都会将刚刚收到的那份外部投票放入选票集合recvset中进行归档。recvset用于记录当前服务器在本轮次的Leader选举中收到的所有外部投票（按照服务队的SID区别，如{(1, vote1), (2, vote2)…}）。</p>
+<p><strong>9、统计投票</strong>。完成选票归档后，就可以开始统计投票，统计投票是为了统计集群中是否已经有过半的服务器认可了当前的内部投票，如果确定已经有过半服务器认可了该投票，则终止投票。否则返回步骤4。</p>
+<p><strong>10、更新服务器状态</strong>。若已经确定可以终止投票，那么就开始更新服务器状态，服务器首选判断当前被过半服务器认可的投票所对应的Leader服务器是否是自己，若是自己，则将自己的服务器状态更新为LEADING，若不是，则根据具体情况来确定自己是FOLLOWING或是OBSERVING。</p>
+<p><strong>以上10个步骤就是FastLeaderElection的核心，其中步骤4-9会经过几轮循环，直到有Leader选举产生</strong>。</p>
+<p>部分参考摘抄：倪超 著《从Paxos到Zookeeper 分布式一致性原理与实践 》</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%EF%BC%88%E6%BC%94%E7%A4%BA%E5%9B%BE%E4%B8%8E%E5%AE%9E%E9%99%85%E5%9B%BEnode%E6%95%B0%E5%80%BC%E7%9B%B8%E5%B7%AE1%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">集群启动顺序（演示图与实际图node数值相差1）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paxos-%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">paxos 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">场景描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E8%BF%90%E8%A1%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">协议运行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zab%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">zab协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E6%98%A0%E5%B0%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">角色映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E8%BF%90%E8%A1%8C-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">协议运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.3.</span> <span class="toc-text">具体执行步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#leader%E9%80%89%E4%B8%BE"><span class="toc-number">1.3.4.</span> <span class="toc-text">leader选举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%A0%B8%E5%BF%83"><span class="toc-number">1.4.</span> <span class="toc-text">算法核心</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

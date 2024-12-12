@@ -1,0 +1,1126 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>redis (三) 数据类型即用法 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="redis(三) 数据类型即用法redisObject 底层数据结构
+REDIS_ENCODING_INT（long 类型的整数）
+REDIS_ENCODING_EMBSTR embstr （编码的,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">redis (三) 数据类型即用法</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                七月 10, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/3.%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8D%B3%E7%94%A8%E6%B3%95/" title="redis (三) 数据类型即用法" class="">redis (三) 数据类型即用法</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    29k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    27 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="redis-三-数据类型即用法"><a href="#redis-三-数据类型即用法" class="headerlink" title="redis(三) 数据类型即用法"></a>redis(三) 数据类型即用法</h1><h2 id="redisObject-底层数据结构"><a href="#redisObject-底层数据结构" class="headerlink" title="redisObject 底层数据结构"></a>redisObject 底层数据结构</h2><ul>
+<li>REDIS_ENCODING_INT（long 类型的整数）</li>
+<li>REDIS_ENCODING_EMBSTR embstr （编码的简单动态字符串）</li>
+<li>REDIS_ENCODING_RAW （简单动态字符串）</li>
+<li>REDIS_ENCODING_HT （字典）</li>
+<li>REDIS_ENCODING_LINKEDLIST （双端链表）</li>
+<li>REDIS_ENCODING_ZIPLIST （压缩列表）</li>
+<li>REDIS_ENCODING_INTSET （整数集合）</li>
+<li>REDIS_ENCODING_SKIPLIST （跳跃表和字典）</li>
+<li>REDIS_ENCODING_QUICKLIST （快速列表）</li>
+<li>REDIS_ENCODING_STREAM （流）</li>
+</ul>
+<p><img src="/images/redis/redis.assets/redis%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png" alt="image-20220703162800298"></p>
+<p><strong>RedisObject 结构</strong></p>
+<pre><code class="c++">typedef struct redisObject &#123;
+    unsigned type:4;
+    unsigned encoding:4;
+    unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
+                            * LFU data (least significant 8 bits frequency
+                            * and most significant 16 bits access time). */
+    int refcount;
+    void *ptr;
+&#125; robj;
+</code></pre>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>是redis最基本的类型,与Memcached一模一样的类型,一个key对应一个value是二进制安全的.即,redis的string可以包含任何数据–字符串、整数、浮点值、JPEG 图像、序列化的对象.<br>字符串value最多512M.</p>
+<h3 id="内部编码"><a href="#内部编码" class="headerlink" title="内部编码"></a>内部编码</h3><ul>
+<li><strong>int编码</strong>：当一个key的value是整型时，Redis就将其编码为int类型（另外还有一个条件：把这个value当作字符串来看，它的长度不能超过20，保存的是可以用 long 类型表示的整数值）。这种编码类型为了节省内存。Redis默认会缓存10000个整型值（#define OBJ_SHARED_INTEGERS 10000），这就意味着，如果有10个不同的KEY，其value都是10000以内的值，事实上全部都是共享同一个对象。</li>
+<li><strong>embstr编码</strong>：保存长度小于44字节的字符串（redis3.2版本之前是39字节，之后是44字节）,保存短字符串.</li>
+<li><strong>raw编码</strong>：保存长度大于44字节的字符串（redis3.2版本之前是39字节，之后是44字节）, 保存长字符串.</li>
+</ul>
+<p><strong>判断44字节逻辑</strong></p>
+<pre><code class="c++">#define OBJ_ENCODING_EMBSTR_SIZE_LIMIT 44
+robj *createStringObject(const char *ptr, size_t len) &#123;
+    if (len &lt;= OBJ_ENCODING_EMBSTR_SIZE_LIMIT)
+        return createEmbeddedStringObject(ptr,len);
+    else
+        return createRawStringObject(ptr,len);
+&#125;
+</code></pre>
+<h4 id="RAW-简单动态字符串"><a href="#RAW-简单动态字符串" class="headerlink" title="RAW(简单动态字符串)"></a>RAW(简单动态字符串)</h4><p>Raw 是 redisObject + sds ，意思是 redisObject ptr指针 指向一个sds 对象.</p>
+<p>3.2 之前版本len和free都使用unsigned int 占4个字节，取值范围：0到4,294,967,295，通常字符串都小于这个值，在 Redis 3.2 版本之后，将 SDS 划分为 5 种类型：sdshdr5(不实际使用，只取flags)、sdshdr8、sdshdr16、sdshdr32、sdshdr64，根据字符串长度初始化不同的sdshdr.</p>
+<p><strong>内存块结构</strong></p>
+<p><img src="/images/redis/redis.assets/raw.png" alt="raw"></p>
+<p><strong>创建rawString源码</strong></p>
+<pre><code class="c++">/* Create a string object with encoding OBJ_ENCODING_RAW, that is a plain
+ * string object where o-&gt;ptr points to a proper sds string. */
+robj *createRawStringObject(const char *ptr, size_t len) &#123;
+    return createObject(OBJ_STRING, sdsnewlen(ptr,len));
+&#125;
+robj *createObject(int type, void *ptr) &#123;
+    robj *o = zmalloc(sizeof(*o));
+    o-&gt;type = type;
+    o-&gt;encoding = OBJ_ENCODING_RAW;
+    o-&gt;ptr = ptr;
+    o-&gt;refcount = 1;
+
+    /* Set the LRU to the current lruclock (minutes resolution), or
+     * alternatively the LFU counter. */
+    if (server.maxmemory_policy &amp; MAXMEMORY_FLAG_LFU) &#123;
+        o-&gt;lru = (LFUGetTimeInMinutes()&lt;&lt;8) | LFU_INIT_VAL;
+    &#125; else &#123;
+        o-&gt;lru = LRU_CLOCK();
+    &#125;
+    return o;
+&#125;
+</code></pre>
+<h4 id="EMBSTR-编码的简单动态字符串"><a href="#EMBSTR-编码的简单动态字符串" class="headerlink" title="EMBSTR(编码的简单动态字符串)"></a>EMBSTR(编码的简单动态字符串)</h4><p>是一种保存短字符串的特殊编码方式。与raw不同的是，raw会调用内存分配函数两次，创建redisobject结构和sdshdr结构，而embstr代码会调用一次内存分配函数，分配一块连续的空间，包括redisobject和sdshdr两种结构,比原始编码对象字符串可以更好地利用缓存（CPU 缓存/缓存行）.</p>
+<p>对于 embstr 编码，由于 Redis 没有对其编写任何的修改程序（embstr 是只读的），在对embstr对象进行修改时，都会先转化为raw再进行修改，因此，只要是修改embstr对象，修改后的对象一定是raw的，无论是否达到了44个字节.</p>
+<p><strong>内存块结构</strong></p>
+<p><img src="/images/redis/redis.assets/embstr.png" alt="embstr"></p>
+<p><strong>创建embString源码</strong></p>
+<pre><code class="c++">
+/* Create a string object with encoding OBJ_ENCODING_EMBSTR, that is
+ * an object where the sds string is actually an unmodifiable string
+ * allocated in the same chunk as the object itself. */
+robj *createEmbeddedStringObject(const char *ptr, size_t len) &#123;
+    robj *o = zmalloc(sizeof(robj)+sizeof(struct sdshdr8)+len+1);
+    struct sdshdr8 *sh = (void*)(o+1);
+
+    o-&gt;type = OBJ_STRING;
+    o-&gt;encoding = OBJ_ENCODING_EMBSTR;
+    o-&gt;ptr = sh+1;
+    o-&gt;refcount = 1;
+    if (server.maxmemory_policy &amp; MAXMEMORY_FLAG_LFU) &#123;
+        o-&gt;lru = (LFUGetTimeInMinutes()&lt;&lt;8) | LFU_INIT_VAL;
+    &#125; else &#123;
+        o-&gt;lru = LRU_CLOCK();
+    &#125;
+
+    sh-&gt;len = len;
+    sh-&gt;alloc = len;
+    sh-&gt;flags = SDS_TYPE_8;
+    if (ptr == SDS_NOINIT)
+        sh-&gt;buf[len] = &#39;\0&#39;;
+    else if (ptr) &#123;
+        memcpy(sh-&gt;buf,ptr,len);
+        sh-&gt;buf[len] = &#39;\0&#39;;
+    &#125; else &#123;
+        memset(sh-&gt;buf,0,len+1);
+    &#125;
+    return o;
+&#125;
+</code></pre>
+<h3 id="SDS概念"><a href="#SDS概念" class="headerlink" title="SDS概念"></a>SDS概念</h3><p>简单动态字符串(SDS)，即：simple dynamic string。</p>
+<p>是redis自己构建的一种简单动态字符串的抽象类型作为其默认字符串, 内部结构实现上类似与 java 的 ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配。当字符串长度小于 1M 时，扩容都是加倍现有的空间，如果超过 1M，扩容时一次只会多扩 1M 的空间。需要注意的是字符串最大长度为 512M。</p>
+<p><strong>结构</strong></p>
+<pre><code class="c++">&#123;
+    uint8_t len; /* 当前字符串大小（单位字节） */
+    uint8_t alloc; /* 内存分配大小（单位字节） */
+    unsigned char flags; /* 头类型分配8，16，32，64字节四种类型（其中5字节这种类型被弃用） */
+    char buf[];
+&#125;;
+</code></pre>
+<p><strong>特点</strong></p>
+<p>​    首先C 字符串并不记录自身长度，且末尾总是包含 \0 的结尾, 每次变化C字符串长度都需要重新分配内存.否则增长会导致内存溢出,缩短会导致内存泄漏.</p>
+<p>​    SDS 通过未使用空间解除了字符串长度和底层数组长度之间的关联：在 SDS 中，buf 数组的长度不一定就是字符数量加一，数组里面可以包含未使用的字节，这样就产生了分配大小alloc与字符串大小len.两者相减就是未使用字节的长度.</p>
+<p>优化策略:</p>
+<ul>
+<li><p>空间预分配: </p>
+<p>概念: 当 SDS API 对一个 SDS 进行修改，并且需要对 SDS 进行空间扩展的时候，程序不仅会为 SDS 分配修改所必须的空间，还会为 SDS 分配额外的未使用空间。</p>
+<p>规则:  如果对 SDS 进行修改之后，SDS 的长度小于 1MB。那么程序会分配和 len 属性同样大小的未使用空间。如：修改后，SDS len = 10 字节 &lt; 1 MB，那么程序会额外分配多 10 字节。所以最终结果为：10 + 10 + 1 = 21 字节,如果对 SDS 进行修改之后，SDS 的长度大于 1MB，那么程序将分配 1MB 的未使用空间。</p>
+<p>优点: Redis 可以减少连续执行字符串增长操作所需要的的内存重分配次数。</p>
+<p><strong>sds扩容源码</strong></p>
+<pre><code class="c++">
+/* Enlarge the free space at the end of the sds string so that the caller
+ * is sure that after calling this function can overwrite up to addlen
+ * bytes after the end of the string, plus one more byte for nul term.
+ *
+ * Note: this does not change the *length* of the sds string as returned
+ * by sdslen(), but only the free buffer space we have. */
+sds sdsMakeRoomFor(sds s, size_t addlen) &#123;
+    void *sh, *newsh;
+    size_t avail = sdsavail(s);
+    size_t len, newlen;
+    char type, oldtype = s[-1] &amp; SDS_TYPE_MASK;
+    int hdrlen;
+
+    /* Return ASAP if there is enough space left. */
+    if (avail &gt;= addlen) return s;
+
+    len = sdslen(s);
+    sh = (char*)s-sdsHdrSize(oldtype);
+    newlen = (len+addlen);
+    if (newlen &lt; SDS_MAX_PREALLOC)
+        newlen *= 2;
+    else
+        newlen += SDS_MAX_PREALLOC;
+
+    type = sdsReqType(newlen);
+
+    /* Don&#39;t use type 5: the user is appending to the string and type 5 is
+     * not able to remember empty space, so sdsMakeRoomFor() must be called
+     * at every appending operation. */
+    if (type == SDS_TYPE_5) type = SDS_TYPE_8;
+
+    hdrlen = sdsHdrSize(type);
+    if (oldtype==type) &#123;
+        newsh = s_realloc(sh, hdrlen+newlen+1);
+        if (newsh == NULL) return NULL;
+        s = (char*)newsh+hdrlen;
+    &#125; else &#123;
+        /* Since the header size changes, need to move the string forward,
+         * and can&#39;t use realloc */
+        newsh = s_malloc(hdrlen+newlen+1);
+        if (newsh == NULL) return NULL;
+        memcpy((char*)newsh+hdrlen, s, len+1);
+        s_free(sh);
+        s = (char*)newsh+hdrlen;
+        s[-1] = type;
+        sdssetlen(s, len);
+    &#125;
+    sdssetalloc(s, newlen);
+    return s;
+&#125;
+</code></pre>
+</li>
+<li><p>惰性空间释放:</p>
+<p>概念: 当 SDS API 需要缩短 SDS 保存的字符串时，程序不会立即使用内存重分配来回收缩短后多出来的字节，而是将未使用空间保存留在SDS里面，并等待将来使用。</p>
+<p>规则: 提供了相应的API，让我们可以在有需要的时候真正释放SDS的未使用空间。</p>
+<p>优点: 避免了缩短字符串时所需的内存重新分配，并为将来可能有的增长操作提供了优化.</p>
+<p><strong>sds缩容代码</strong></p>
+<pre><code class="c++">/* Modify an sds string in-place to make it empty (zero length).
+ * However all the existing buffer is not discarded but set as free space
+ * so that next append operations will not require allocations up to the
+ * number of bytes previously available. */
+void sdsclear(sds s) &#123;
+    sdssetlen(s, 0);
+    s[0] = &#39;\0&#39;;
+&#125;
+
+
+static inline size_t sdsavail(const sds s) &#123;
+    unsigned char flags = s[-1];
+    switch(flags&amp;SDS_TYPE_MASK) &#123;
+        case SDS_TYPE_5: &#123;
+            return 0;
+        &#125;
+        case SDS_TYPE_8: &#123;
+            SDS_HDR_VAR(8,s);
+            return sh-&gt;alloc - sh-&gt;len;
+        &#125;
+        case SDS_TYPE_16: &#123;
+            SDS_HDR_VAR(16,s);
+            return sh-&gt;alloc - sh-&gt;len;
+        &#125;
+        case SDS_TYPE_32: &#123;
+            SDS_HDR_VAR(32,s);
+            return sh-&gt;alloc - sh-&gt;len;
+        &#125;
+        case SDS_TYPE_64: &#123;
+            SDS_HDR_VAR(64,s);
+            return sh-&gt;alloc - sh-&gt;len;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+
+static inline void sdssetlen(sds s, size_t newlen) &#123;
+    unsigned char flags = s[-1];
+    switch(flags&amp;SDS_TYPE_MASK) &#123;
+        case SDS_TYPE_5:
+            &#123;
+                unsigned char *fp = ((unsigned char*)s)-1;
+                *fp = SDS_TYPE_5 | (newlen &lt;&lt; SDS_TYPE_BITS);
+            &#125;
+            break;
+        case SDS_TYPE_8:
+            SDS_HDR(8,s)-&gt;len = newlen;
+            break;
+        case SDS_TYPE_16:
+            SDS_HDR(16,s)-&gt;len = newlen;
+            break;
+        case SDS_TYPE_32:
+            SDS_HDR(32,s)-&gt;len = newlen;
+            break;
+        case SDS_TYPE_64:
+            SDS_HDR(64,s)-&gt;len = newlen;
+            break;
+    &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+<h3 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h3><pre><code class="shell">127.0.0.1:6390&gt; set name code  # 设置，成功返回 ok
+OK
+127.0.0.1:6390&gt; get name   # 获取，不存在返回 nil
+&quot;code&quot;
+127.0.0.1:6390&gt; mset name1 code1 name2 code2 # 批量设置
+OK
+127.0.0.1:6390&gt; mget name1 name2  # 批量获取
+1) &quot;code1&quot;
+2) &quot;code2&quot;
+127.0.0.1:6390&gt; exists name  # 是否存在，1:存在；0:不存在
+(integer) 1
+127.0.0.1:6390&gt; del name  # 删除，1:成功
+(integer) 1
+127.0.0.1:6390&gt; expire name 5 # 设置过期时间
+(integer) 0
+127.0.0.1:6390&gt; setex name 5 code # 等价于 set + expire
+OK
+127.0.0.1:6390&gt; setnx name  code  # 如果name不存在，则创建，存在，则创建失败返回 0
+(integer) 1
+127.0.0.1:6390&gt; incr count  # 对count++
+(integer) 1
+127.0.0.1:6390&gt; incrby age 10  # 对count + n
+(integer) 11
+
+
+</code></pre>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><p>  Redis List是一个有序集合，允许添加重复元素。可以将元素添加到 Redis 列表中，将新元素push到列表的头部（左侧）或尾部（右侧）。list类似于大多数编程语言中的数组，添加到列表中的每个值都会自动分配一个从 0 开始的index。</p>
+<h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><p><img src="/images/redis/redis.assets/list.png" alt="image-20220710112759462"></p>
+<pre><code class="c++">typedef struct list &#123;
+    listNode *head;           // 表头节点
+    listNode *tail;            // 表尾节点
+    void *(*dup)(void *ptr); // 节点复制函数
+    void (*free)(void *ptr); // 节点释放函数
+    int (*match)(void *ptr, void *key); // 节点比较函数
+    unsigned long len;        // 链表长度
+&#125; list;
+
+typedef struct listNode &#123;
+    struct listNode *prev;
+    struct listNode *next;
+    void *value;
+&#125; listNode;
+</code></pre>
+<h3 id="内部分类"><a href="#内部分类" class="headerlink" title="内部分类"></a>内部分类</h3><ul>
+<li>linkedList:  一个简单基础的双向列表.</li>
+<li>zipList: 压缩列表.</li>
+<li>quickList: 快速列表.</li>
+</ul>
+<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><p>​    linkedList底层就是list.</p>
+<p><strong>内存计算公式</strong></p>
+<ul>
+<li><p>linked list 每个节点都是一个listNode结构体，包含三个指针：前一个previous node、下一个next node、 值value。 3 个指针 = 8 个字节 * 3 = 共占用 24 个字节</p>
+</li>
+<li><p>listNode值是指向 struct robj（redisObject）的指针，其中包含：元数据（metadata）、引用计数（reference count）和指向内容的指针。2 个整数 + 1 个指针 = 2 * 4 个字节 + 1 * 8 个字节 = 共 16 个字节</p>
+</li>
+<li><p>redisObject 中的value指向一个带有两个整数字段和字符串内容的 Redis sds。 （2 个整数 + 内容 = 2 * 2 字节 + 内容 = 4 字节 + 内容）</p>
+<p>所以,每向linked list插入1个元素，Redis 会创建大约 40 字节的元数据以及内存分配导致的额外开销.当存储小元素的时候将消耗比实际大的多的内存.</p>
+</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>访问元素慢，时间复杂度O(N)</li>
+<li>需要额外的内存开销来存储小值</li>
+<li>遍历列表时缓存效率不高</li>
+</ul>
+<h3 id="ZipList"><a href="#ZipList" class="headerlink" title="ZipList"></a>ZipList</h3><p>ziplist 存储高效、无指针数据结构。使用连续的内存块存储所有元素。使得数据局部性很好，整个数据结构可以适应 CPU 的缓存,可以很好的解决小值存储带来的内存开销问题.</p>
+<h4 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h4><p><img src="/images/redis/redis.assets/zipList.png" alt="zipList"></p>
+<p>zlbytes：32 位无符号整型，表示整个 ziplist 所占的空间大小，包含了 zlbytes 所占的 4 个字节。这个字段可以在重置整个 ziplist 大小时不需要遍历整个 list 来确定大小，空间换时间。在对压缩列表进行内存重分配， 或者计算 zlend 的位置时使用。</p>
+<p>zltail：32 位无符号整型，表示整个 list 中最后一项所在的偏移量，用来倒序遍历压缩列表。</p>
+<p>zllen：16 位，表示 ziplist 中所存储的 entry 数量，但是注意，这里最多表示 2^16 − 2 个 entry， 如果是2^16 − 1，则有特殊含义，2^16 − 1 表示存储数量超过了 2^16 − 2 个，但具体是多少个得遍历一次才能知道。</p>
+<p>entry：不定长，可能有多个，list 中具体的数据项，</p>
+<p>​        prevlen：前一个 entry 的存储大小，主要是为了方便从后往前遍历。</p>
+<p>​        encoding：数据的编码形式（比如：表示的是字符串还是数字，以及对应的长度）</p>
+<p>​        entry-data：实际存储的数据</p>
+<p>zlend：8 位，ziplist 的末尾表示，值固定是 255。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>顺序内存读写</li>
+<li>不需要内部指针</li>
+<li>高效的整数存储和高效的偏移记录</li>
+<li>头/尾访问时间复杂度O(1)</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>插入列表需要将所有后续元素向下移动</li>
+<li>从列表中删除需要将所有后续元素向上移动</li>
+<li>插入如果需要重新分配内存（内存块必须扩容）这可能导致整个列表被复制到一个新的内存位置</li>
+</ul>
+<h3 id="QuickList"><a href="#QuickList" class="headerlink" title="QuickList"></a>QuickList</h3><p>quicklist 是双向链表+压缩链表组合，其本身是个链表，链表中的元素是压缩列表即zpiList.</p>
+<p>quick list为每个ziplist存储list-max-ziplist-entries个元素。当一个Ziplist增长超过这个数字时，一个新的链表节点就会被创建，并有创建一个新的Ziplist。每个持有Ziplist的链接列表节点都存储了一个Ziplist长度的缓存计数，因此在遍历操作时可以跳过整个Ziplist范围</p>
+<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><p><img src="/images/redis/redis.assets/quickList.png" alt="image-20220710145525718"></p>
+<pre><code class="c++">typedef struct quicklist &#123;
+    //quicklist的链表头
+    quicklistNode *head;      
+    //quicklist的链表尾
+    quicklistNode *tail; 
+    //所有压缩列表中的总元素个数
+    unsigned long count;
+    //链表节点的个数 quicklistNode
+    unsigned long len;       
+    int fill : 16;              /* fill factor for individual nodes */
+    unsigned int compress : 16; /* depth of end nodes not to compress;0=off */
+&#125; quicklist;
+
+typedef struct quicklistNode &#123;
+    //指向前节点的指针
+    struct quicklistNode *prev;     //前一个quicklistNode
+    //指向后节点的指针
+    struct quicklistNode *next;     //后一个quicklistNode
+    //quicklistNode指向的压缩列表
+    unsigned char *zl;              
+    //压缩列表的的字节大小
+    unsigned int sz;                
+    //压缩列表的元素个数
+    unsigned int count : 16;        //ziplist中的元素个数 
+    unsigned int encoding : 2;   /* RAW==1 or LZF==2 */
+    unsigned int container : 2;  /* NONE==1 or ZIPLIST==2 */
+    unsigned int recompress : 1; /* was this node previous compressed? */
+    unsigned int attempted_compress : 1; /* node can&#39;t compress; too small */
+    unsigned int extra : 10; /* more bits to steal for future usage */
+&#125; quicklistNode;
+</code></pre>
+<ul>
+<li>prev、next：指向前驱节点，后驱节点。</li>
+<li>zl：ziplist，负责存储数据。</li>
+<li>sz：ziplist占用的字节数。</li>
+<li>count：ziplist的元素数量。</li>
+<li>encoding：2代表节点已压缩，1代表没有压缩。</li>
+<li>container：目前固定为2，代表使用ziplist存储数据。</li>
+<li>recompress：1代表暂时解压（用于读取数据等），后续需要时再将其压缩。</li>
+<li>extra：预留属性，暂未使用。</li>
+</ul>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>存储任意长度的列表时都能有效地使用内存</li>
+<li>高效的内存表示方式，便于高速缓存的遍历</li>
+<li>对列表头部和尾部的访问时间复杂度O(1)</li>
+<li>删除大范围的数据不需要遍历，可以直接删除整个内部ziplists节点</li>
+<li>保留现有的RDB和AOF格式，因此旧的DB可以被加载到新的实现中</li>
+<li>如果您将 ziplist 填充因子 (list-max-ziplist-entries) 设置每个 ziplist 一个entry，将达到与传统Linked List相同的性能，但内存利用率更高</li>
+</ul>
+<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>在列表的中间插入元素可能需要拆分现有的Ziplist并创建新的内部quick list节点。</li>
+<li>从列表的中间删除元素可能需要重新连接quick list</li>
+<li>插入都会在 ziplist 本身上调用 realloc，可能会触发整个 ziplist 的内存副本到新内存。</li>
+<li>头部插入需要将现有的Ziplist条目向下移动一个位置.</li>
+</ul>
+<h4 id="操作分析-插入一个元素"><a href="#操作分析-插入一个元素" class="headerlink" title="操作分析-插入一个元素"></a>操作分析-插入一个元素</h4><pre><code class="c++">REDIS_STATIC void _quicklistInsert(quicklist *quicklist, quicklistEntry *entry,
+                                   void *value, const size_t sz, int after) &#123;
+    int full = 0, at_tail = 0, at_head = 0, full_next = 0, full_prev = 0;
+    int fill = quicklist-&gt;fill;
+    quicklistNode *node = entry-&gt;node;
+    quicklistNode *new_node = NULL;
+    assert(sz &lt; UINT32_MAX); /* TODO: add support for quicklist nodes that are sds encoded (not zipped) */
+
+    if (!node) &#123;  // 如果entry为没有所属的quicklistNode节点，需要新创建
+        /* we have no reference node, so let&#39;s create only node in the list */
+        D(&quot;No node given!&quot;);
+        //创建一个节点
+        new_node = quicklistCreateNode();    
+        //将entry值push到new_node新节点的ziplist中
+        new_node-&gt;zl = ziplistPush(ziplistNew(), value, sz, ZIPLIST_HEAD);
+        //将新的quicklistNode节点插入到quicklist中
+        __quicklistInsertNode(quicklist, NULL, new_node, after);
+         //更新entry计数器
+        new_node-&gt;count++;
+        quicklist-&gt;count++;
+        return;
+    &#125;
+
+    /* Populate accounting flags for easier boolean checks later */
+    // 如果node不能插入entry
+    if (!_quicklistNodeAllowInsert(node, fill, sz)) &#123;
+        D(&quot;Current node is full with count %d with requested fill %lu&quot;,
+          node-&gt;count, fill);
+        // 设置full的标志
+        full = 1;
+    &#125;
+
+    // 如果是后插入且当前entry为尾部的entry
+    if (after &amp;&amp; (entry-&gt;offset == node-&gt;count)) &#123;
+        D(&quot;At Tail of current ziplist&quot;);
+        // 设置在尾部at_tail标示
+        at_tail = 1;
+        // 如果node的后继节点不能插入
+        if (!_quicklistNodeAllowInsert(node-&gt;next, fill, sz)) &#123;
+            D(&quot;Next node is full too.&quot;);
+            // 设置标示
+            full_next = 1;
+        &#125;
+    &#125;
+
+    if (!after &amp;&amp; (entry-&gt;offset == 0)) &#123;
+        D(&quot;At Head&quot;);
+        //设置at_head表示
+        at_head = 1;
+        // 如果node的前驱节点不能插入
+        if (!_quicklistNodeAllowInsert(node-&gt;prev, fill, sz)) &#123;
+            D(&quot;Prev node is full too.&quot;);
+            // 设置标示
+            full_prev = 1;
+        &#125;
+    &#125;
+
+    /* Now determine where and how to insert the new element */
+    // 如果node不满，且是后插入
+    if (!full &amp;&amp; after) &#123;
+        D(&quot;Not full, inserting after current position.&quot;);
+        // 将node临时解压
+        quicklistDecompressNodeForUse(node);
+        // 返回下一个entry的地址
+        unsigned char *next = ziplistNext(node-&gt;zl, entry-&gt;zi);
+        
+        if (next == NULL) &#123;
+            // 如果next为空，则直接在尾部push一个entry
+            node-&gt;zl = ziplistPush(node-&gt;zl, value, sz, ZIPLIST_TAIL);
+        &#125; else &#123;
+            // 否则，后插入一个entry
+            node-&gt;zl = ziplistInsert(node-&gt;zl, next, value, sz);
+        &#125;
+        // 更新entry计数器
+        node-&gt;count++;
+        // 更新ziplist的大小sz
+        quicklistNodeUpdateSz(node);
+        // 将临时解压的重压缩
+        quicklistRecompressOnly(quicklist, node);
+    &#125; else if (!full &amp;&amp; !after) &#123; // 如果node不满且是前插
+        D(&quot;Not full, inserting before current position.&quot;);
+        // 将node临时解压
+        quicklistDecompressNodeForUse(node);
+        // 前插入
+        node-&gt;zl = ziplistInsert(node-&gt;zl, entry-&gt;zi, value, sz);
+        node-&gt;count++;
+        quicklistNodeUpdateSz(node);
+        quicklistRecompressOnly(quicklist, node);
+    &#125; else if (full &amp;&amp; at_tail &amp;&amp; node-&gt;next &amp;&amp; !full_next &amp;&amp; after) &#123;
+        //当前node满了，且当前已存在的entry是尾节点，node的后继节点指针不为空，且node的后驱节点能插入
+        //本来要插入当前node中，但是当前的node满了，所以插在next节点的头部
+        
+        
+        /* If we are: at tail, next has free space, and inserting after:
+         *   - insert entry at head of next node. */
+        D(&quot;Full and tail, but next isn&#39;t full; inserting next node head&quot;);
+        new_node = node-&gt;next;
+        quicklistDecompressNodeForUse(new_node);
+        new_node-&gt;zl = ziplistPush(new_node-&gt;zl, value, sz, ZIPLIST_HEAD);
+        new_node-&gt;count++;
+        quicklistNodeUpdateSz(new_node);
+        quicklistRecompressOnly(quicklist, new_node);
+    &#125; else if (full &amp;&amp; at_head &amp;&amp; node-&gt;prev &amp;&amp; !full_prev &amp;&amp; !after) &#123;
+         // 当前node满了，且当前已存在的entry是头节点，node的前驱节点指针不为空，且前驱节点可以插入
+        //因此插在前驱节点的尾部
+        
+        
+        /* If we are: at head, previous has free space, and inserting before:
+         *   - insert entry at tail of previous node. */
+        D(&quot;Full and head, but prev isn&#39;t full, inserting prev node tail&quot;);
+        //new_node指向node的后继节点
+        new_node = node-&gt;prev;
+        quicklistDecompressNodeForUse(new_node);
+        // 在new_node头部push一个entry
+        new_node-&gt;zl = ziplistPush(new_node-&gt;zl, value, sz, ZIPLIST_TAIL);
+        new_node-&gt;count++;
+        quicklistNodeUpdateSz(new_node);
+        quicklistRecompressOnly(quicklist, new_node);
+    &#125; else if (full &amp;&amp; ((at_tail &amp;&amp; node-&gt;next &amp;&amp; full_next &amp;&amp; after) ||
+                        (at_head &amp;&amp; node-&gt;prev &amp;&amp; full_prev &amp;&amp; !after))) &#123;
+       
+         //当前node满了
+        //要么已存在的entry是尾节点，且后继节点指针不为空，且后继节点不可以插入，且要后插
+            //要么已存在的entry为头节点，且前驱节点指针不为空，且前驱节点不可以插入，且要前插
+        /* If we are: full, and our prev/next is full, then:
+         *   - create new node and attach to quicklist */
+        D(&quot;\tprovisioning new node...&quot;);
+        //创建一个节点
+        new_node = quicklistCreateNode();
+        // 将entrypush到new_node的头部
+        new_node-&gt;zl = ziplistPush(ziplistNew(), value, sz, ZIPLIST_HEAD);
+        new_node-&gt;count++;
+        quicklistNodeUpdateSz(new_node);
+        // 将new_node插入在当前node的后面
+        __quicklistInsertNode(quicklist, node, new_node, after);
+    &#125; else if (full) &#123;
+        //当前node满了，且要将entry插入在中间的任意地方，需要将node分割
+        
+        /* else, node is full we need to split it. */
+        /* covers both after and !after cases */
+        D(&quot;\tsplitting node...&quot;);
+        quicklistDecompressNodeForUse(node);
+        //分割node成两块
+        new_node = _quicklistSplitNode(node, entry-&gt;offset, after);
+        // 将entry push到new_node中
+        new_node-&gt;zl = ziplistPush(new_node-&gt;zl, value, sz,
+                                   after ? ZIPLIST_HEAD : ZIPLIST_TAIL);
+        new_node-&gt;count++;
+        quicklistNodeUpdateSz(new_node);
+        // 将new_node插入进去
+        __quicklistInsertNode(quicklist, node, new_node, after);
+        //左右能合并的合并
+        _quicklistMergeNodes(quicklist, node);
+    &#125;
+
+    quicklist-&gt;count++;
+&#125;
+</code></pre>
+<p>整理成表格</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>条件说明</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>!full &amp;&amp; after</td>
+<td>待插入节点未满，ziplist尾插</td>
+<td>再次检查ziplist插入位置是否存在后驱元素，如果不存在则调用ziplistPush函数插入元素（更快），否则调用ziplistInsert插入元素</td>
+</tr>
+<tr>
+<td>!full &amp;&amp; !after</td>
+<td>待插入节点未满，非ziplist尾插</td>
+<td>调用ziplistInsert函数插入元素</td>
+</tr>
+<tr>
+<td>full &amp;&amp; at_tail &amp;&amp; node -&gt; next &amp;&amp; !full_next &amp;&amp; after</td>
+<td>待插入节点已满，尾插，后驱节点未满</td>
+<td>将元素插入后驱节点ziplist中</td>
+</tr>
+<tr>
+<td>full &amp;&amp; at_head &amp;&amp; node -&gt; prev &amp;&amp; !full_prev &amp;&amp; !after</td>
+<td>待插入节点已满，ziplist头插，前驱节点未满</td>
+<td>将元素插入前驱节点ziplist中</td>
+</tr>
+<tr>
+<td>full &amp;&amp; ((at_tail &amp;&amp; node -&gt; next &amp;&amp; full_next &amp;&amp; after) ||(at_head &amp;&amp; node-&gt;prev &amp;&amp; full_prev &amp;&amp; !after))</td>
+<td>满足以下条件： (1)待插入节点已满 (2)尾插且后驱节点已满，或者头插且前驱节点已满</td>
+<td>构建一个新节点，将元素插入新节点，并根据after参数将新节点插入quicklist中</td>
+</tr>
+<tr>
+<td>full</td>
+<td>待插入节点已满，并且在节点ziplist中间插入</td>
+<td>将插入节点的数据拆分到两个节点中，再插入拆分后的新节点中</td>
+</tr>
+</tbody></table>
+<h4 id="命令使用-1"><a href="#命令使用-1" class="headerlink" title="命令使用"></a>命令使用</h4><pre><code class="bash">127.0.0.1:6390&gt; llen mylist  # 链表长度
+(integer) 0
+127.0.0.1:6390&gt; LPUSH mylist v1 v2 # 往头部插入值
+(integer) 2
+127.0.0.1:6390&gt; RPUSH mylist v4 v3 # 往尾部插入值
+(integer) 2
+127.0.0.1:6390&gt; LRANGE mylist 0 -1 # 返回列表中指定区间内的元素，区间以偏移量 START 和 END 指定。
+1) &quot;v2&quot;
+2) &quot;v1&quot;
+3) &quot;v4&quot;
+4) &quot;v3&quot;
+127.0.0.1:6390&gt; RPUSHX mylist2 v5 # 往已存在的链表尾部插入值,否则无法插入,返回0.LPUSHX同理.
+(integer) 0
+127.0.0.1:6390&gt; LINDEX mylist 2 # 获取链表范围内指定下标的值, 超出范围返回nil
+&quot;v4&quot;
+127.0.0.1:6390&gt; LPOP mylist # 弹出表头元素,将表头元素返回,并从列表中删除.RPOP同理.
+&quot;v2&quot;
+127.0.0.1:6390&gt; LREM mylist 0 v3 # 移除列表中所有值为v3的元素. 当count &gt; 0 从表头开始删除值为v3的count个元素,count&lt;0则为从表尾开始.
+(integer) 1
+127.0.0.1:6390&gt; BLPOP mylist2 10 # 阻塞的LPOP,弹出表头元素,如果没有值,等待10S的超时时间.再返回nil.
+(nil)
+(10.07s)
+</code></pre>
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><p>Redis 的字典相当于 Java 语言里面的 HashMap,是无序字典，内部存储了很多键值对,都是“数组 + 链表”的二维结构。在数组位置发生 hash 冲突时，就会将冲突的元素使用链表串起来.</p>
+<p>与 Java HashMap 不同的是，Redis 的字典的值只能是字符串，另外它们 rehash 的方式也不一样。因为 Java HashMap 在字典很大时，rehash 是一个耗时的操作，需要一次性全部 rehash。Redis 为了追求高性能，不能堵塞服务，所以采用了渐进式 rehash 策略。</p>
+<h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p><img src="/images/redis/redis.assets/hash.png" alt="hash"></p>
+<pre><code class="c++">typedef struct dict &#123;
+    // 类型特定函数
+    dictType *type;
+    
+    // 私有数据
+    void *privdata;
+    
+    // 哈希表
+    dictht ht[2];
+    
+    // rehash索引
+    // 当 rehash 不在进行时，值为 -1
+    int rehashidx;
+&#125; dict;
+
+typedef struct dictht &#123;
+    // 哈希表数组
+    dictEntry **table;
+    
+    // 哈希表大小
+    unsigned long size;
+    
+    // 哈希表大小掩码，用于计算索引值
+    // 总是等于 size - 1
+    unsigned long sizemask;
+    
+    // 该哈希表已有节点的数量
+    unsigned long used;
+&#125;dictht;
+
+
+typedef struct dictEntry &#123;
+    // 键
+    void *key;
+    
+    // 值
+    union &#123;
+        void *val;
+        uint64_t u64; // 无符号64位整数
+        int64_t s64;  // 带符号64位整数
+    &#125; v;
+    
+    // 指向下个哈希表节点，形成链表
+    struct dictEntry *next;
+&#125; dictEntry;
+</code></pre>
+<h3 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h3><p>当哈希表里的键值对数量过大，进行常规的 <code>rehash</code> 所占用的时间过大，会影响用户的正常使用。所以，<code>Redis</code> 采取了渐进式 <code>rehash</code> 的方式，通过分多次、渐进式地将 <code>ht[0]</code> 里面的键值对慢慢地 <code>rehash</code> 到 <code>ht[1]</code> 中.</p>
+<p><strong>步骤:</strong></p>
+<ul>
+<li>给 ht[1] 分配空间；</li>
+<li>在字典中维持一个索引计数器变量 rehashidx，并将它的值设置为 0，表示 rehash 开始；</li>
+<li>在 rehash 期间，每次对字典执行增删改查操作时，程序除了执行指定的操作以外，还会顺带将 ht[0] 哈希表在 rehashindex 索引上</li>
+<li>所有键值对 rehash 到 ht[1]，当 rehash 工作完成以后，rehashindex + 1；</li>
+<li>当 ht[0] 的所有值都 rehash 到 ht[1] 后，rehashidx 会被设为 -1，表示 rehash 结束.</li>
+</ul>
+<p><strong>图解</strong></p>
+<p><img src="/images/redis/redis.assets/rehash_start.png" alt="rehash_start"></p>
+<p><img src="/images/redis/redis.assets/rehash_padding.png" alt="rehash_padding"></p>
+<p><img src="/images/redis/redis.assets/reshah_padding2.png" alt="reshah_padding2"></p>
+<p><img src="/images/redis/redis.assets/rehash_end.png" alt="rehash_end"></p>
+<p><strong>rehash时访问</strong></p>
+<ul>
+<li>查找：现在 <code>ht[0]</code> 找，找不到再到 <code>ht[1]</code> 找；</li>
+<li>添加：直接往 <code>ht[1]</code> 中添加；</li>
+<li>更新、删除：先找到，再更新/删除。也是在 <code>ht[0] &amp; ht[1]</code> 之间进行。</li>
+</ul>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code class="shell">127.0.0.1:6390&gt; HSET myhash field1 &quot;redis&quot; # 设置 myhash中的 field1属性的值为 redis,返回1,如果属性存在则为更新值,返回0.
+(integer) 1
+127.0.0.1:6390&gt; HSET myhash field2 &quot;zookeeper&quot;
+(integer) 1
+127.0.0.1:6390&gt; HGETALL myhash # 查看 myhash 的所有键值对
+1) &quot;field1&quot;
+2) &quot;redis&quot;
+3) &quot;field2&quot;
+4) &quot;zookeeper&quot;
+127.0.0.1:6390&gt; HMSET myhash field1 &quot;redis1&quot; field3 &quot;kafka&quot; # HSET 的批量操作版,返回OK.
+OK
+127.0.0.1:6390&gt; HSETNX myhash field3 &quot;MQ&quot;  # 去掉更新功能的hset.只能新增属性,不能修改.
+(integer) 0
+127.0.0.1:6390&gt; HGET myhash field3 # 查看myhash 指定键的值.
+&quot;kafka&quot;
+127.0.0.1:6390&gt; HKEYS myhash # 获取 myhash 的所有键
+1) &quot;field1&quot;
+2) &quot;field2&quot;
+3) &quot;field3&quot;
+127.0.0.1:6390&gt; HVALS myhash # 获取 myhash 的所有值
+1) &quot;redis1&quot;
+2) &quot;zookeeper&quot;
+3) &quot;kafka&quot;
+127.0.0.1:6390&gt; HLEN myhash # 获取 myhash 的键值对个数.
+(integer) 3
+127.0.0.1:6390&gt; HEXISTS myhash field3 # 查看哈希表的指定字段是否存在。存在返回1,不存在返回0.
+(integer) 1
+127.0.0.1:6390&gt; HDEL myhash field3 # 删除哈希表的指定字段.删除成功返回1.
+(integer) 1
+127.0.0.1:6390&gt; HINCRBY myhash field3 1 # 为哈希表中的字段值加上指定增量值.
+(integer) 1
+</code></pre>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>Redis Set 是字符串的无序集合。在 Set 中添加、删除和测试成员的存在，无论集合中包含多少数量的元素，都是恒定的时间复杂性O(1) 。</p>
+<p>还可以在非常高效的进行集合集合运算，获取并集、交集、差集。</p>
+<p>Redis Set 不允许重复，集合中的最大成员数为 2^32 - 1（4294967295，每组超过 40 亿个成员）。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#redis-%E4%B8%89-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8D%B3%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">redis(三) 数据类型即用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#redisObject-%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">redisObject 底层数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String"><span class="toc-number">1.2.</span> <span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">内部编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDS%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.2.</span> <span class="toc-text">SDS概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.3.</span> <span class="toc-text">命令使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-number">1.3.</span> <span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">内部分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZipList"><span class="toc-number">1.3.3.</span> <span class="toc-text">ZipList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickList"><span class="toc-number">1.3.4.</span> <span class="toc-text">QuickList</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash"><span class="toc-number">1.4.</span> <span class="toc-text">Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%90%E8%BF%9B%E5%BC%8Frehash"><span class="toc-number">1.4.2.</span> <span class="toc-text">渐进式rehash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.3.</span> <span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set"><span class="toc-number">1.5.</span> <span class="toc-text">Set</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

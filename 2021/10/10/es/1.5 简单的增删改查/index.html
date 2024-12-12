@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>简单的增删改查 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="简单的增删改查(基于es7以上)本篇使用的是es7.x版本以上。所以不需要类型名称。
+创建索引PUT developer
+&amp;#123;
+    &amp;quot;mappings&amp;quot;: &amp;#123,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">简单的增删改查</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/es"><b>「
+                    </b>ES<b> 」</b></a>
+                
+                十月 10, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/10/10/es/1.5%20%E7%AE%80%E5%8D%95%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" title="简单的增删改查" class="">简单的增删改查</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    11k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    10 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="简单的增删改查-基于es7以上"><a href="#简单的增删改查-基于es7以上" class="headerlink" title="简单的增删改查(基于es7以上)"></a>简单的增删改查(基于es7以上)</h1><p>本篇使用的是es7.x版本以上。所以不需要类型名称。</p>
+<h2 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h2><pre><code class="elm">PUT developer
+&#123;
+    &quot;mappings&quot;: &#123;
+        &quot;properties&quot;: &#123;
+            &quot;age&quot;: &#123;
+                &quot;type&quot;: &quot;long&quot;
+            &#125;,
+            &quot;id&quot;: &#123;
+                &quot;type&quot;: &quot;long&quot;
+            &#125;,
+            &quot;name&quot;: &#123;
+                &quot;type&quot;: &quot;text&quot;,
+                &quot;fields&quot;: &#123;
+                    &quot;keyword&quot;: &#123;
+                        &quot;type&quot;: &quot;keyword&quot;,
+                        &quot;ignore_above&quot;: 256
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+
+-- 查看索引字段信息（不可修改）
+GET developer/_mapping
+-- 查看索引的设置信息（可修改参数）
+GET developer/_setting
+-- 查看索引的别名信息
+GET developer/_alias
+-- 查看索引分片分布
+GET developer/_search_shards
+</code></pre>
+<h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><p> 插入数据时，可以设置matedata中的_id字段的值,减少数据的大小。但注意，metadata中 _id属于主键，重复将覆盖记录。</p>
+<pre><code class="elm">--插入数据，不指定matedata的id值
+POST developer/_doc
+&#123;
+  &quot;id&quot;:1,
+  &quot;name&quot;:&quot;空痕影&quot;,
+  &quot;age&quot;:29
+&#125;
+--返回-----------------
+&#123;
+  &quot;_index&quot; : &quot;developer&quot;,
+  &quot;_id&quot; : &quot;7lDMB5EB76sTFOdbgmGn&quot;,
+  &quot;_version&quot; : 1,
+  &quot;result&quot; : &quot;created&quot;,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 2,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;_seq_no&quot; : 0,
+  &quot;_primary_term&quot; : 1
+&#125;
+
+-- 插入数据指定matedata中的id值
+POST developer/_doc/1
+&#123;
+  &quot;id&quot;:2,
+  &quot;name&quot;:&quot;张三&quot;,
+  &quot;age&quot;:24
+&#125;
+--返回-----------------------
+&#123;
+  &quot;_index&quot; : &quot;developer&quot;,
+  &quot;_id&quot; : &quot;1&quot;,
+  &quot;_version&quot; : 1,
+  &quot;result&quot; : &quot;created&quot;,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 2,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;_seq_no&quot; : 1,
+  &quot;_primary_term&quot; : 1
+&#125;
+
+-- 插入重复的_id值记录
+POST developer/_doc/1
+&#123;
+  &quot;name&quot;:&quot;张三&quot;,
+  &quot;age&quot;:25
+&#125;
+-- --
+GET developer/_doc/1
+--返回--------
+&#123;
+  &quot;_index&quot; : &quot;developer&quot;,
+  &quot;_id&quot; : &quot;1&quot;,
+  &quot;_version&quot; : 2,
+  &quot;_seq_no&quot; : 2,
+  &quot;_primary_term&quot; : 1,
+  &quot;found&quot; : true,
+  &quot;_source&quot; : &#123;
+    &quot;name&quot; : &quot;张三&quot;,
+    &quot;age&quot; : 25
+  &#125;
+&#125;
+</code></pre>
+<p>批量插入</p>
+<pre><code class="elm">POST developer/_bulk
+&#123;&quot;index&quot;:&#123;&quot;_id&quot;:4&#125;&#125;
+&#123;&quot;name&quot;:&quot;王五&quot;,&quot;address&quot;:&quot;北京&quot;&#125;
+&#123;&quot;index&quot;:&#123;&quot;_id&quot;:2&#125;&#125;
+&#123;&quot;name&quot;:&quot;赵六&quot;,&quot;address&quot;:&quot;上海&quot;&#125;
+&#123;&quot;index&quot;:&#123;&quot;_id&quot;:3&#125;&#125;
+&#123;&quot;name&quot;:&quot;田七&quot;,&quot;address&quot;:&quot;武汉&quot;&#125;
+-- 返回------------
+&#123;
+  &quot;took&quot; : 33,
+  &quot;errors&quot; : false,
+  &quot;items&quot; : [
+    &#123;
+      &quot;index&quot; : &#123;
+        &quot;_index&quot; : &quot;developer&quot;,
+        &quot;_id&quot; : &quot;4&quot;,
+        &quot;_version&quot; : 1,
+        &quot;result&quot; : &quot;created&quot;,
+        &quot;_shards&quot; : &#123;
+          &quot;total&quot; : 2,
+          &quot;successful&quot; : 1,
+          &quot;failed&quot; : 0
+        &#125;,
+        &quot;_seq_no&quot; : 8,
+        &quot;_primary_term&quot; : 1,
+        &quot;status&quot; : 201
+      &#125;
+    &#125;,
+    &#123;
+      &quot;index&quot; : &#123;
+        &quot;_index&quot; : &quot;developer&quot;,
+        &quot;_id&quot; : &quot;2&quot;,
+        &quot;_version&quot; : 1,
+        &quot;result&quot; : &quot;created&quot;,
+        &quot;_shards&quot; : &#123;
+          &quot;total&quot; : 2,
+          &quot;successful&quot; : 1,
+          &quot;failed&quot; : 0
+        &#125;,
+        &quot;_seq_no&quot; : 9,
+        &quot;_primary_term&quot; : 1,
+        &quot;status&quot; : 201
+      &#125;
+    &#125;,
+    &#123;
+      &quot;index&quot; : &#123;
+        &quot;_index&quot; : &quot;developer&quot;,
+        &quot;_id&quot; : &quot;3&quot;,
+        &quot;_version&quot; : 1,
+        &quot;result&quot; : &quot;created&quot;,
+        &quot;_shards&quot; : &#123;
+          &quot;total&quot; : 2,
+          &quot;successful&quot; : 1,
+          &quot;failed&quot; : 0
+        &#125;,
+        &quot;_seq_no&quot; : 10,
+        &quot;_primary_term&quot; : 1,
+        &quot;status&quot; : 201
+      &#125;
+    &#125;
+  ]
+&#125;
+</code></pre>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><pre><code class="elm">-- 查询指定id记录
+GET developer/doc/1
+-- 查询默认排序记录的前20条
+GET developer/_search
+&#123;
+  &quot;size&quot;: 20
+&#125;
+--  （单条件查询）查询名字叫张三的记录
+GET developer/_search
+&#123;
+  &quot;size&quot;: 20,
+  &quot;query&quot;:&#123;
+    &quot;term&quot;: &#123;
+      &quot;name.keyword&quot;: &#123;
+        &quot;value&quot;: &quot;张三&quot;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+-- （多条件查询）查询名字叫张三且年龄大于20的记录
+GET developer/_search
+&#123;
+  &quot;size&quot;: 20,
+  &quot;query&quot;: &#123;
+    &quot;bool&quot;: &#123;
+      &quot;must&quot;: [
+        &#123;
+          &quot;term&quot;: &#123;
+            &quot;name.keyword&quot;: &#123;
+              &quot;value&quot;: &quot;张三&quot;
+            &#125;
+          &#125;
+        &#125;,
+        &#123;
+          &quot;range&quot;: &#123;
+            &quot;age&quot;: &#123;
+              &quot;gte&quot;: 20
+            &#125;
+          &#125;
+        &#125;
+      ]
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><p>es索引数据本身并不支持修改。其原理都是删除记录后重新插入。</p>
+<pre><code class="elm">-- 使用插入时带 _id的方法来修改数据 
+-- PUT/POST 都可以插入成功，但put需要指定_id。
+-- 且修改数据可以增加或者删除数据中的指定字段。更新为完全覆盖，最后设置了哪些字段，输出就是哪些字段。
+PUT developer/_doc/1
+&#123;
+     &quot;sex&quot;:&quot;男&quot;,
+      &quot;age&quot;:27,
+      &quot;name&quot;:&quot;空痕影&quot;,
+      &quot;id&quot;:2
+&#125;
+
+-- 增量更新数据--------
+POST developer/_update/1
+&#123;
+  &quot;doc&quot;:&#123;
+      &quot;name&quot;:&quot;里斯&quot;
+    
+  &#125;
+&#125;
+--返回----------
+&#123;
+  &quot;_index&quot; : &quot;developer&quot;,
+  &quot;_id&quot; : &quot;1&quot;,
+  &quot;_version&quot; : 8,
+  &quot;result&quot; : &quot;noop&quot;,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 0,
+    &quot;successful&quot; : 0,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;_seq_no&quot; : 14,
+  &quot;_primary_term&quot; : 1
+&#125;
+
+
+-- es6的增量更新操作
+PUT developer/developer/20211214113238000781000004/_update
+&#123;
+  &quot;doc&quot;:&#123;
+      &quot;code&quot;: &quot;33010800101700122017701010001&quot;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><h3 id="根据主键删除索引记录"><a href="#根据主键删除索引记录" class="headerlink" title="根据主键删除索引记录"></a>根据主键删除索引记录</h3><pre><code class="elm">-- 根据主键删除索引记录
+DELETE developer/_doc/5
+-- 返回--------------
+&#123;
+  &quot;_index&quot; : &quot;developer&quot;,
+  &quot;_id&quot; : &quot;5&quot;,
+  &quot;_version&quot; : 1,
+  &quot;result&quot; : &quot;not_found&quot;,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 2,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;_seq_no&quot; : 15,
+  &quot;_primary_term&quot; : 1
+&#125;
+
+</code></pre>
+<h3 id="删除整个索引"><a href="#删除整个索引" class="headerlink" title="删除整个索引"></a>删除整个索引</h3><pre><code class="elm">
+-- 删除整个索引
+DELETE developer
+</code></pre>
+<h3 id="带条件删除"><a href="#带条件删除" class="headerlink" title="带条件删除"></a>带条件删除</h3><pre><code class="elm">
+-- 带条件删除
+POST developer/_delete_by_query
+&#123;
+  &quot;query&quot;:&#123;
+    &quot;term&quot;:&#123;
+      &quot;age&quot;:26
+    &#125;
+  &#125;
+&#125;
+--返回删除一条记录的结果-----------
+&#123;
+  &quot;took&quot; : 12,
+  &quot;timed_out&quot; : false,
+  &quot;total&quot; : 1,
+  &quot;deleted&quot; : 1,
+  &quot;batches&quot; : 1,
+  &quot;version_conflicts&quot; : 0,
+  &quot;noops&quot; : 0,
+  &quot;retries&quot; : &#123;
+    &quot;bulk&quot; : 0,
+    &quot;search&quot; : 0
+  &#125;,
+  &quot;throttled_millis&quot; : 0,
+  &quot;requests_per_second&quot; : -1.0,
+  &quot;throttled_until_millis&quot; : 0,
+  &quot;failures&quot; : [ ]
+&#125;
+</code></pre>
+<h2 id="批量操作bulk"><a href="#批量操作bulk" class="headerlink" title="批量操作bulk"></a>批量操作bulk</h2><p>使用bulk语法执行批量增删改。语法格式如下：</p>
+<p>注意：_bulk的两个{}都不要出现换行等操作，两个{}使用回车符进行识别。</p>
+<p>POST _bulk { “action_type” : { “metadata_name” : “metadata_value” } } { document datas | action datas }</p>
+<p>语法中的action_type可选值为： create : 强制创建，相当于PUT 索引名/类型名/唯一ID/_create。主键必须有。 index: 普通的POST操作，相当于创建Document或全量替换 update: 更新操作（partial update）,相当于 POST 索引名/类型名/唯一ID/_update delete: 删除操作</p>
+<h3 id="批量新增"><a href="#批量新增" class="headerlink" title="批量新增"></a>批量新增</h3><pre><code class="elm">POST _bulk
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:21&#125;&#125;
+&#123;&quot;name&quot;:&quot;马大六&quot;,&quot;age&quot;:32&#125;
+</code></pre>
+<h3 id="批量更新（全量修改）"><a href="#批量更新（全量修改）" class="headerlink" title="批量更新（全量修改）"></a>批量更新（全量修改）</h3><pre><code class="elm">POST _bulk
+&#123;&quot;index&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:2&#125;&#125;
+&#123;&quot;name&quot;:&quot;兴名&quot;&#125;
+</code></pre>
+<h3 id="批量更新（增量修改）"><a href="#批量更新（增量修改）" class="headerlink" title="批量更新（增量修改）"></a>批量更新（增量修改）</h3><pre><code class="elm">POST _bulk
+&#123;&quot;update&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:1&#125;&#125;
+&#123;&quot;doc&quot;:&#123; &quot;age&quot;:33&#125;&#125;
+</code></pre>
+<h3 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除"></a>批量删除</h3><pre><code class="elm">POST _bulk
+&#123;&quot;delete&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:3&#125;&#125;
+</code></pre>
+<h3 id="批量命令"><a href="#批量命令" class="headerlink" title="批量命令"></a>批量命令</h3><pre><code class="elm">POST _bulk
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:21&#125;&#125;
+&#123;&quot;name&quot;:&quot;马大六&quot;,&quot;age&quot;:32&#125;
+&#123;&quot;update&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:1&#125;&#125;
+&#123;&quot;doc&quot;:&#123; &quot;age&quot;:33&#125;&#125;
+&#123;&quot;index&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:2&#125;&#125;
+&#123;&quot;name&quot;:&quot;兴名&quot;&#125;
+&#123;&quot;delete&quot;:&#123;&quot;_index&quot;:&quot;developer&quot;,&quot;_id&quot;:3&#125;&#125;
+</code></pre>
+<p>注意： bulk语法中要求一个完整的json串不能有换行。不同的json串必须使用换行分隔。 多个操作中，如果有错误情况，不会影响到其他的操作，只会在批量操作返回结果中标记失败。 bulk语法批量操作时，bulk request会一次性加载到内存中，如果请求数据量太大， 性能反而下降（内存压力过高），需要反复尝试一个最佳的bulk request size。 一般从1000<del>5000条数据开始尝试，逐渐增加。如果查看bulk request size的话， 一般是5</del>15MB之间为好。  bulk语法要求json格式是为了对内存的方便管理，和尽可能降低内存的压力。 如果json格式没有特殊的限制，Elasticsearch在解释bulk请求时，需要对任意格式的json进行解释处理， 需要对bulk请求数据做json对象会json array对象的转化，那么内存的占用量至少翻倍， 当请求量过大的时候，对内存的压力会直线上升，且需要jvm gc进程对垃圾数据做频繁回收， 影响Elasticsearch效率。 生产环境中，bulk api常用。  都是使用java代码实现循环操作。一般一次bulk请求，执行一种操作。如：批量新增10000条数据等。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5-%E5%9F%BA%E4%BA%8Ees7%E4%BB%A5%E4%B8%8A"><span class="toc-number">1.</span> <span class="toc-text">简单的增删改查(基于es7以上)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="toc-number">1.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.</span> <span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">1.5.</span> <span class="toc-text">删除数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%B8%BB%E9%94%AE%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95%E8%AE%B0%E5%BD%95"><span class="toc-number">1.5.1.</span> <span class="toc-text">根据主键删除索引记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B4%E4%B8%AA%E7%B4%A2%E5%BC%95"><span class="toc-number">1.5.2.</span> <span class="toc-text">删除整个索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%9D%A1%E4%BB%B6%E5%88%A0%E9%99%A4"><span class="toc-number">1.5.3.</span> <span class="toc-text">带条件删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Cbulk"><span class="toc-number">1.6.</span> <span class="toc-text">批量操作bulk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%96%B0%E5%A2%9E"><span class="toc-number">1.6.1.</span> <span class="toc-text">批量新增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0%EF%BC%88%E5%85%A8%E9%87%8F%E4%BF%AE%E6%94%B9%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">批量更新（全量修改）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0%EF%BC%88%E5%A2%9E%E9%87%8F%E4%BF%AE%E6%94%B9%EF%BC%89"><span class="toc-number">1.6.3.</span> <span class="toc-text">批量更新（增量修改）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4"><span class="toc-number">1.6.4.</span> <span class="toc-text">批量删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%91%BD%E4%BB%A4"><span class="toc-number">1.6.5.</span> <span class="toc-text">批量命令</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

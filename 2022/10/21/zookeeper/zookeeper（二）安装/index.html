@@ -1,0 +1,658 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zookeeper（二） 安装 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="安装docker单机安装下载镜像# 默认拉取最新的版本，如要指定版本 zookeeeper:版本号
+docker pull zookeeper
+
+
+创建并运行容器docker run --name ,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">zookeeper（二） 安装</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                十月 21, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AE%89%E8%A3%85/" title="zookeeper（二） 安装" class="">zookeeper（二） 安装</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    11k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    10 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="docker单机安装"><a href="#docker单机安装" class="headerlink" title="docker单机安装"></a>docker单机安装</h2><h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><pre><code class="shell"># 默认拉取最新的版本，如要指定版本 zookeeeper:版本号
+docker pull zookeeper
+</code></pre>
+<p><img src="/images/zookeeper/zookeeper.assets/docker%E6%8B%89%E5%8F%96zookeeper.png" alt="docker拉取zookeeper"></p>
+<h3 id="创建并运行容器"><a href="#创建并运行容器" class="headerlink" title="创建并运行容器"></a>创建并运行容器</h3><pre><code class="shell">docker run --name zookeeper -e JAMFLAGS=&quot;-Xmx256m&quot; -v /mysoft/zookeeper/data/:/data/ -d -p 2181:2181 --privileged zookeeper
+</code></pre>
+<p><img src="/images/zookeeper/zookeeper.assets/%E5%88%9B%E5%BB%BAzookeeper%E5%AE%B9%E5%99%A8.png" alt="创建zookeeper容器"></p>
+<h3 id="使用zk客户端创建节点"><a href="#使用zk客户端创建节点" class="headerlink" title="使用zk客户端创建节点"></a>使用zk客户端创建节点</h3><pre><code class="shell"># 进入容器
+docker exec -it acf2ec660c0e /bin/bash
+# 开启zk客户端
+bin/zkCli.sh
+# 创建一个节点
+create /app2 app2
+</code></pre>
+<p><img src="/images/zookeeper/zookeeper.assets/%E8%BF%9B%E5%85%A5zk%E5%AE%B9%E5%99%A8.png" alt="进入zk容器"></p>
+<p><img src="/images/zookeeper/zookeeper.assets/%E4%BD%BF%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9.png" alt="image-20211122011349451"></p>
+<h3 id="使用可视化工具ZooInspector-观察结果"><a href="#使用可视化工具ZooInspector-观察结果" class="headerlink" title="使用可视化工具ZooInspector 观察结果"></a>使用可视化工具ZooInspector 观察结果</h3><p>下载<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/secure/attachment/12436620/ZooInspector.zip%EF%BC%9B">ZooInspector</a> .并解压后运行zookeeper-dev-ZooInspector.jar</p>
+<p>连接并设置参数即可。</p>
+<p><img src="/images/zookeeper/zookeeper.assets/ZooInspector.png" alt="ZooInspector"></p>
+<p><img src="/images/zookeeper/zookeeper.assets/ZooInspector2.png" alt="ZooInspector2"></p>
+<h2 id="docker集群版（一）"><a href="#docker集群版（一）" class="headerlink" title="docker集群版（一）"></a>docker集群版（一）</h2><h3 id="创建网络环境，并运行容器"><a href="#创建网络环境，并运行容器" class="headerlink" title="创建网络环境，并运行容器"></a>创建网络环境，并运行容器</h3><pre><code class="shell"># 创建一个桥接网络 用于zookeeper集群通信。
+docker network create --driver bridge  zoonet
+# 创建三个容器，在一个桥接网络下，并分别映射到主机的不同端口，同时配置hostname不同，zoo的my_id不同，并根据hostname组建集群。
+docker run -d -p 2181:2181 --name zookeepernode1 --hostname zoo1 --privileged --network zoonet \
+-e ZOO_MY_ID=1 \
+-e JAMFLAGS=&quot;-Xmx256m&quot; \
+-e &quot;ZOO_SERVERS=server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181&quot; zookeeper
+
+docker run -d -p 2182:2181 --name zookeepernode2 --hostname zoo2 --privileged --network zoonet \
+-e ZOO_MY_ID=2 \
+-e JAMFLAGS=&quot;-Xmx256m&quot; \
+-e &quot;ZOO_SERVERS=server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181&quot; zookeeper
+
+docker run -d -p 2183:2181 --name zookeepernode3 --hostname zoo3 --privileged --network zoonet \
+-e ZOO_MY_ID=3 \
+-e JAMFLAGS=&quot;-Xmx256m&quot; \
+-e &quot;ZOO_SERVERS=server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181&quot; zookeeper
+</code></pre>
+<p><img src="/images/zookeeper/zookeeper.assets/%E5%88%9B%E5%BB%BAzookeeper%E9%9B%86%E7%BE%A4%E5%AE%B9%E5%99%A8.png" alt="创建zookeeper集群容器"></p>
+<h3 id="查看各服务状态"><a href="#查看各服务状态" class="headerlink" title="查看各服务状态"></a>查看各服务状态</h3><pre><code class="shell">#进入容器
+docker exec -it 容器id /bin/bash
+# 查看服务状态
+bin/zkServer.sh status
+</code></pre>
+<p><img src="/images/zookeeper/zookeeper.assets/%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%811.png" alt="服务状态"></p>
+<h3 id="使用ZooInspector-观察结果"><a href="#使用ZooInspector-观察结果" class="headerlink" title="使用ZooInspector 观察结果"></a>使用ZooInspector 观察结果</h3><p><img src="/images/zookeeper/zookeeper.assets/%E9%9B%86%E7%BE%A4%E7%BB%93%E6%9E%9C1.png" alt="集群结果"></p>
+<h2 id="docker集群版（二）"><a href="#docker集群版（二）" class="headerlink" title="docker集群版（二）"></a>docker集群版（二）</h2><p>便于管理</p>
+<h3 id="编写compose文件"><a href="#编写compose文件" class="headerlink" title="编写compose文件"></a>编写compose文件</h3><pre><code class="shell">version: &#39;3.1&#39;
+
+services:
+  zoo1:
+    image: zookeeper
+    restart: always
+    privileged: true
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    volumes: # 挂载数据
+      - /usr/local/zookeeper-cluster/node4/data:/data
+      - /usr/local/zookeeper-cluster/node4/datalog:/datalog
+    environment:
+      ZOO_MY_ID: 4
+      ZOO_SERVERS: server.4=0.0.0.0:2888:3888;2181 server.5=zoo2:2888:3888;2181 server.6=zoo3:2888:3888;2181
+    networks:
+      default:
+        ipv4_address: 172.18.0.14
+
+  zoo2:
+    image: zookeeper
+    restart: always
+    privileged: true
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    volumes: # 挂载数据
+      - /usr/local/zookeeper-cluster/node5/data:/data
+      - /usr/local/zookeeper-cluster/node5/datalog:/datalog
+    environment:
+      ZOO_MY_ID: 5
+      ZOO_SERVERS: server.4=zoo1:2888:3888;2181 server.5=0.0.0.0:2888:3888;2181 server.6=zoo3:2888:3888;2181
+    networks:
+      default:
+        ipv4_address: 172.18.0.15
+
+  zoo3:
+    image: zookeeper
+    restart: always
+    privileged: true
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    volumes: # 挂载数据
+      - /usr/local/zookeeper-cluster/node6/data:/data
+      - /usr/local/zookeeper-cluster/node6/datalog:/datalog
+    environment:
+      ZOO_MY_ID: 6
+      ZOO_SERVERS: server.4=zoo1:2888:3888;2181 server.5=zoo2:2888:3888;2181 server.6=0.0.0.0:2888:3888;2181
+    networks:
+      default:
+        ipv4_address: 172.18.0.16
+
+networks: # 自定义网络
+  default:
+    external:
+      name: zoonet2
+</code></pre>
+<h3 id="执行compose文件"><a href="#执行compose文件" class="headerlink" title="执行compose文件"></a>执行compose文件</h3><pre><code class="shell">docker-compose -f docker-compose.yml up -d
+</code></pre>
+<p>**停止zookeeper集群 **</p>
+<pre><code class="shell">docker-compose stop
+</code></pre>
+<p>**删除zookeeper集群 **</p>
+<pre><code class="shell">docker-compose rm
+</code></pre>
+<h2 id="实体机安装zookeeper"><a href="#实体机安装zookeeper" class="headerlink" title="实体机安装zookeeper"></a>实体机安装zookeeper</h2><h3 id="下载zookeeper"><a href="#下载zookeeper" class="headerlink" title="下载zookeeper"></a>下载zookeeper</h3><p> 从<a target="_blank" rel="noopener" href="https://downloads.apache.org/zookeeper/">apache官网目录</a>选择自己想要的版本，下载-bin.tar.gz包</p>
+<p>有<strong>bin</strong>名称的包里面有编译后的二进制的包，而之前的普通的tar.gz的包里面是只是源码的包无法直接使用。</p>
+<h3 id="解压zookeeper并配置文件"><a href="#解压zookeeper并配置文件" class="headerlink" title="解压zookeeper并配置文件"></a>解压zookeeper并配置文件</h3><pre><code class="shell"># 解压
+tar -zxf zookeeper-xxx-bin.tar.gz -C &lt;dir&gt;
+# 复制一份配置文件
+cp zoo-simple.cfg zoo.cfg
+</code></pre>
+<p><strong>配置文件</strong></p>
+<pre><code class="properties"># The number of milliseconds of each tick
+# 与其他服务间的通信时间，作为单位
+tickTime=2000
+# The number of ticks that the initial 
+# synchronization phase can take
+# 首次leader与follow连接时，允许等待initLimit*tickTime的时间。即10个tickTime的等待时长。
+initLimit=10
+# The number of ticks that can pass between 
+# sending a request and getting an acknowledgement
+# 同步等待时常5个tickTime。
+syncLimit=5
+# the directory where the snapshot is stored.
+# do not use /tmp for storage, /tmp here is just 
+# example sakes.
+# 文件存储目录
+dataDir=/data/zookeeper/single-3.7.0
+# the port at which the clients will connect
+# 客户端连接使用的端口号
+clientPort=2181
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+# 当前客户端允许的最大连接数
+#maxClientCnxns=60
+#
+# Be sure to read the maintenance section of the 
+# administrator guide before turning on autopurge.
+#
+# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance
+#
+# The number of snapshots to retain in dataDir
+#autopurge.snapRetainCount=3
+# Purge task interval in hours
+# Set to &quot;0&quot; to disable auto purge feature
+#autopurge.purgeInterval=1
+
+## Metrics Providers
+#
+# https://prometheus.io Metrics Exporter
+#metricsProvider.className=org.apache.zookeeper.metrics.prometheus.PrometheusMetricsProvider
+#metricsProvider.httpPort=7000
+#metricsProvider.exportJvmInfo=true
+</code></pre>
+<p><strong>创建需要的目录</strong></p>
+<pre><code class="shell"># -p 创建多级目录 此目录为zookeeper文件存储目录
+mkdir -p /data/zookeeper/single3.7.0
+</code></pre>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code class="shell">/opt/zookeeper/single-3.7.0/bin/zkServer.sh --config /opt/zookeeper/single-3.7.0/conf start
+结果显示：
+    ZooKeeper JMX enabled by default
+    Using config: /opt/zookeeper/single-3.7.0/conf/zoo.cfg
+    Starting zookeeper ... STARTED
+</code></pre>
+<p><strong>停止服务</strong></p>
+<pre><code class="shell">/opt/zookeeper/single-3.7.0/bin/zkServer.sh --config /opt/zookeeper/single-3.7.0/conf stop
+结果显示：
+    ZooKeeper JMX enabled by default
+    Using config: /opt/zookeeper/single-3.7.0/conf/zoo.cfg
+    Stopping zookeeper ... STOPPED
+</code></pre>
+<h2 id="安装zookeeper集群"><a href="#安装zookeeper集群" class="headerlink" title="安装zookeeper集群"></a>安装zookeeper集群</h2><p><strong>以四台为例</strong></p>
+<p>与单台安装步骤差不多。</p>
+<h3 id="解压zookeeper并配置文件-1"><a href="#解压zookeeper并配置文件-1" class="headerlink" title="解压zookeeper并配置文件"></a>解压zookeeper并配置文件</h3><pre><code class="shell"># 解压
+tar -zxf zookeeper-xxx-bin.tar.gz -C &lt;dir&gt;
+# 复制一份配置文件
+cp zoo-simple.cfg zoo.cfg
+</code></pre>
+<p><strong>在zoo.cfg中加入集群节点配置信息</strong></p>
+<pre><code># 集群节点列表，2888为连接通信用端口，3888为投票选举用端口
+server.1=node01:2888:3888
+server.2=node02:2888:3888
+server.3=node03:2888:3888
+server.4=node04:2888:3888
+</code></pre>
+<p><strong>设置各个节点编号,以node1为例</strong></p>
+<pre><code class="shell">mkdir -p /data/zookeeper/zk
+echo 1 &gt; /data/zookeeper/zk/myid
+</code></pre>
+<h3 id="启动服务-1"><a href="#启动服务-1" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code class="shell"># 分别在四台机子上执行
+zkServer.sh start
+</code></pre>
+<p><strong>查看节点主从</strong></p>
+<pre><code class="shell">zkServer.sh status
+</code></pre>
+<p><strong>启动客户端验证</strong></p>
+<pre><code class="shell">zkCli.sh 
+</code></pre>
+<p><strong>查看帮助命令</strong></p>
+<pre><code class="shell">help
+
+ZooKeeper -server host:port -client-configuration properties-file cmd args
+    addWatch [-m mode] path # optional mode is one of [PERSISTENT, PERSISTENT_RECURSIVE] - default is PERSISTENT_RECURSIVE
+    addauth scheme auth
+    close 
+    config [-c] [-w] [-s]
+    connect host:port
+    create [-s] [-e] [-c] [-t ttl] path [data] [acl]
+    delete [-v version] path
+    deleteall path [-b batch size]
+    delquota [-n|-b|-N|-B] path
+    get [-s] [-w] path
+    getAcl [-s] path
+    getAllChildrenNumber path
+    getEphemerals path
+    history 
+    listquota path
+    ls [-s] [-w] [-R] path
+    printwatches on|off
+    quit 
+    reconfig [-s] [-v version] [[-file path] | [-members serverID=host:port1:port2;port3[,...]*]] | [-add serverId=host:port1:port2;port3[,...]]* [-remove serverId[,...]*]
+    redo cmdno
+    removewatches path [-c|-d|-a] [-l]
+    set [-s] [-v version] path data
+    setAcl [-s] [-v version] [-R] path acl
+    setquota -n|-b|-N|-B val path
+    stat [-w] path
+    sync path
+    version 
+    whoami 
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E5%8D%95%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">docker单机安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="toc-number">2.1.</span> <span class="toc-text">下载镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">创建并运行容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8zk%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">使用zk客户端创建节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7ZooInspector-%E8%A7%82%E5%AF%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">2.4.</span> <span class="toc-text">使用可视化工具ZooInspector 观察结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E9%9B%86%E7%BE%A4%E7%89%88%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">docker集群版（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%B9%B6%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">创建网络环境，并运行容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%84%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81"><span class="toc-number">3.2.</span> <span class="toc-text">查看各服务状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8ZooInspector-%E8%A7%82%E5%AF%9F%E7%BB%93%E6%9E%9C"><span class="toc-number">3.3.</span> <span class="toc-text">使用ZooInspector 观察结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E9%9B%86%E7%BE%A4%E7%89%88%EF%BC%88%E4%BA%8C%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">docker集群版（二）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99compose%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">编写compose文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Ccompose%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">执行compose文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%9C%BA%E5%AE%89%E8%A3%85zookeeper"><span class="toc-number">5.</span> <span class="toc-text">实体机安装zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDzookeeper"><span class="toc-number">5.1.</span> <span class="toc-text">下载zookeeper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8Bzookeeper%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.2.</span> <span class="toc-text">解压zookeeper并配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.3.</span> <span class="toc-text">启动服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85zookeeper%E9%9B%86%E7%BE%A4"><span class="toc-number">6.</span> <span class="toc-text">安装zookeeper集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8Bzookeeper%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-1"><span class="toc-number">6.1.</span> <span class="toc-text">解压zookeeper并配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1-1"><span class="toc-number">6.2.</span> <span class="toc-text">启动服务</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

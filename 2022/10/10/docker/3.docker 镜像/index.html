@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>三 docker镜像 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="Docker 容器镜像概念
+Docker 镜像是只读的容器模板，是Docker容器基础
+为Docker容器提供了静态文件系统运行环境（rootfs）
+区分: 容器是镜像的运行状态,镜像是容器的静止状,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">三 docker镜像</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/docker"><b>「
+                    </b>DOCKER<b> 」</b></a>
+                
+                十月 10, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/10/10/docker/3.docker%20%E9%95%9C%E5%83%8F/" title="三 docker镜像" class="">三 docker镜像</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    14k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    13 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Docker-容器镜像"><a href="#Docker-容器镜像" class="headerlink" title="Docker 容器镜像"></a>Docker 容器镜像</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>Docker 镜像是只读的容器模板，是Docker容器基础</li>
+<li>为Docker容器提供了静态文件系统运行环境（rootfs）</li>
+<li>区分: 容器是镜像的运行状态,镜像是容器的静止状态.</li>
+</ul>
+<h2 id="联合文件系统-union-filesystem"><a href="#联合文件系统-union-filesystem" class="headerlink" title="联合文件系统(union filesystem)"></a>联合文件系统(union filesystem)</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p> 是实现联合挂载技术的文件系统.可以实现在一个挂载点同时挂在多个文件系统,将挂载点的原目录与被挂载内容进行整合,使得最终可见的文件系统包含整合后的各层文件与目录.</p>
+<h3 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h3><p><img src="/images/docker/docker.assets/%E5%AE%B9%E5%99%A8%E5%88%86%E5%B1%82%E5%AD%98%E5%82%A8.png" alt="容器分层存储"></p>
+<h2 id="Docker-Overlay2"><a href="#Docker-Overlay2" class="headerlink" title="Docker Overlay2"></a>Docker Overlay2</h2><p>容器文件系统中有多种存储驱动实现方式:aufs,devicemapper,overlay,overlay2等.docker目前默认使用的是overlay2.</p>
+<h3 id="概念-2"><a href="#概念-2" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>registry: repository集合.</li>
+<li>repository: repository 是镜像的集合.</li>
+<li>image: image 是存储镜像相关的元数据，包括镜像的架构，镜像默认配置信息，镜像的容器配置信息等等。它是“逻辑”上的概念，并无物理上的镜像文件与之对应。</li>
+<li>layer: layer(镜像层) 组成了镜像，单个 layer 可以被多个镜像共享。</li>
+</ul>
+<p> overlay2是由merged,lowerdir,upperdir,workdir组成.</p>
+<ul>
+<li>lowerdir: 镜像只读层,镜像层.</li>
+<li>upperdir: 容器读写层, 反应容器的读写操作.</li>
+<li>workdir: overlayfs的内部层, 用于实现从只读到读写层的copy_up操作.</li>
+<li>merge: 容器内作为同一视图联合挂载点的目录.</li>
+</ul>
+<p><img src="/images/docker/docker.assets/overlay2.png" alt="overlay2"></p>
+<h3 id="docker-查看存储驱动"><a href="#docker-查看存储驱动" class="headerlink" title="docker 查看存储驱动"></a>docker 查看存储驱动</h3><pre><code class="bash">docker info | grep overlay
+Storage Driver: overlay2
+ Network: bridge host macvlan null overlay
+  WARNING: You&#39;re not using the default seccomp profile
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+</code></pre>
+<h3 id="docker-镜像存储位置"><a href="#docker-镜像存储位置" class="headerlink" title="docker 镜像存储位置"></a>docker 镜像存储位置</h3><p><strong>入口:</strong> /var/lib/docker/image/overlay2/</p>
+<pre><code class="bash">ls /var/lib/docker/image/overlay2/
+distribution  imagedb  layerdb  repositories.json
+</code></pre>
+<ul>
+<li>repositories.json 记录了repo与镜像id的映射关系</li>
+<li>imagedb 记录了镜像架构，操作系统，构建镜像的容器 ID 和配置以及 rootfs 等信息</li>
+<li>layerdb 记录了每层镜像层的元数据。</li>
+</ul>
+<h3 id="docker-镜像分层文件查找方法"><a href="#docker-镜像分层文件查找方法" class="headerlink" title="docker 镜像分层文件查找方法"></a>docker 镜像分层文件查找方法</h3><p>以redis为例.</p>
+<ol>
+<li><p>通过下载镜像可以得知该镜像有六层.</p>
+<pre><code class="bash"># docker pull redis
+Using default tag: latest
+Trying to pull repository docker.io/library/redis ... 
+latest: Pulling from docker.io/library/redis
+3f4ca61aafcd: Already exists 
+c3775af77098: Pull complete 
+fa7c5c7e501c: Pull complete 
+4059b4d2a3ce: Pull complete 
+6bc523bfb16a: Pull complete 
+20bf15ad3c24: Pull complete 
+Digest: sha256:8184cfe57f205ab34c62bd0e9552dffeb885d2a7f82ce4295c0df344cb6f0007
+Status: Downloaded newer image for docker.io/redis:latest
+</code></pre>
+</li>
+<li><p>通过docker images 来查看redis的短的image id</p>
+<pre><code class="bash">docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/redis     latest              0256c63af7db        2 weeks ago         117 MB
+</code></pre>
+</li>
+<li><p>进入docker 镜像存储路径,通过短id查找完整的长id.再通过长id可以在imagedb中找到镜像的元数据.</p>
+<pre><code class="bash">cd /var/lib/docker/image/overlay2
+more repositories.json 
+
+&#123;
+    &quot;Repositories&quot;: &#123;
+        &quot;docker.io/redis&quot;: &#123;
+            &quot;docker.io/redis:latest&quot;: &quot;sha256:0256c63af7dbecdb8783029521d1bcaf02d194d1451ad8cddc193352b6caedd0&quot;,
+            &quot;docker.io/redis@sha256:8184cfe57f205ab34c62bd0e9552dffeb885d2a7f82ce4295c0df344cb6f0007&quot;: &quot;sha256:0256c63af7dbecdb8783029521d1bcaf02d194d1451ad8cddc193352b6caedd0&quot;
+        &#125;
+&#125;
+</code></pre>
+<p>通过结构可以看到redis:latest的长id是<code>0256c63af7dbecdb8783029521d1bcaf02d194d1451ad8cddc193352b6caedd0</code>.在imagedb/content/sha256/文件夹下找到同名文件.查看信息.</p>
+<pre><code class="bash"># more /var/lib/docker/image/overlay2/imagedb/content/sha256/0256c63af7dbecdb8783029521d1bcaf02d194d1451ad8cddc193352b6caedd0
+
+...
+&quot;rootfs&quot;: &#123;
+    &quot;type&quot;: &quot;layers&quot;,
+    &quot;diff_ids&quot;: [
+        &quot;sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069&quot;,
+        &quot;sha256:f425a4ae4b4e5325d4462e5d617a58784c445405e7435c5dc9eef7f3fc177075&quot;,
+        &quot;sha256:25573b19d1564d20fb6eafe2cc68eaebea262b2add86bafe0aace6a8d9273ccb&quot;,
+        &quot;sha256:a2e52a99a99fef7d419c5ce7a3e23a8e60b5b51a03dc3f1417347e12bd21c051&quot;,
+        &quot;sha256:807cec72b26c8db57733dd867031b00d113d7b834f4b0601ee41ec4fa63b894b&quot;,
+        &quot;sha256:2ffda52105d36ec4cdbd24bd17e698e26d19bcba072238ec519a0381795108f5&quot;
+    ]
+&#125;
+...
+</code></pre>
+<p>在json文件最下方有一块<code>rootfs</code>目录.其中的diff_ids就记录着分层的数据的id号.这六层分别对应镜像的六层.自上而下,引射着容器的底层到顶层.该id的作用是找到镜像层的镜像.</p>
+</li>
+<li><p>根据chainId(底层diff_id即是chainId)可以在layer/sha256/(/var/lib/docker/image/overlay2/layerdb/sha256)目录下同名文件夹.里面存放了文件路径指向.</p>
+<pre><code class="bash"># pwd
+/var/lib/docker/image/overlay2/layerdb/sha256/8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069
+# ls
+cache-id  diff  size  tar-split.json.gz
+# more cache-id 
+7a335dd840b2cd775af90da49047a068eae5613484aec5e50b0c0c0018882a30
+# more diff 
+sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069
+</code></pre>
+<p>文件夹里有个cache-id的文件,里面存放了cache-id,我们可以通过cache-id:<code>7a335dd840b2cd775af90da49047a068eae5613484aec5e50b0c0c0018882a30</code>去/var/lib/docker/overlay2/路径下查找具体文件内容.</p>
+</li>
+<li><p>根据查到的cache-id去/var/lib/docker/overlay2/查看文件夹信息</p>
+<pre><code class="bash"># cd /var/lib/docker/overlay2/7a335dd840b2cd775af90da49047a068eae5613484aec5e50b0c0c0018882a30/
+# ls 
+committed  diff  link
+# more link 
+KUNIQVGBWFZHEASENNFRPT46MN
+# ls diff
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+</code></pre>
+<ul>
+<li>link: 存放镜像层对应的短id </li>
+<li>diff: 存放镜像层的原始文件</li>
+<li>lower: 上一层镜像层的短id. </li>
+<li></li>
+</ul>
+</li>
+<li><p>找到镜像底层后,需要通过公式来计算出下一层的chainId,然后循环执行4.5.6步骤.依次逐层查找文件信息.</p>
+<pre><code class="bash"># echo -n &quot;sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069 sha256:f425a4ae4b4e5325d4462e5d617a58784c445405e7435c5dc9eef7f3fc177075&quot; | sha256sum -
+
+555a4acbdb957b13ce0e5320a106dba38014f72d84dcab6ca989ce7ab505308f  -
+# ls /var/lib/docker/image/overlay2/layerdb/sha256/555a4acbdb957b13ce0e5320a106dba38014f72d84dcab6ca989ce7ab505308f
+cache-id  diff  parent  size  tar-split.json.gz
+# more parent 
+sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069
+</code></pre>
+<ul>
+<li>cache-id: 当前容器层的缓存id.</li>
+<li>diff: 当前容器层的diffid.</li>
+<li>parent: 上一层的cache-id.</li>
+</ul>
+<p> docker 引入了内容寻址机制，该机制会根据文件内容来索引镜像和镜像层。docker 利用 rootfs 中的 diff_id 计算出内容寻址的 chainID，通过 chainID 获取 layer 相关信息，最终索引到镜像层文件内容。</p>
+<p>对于最底层镜像层其 diff_id 即是 chainID。因此我们可以查找到它的文件内容。除最底层外，chainID 需通过公式 chainID(n) = SHA256(chain(n-1) diffID(n)) 计算得到.</p>
+<p>eg:<code>&quot;sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069 sha256:f425a4ae4b4e5325d4462e5d617a58784c445405e7435c5dc9eef7f3fc177075&quot; | sha256sum -</code></p>
+</li>
+</ol>
+<h2 id="镜像与容器"><a href="#镜像与容器" class="headerlink" title="镜像与容器"></a>镜像与容器</h2><p>启动一个docker 容器后,docker会mount一个overlay 的联合文件系统到容器内。这个文件系统由三层组成：</p>
+<p>lowerdir,upperdir,workdir. 对外统一用merge目录展示.</p>
+<pre><code class="bash"># docker run -d --privileged=true -p 6379:6379 --name redis  redis redis-server --appendonly yes
+f0689a0be678fa161374cad4da978369cf2eabb30761964cb9419349c882e62f
+# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+f0689a0be678        redis               &quot;docker-entrypoint...&quot;   3 seconds ago       Up 2 seconds        0.0.0.0:6379-&gt;6379/tcp   redis
+# mount |grep overlay
+/dev/vda1 on /var/lib/docker/overlay2 type ext4 (rw,relatime,data=ordered)
+overlay on /var/lib/docker/overlay2/41142d0283bc4c18abf7229830e7bd6ee37aa438321d0ca910341d2c4951ee42/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/WYS5YBW3HPSLD3LOZ7ENZAQH5K:
+/var/lib/docker/overlay2/l/AUC35C4AV2R55HFCPAII4ULPJB:
+/var/lib/docker/overlay2/l/3FWL7ZCAH2K47UI6SUERCDFXUO:
+/var/lib/docker/overlay2/l/W3LTS35MU3HRPPO6D22VKQ4MMR:
+/var/lib/docker/overlay2/l/YMGPW6T3736D2VPYWA5LCM2X3E:
+/var/lib/docker/overlay2/l/GUIPEFGV4TLNAML2MR42VREWZD:
+/var/lib/docker/overlay2/l/KUNIQVGBWFZHEASENNFRPT46MN,upperdir=/var/lib/docker/overlay2/41142d0283bc4c18abf7229830e7bd6ee37aa438321d0ca910341d2c4951ee42/diff,workdir=/var/lib/docker/overlay2/41142d0283bc4c18abf7229830e7bd6ee37aa438321d0ca910341d2c4951ee42/work)
+</code></pre>
+<p>细心点可以发现容器的lowerdir镜像层有七层目录.而我们的镜像缺只有六层目录.</p>
+<p><code>/var/lib/docker/overlay2/l/AUC35C4AV2R55HFCPAII4ULPJB: /var/lib/docker/overlay2/l/3FWL7ZCAH2K47UI6SUERCDFXUO: /var/lib/docker/overlay2/l/W3LTS35MU3HRPPO6D22VKQ4MMR: /var/lib/docker/overlay2/l/YMGPW6T3736D2VPYWA5LCM2X3E: /var/lib/docker/overlay2/l/GUIPEFGV4TLNAML2MR42VREWZD: /var/lib/docker/overlay2/l/KUNIQVGBWFZHEASENNFRPT46MN:</code></p>
+<p>这六层目录从下到上分别对应镜像的6层镜像层文件内容，它们分别映射到镜像层的 diff 目录。</p>
+<p><code>/var/lib/docker/overlay2/l/WYS5YBW3HPSLD3LOZ7ENZAQH5K</code> 映射的是容器的初始化层 init，该层内容是和容器配置相关的文件内容，它是只读的,从系统的软连接来看比较明显,其软连接的文件路径上的chainId带有init字眼.</p>
+<pre><code class="bash"># ll -l /var/lib/docker/overlay2/l/
+total 32
+lrwxrwxrwx 1 root root 72 Jan  8 10:40 3FWL7ZCAH2K47UI6SUERCDFXUO -&gt; ../2784b462764e1047c9812f8179d8dc716484d3fc29fc56254c2c4c28464dd210/diff
+lrwxrwxrwx 1 root root 72 Jan  8 13:16 6NZOOWLAX6OVSSWWC2XVPPWNZM -&gt; ../41142d0283bc4c18abf7229830e7bd6ee37aa438321d0ca910341d2c4951ee42/diff
+lrwxrwxrwx 1 root root 72 Jan  8 10:40 AUC35C4AV2R55HFCPAII4ULPJB -&gt; ../23f995bf67090d39d2244fba02a92c09238b397f6ed03e922b851c524ec2415d/diff
+lrwxrwxrwx 1 root root 72 Jan  8 10:40 GUIPEFGV4TLNAML2MR42VREWZD -&gt; ../1db6ab3ea318bc2ded84f7b0ebee89be34f56b08973e48cfef0e2a0004fb99a3/diff
+lrwxrwxrwx 1 root root 72 Dec 30 10:11 KUNIQVGBWFZHEASENNFRPT46MN -&gt; ../7a335dd840b2cd775af90da49047a068eae5613484aec5e50b0c0c0018882a30/diff
+lrwxrwxrwx 1 root root 72 Jan  8 10:40 W3LTS35MU3HRPPO6D22VKQ4MMR -&gt; ../36834a7e9756d599a9389d683d2a08912598905b50ad62ac9b5eb8cdfde8a0c0/diff
+lrwxrwxrwx 1 root root 77 Jan  8 13:16 WYS5YBW3HPSLD3LOZ7ENZAQH5K -&gt; ../41142d0283bc4c18abf7229830e7bd6ee37aa438321d0ca910341d2c4951ee42-init/diff
+lrwxrwxrwx 1 root root 72 Jan  8 10:40 YMGPW6T3736D2VPYWA5LCM2X3E -&gt; ../dfa70e9006936534510da1d5380f9828a5fad83614d3f8d1ba2fded3d5b482a4/diff
+</code></pre>
+<h2 id="容器镜像的操作命令"><a href="#容器镜像的操作命令" class="headerlink" title="容器镜像的操作命令"></a>容器镜像的操作命令</h2><h3 id="docker-commit"><a href="#docker-commit" class="headerlink" title="docker commit"></a>docker commit</h3><p>docker 通过commit与build操作实现镜像的构建.</p>
+<p>两者的区别:</p>
+<ul>
+<li>docker commit: 将容器提交为一个镜像 . eg: <code>docker commit &#123;容器id&#125;</code></li>
+<li>docker build: 在一个镜像的基础上构建镜像.多与dockerfile配合使用. eg :<code>docker build Dockerfile</code></li>
+</ul>
+<h3 id="docker-save"><a href="#docker-save" class="headerlink" title="docker save"></a>docker save</h3><p>导出容器或镜像，方便分享,可以将多个容器或镜像同时保存在一个tar包里.</p>
+<p>当然,虽然可以导出容器,但本质是导出容器所依赖的镜像.</p>
+<p>使用场景: 使用了docker-compose 编排的多个镜像组合,且部署的客户服务器并不能连外网.这时需要通过将镜像save成文件,拷贝到目标机器上后使用load载入.</p>
+<p>格式: <code>docker save -o &#123;输出文件路径&#125; &#123;name:tag ...&#125;</code></p>
+<p>​    -o 输出到文件.</p>
+<p>eg: <code>docker save -o redis.tar redis:v1  </code></p>
+<p><strong>补充: 压缩导出</strong></p>
+<p>将导出的镜像再通过gzip压缩.使之更小更容易传输.压缩后的文件大小为原来的三分之一左右.</p>
+<p>格式:<code>docker save &#123;name:tag&#125; | gzip &gt; &#123;输出文件路径&#125;</code></p>
+<p>eg: docker save redis:v1 | gzip &gt; redis2.tar</p>
+<h3 id="docker-load"><a href="#docker-load" class="headerlink" title="docker load"></a>docker load</h3><p>把他人分享的容器镜像导入到本地镜像中，这通常是容器镜像分发方式之一, 与save配套使用.</p>
+<p>格式: <code>docker load -i &#123;镜像文件路径&#125;</code></p>
+<p>–input, -i : 指定文件输入</p>
+<p>-quiet, -q : 精简输出信息.</p>
+<h3 id="docker-export"><a href="#docker-export" class="headerlink" title="docker export"></a>docker export</h3><p>把正在运行的容器导出.应用场景主要是用来制作基础镜像.</p>
+<p>使用场景: 制作符合自生环境的基础镜像.比如从一个centos镜像启动一个容器后,安装了一些软件与设置后,使用export保存成一个基础镜像,供以后使用.</p>
+<p>格式: <code>docker export -o &#123;输出文件路径&#125; &#123;容器名称/容器id&#125;</code></p>
+<p>eg: <code>docker export -o redis.tar redis</code></p>
+<h3 id="docker-import"><a href="#docker-import" class="headerlink" title="docker import"></a>docker import</h3><p>导入使用docker export导入的容器做为本地容器镜像。</p>
+<p>格式: <code>docker import &#123;镜像文件路径&#125; &#123;生成的镜像名称/生成的镜像tag&#125;</code></p>
+<p>eg: <code>docker import redis.tar redis:v1</code></p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li>docker save 保存的是镜像, docker export 可以保存容器.</li>
+<li>docker load 载入镜像包, docker import 载入容器包,但都将载入成镜像.</li>
+<li>docker load 不能对载入的镜像重命名, docker import 可以为镜像重命名.</li>
+<li>docker load 不能载入export出来的容器包.docker import 可以载入load出来的镜像包,但启动失败.</li>
+</ul>
+<h3 id="容器镜像仓库的使用命令"><a href="#容器镜像仓库的使用命令" class="headerlink" title="容器镜像仓库的使用命令"></a>容器镜像仓库的使用命令</h3><h3 id="docker-tag"><a href="#docker-tag" class="headerlink" title="docker tag"></a>docker tag</h3><p>用于给镜像打标签.生成不通版本的镜像,为上传做支撑.</p>
+<p>格式: <code>docker tag &#123;目标镜像&#125;:[tag] &#123;生成镜像&#125;:[tag]</code></p>
+<p>eg: <code>docker tag redis:latest redis:v1</code></p>
+<h3 id="docker-push"><a href="#docker-push" class="headerlink" title="docker push"></a>docker push</h3><p>上传容器镜像至远程仓库.</p>
+<p>格式: <code>docker push &#123;镜像名称&#125;:[tag]</code></p>
+<p>eg: <code>docker push redis:v1</code></p>
+<h3 id="docker-pull"><a href="#docker-pull" class="headerlink" title="docker pull"></a>docker pull</h3><p>下载容器镜像.</p>
+<p>使用场景: 在专门的打包服务器/或本地将镜像更新上传后,在其生产环境上下载并启动,多实例的场景就无需多次上传.且方便回滚.</p>
+<p>格式: <code>docker pull &#123;镜像名称&#125;:[tag]</code></p>
+<p>eg: <code>docker pull redis:v1</code></p>
+<h3 id="docker-login"><a href="#docker-login" class="headerlink" title="docker login"></a>docker login</h3><p>登入</p>
+<h3 id="docker-logout"><a href="#docker-logout" class="headerlink" title="docker logout"></a>docker logout</h3><p>登出</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F"><span class="toc-number">1.</span> <span class="toc-text">Docker 容器镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-union-filesystem"><span class="toc-number">1.2.</span> <span class="toc-text">联合文件系统(union filesystem)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%A4%BA"><span class="toc-number">1.2.2.</span> <span class="toc-text">图示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Overlay2"><span class="toc-number">1.3.</span> <span class="toc-text">Docker Overlay2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text">docker 查看存储驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-%E9%95%9C%E5%83%8F%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.3.3.</span> <span class="toc-text">docker 镜像存储位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.4.</span> <span class="toc-text">docker 镜像分层文件查找方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">镜像与容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.5.</span> <span class="toc-text">容器镜像的操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-commit"><span class="toc-number">1.5.1.</span> <span class="toc-text">docker commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-save"><span class="toc-number">1.5.2.</span> <span class="toc-text">docker save</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-load"><span class="toc-number">1.5.3.</span> <span class="toc-text">docker load</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-export"><span class="toc-number">1.5.4.</span> <span class="toc-text">docker export</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-import"><span class="toc-number">1.5.5.</span> <span class="toc-text">docker import</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.6.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.5.7.</span> <span class="toc-text">容器镜像仓库的使用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-tag"><span class="toc-number">1.5.8.</span> <span class="toc-text">docker tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-push"><span class="toc-number">1.5.9.</span> <span class="toc-text">docker push</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-pull"><span class="toc-number">1.5.10.</span> <span class="toc-text">docker pull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-login"><span class="toc-number">1.5.11.</span> <span class="toc-text">docker login</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-logout"><span class="toc-number">1.5.12.</span> <span class="toc-text">docker logout</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

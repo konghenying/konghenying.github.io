@@ -1,0 +1,1358 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>脚本查询 scripting - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="scripting​    Scripting是ES支持的一种专门用于复杂场景下支持自定义编程的强大的脚本功能，ES支持多种脚本语言，如painless，其语法类似于Java，也有注释、关键字、类型,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">脚本查询 scripting</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/es"><b>「
+                    </b>ES<b> 」</b></a>
+                
+                十二月 21, 2023
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2023/12/21/es/5%20%E8%84%9A%E6%9C%AC%E6%9F%A5%E8%AF%A2/" title="脚本查询 scripting" class="">脚本查询 scripting</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    34k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    31 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="scripting"><a href="#scripting" class="headerlink" title="scripting"></a>scripting</h1><p>​    Scripting是ES支持的一种专门用于复杂场景下支持自定义编程的强大的脚本功能，ES支持多种脚本语言，如painless，其语法类似于Java，也有注释、关键字、类型、变量、函数等，其就要相对于其他脚本高出几倍的性能，并且安全可靠，可以用于内联和存储脚本。</p>
+<h2 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h2><p>groovy: 即es 1.4.x - 5.0 的默认脚本语言.</p>
+<p>painless: es5.0之后的默认脚本语言.</p>
+<p>expression: 每个文档的开销较低，表达式的作用更多，可以非常快速地执行.但只能访问数值,布尔值,日期与geo_point字段.</p>
+<p>mustache: 提供模板参数化查询.</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>灵活度高，可编程能力强</li>
+<li>相较于DSL性能低</li>
+<li>不适用于复杂的业务场景</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
+<li>自定义分词</li>
+<li>自定义相关度</li>
+<li>自定义评分</li>
+<li>自定义过滤器</li>
+<li>自定义聚合分析</li>
+<li>自定义reindex</li>
+<li>等等</li>
+</ul>
+<h2 id="正则开启"><a href="#正则开启" class="headerlink" title="正则开启"></a>正则开启</h2><p>​    早先某些版本正则表达式默认情况下处于禁用模式，因为它绕过了painless的针对长时间运行和占用内存脚本的保护机制,而且有深度堆栈行为.</p>
+<p>elasticsearch.yml中增加配置<code>script.painless.regex.enabled: true</code></p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>脚本的格式:</p>
+<pre><code class="elm">&quot;script&quot;: &#123;
+    &quot;lang&quot;:   &quot;...&quot;,  
+    &quot;source&quot; | &quot;id&quot;: &quot;...&quot;,  
+    &quot;params&quot;: &#123; ... &#125;  
+  &#125;
+</code></pre>
+<p>lang: 语言.默认为painless.</p>
+<p>source: 可以为 inline 脚本，或者是一个 id.这个id为stored脚本的id.</p>
+<p>params: 脚本中所需的输入参数.</p>
+<hr>
+<p>es8中可以通过<code>GET _script_language</code> 查看支持的语言与用法</p>
+<pre><code class="elm">GET _script_language
+
+&#123;
+  &quot;types_allowed&quot; : [
+    &quot;inline&quot;,
+    &quot;stored&quot;
+  ],
+  &quot;language_contexts&quot; : [
+    &#123;
+      &quot;language&quot; : &quot;expression&quot;,
+      &quot;contexts&quot; : [
+        &quot;aggregation_selector&quot;,
+        &quot;aggs&quot;,
+        &quot;bucket_aggregation&quot;,
+        &quot;field&quot;,
+        &quot;filter&quot;,
+        &quot;number_sort&quot;,
+        &quot;score&quot;,
+        &quot;terms_set&quot;
+      ]
+    &#125;,
+    &#123;
+      &quot;language&quot; : &quot;mustache&quot;,
+      &quot;contexts&quot; : [
+        &quot;template&quot;
+      ]
+    &#125;,
+    &#123;
+      &quot;language&quot; : &quot;painless&quot;,
+      &quot;contexts&quot; : [
+        &quot;aggregation_selector&quot;,
+        &quot;aggs&quot;,
+        &quot;aggs_combine&quot;,
+        &quot;aggs_init&quot;,
+        &quot;aggs_map&quot;,
+        &quot;aggs_reduce&quot;,
+        &quot;analysis&quot;,
+        &quot;bucket_aggregation&quot;,
+        &quot;field&quot;,
+        &quot;filter&quot;,
+        &quot;ingest&quot;,
+        &quot;interval&quot;,
+        &quot;moving-function&quot;,
+        &quot;number_sort&quot;,
+        &quot;painless_test&quot;,
+        &quot;processor_conditional&quot;,
+        &quot;score&quot;,
+        &quot;script_heuristic&quot;,
+        &quot;similarity&quot;,
+        &quot;similarity_weight&quot;,
+        &quot;string_sort&quot;,
+        &quot;template&quot;,
+        &quot;terms_set&quot;,
+        &quot;update&quot;,
+        &quot;watcher_condition&quot;,
+        &quot;watcher_transform&quot;,
+        &quot;xpack_template&quot;
+      ]
+    &#125;
+  ]
+&#125;
+</code></pre>
+<h2 id="语法-amp-应用场景"><a href="#语法-amp-应用场景" class="headerlink" title="语法&amp;应用场景"></a>语法&amp;应用场景</h2><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/painless/8.14/painless-field-context.html">es脚本语法官方文档</a></p>
+<p>官方脚本例子索引</p>
+<pre><code class="elm">
+PUT /seats
+&#123;
+  &quot;mappings&quot;: &#123;
+    &quot;properties&quot;: &#123;
+      &quot;theatre&quot;:  &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;play&quot;:     &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;actors&quot;:   &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;date&quot;:     &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;time&quot;:     &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;cost&quot;:     &#123; &quot;type&quot;: &quot;double&quot;  &#125;,
+      &quot;row&quot;:      &#123; &quot;type&quot;: &quot;integer&quot; &#125;,
+      &quot;number&quot;:   &#123; &quot;type&quot;: &quot;integer&quot; &#125;,
+      &quot;sold&quot;:     &#123; &quot;type&quot;: &quot;boolean&quot; &#125;,
+      &quot;datetime&quot;: &#123; &quot;type&quot;: &quot;date&quot;    &#125;
+    &#125;
+  &#125;
+&#125;
+
+
+POST seats/_bulk?pipeline=seats&amp;refresh=true
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;1&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Skyline&quot;,&quot;play&quot;:&quot;Rent&quot;,&quot;actors&quot;:[&quot;James Holland&quot;,&quot;Krissy Smith&quot;,&quot;Joe Muir&quot;,&quot;Ryan Earns&quot;],&quot;date&quot;:&quot;2021-4-1&quot;,&quot;time&quot;:&quot;3:00PM&quot;,&quot;cost&quot;:37,&quot;row&quot;:1,&quot;number&quot;:7,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;2&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Graye&quot;,&quot;play&quot;:&quot;Rent&quot;,&quot;actors&quot;:&quot;Dave Christmas&quot;,&quot;date&quot;:&quot;2021-4-1&quot;,&quot;time&quot;:&quot;3:00PM&quot;,&quot;cost&quot;:30,&quot;row&quot;:3,&quot;number&quot;:5,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;3&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Graye&quot;,&quot;play&quot;:&quot;Rented&quot;,&quot;actors&quot;:&quot;Dave Christmas&quot;,&quot;date&quot;:&quot;2021-4-1&quot;,&quot;time&quot;:&quot;3:00PM&quot;,&quot;cost&quot;:33,&quot;row&quot;:2,&quot;number&quot;:6,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;4&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Skyline&quot;,&quot;play&quot;:&quot;Rented&quot;,&quot;actors&quot;:[&quot;James Holland&quot;,&quot;Krissy Smith&quot;,&quot;Joe Muir&quot;,&quot;Ryan Earns&quot;],&quot;date&quot;:&quot;2021-4-1&quot;,&quot;time&quot;:&quot;3:00PM&quot;,&quot;cost&quot;:20,&quot;row&quot;:5,&quot;number&quot;:2,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;5&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Down Port&quot;,&quot;play&quot;:&quot;Pick It Up&quot;,&quot;actors&quot;:[&quot;Joel Madigan&quot;,&quot;Jessica Brown&quot;,&quot;Baz Knight&quot;,&quot;Jo Hangum&quot;,&quot;Rachel Grass&quot;,&quot;Phoebe Miller&quot;],&quot;date&quot;:&quot;2018-4-2&quot;,&quot;time&quot;:&quot;8:00PM&quot;,&quot;cost&quot;:27.5,&quot;row&quot;:3,&quot;number&quot;:2,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;6&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Down Port&quot;,&quot;play&quot;:&quot;Harriot&quot;,&quot;actors&quot;:[&quot;Phoebe Miller&quot;,&quot;Sarah Notch&quot;,&quot;Brayden Green&quot;,&quot;Joshua Iller&quot;,&quot;Jon Hittle&quot;,&quot;Rob Kettleman&quot;,&quot;Laura Conrad&quot;,&quot;Simon Hower&quot;,&quot;Nora Blue&quot;,&quot;Mike Candlestick&quot;,&quot;Jacey Bell&quot;],&quot;date&quot;:&quot;2018-8-7&quot;,&quot;time&quot;:&quot;8:00PM&quot;,&quot;cost&quot;:30,&quot;row&quot;:1,&quot;number&quot;:10,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;7&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Skyline&quot;,&quot;play&quot;:&quot;Auntie Jo&quot;,&quot;actors&quot;:[&quot;Jo Hangum&quot;,&quot;Jon Hittle&quot;,&quot;Rob Kettleman&quot;,&quot;Laura Conrad&quot;,&quot;Simon Hower&quot;,&quot;Nora Blue&quot;],&quot;date&quot;:&quot;2018-10-2&quot;,&quot;time&quot;:&quot;5:40PM&quot;,&quot;cost&quot;:22.5,&quot;row&quot;:7,&quot;number&quot;:10,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;8&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Skyline&quot;,&quot;play&quot;:&quot;Test Run&quot;,&quot;actors&quot;:[&quot;Joe Muir&quot;,&quot;Ryan Earns&quot;,&quot;Joel Madigan&quot;,&quot;Jessica Brown&quot;],&quot;date&quot;:&quot;2018-8-5&quot;,&quot;time&quot;:&quot;7:30PM&quot;,&quot;cost&quot;:17.5,&quot;row&quot;:11,&quot;number&quot;:12,&quot;sold&quot;:true&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;9&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Skyline&quot;,&quot;play&quot;:&quot;Sunnyside Down&quot;,&quot;actors&quot;:[&quot;Krissy Smith&quot;,&quot;Joe Muir&quot;,&quot;Ryan Earns&quot;,&quot;Nora Blue&quot;,&quot;Mike Candlestick&quot;,&quot;Jacey Bell&quot;],&quot;date&quot;:&quot;2018-6-12&quot;,&quot;time&quot;:&quot;4:00PM&quot;,&quot;cost&quot;:21.25,&quot;row&quot;:8,&quot;number&quot;:15,&quot;sold&quot;:true&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;10&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Graye&quot;,&quot;play&quot;:&quot;Line and Single&quot;,&quot;actors&quot;:[&quot;Nora Blue&quot;,&quot;Mike Candlestick&quot;],&quot;date&quot;:&quot;2018-6-5&quot;,&quot;time&quot;:&quot;2:00PM&quot;,&quot;cost&quot;:30,&quot;row&quot;:1,&quot;number&quot;:2,&quot;sold&quot;:false&#125;
+&#123;&quot;create&quot;:&#123;&quot;_index&quot;:&quot;seats&quot;,&quot;_id&quot;:&quot;11&quot;&#125;&#125;
+&#123;&quot;theatre&quot;:&quot;Graye&quot;,&quot;play&quot;:&quot;Hamilton&quot;,&quot;actors&quot;:[&quot;Lin-Manuel Miranda&quot;,&quot;Leslie Odom Jr.&quot;],&quot;date&quot;:&quot;2018-6-5&quot;,&quot;time&quot;:&quot;2:00PM&quot;,&quot;cost&quot;:5000,&quot;row&quot;:1,&quot;number&quot;:20,&quot;sold&quot;:true&#125;
+</code></pre>
+<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">if</td>
+<td align="center">else</td>
+<td align="center">while</td>
+<td align="center">do</td>
+<td align="center">for</td>
+</tr>
+<tr>
+<td align="center">in</td>
+<td align="center">continue</td>
+<td align="center">break</td>
+<td align="center">return</td>
+<td align="center">new</td>
+</tr>
+<tr>
+<td align="center">try</td>
+<td align="center">catch</td>
+<td align="center">throw</td>
+<td align="center">this</td>
+<td align="center">instanceof</td>
+</tr>
+</tbody></table>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li><p>算数运算符: <code>+ - * / %</code></p>
+</li>
+<li><p>位运算符: <code>| &amp; ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</code></p>
+</li>
+<li><p>布尔运算符 (包含三元运算符): <code>&amp;&amp; || ! ?:</code></p>
+</li>
+<li><p>比较运算符: <code>&lt; &lt;= == &gt;= &gt;</code></p>
+</li>
+<li><p>常用数学函数: <code>abs ceil exp floor ln log10 logn max min sqrt pow</code></p>
+</li>
+<li><p>三角函数库函数: <code>acosh acos asinh asin atanh atan atan2 cosh cos sinh sin tanh tan</code></p>
+</li>
+<li><p>距离运算函数: <code>haversin</code></p>
+</li>
+<li><p>其他函数: <code>min, max</code></p>
+</li>
+</ul>
+<h3 id="管道脚本"><a href="#管道脚本" class="headerlink" title="管道脚本"></a>管道脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>ctx: 文档中字段.包含以map与list结构提取的json.</p>
+<p>ctx[‘_index’]: 修改此项可更改当前文档的目标索引.</p>
+<p><strong>例子</strong></p>
+<p>提取日期格式字段与时间格式字段,转换成时间戳并赋值到datetime字段上.</p>
+<pre><code class="elm">-- 设置管道
+PUT /_ingest/pipeline/seats
+&#123;
+  &quot;description&quot;: &quot;update datetime for seats&quot;,
+  &quot;processors&quot;: [
+    &#123;
+      &quot;script&quot;: &#123;
+        &quot;source&quot;: &quot;&quot;&quot;
+        String[] dateSplit = ctx.date.splitOnToken(&quot;-&quot;);                     
+        String year = dateSplit[0].trim();
+        String month = dateSplit[1].trim();
+
+        if (month.length() == 1) &#123;                                           
+            month = &quot;0&quot; + month;
+        &#125;
+
+        String day = dateSplit[2].trim();
+
+        if (day.length() == 1) &#123;                                             
+            day = &quot;0&quot; + day;
+        &#125;
+
+        boolean pm = ctx.time.substring(ctx.time.length() - 2).equals(&quot;PM&quot;); 
+        String[] timeSplit = ctx.time.substring(0,
+                ctx.time.length() - 2).splitOnToken(&quot;:&quot;);                    
+        int hours = Integer.parseInt(timeSplit[0].trim());
+        int minutes = Integer.parseInt(timeSplit[1].trim());
+
+        if (pm) &#123;                                                            
+            hours += 12;
+        &#125;
+
+        String dts = year + &quot;-&quot; + month + &quot;-&quot; + day + &quot;T&quot; +
+                (hours &lt; 10 ? &quot;0&quot; + hours : &quot;&quot; + hours) + &quot;:&quot; +
+                (minutes &lt; 10 ? &quot;0&quot; + minutes : &quot;&quot; + minutes) +
+                &quot;:00+08:00&quot;;                                                 
+
+        ZonedDateTime dt = ZonedDateTime.parse(
+                 dts, DateTimeFormatter.ISO_OFFSET_DATE_TIME);               
+        ctx.datetime = dt.getLong(ChronoField.INSTANT_SECONDS)*1000L;       
+        &quot;&quot;&quot;
+      &#125;
+    &#125;
+  ]
+&#125;
+
+--验证管道作用.返回的结果中datetime字段存在时间戳.
+
+GET seats/_search
+&#123;
+  &quot;size&quot;: 1
+&#125;
+-- 返回 --------
+....
+&quot;hits&quot; : [
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;1&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;_source&quot; : &#123;
+          &quot;play&quot; : &quot;Rent&quot;,
+          &quot;date&quot; : &quot;2021-4-1&quot;,
+          &quot;sold&quot; : false,
+          &quot;cost&quot; : 37,
+          &quot;theatre&quot; : &quot;Skyline&quot;,
+          &quot;actors&quot; : [
+            &quot;James Holland&quot;,
+            &quot;Krissy Smith&quot;,
+            &quot;Joe Muir&quot;,
+            &quot;Ryan Earns&quot;
+          ],
+          &quot;number&quot; : 7,
+          &quot;datetime&quot; : 1617260400000,
+          &quot;time&quot; : &quot;3:00PM&quot;,
+          &quot;row&quot; : 1
+        &#125;
+      &#125;
+    ]
+....
+</code></pre>
+<h3 id="运行时脚本"><a href="#运行时脚本" class="headerlink" title="运行时脚本"></a>运行时脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>doc: 文档中字段.每个字段都作为一个值列表.</p>
+<p>params[‘_source’]: 文档中字段.包含以map与list结构提取的json.</p>
+<p>例子</p>
+<p>在运行时输出是周几.</p>
+<pre><code class="elm">PUT seats/_mapping
+&#123;
+  &quot;runtime&quot;: &#123;
+    &quot;day_of_week&quot;: &#123;
+      &quot;type&quot;: &quot;keyword&quot;,
+      &quot;script&quot;: &#123;
+        &quot;source&quot;: &quot;emit(doc[&#39;datetime&#39;].value.getDayOfWeekEnum().toString())&quot;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+
+-- 验证脚本作用.
+-- 运行时输出字段非_source字段.所以不是出现在_source中.需要自行指定fields.并在结构的fileds中显示.
+GET seats/_search
+&#123;
+  &quot;size&quot;: 1,
+  &quot;_source&quot;: false, 
+  &quot;fields&quot;: [
+    &quot;*&quot;,&quot;day_of_week&quot;
+  ]
+&#125;
+-- 返回-------
+
+......
+    &quot;hits&quot; : [
+    &#123;
+        &quot;_index&quot;: &quot;seats&quot;,
+        &quot;_id&quot;: &quot;1&quot;,
+        &quot;_score&quot;: 1.0,
+        &quot;fields&quot;: &#123;
+            &quot;play&quot;: [
+                &quot;Rent&quot;
+            ],
+            &quot;date&quot;: [
+                &quot;2021-4-1&quot;
+            ],
+            &quot;theatre&quot;: [
+                &quot;Skyline&quot;
+            ],
+            &quot;sold&quot;: [
+                false
+            ],
+            &quot;number&quot;: [
+                7
+            ],
+            &quot;actors&quot;: [
+                &quot;James Holland&quot;,
+                &quot;Krissy Smith&quot;,
+                &quot;Joe Muir&quot;,
+                &quot;Ryan Earns&quot;
+            ],
+            &quot;datetime&quot;: [
+                &quot;2021-04-01T07:00:00.000Z&quot;
+            ],
+            &quot;cost&quot;: [
+                37.0
+            ],
+            &quot;row&quot;: [
+                1
+            ],
+            &quot;time&quot;: [
+                &quot;3:00PM&quot;
+            ],
+            &quot;day_of_week&quot;: [
+                &quot;THURSDAY&quot;
+            ]
+        &#125;
+    &#125;
+]
+          ......
+</code></pre>
+<h3 id="更新脚本"><a href="#更新脚本" class="headerlink" title="更新脚本"></a>更新脚本</h3><p><strong>变量</strong></p>
+<p>params(只读): 用户自定义参数</p>
+<p>ctx[‘op’]: 使用索引的默认值更新文档。 设置为 none 表示不进行任何操作，设置为 delete 表示从索引中删除当前文档。</p>
+<p>ctx[‘_routing’] (只读): 分区名称.</p>
+<p>ctx[‘_index’] (只读): 索引名称.</p>
+<p>ctx[‘_id’] (只读): 文档的唯一id.</p>
+<p>ctx[‘_version’] (只读): 当前文档的版本.</p>
+<p>ctx[‘_now’] (只读): 当前时间戳.只在_update中存在,_update_by_query中不存在.</p>
+<p>ctx[‘_source’]: 文档中字段.包含以map与list结构提取的json.可修改.</p>
+<p><strong>例子</strong></p>
+<p>修改id为3的座位已被卖出,卖出价格为26.</p>
+<pre><code class="elm">POST /seats/_update/3
+&#123;
+  &quot;script&quot;: &#123;
+    &quot;source&quot;: &quot;ctx[&#39;_source&#39;].sold = true; ctx._source.cost = params.sold_cost&quot;,
+    &quot;lang&quot;: &quot;painless&quot;,
+    &quot;params&quot;: &#123;
+      &quot;sold_cost&quot;: 26
+    &#125;
+  &#125;
+&#125;
+
+-- 查看id为3的记录结果
+GET /seats/_doc/3
+--返回-----
+&#123;
+  &quot;_index&quot; : &quot;seats&quot;,
+  &quot;_id&quot; : &quot;3&quot;,
+  &quot;_version&quot; : 3,
+  &quot;_seq_no&quot; : 12,
+  &quot;_primary_term&quot; : 1,
+  &quot;found&quot; : true,
+  &quot;_source&quot; : &#123;
+    &quot;play&quot; : &quot;Rented&quot;,
+    &quot;date&quot; : &quot;2021-4-1&quot;,
+    &quot;sold&quot; : true,
+    &quot;cost&quot; : 26,
+    &quot;theatre&quot; : &quot;Graye&quot;,
+    &quot;actors&quot; : &quot;Dave Christmas&quot;,
+    &quot;number&quot; : 6,
+    &quot;datetime&quot; : 1617260400000,
+    &quot;time&quot; : &quot;3:00PM&quot;,
+    &quot;row&quot; : 2
+  &#125;
+&#125;
+</code></pre>
+<p>批量更新:前三排还没卖出去的,费用减少2元.</p>
+<pre><code class="elm">POST /seats/_update_by_query
+&#123;
+  &quot;query&quot;: &#123;
+    &quot;bool&quot;: &#123;
+      &quot;filter&quot;: [
+        &#123;
+          &quot;range&quot;: &#123;
+            &quot;row&quot;: &#123;
+              &quot;lte&quot;: 3
+            &#125;
+          &#125;
+        &#125;,
+        &#123;
+          &quot;match&quot;: &#123;
+            &quot;sold&quot;: false
+          &#125;
+        &#125;
+      ]
+    &#125;
+  &#125;,
+  &quot;script&quot;: &#123;
+    &quot;source&quot;: &quot;ctx._source.cost -= params.discount&quot;,
+    &quot;lang&quot;: &quot;painless&quot;,
+    &quot;params&quot;: &#123;
+      &quot;discount&quot;: 2
+    &#125;
+  &#125;
+&#125;
+
+-- 执行前后查看 前三排没卖出去的座位价格
+GET seats/_search
+&#123;
+  &quot;size&quot;: 1,
+  &quot;query&quot;: &#123;
+    &quot;bool&quot;: &#123;
+      &quot;must&quot;: [
+        &#123;
+          &quot;term&quot;: &#123;
+            &quot;sold&quot;: &#123;
+              &quot;value&quot;: false
+            &#125;
+          &#125;
+        &#125;,
+        &#123;
+          &quot;range&quot;: &#123;
+            &quot;row&quot;: &#123;
+              &quot;lte&quot;: 3
+            &#125;
+          &#125;
+        &#125;
+      ]
+    &#125;
+  &#125;
+&#125;
+
+-- 执行前
+&#123;
+    &quot;_index&quot; : &quot;seats&quot;,
+    &quot;_id&quot; : &quot;1&quot;,
+    &quot;_score&quot; : 1.3448405,
+    &quot;_source&quot; : &#123;
+      &quot;play&quot; : &quot;Rent&quot;,
+      &quot;date&quot; : &quot;2021-4-1&quot;,
+      &quot;sold&quot; : false,
+      &quot;cost&quot; : 37,
+      &quot;theatre&quot; : &quot;Skyline&quot;,
+      &quot;actors&quot; : [
+        &quot;James Holland&quot;,
+        &quot;Krissy Smith&quot;,
+        &quot;Joe Muir&quot;,
+        &quot;Ryan Earns&quot;
+      ],
+      &quot;number&quot; : 7,
+      &quot;datetime&quot; : 1617260400000,
+      &quot;time&quot; : &quot;3:00PM&quot;,
+      &quot;row&quot; : 1
+    &#125;
+&#125;
+-- 执行后
+&#123;
+    &quot;_index&quot; : &quot;seats&quot;,
+    &quot;_id&quot; : &quot;1&quot;,
+    &quot;_score&quot; : 1.3829923,
+    &quot;_source&quot; : &#123;
+      &quot;play&quot; : &quot;Rent&quot;,
+      &quot;date&quot; : &quot;2021-4-1&quot;,
+      &quot;theatre&quot; : &quot;Skyline&quot;,
+      &quot;sold&quot; : false,
+      &quot;actors&quot; : [
+        &quot;James Holland&quot;,
+        &quot;Krissy Smith&quot;,
+        &quot;Joe Muir&quot;,
+        &quot;Ryan Earns&quot;
+      ],
+      &quot;number&quot; : 7,
+      &quot;datetime&quot; : 1617260400000,
+      &quot;cost&quot; : 35,
+      &quot;time&quot; : &quot;3:00PM&quot;,
+      &quot;row&quot; : 1
+    &#125;
+  &#125;
+</code></pre>
+<h3 id="重新索引脚本"><a href="#重新索引脚本" class="headerlink" title="重新索引脚本"></a>重新索引脚本</h3><p><strong>变量</strong></p>
+<p>params(只读): 用户自定义参数</p>
+<p>ctx[‘op’]: 使用索引的默认值更新文档。 设置为 none 表示不进行任何操作，设置为 delete 表示从索引中删除当前文档。</p>
+<p>ctx[‘_routing’] : 更改当前文档的路由.</p>
+<p>ctx[‘_index’] : 更改当前文档的索引.</p>
+<p>ctx[‘_id’] : 修改文档的唯一id.</p>
+<p>ctx[‘_version’] : 修改当前文档的版本.</p>
+<p>ctx[‘_source’]: 文档中字段.包含以map与list结构提取的json.可修改.</p>
+<p><strong>返回</strong></p>
+<p>无.一般用于在重建索引时批量修改一些字段值.</p>
+<p><strong>例子</strong></p>
+<p>重建索引.将前三排未售出的票价打七折.六排之后的票价涨20%.</p>
+<pre><code class="elm">
+POST _reindex
+&#123;
+  &quot;source&quot;: &#123;
+    &quot;index&quot;: &quot;seats&quot;
+  &#125;,
+  &quot;dest&quot;: &#123;
+    &quot;index&quot;: &quot;seats2&quot;
+  &#125;, 
+  &quot;script&quot;: &#123;
+    &quot;source&quot;: &quot;&quot;&quot;
+    if (ctx._source.row&lt;3 &amp;&amp; !ctx._source.sold)&#123;
+      ctx._source.cost = ctx._source.cost ;
+    &#125;
+    if (ctx._source.row&gt;6 &amp;&amp; !ctx._source.sold)&#123;
+      ctx._source.cost= ctx._source.cost * params.discount2;
+    &#125;
+    &quot;&quot;&quot;, &quot;params&quot;: &#123;&quot;discount&quot;:0.7,&quot;discount2&quot;:1.2&#125;
+  &#125;
+&#125;
+</code></pre>
+<h3 id="排序-评分脚本"><a href="#排序-评分脚本" class="headerlink" title="排序/评分脚本"></a>排序/评分脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>doc: 文档中字段.</p>
+<p>_score: 当前文档的相似度得分。</p>
+<p><strong>返回</strong></p>
+<p>排序得分,返回类型取决于脚本排序配置中的类型参数值（”数字 “或 “字符串”）.</p>
+<p><strong>例子</strong></p>
+<p>根据剧名的长度乘以一定系数所得的分数来升序排序</p>
+<pre><code class="elm">GET /_search
+&#123;
+  &quot;query&quot;: &#123;
+    &quot;term&quot;: &#123;
+      &quot;sold&quot;: &quot;true&quot;
+    &#125;
+  &#125;,
+  &quot;sort&quot;: &#123;
+    &quot;_script&quot;: &#123;
+      &quot;type&quot;: &quot;number&quot;,
+      &quot;script&quot;: &#123;
+        &quot;lang&quot;: &quot;painless&quot;,
+        &quot;source&quot;: &quot;doc[&#39;theatre&#39;].value.length() * params.factor&quot;,
+        &quot;params&quot;: &#123;
+          &quot;factor&quot;: 1.1
+        &#125;
+      &#125;,
+      &quot;order&quot;: &quot;asc&quot;
+    &#125;
+  &#125;
+&#125;
+
+
+
+
+-- 返回结果  -------
+    &quot;hits&quot; : [
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;11&quot;,
+        &quot;_score&quot; : null,
+        &quot;_source&quot; : &#123;
+          &quot;play&quot; : &quot;Hamilton&quot;,
+          &quot;date&quot; : &quot;2018-6-5&quot;,
+          &quot;sold&quot; : true,
+          &quot;cost&quot; : 5000,
+          &quot;theatre&quot; : &quot;Graye&quot;,
+          &quot;actors&quot; : [
+            &quot;Lin-Manuel Miranda&quot;,
+            &quot;Leslie Odom Jr.&quot;
+          ],
+          &quot;number&quot; : 20,
+          &quot;datetime&quot; : 1528178400000,
+          &quot;time&quot; : &quot;2:00PM&quot;,
+          &quot;row&quot; : 1
+        &#125;,
+        &quot;sort&quot; : [
+          5.5
+        ]
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;8&quot;,
+        &quot;_score&quot; : null,
+        &quot;_source&quot; : &#123;
+          &quot;play&quot; : &quot;Test Run&quot;,
+          &quot;date&quot; : &quot;2018-8-5&quot;,
+          &quot;sold&quot; : true,
+          &quot;cost&quot; : 17.5,
+          &quot;theatre&quot; : &quot;Skyline&quot;,
+          &quot;actors&quot; : [
+            &quot;Joe Muir&quot;,
+            &quot;Ryan Earns&quot;,
+            &quot;Joel Madigan&quot;,
+            &quot;Jessica Brown&quot;
+          ],
+          &quot;number&quot; : 12,
+          &quot;datetime&quot; : 1533468600000,
+          &quot;time&quot; : &quot;7:30PM&quot;,
+          &quot;row&quot; : 11
+        &#125;,
+        &quot;sort&quot; : [
+          7.700000000000001
+        ]
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;9&quot;,
+        &quot;_score&quot; : null,
+        &quot;_source&quot; : &#123;
+          &quot;play&quot; : &quot;Sunnyside Down&quot;,
+          &quot;date&quot; : &quot;2018-6-12&quot;,
+          &quot;sold&quot; : true,
+          &quot;cost&quot; : 21.25,
+          &quot;theatre&quot; : &quot;Skyline&quot;,
+          &quot;actors&quot; : [
+            &quot;Krissy Smith&quot;,
+            &quot;Joe Muir&quot;,
+            &quot;Ryan Earns&quot;,
+            &quot;Nora Blue&quot;,
+            &quot;Mike Candlestick&quot;,
+            &quot;Jacey Bell&quot;
+          ],
+          &quot;number&quot; : 15,
+          &quot;datetime&quot; : 1528790400000,
+          &quot;time&quot; : &quot;4:00PM&quot;,
+          &quot;row&quot; : 8
+        &#125;,
+        &quot;sort&quot; : [
+          7.700000000000001
+        ]
+      &#125;
+    ]
+  
+</code></pre>
+<h3 id="查询字段脚本"><a href="#查询字段脚本" class="headerlink" title="查询字段脚本"></a>查询字段脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>doc: 文档中字段.</p>
+<p>params[‘_source’]: 文档中的字段.包含以map与list结构提取的json.</p>
+<p><strong>返回</strong></p>
+<p>文档自定义的值.输出在fields中.若查询中不添加_source的include字段,则表示_source默认缺省值为false.返回信息里不会带上_source内容.</p>
+<p><strong>例子</strong></p>
+<p>获取计算出的星期和每个剧目的演员人数.</p>
+<pre><code class="elm">GET seats/_search
+&#123;
+  &quot;size&quot;: 2,
+  &quot;query&quot;: &#123;
+    &quot;match_all&quot;: &#123;&#125;
+  &#125;,
+  &quot;script_fields&quot;: &#123;
+    &quot;day-of-week&quot;: &#123;
+      &quot;script&quot;: &#123;
+        &quot;source&quot;: &quot;doc[&#39;datetime&#39;].value.getDayOfWeekEnum().getDisplayName(TextStyle.FULL, Locale.ROOT)&quot;
+      &#125;
+    &#125;,
+    &quot;number-of-actors&quot;: &#123;
+      &quot;script&quot;: &#123;
+        &quot;source&quot;: &quot;doc[&#39;actors&#39;].size()&quot;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+
+--返回-----
+......
+&quot;hits&quot; : [
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;1&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;day-of-week&quot; : [
+            &quot;Thursday&quot;
+          ],
+          &quot;number-of-actors&quot; : [
+            4
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;2&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;day-of-week&quot; : [
+            &quot;Thursday&quot;
+          ],
+          &quot;number-of-actors&quot; : [
+            1
+          ]
+        &#125;
+      &#125;
+    ]
+......
+</code></pre>
+<h3 id="过滤器脚本"><a href="#过滤器脚本" class="headerlink" title="过滤器脚本"></a>过滤器脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>doc: 文档中字段.</p>
+<p><strong>返回</strong></p>
+<p>返回boolean类型.true为输出显示.false为过滤.只作为过滤依据,不会再结果中体现.</p>
+<p><strong>例子</strong></p>
+<p>查询25元以下未售出的位子.</p>
+<pre><code class="elm">GET seats/_search
+&#123;
+  &quot;query&quot;: &#123;
+    &quot;bool&quot;: &#123;
+      &quot;filter&quot;: &#123;
+        &quot;script&quot;: &#123;
+          &quot;script&quot;: &#123;
+            &quot;source&quot;: &quot;doc[&#39;sold&#39;].value == false &amp;&amp; doc[&#39;cost&#39;].value &lt; params.cost&quot;,
+            &quot;params&quot;: &#123;
+              &quot;cost&quot;: 25
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h3 id="最少匹配数脚本"><a href="#最少匹配数脚本" class="headerlink" title="最少匹配数脚本"></a>最少匹配数脚本</h3><p><strong>变量</strong></p>
+<p>params: 用户自定义参数</p>
+<p>params[‘num_terms’]: 记录中匹配到的数量.</p>
+<p>doc: 文档中字段.</p>
+<p><strong>返回</strong></p>
+<p>两个数组中匹配中的记录数.</p>
+<p><strong>例子</strong></p>
+<p>匹配剧本中有smith,earns,black出演的,且至少同时有两人出演的位子记录.</p>
+<pre><code class="elm">GET seats/_search
+&#123;
+  &quot;query&quot;: &#123;
+    &quot;terms_set&quot;: &#123;
+      &quot;actors&quot;: &#123;
+        &quot;terms&quot;: [
+          &quot;smith&quot;,
+          &quot;earns&quot;,
+          &quot;black&quot;
+        ],
+        &quot;minimum_should_match_script&quot;: &#123;
+          &quot;source&quot;: &quot;Math.min(params[&#39;num_terms&#39;], params[&#39;min_actors_to_see&#39;])&quot;,
+          &quot;params&quot;: &#123;
+            &quot;min_actors_to_see&quot;: 2
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h3 id="source与doc"><a href="#source与doc" class="headerlink" title="source与doc"></a>source与doc</h3><p>Doc: doc[‘field_name’]</p>
+<ul>
+<li><p>值是一个列式（columnar）字段值存储，除了analyzed text字段，默认在全部字段开启。</p>
+</li>
+<li><p>只返回简单的字段值，如数字、日期、地理坐标、terms等等，或者这些值的列表。不能返回 json 对象。</p>
+</li>
+<li><p>在 <code>painless</code> 脚本语法中，在访问 <code>doc</code> map 前，会首先检查 <code>doc.containsKey(&#39;field&#39;)</code>，但在 <code>expression</code> 脚本中，没法检查字段在映射中的存在。</p>
+</li>
+<li><p>对于text类型字段,设置了 fielddata的属性后，也可以用 doc[‘field’] 语法取值,但设置了 fielddata 的text 字段需要加载所有的 terms 到 JVM 堆中，这回非常消耗内存和 CPU。</p>
+</li>
+</ul>
+<p>source: _source[‘field_name’] 或 _source.field_name</p>
+<ul>
+<li><p><code>_source</code> 会加载为一个映射.将源文档关联上.可以修改文件.</p>
+</li>
+<li><p>访问 _source 字段比 doc-values 方式更慢。</p>
+</li>
+</ul>
+<p>应用:</p>
+<ul>
+<li>ingest场景使用ctx.xxx;</li>
+<li>update/update_by_query/reindex这些修改文档的场景使用ctx._source;</li>
+<li>search与聚合等查询的场景尽量使用doc.</li>
+<li>_source 字段对每个结果返回多个字段进行了优化，而 doc values 对访问许多文档的指定字段进行了优化.</li>
+</ul>
+<h3 id="内置脚本方法"><a href="#内置脚本方法" class="headerlink" title="内置脚本方法"></a>内置脚本方法</h3><p><strong>创建脚本</strong></p>
+<p>创建一个打折的脚本.并将结果输出到2位小数.</p>
+<pre><code class="elm">POST _scripts/discount_script
+&#123;
+  &quot;script&quot;: &#123;
+        &quot;lang&quot;: &quot;painless&quot;,
+        &quot;source&quot;: &quot;(doc[&#39;cost&#39;].value * params[&#39;discount&#39;] * 100)/100&quot;
+      &#125;
+&#125;
+</code></pre>
+<p><strong>查看脚本</strong></p>
+<pre><code class="elm">GET _scripts/discount_script
+-- 返回 ----
+&#123;
+  &quot;_id&quot; : &quot;discount_script&quot;,
+  &quot;found&quot; : true,
+  &quot;script&quot; : &#123;
+    &quot;lang&quot; : &quot;painless&quot;,
+    &quot;source&quot; : &quot;(doc[&#39;cost&#39;].value * params[&#39;discount&#39;] * 100)/100&quot;
+  &#125;
+&#125;
+</code></pre>
+<p><strong>使用脚本</strong></p>
+<pre><code class="elm">GET seats/_search
+&#123;
+  &quot;script_fields&quot;: &#123;
+    &quot;discount_cost&quot;: &#123;
+      &quot;script&quot;:&#123;
+        &quot;id&quot;: &quot;discount_script&quot;,
+        &quot;params&quot;: &#123;&quot;discount&quot;:0.8&#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+
+--返回-------
+&#123;
+  &quot;took&quot; : 4,
+  &quot;timed_out&quot; : false,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 1,
+    &quot;successful&quot; : 1,
+    &quot;skipped&quot; : 0,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;hits&quot; : &#123;
+    &quot;total&quot; : &#123;
+      &quot;value&quot; : 10,
+      &quot;relation&quot; : &quot;eq&quot;
+    &#125;,
+    &quot;max_score&quot; : 1.0,
+    &quot;hits&quot; : [
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;1&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            28.0
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;2&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            22.4
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;5&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            20.400000000000002
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;6&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            22.4
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;10&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            22.4
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;4&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            16.0
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;7&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            18.0
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;8&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            14.0
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;9&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            17.0
+          ]
+        &#125;
+      &#125;,
+      &#123;
+        &quot;_index&quot; : &quot;seats&quot;,
+        &quot;_id&quot; : &quot;11&quot;,
+        &quot;_score&quot; : 1.0,
+        &quot;fields&quot; : &#123;
+          &quot;discount_cost&quot; : [
+            4000.0
+          ]
+        &#125;
+      &#125;
+    ]
+  &#125;
+&#125;
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#scripting"><span class="toc-number">1.</span> <span class="toc-text">scripting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.3.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%BC%80%E5%90%AF"><span class="toc-number">1.4.</span> <span class="toc-text">正则开启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-amp-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.6.</span> <span class="toc-text">语法&amp;应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="toc-number">1.6.1.</span> <span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.6.2.</span> <span class="toc-text">运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.3.</span> <span class="toc-text">管道脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.4.</span> <span class="toc-text">运行时脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.5.</span> <span class="toc-text">更新脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E7%B4%A2%E5%BC%95%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.6.</span> <span class="toc-text">重新索引脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F-%E8%AF%84%E5%88%86%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.7.</span> <span class="toc-text">排序&#x2F;评分脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.8.</span> <span class="toc-text">查询字段脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.9.</span> <span class="toc-text">过滤器脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%91%E5%8C%B9%E9%85%8D%E6%95%B0%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.10.</span> <span class="toc-text">最少匹配数脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#source%E4%B8%8Edoc"><span class="toc-number">1.6.11.</span> <span class="toc-text">source与doc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E8%84%9A%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.12.</span> <span class="toc-text">内置脚本方法</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

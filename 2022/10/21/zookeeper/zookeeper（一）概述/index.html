@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zookeeper（一） 概述 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="zookeeper（一）概述  zookeeper是一种分布式应用程序的分布式协调服务，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">zookeeper（一） 概述</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                十月 21, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%80%EF%BC%89%E6%A6%82%E8%BF%B0/" title="zookeeper（一） 概述" class="">zookeeper（一） 概述</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    5.6k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="zookeeper（一）"><a href="#zookeeper（一）" class="headerlink" title="zookeeper（一）"></a>zookeeper（一）</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>  <a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">zookeeper</a>是一种分布式应用程序的分布式协调服务，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。</p>
+<p>  zookeeper设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</p>
+<p>  zookeeper将数据保存在内存中，保证了高吞吐与低延迟，同时Zk规定节点的数据大小不能超过1M，我们实际使用时节点存储的数据应该尽可能的小，保证zk有一个良好的性能。</p>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p><img src="/images/zookeeper/zookeeper.assets/zknamespace.jpg" alt="zknamespace"></p>
+<p>zookeepert提供的命名空间很像标准文件系统的命名空间，名称是由斜杠（/）分隔的一系列路径元素，但与标准文件不同的是，zookeeper每个节点都可以拥有与其关联的数据与子节点。相当于一个允许文件也可以成为目录的文件系统。zookeeper的数据接待你用znode表示。</p>
+<h3 id="znode"><a href="#znode" class="headerlink" title="znode"></a>znode</h3><p> 每个节点维护一个stat结构的元数据，其中包括版本号，操作控制列表(ACL)，时间戳和数据长度。</p>
+<p><strong>版本号：</strong></p>
+<p>​    每个znode都有版本号，版本号会随着数据的变化而增加，版本号的作用避免了多个客户端对同一node数据写入混乱情况,即用于锁的实现。</p>
+<p><strong>操作控制列表(ACL)</strong></p>
+<p>​    ACL机制是用来控制访问znode的，在创建znode的时候，ACL将确定用户可以在znode上执行的各种操作权限,是基于客户端与zookeeper服务的认证机制来确定的。ACL机制与linux文件系统中的文件许可类似，通过设置/取消在znode上的操作权限来达到访问控制,但不具备linux文件系统中的所有权概念。</p>
+<p><strong>时间戳</strong></p>
+<p>​    表示创建和修改znode所经过的时间。通常以毫秒为单位。</p>
+<p><strong>数据长度</strong></p>
+<p>​    存储在znode中的数据总量是数据长度。</p>
+<h3 id="Znode属性"><a href="#Znode属性" class="headerlink" title="Znode属性"></a>Znode属性</h3><p>可以通过<code>get -s /节点路径</code> 来显示</p>
+<p><img src="/images/zookeeper/zookeeper.assets/znode%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="znode数据结构"></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cZxid</td>
+<td>create ZXID，即该数据节点被创建时的事务id</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>create time，即该节点的创建时间</td>
+</tr>
+<tr>
+<td>mZxid</td>
+<td>modified ZXID，即该节点最终一次更新时的事务id</td>
+</tr>
+<tr>
+<td>mtime</td>
+<td>modified time，即该节点最后一次的更新时间</td>
+</tr>
+<tr>
+<td>pZxid</td>
+<td>该节点的子节点列表最后一次修改时的事务id，只有子节点列表变更才会更新pZxid，子节点内容变更不会更新</td>
+</tr>
+<tr>
+<td>cversion</td>
+<td>子节点版本号，当前节点的子节点每次变化时值增加1</td>
+</tr>
+<tr>
+<td>dataVersion</td>
+<td>数据节点内容版本号，节点创建时为0，每更新一次节点内容(不管内容有无变化)该版本号的值增加1</td>
+</tr>
+<tr>
+<td>aclVersion</td>
+<td>节点的ACL版本号，表示该节点ACL信息变更次数</td>
+</tr>
+<tr>
+<td>ephemeralOwner</td>
+<td>创建该临时节点的会话的sessionId；如果当前节点为持久节点，则ephemeralOwner=0</td>
+</tr>
+<tr>
+<td>dataLength</td>
+<td>数据节点内容长度</td>
+</tr>
+<tr>
+<td>numChildren</td>
+<td>当前节点的子节点个数</td>
+</tr>
+</tbody></table>
+<h3 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h3><p>持久节点(PERSISTENT)：创建后永久存在，除非主动删除。</p>
+<p>持久顺序节点(PERSISTENT)：创建后永久存在，相对于持久节点它会在节点名称后面自动增加一个10位数字的序列号，这个计数对于此节点的父节点是唯一，如果这个序列号大于2^32-1就会溢出。</p>
+<p>临时节点（EPHEMERAL）：临时创建的，必须依托于会话session,会话结束节点自动被删除，也可以手动删除，临时节点不能拥有子节点。</p>
+<p>临时顺序节点（PERSISTENT_SEQUENTIAL）：具有临时节点特征，但是它会有序列号，分布式锁中会用到该类型节点。</p>
+<h3 id="创建语句"><a href="#创建语句" class="headerlink" title="创建语句"></a>创建语句</h3><pre><code class="shell"># 创建持久节点 -e参数为创建临时节点， -s参数为创建临时节点。
+create /NODE_NAME DATA
+</code></pre>
+<p>可以更具ephemeralOwner参数来区分是否是临时节点。</p>
+<p><img src="/images/zookeeper/zookeeper.assets/%E4%B8%B4%E6%97%B6%E8%8A%82%E7%82%B9%E5%8C%BA%E5%88%86.png" alt="临时节点区分"></p>
+<h2 id="zookeeper架构"><a href="#zookeeper架构" class="headerlink" title="zookeeper架构"></a>zookeeper架构</h2><h3 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h3><p><img src="/images/zookeeper/zookeeper.assets/zkservice.jpg" alt="zkservice"></p>
+<p>ZooKeeper 中没有选择传统的 Master/Slave 概念，而是引入了Leader、Follower 和 Observer 三种角色。</p>
+<p>ZooKeeper 集群中的所有机器通过一个 Leader 选举过程来选定一台称为 “Leader” 的机器。</p>
+<p>Leader 既可以为客户端提供写服务又能提供读服务。除了 Leader 外，Follower 和  Observer 都只能提供读服务。</p>
+<p>Follower 和 Observer 唯一的区别在于 Observer 机器不参与 Leader 的选举过程，也不参与写操作的“过半写成功”策略，因此 Observer 机器可以在不影响写性能的情况下提升集群的读性能。</p>
+<h3 id="组成元素"><a href="#组成元素" class="headerlink" title="组成元素"></a>组成元素</h3><table>
+<thead>
+<tr>
+<th>部分</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Client（客户端）</td>
+<td>客户端，我们的分布式应用集群中的一个节点，从服务器访问信息。对于特定的时间间隔，每个客户端向服务器发送消息以使服务器知道客户端是活跃的。  类似地，当客户端连接时，服务器发送确认码。如果连接的服务器没有响应，客户端会自动将消息重定向到另一个服务器。</td>
+</tr>
+<tr>
+<td>Server（服务器）</td>
+<td>服务器，我们的ZooKeeper总体中的一个节点，为客户端提供所有的服务。向客户端发送确认码以告知服务器是活跃的。</td>
+</tr>
+<tr>
+<td>Ensemble</td>
+<td>ZooKeeper服务器组。形成ensemble所需的最小节点数为3。</td>
+</tr>
+<tr>
+<td>Leader</td>
+<td>领导者负责进行投票的发起与决议。如果任何连接的节点失败，则执行自动恢复。Leader在服务启动时被选举。</td>
+</tr>
+<tr>
+<td>Follower</td>
+<td>跟随leader指令的服务器节点。用于接收客户请求并向客户端返回结果，在选举过程中参与投票的。</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>与follower功能类似，但不参与投票过程，只同步leader状态。目的是为了扩展系统，提高读取速度。</td>
+</tr>
+</tbody></table>
+<h2 id="zookeeper特性"><a href="#zookeeper特性" class="headerlink" title="zookeeper特性"></a>zookeeper特性</h2><h3 id="扩展性"><a href="#扩展性" class="headerlink" title="扩展性"></a>扩展性</h3><ul>
+<li>框架结构中存在leader，follower，observer等易于扩展的角色。可以通过添加follower与observer来增加吞吐量。</li>
+<li>读写分离，将增删改操作在leader中执行，查询操作在follower与observer上。而observer的作用是加快zookeeper中leader的选举，降低leader候选者，但不降低读取速度。</li>
+<li>节点扩展方便。只需要在zoo.cfg中增加 server.x=nodex:2888:3888:observer</li>
+</ul>
+<h3 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h3><ul>
+<li>快速恢复leader</li>
+<li>攘外必先安内：给外部提供服务之前，必先保证内部结构稳定即leader的选举。</li>
+<li>数据的可靠，可用与最终一致性</li>
+</ul>
+<h3 id="及时性"><a href="#及时性" class="headerlink" title="及时性"></a>及时性</h3><ul>
+<li>系统的客户视图保证在特定时间范围内是最新的。</li>
+</ul>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><ul>
+<li>更新成功与失败，不存在部分更新</li>
+</ul>
+<h3 id="顺序一致性"><a href="#顺序一致性" class="headerlink" title="顺序一致性"></a>顺序一致性</h3><ul>
+<li>客户端的更新按照发送顺序应用。</li>
+</ul>
+<h3 id="统一视图"><a href="#统一视图" class="headerlink" title="统一视图"></a>统一视图</h3><ul>
+<li>无论服务器连接到哪个服务器，客户端都将看到相同的服务视图。</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeeper%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">zookeeper（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#znode"><span class="toc-number">1.2.1.</span> <span class="toc-text">znode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Znode%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.2.</span> <span class="toc-text">Znode属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">节点类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.2.4.</span> <span class="toc-text">创建语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">zookeeper架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3"><span class="toc-number">1.3.1.</span> <span class="toc-text">图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E5%85%83%E7%B4%A0"><span class="toc-number">1.3.2.</span> <span class="toc-text">组成元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper%E7%89%B9%E6%80%A7"><span class="toc-number">1.4.</span> <span class="toc-text">zookeeper特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-number">1.4.1.</span> <span class="toc-text">扩展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="toc-number">1.4.2.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8A%E6%97%B6%E6%80%A7"><span class="toc-number">1.4.3.</span> <span class="toc-text">及时性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-number">1.4.4.</span> <span class="toc-text">原子性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.4.5.</span> <span class="toc-text">顺序一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E8%A7%86%E5%9B%BE"><span class="toc-number">1.4.6.</span> <span class="toc-text">统一视图</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

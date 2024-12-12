@@ -1,0 +1,1066 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>redis (五) RDB日志详解 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="redis (五) RDB日志详解本文中的源码来自 Redis 5.0 ，RDB持久化过程的相关源码都在 rdb.c 文件中.
+整体流程
+​        上图表明了三种触发 RDB 持久化的手段之,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">redis (五) RDB日志详解</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                七月 10, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/5.RDB%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3/" title="redis (五) RDB日志详解" class="">redis (五) RDB日志详解</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    27k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    25 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="redis-五-RDB日志详解"><a href="#redis-五-RDB日志详解" class="headerlink" title="redis (五) RDB日志详解"></a>redis (五) RDB日志详解</h1><p>本文中的源码来自 Redis 5.0 ，RDB持久化过程的相关源码都在 rdb.c 文件中.</p>
+<h2 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h2><p><img src="/images/redis/redis.assets/rbd%E6%8C%81%E4%B9%85%E5%8C%96(%E8%AF%A6%E7%BB%86).png" alt="rbd持久化(详细)"></p>
+<p>​        上图表明了三种触发 RDB 持久化的手段之间的整体关系。通过 serverCron 自动触发的 RDB 相当于直接调用了 bgsave 指令的流程进行处理。而 bgsave 的处理流程启动子进程后，调用了 save 指令的处理流程。</p>
+<h2 id="各流程详解"><a href="#各流程详解" class="headerlink" title="各流程详解"></a>各流程详解</h2><h3 id="serverCron-自动触发持久化逻辑"><a href="#serverCron-自动触发持久化逻辑" class="headerlink" title="serverCron(自动触发持久化逻辑)"></a>serverCron(自动触发持久化逻辑)</h3><p>redisServer 结构体的 save_params指向拥有三个值的数组，该数组的值与 redis.conf 文件中 save 配置项一一对应。dirty 记录着有多少键值发生变化， lastsave记录着上次 RDB 持久化的时间。</p>
+<p>serverCron 函数就是遍历该数组的值，检查当前 Redis 状态是否符合触发 RDB 持久化的条件，比如说距离上次 RDB 持久化过去了 900 秒并且有至少一条数据发生变更。</p>
+<p><strong>rdb涉及到的参数</strong></p>
+<pre><code class="c++">struct redisServer &#123;
+    /** 省略其他参数 */
+     /* RDB persistence */
+    long long dirty;                /* Changes to DB from the last save */
+    long long dirty_before_bgsave;  /* Used to restore dirty on failed BGSAVE */
+    pid_t rdb_child_pid;            /* PID of RDB saving child */
+    struct saveparam *saveparams;   /* Save points array for RDB */
+    int saveparamslen;              /* Number of saving points */
+    char *rdb_filename;             /* Name of RDB file */
+    int rdb_compression;            /* Use compression in RDB? */
+    int rdb_checksum;               /* Use RDB checksum? */
+    time_t lastsave;                /* Unix time of last successful save */
+    time_t lastbgsave_try;          /* Unix time of last attempted bgsave */
+    time_t rdb_save_time_last;      /* Time used by last RDB save run. */
+    time_t rdb_save_time_start;     /* Current RDB save start time. */
+    int rdb_bgsave_scheduled;       /* BGSAVE when possible if true. */
+    int rdb_child_type;             /* Type of save by active child. */
+    int lastbgsave_status;          /* C_OK or C_ERR */
+    int stop_writes_on_bgsave_err;  /* Don&#39;t allow writes if can&#39;t BGSAVE */
+    int rdb_pipe_write_result_to_parent; /* RDB pipes used to return the state */
+    int rdb_pipe_read_result_from_child; /* of each slave in diskless SYNC. */
+    /* Pipe and data structures for child -&gt; parent info sharing. */
+    int child_info_pipe[2];         /* Pipe used to write the child_info_data. */
+    struct &#123;
+        int process_type;           /* AOF or RDB child? */
+        size_t cow_size;            /* Copy on write size. */
+        unsigned long long magic;   /* Magic value to make sure data is valid. */
+    &#125; child_info_data;
+&#125;
+</code></pre>
+<p><strong>serverCron函数相关逻辑-server.c</strong></p>
+<pre><code class="c++">
+int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) &#123;
+   /* 省略其他逻辑 */
+    /* 检查后台是否正在进行 rdb 或者 aof 操作 */
+    /* Check if a background saving or AOF rewrite in progress terminated. */
+    if (server.rdb_child_pid != -1 || server.aof_child_pid != -1 ||
+        ldbPendingChildren())
+    &#123;
+        int statloc;
+        pid_t pid;
+
+        if ((pid = wait3(&amp;statloc,WNOHANG,NULL)) != 0) &#123;
+            int exitcode = WEXITSTATUS(statloc);
+            int bysignal = 0;
+
+            if (WIFSIGNALED(statloc)) bysignal = WTERMSIG(statloc);
+
+            if (pid == -1) &#123;
+                serverLog(LL_WARNING,&quot;wait3() returned an error: %s. &quot;
+                    &quot;rdb_child_pid = %d, aof_child_pid = %d&quot;,
+                    strerror(errno),
+                    (int) server.rdb_child_pid,
+                    (int) server.aof_child_pid);
+            &#125; else if (pid == server.rdb_child_pid) &#123;
+                backgroundSaveDoneHandler(exitcode,bysignal);
+                if (!bysignal &amp;&amp; exitcode == 0) receiveChildInfo();
+            &#125; else if (pid == server.aof_child_pid) &#123;
+                backgroundRewriteDoneHandler(exitcode,bysignal);
+                if (!bysignal &amp;&amp; exitcode == 0) receiveChildInfo();
+            &#125; else &#123;
+                if (!ldbRemoveChild(pid)) &#123;
+                    serverLog(LL_WARNING,
+                        &quot;Warning, detected child with unmatched pid: %ld&quot;,
+                        (long)pid);
+                &#125;
+            &#125;
+            updateDictResizePolicy();
+            closeChildInfoPipe();
+        &#125;
+    &#125; else &#123;
+        /* If there is not a background saving/rewrite in progress check if
+         * we have to save/rewrite now. */
+        /** 遍历每一个rdb 保存条件*/
+        for (j = 0; j &lt; server.saveparamslen; j++) &#123;
+            struct saveparam *sp = server.saveparams+j;
+
+            /* Save if we reached the given amount of changes,
+             * the given amount of seconds, and if the latest bgsave was
+             * successful or if, in case of an error, at least
+             * CONFIG_BGSAVE_RETRY_DELAY seconds already elapsed. */
+            /** 如果数据保存记录 大于规定的修改次数 且距离 上一次保存的时间大于规定时间或者上次BGSAVE命令执行成功，
+            才执行 BGSAVE 操作*/
+            if (server.dirty &gt;= sp-&gt;changes &amp;&amp;
+                server.unixtime-server.lastsave &gt; sp-&gt;seconds &amp;&amp;
+                (server.unixtime-server.lastbgsave_try &gt;
+                 CONFIG_BGSAVE_RETRY_DELAY ||
+                 server.lastbgsave_status == C_OK))
+            &#123;
+                /** 记录日志*/
+                serverLog(LL_NOTICE,&quot;%d changes in %d seconds. Saving...&quot;,
+                    sp-&gt;changes, (int)sp-&gt;seconds);
+                rdbSaveInfo rsi, *rsiptr;
+                rsiptr = rdbPopulateSaveInfo(&amp;rsi);
+                /** 异步保存*/
+                rdbSaveBackground(server.rdb_filename,rsiptr);
+                break;
+            &#125;
+        &#125;
+    /* 省略其他逻辑 */
+&#125;
+</code></pre>
+<h3 id="bgsaveCommand-子进程后台执行rdb持久化检查状态"><a href="#bgsaveCommand-子进程后台执行rdb持久化检查状态" class="headerlink" title="bgsaveCommand(子进程后台执行rdb持久化检查状态)"></a>bgsaveCommand(子进程后台执行rdb持久化检查状态)</h3><p>执行 bgsave 指令时，Redis 会先触发 bgsaveCommand 进行当前状态检查，然后才会调用 rdbSaveBackground.</p>
+<p><strong>bgsaveCommand相关逻辑 – rdb.c</strong></p>
+<pre><code class="c++">
+/* BGSAVE [SCHEDULE] */
+void bgsaveCommand(client *c) &#123;
+    int schedule = 0;
+
+    /* The SCHEDULE option changes the behavior of BGSAVE when an AOF rewrite
+     * is in progress. Instead of returning an error a BGSAVE gets scheduled. */
+    if (c-&gt;argc &gt; 1) &#123;
+        if (c-&gt;argc == 2 &amp;&amp; !strcasecmp(c-&gt;argv[1]-&gt;ptr,&quot;schedule&quot;)) &#123;
+            schedule = 1;
+        &#125; else &#123;
+            addReply(c,shared.syntaxerr);
+            return;
+        &#125;
+    &#125;
+
+    rdbSaveInfo rsi, *rsiptr;
+    rsiptr = rdbPopulateSaveInfo(&amp;rsi);
+
+    
+    if (server.rdb_child_pid != -1) &#123;
+        /** 是否存在rdb持久化的进程id, 若进程id不为-1,则返回,并记录异常文案*/
+        addReplyError(c,&quot;Background save already in progress&quot;);
+    &#125; else if (server.aof_child_pid != -1) &#123;        
+        /** 是否存在aof持久化的进程id, 若进程id不为-1,怎判断是否存在定时任务参数*/
+        if (schedule) &#123;
+            /** 若存在定时任务,则打上定时保存标记,并直接返回,记录状态日志 */
+            server.rdb_bgsave_scheduled = 1;
+            addReplyStatus(c,&quot;Background saving scheduled&quot;);
+        &#125; else &#123;
+            /** 若干不存在定时任务,则返回,并记录异常文案 */
+            addReplyError(c,
+                &quot;An AOF log rewriting in progress: can&#39;t BGSAVE right now. &quot;
+                &quot;Use BGSAVE SCHEDULE in order to schedule a BGSAVE whenever &quot;
+                &quot;possible.&quot;);
+        &#125;
+    &#125; else if (rdbSaveBackground(server.rdb_filename,rsiptr) == C_OK) &#123;/**若rdb与aof都没有进行,则调用rdbSaveBackground方法来fork子进程处理rdb持久化,并返回,记录状态日志. */
+        addReplyStatus(c,&quot;Background saving started&quot;);
+    &#125; else &#123;
+        /** 记录其他异常日志*/
+        addReply(c,shared.err);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="rdbSaveBackground-fork子进程"><a href="#rdbSaveBackground-fork子进程" class="headerlink" title="rdbSaveBackground(fork子进程)"></a>rdbSaveBackground(fork子进程)</h3><p>rdbSaveBackground 函数中最主要的工作就是调用 fork 命令生成子流程，然后在子流程中执行 rdbSave函数，也就是 save 指令最终会触发的函数。</p>
+<p>根据调用方（父进程或者子进程）不同，有两种不同的执行逻辑。</p>
+<ul>
+<li>如果调用方是父进程，则fork出子进程，保存子进程信息后直接返回。</li>
+<li>如果调用方是子进程则调用rdbSave执行RDB持久化逻辑，持久化完成后退出子进程。</li>
+</ul>
+<p>父进程内存占用过大，fork过程会比较耗时，在这个过程中父进程无法对外提供服务；fork的过程会拷贝一份与主进程一样的内存,所以redis内存空间会翻倍,需要注意剩余内存的大小.</p>
+<p>info stats命令查看latest_fork_usec选项，可以获取最近一个fork以操作的耗时。</p>
+<p><strong>rdbSaveBackground函数相关逻辑–rdb.c</strong></p>
+<pre><code class="c++">
+int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) &#123;
+    pid_t childpid;
+    long long start;
+    /**检查后台是否正在执行 aof 或者 rdb 操作*/
+    if (server.aof_child_pid != -1 || server.rdb_child_pid != -1) return C_ERR;
+    /**拿出 数据保存记录，保存为 上次记录*/
+    server.dirty_before_bgsave = server.dirty;
+    /**bgsave 时间*/
+    server.lastbgsave_try = time(NULL);
+    /** 创建子进程*/
+    openChildInfoPipe();
+
+    /** 记录开始时间*/
+    start = ustime();
+    /** fork子进程*/
+    if ((childpid = fork()) == 0) &#123;
+        int retval;
+
+        /* Child */
+        /** 关闭子进程中无用的资源,在frok之后, 比如:关闭子进程继承的 socket 监听, 关闭集群锁定(若有), 释放对service.pidfile文件的持有并设置为null来不可达处理*/
+        closeClildUnusedResourceAfterFork();
+        /** 子进程 title 修改*/
+        redisSetProcTitle(&quot;redis-rdb-bgsave&quot;);
+        /**  执行rdb 写入操作*/
+        retval = rdbSave(filename,rsi);
+        /** 执行完毕后*/
+        if (retval == C_OK) &#123;
+            size_t private_dirty = zmalloc_get_private_dirty(-1);
+            if (private_dirty) &#123;
+                serverLog(LL_NOTICE,
+                    &quot;RDB: %zu MB of memory used by copy-on-write&quot;,
+                    private_dirty/(1024*1024));
+            &#125;
+
+            server.child_info_data.cow_size = private_dirty;
+            sendChildInfo(CHILD_INFO_TYPE_RDB);
+        &#125;
+        /** 退出子进程*/
+        exitFromChild((retval == C_OK) ? 0 : 1);
+    &#125; else &#123;
+        /* Parent */
+        /** 进行fork时间的统计和信息记录，比如说rdb_save_time_start、rdb_child_pid、和rdb_child_type */
+        server.stat_fork_time = ustime()-start;
+        server.stat_fork_rate = (double) zmalloc_used_memory() * 1000000 / server.stat_fork_time / (1024*1024*1024); /* GB per second. */
+        latencyAddSampleIfNeeded(&quot;fork&quot;,server.stat_fork_time/1000);
+        if (childpid == -1) &#123;
+            closeChildInfoPipe();
+            server.lastbgsave_status = C_ERR;
+            serverLog(LL_WARNING,&quot;Can&#39;t save in background: fork: %s&quot;,
+                strerror(errno));
+            return C_ERR;
+        &#125;
+        serverLog(LL_NOTICE,&quot;Background saving started by pid %d&quot;,childpid);
+        server.rdb_save_time_start = time(NULL);
+        server.rdb_child_pid = childpid;
+        server.rdb_child_type = RDB_CHILD_TYPE_DISK;
+        updateDictResizePolicy();
+        return C_OK;
+    &#125;
+    return C_OK; /* unreached */
+&#125;
+</code></pre>
+<h3 id="rdbSave-RDB-持久化函数"><a href="#rdbSave-RDB-持久化函数" class="headerlink" title="rdbSave(RDB 持久化函数)"></a>rdbSave(RDB 持久化函数)</h3><p>真正进行 RDB 持久化的函数</p>
+<p>大致的流程:</p>
+<ol>
+<li><p>打开一个临时文件，</p>
+</li>
+<li><p>调用 rdbSaveRio函数，将当前 Redis 的内存信息写入到这个临时文件中，</p>
+</li>
+<li><p>调用 fflush、 fsync 和 fclose 接口将文件写入磁盘中，</p>
+</li>
+<li><p>使用 rename 将临时文件改名为 正式的 RDB 文件，</p>
+</li>
+<li><p>记录 dirty 和 lastsave等状态信息。</p>
+</li>
+</ol>
+<p>**rdbSave–rdb.c **</p>
+<pre><code class="c++">
+/* Save the DB on disk. Return C_ERR on error, C_OK on success. */
+int rdbSave(char *filename, rdbSaveInfo *rsi) &#123;
+    
+    char tmpfile[256];
+    char cwd[MAXPATHLEN]; /* Current working dir path for error messages. */
+    FILE *fp;
+    rio rdb;
+    int error = 0;
+
+    snprintf(tmpfile,256,&quot;temp-%d.rdb&quot;, (int) getpid());
+    /** 生成tmpfile文件名 temp-[pid].rdb,并打开 */
+    fp = fopen(tmpfile,&quot;w&quot;);
+    if (!fp) &#123;
+        /**tmp文件打开异常日志记录 */
+        char *cwdp = getcwd(cwd,MAXPATHLEN);
+        serverLog(LL_WARNING,
+            &quot;Failed opening the RDB file %s (in server root dir %s) &quot;
+            &quot;for saving: %s&quot;,
+            filename,
+            cwdp ? cwdp : &quot;unknown&quot;,
+            strerror(errno));
+        return C_ERR;
+    &#125;
+    /** 初始化rio结构 */
+    rioInitWithFile(&amp;rdb,fp);
+
+    if (server.rdb_save_incremental_fsync)
+        rioSetAutoSync(&amp;rdb,REDIS_AUTOSYNC_BYTES);
+    
+    /** 主要逻辑:内存写入临时文件.*/
+    if (rdbSaveRio(&amp;rdb,&amp;error,RDB_SAVE_NONE,rsi) == C_ERR) &#123;
+        errno = error;
+        goto werr;
+    &#125;
+
+    /* Make sure data will not remain on the OS&#39;s output buffers */
+    /**缓存数据从应用层缓存刷新到内核*/
+    if (fflush(fp) == EOF) goto werr;
+    /**作用于文件描述符，用于将内核缓存刷新到物理设备上。*/
+    if (fsync(fileno(fp)) == -1) goto werr;
+    /**关闭文件*/
+    if (fclose(fp) == EOF) goto werr;
+
+    /* Use RENAME to make sure the DB file is changed atomically only
+     * if the generate DB file is ok. */
+    /**重新命名 rdb 文件，把之前临时的名称修改为正式的 rdb 文件名称*/
+    if (rename(tmpfile,filename) == -1) &#123;
+        /** 异常处理,断开临时文件的持有.*/
+        char *cwdp = getcwd(cwd,MAXPATHLEN);
+        serverLog(LL_WARNING,
+            &quot;Error moving temp DB file %s on the final &quot;
+            &quot;destination %s (in server root dir %s): %s&quot;,
+            tmpfile,
+            filename,
+            cwdp ? cwdp : &quot;unknown&quot;,
+            strerror(errno));
+        unlink(tmpfile);
+        return C_ERR;
+    &#125;
+
+    /**写入完成，打印日志*/
+    serverLog(LL_NOTICE,&quot;DB saved on disk&quot;);
+    /** 清理数据保存记录*/
+    server.dirty = 0;
+    /** 最后一次完成 SAVE 命令的时间*/
+    server.lastsave = time(NULL);
+    /** 最后一次 bgsave 的状态置位 成功*/
+    server.lastbgsave_status = C_OK;
+    return C_OK;
+
+    /** 当发生异常, 保存日志,关闭文件,断开临时文件的持有.*/
+werr:
+    serverLog(LL_WARNING,&quot;Write error saving DB on disk: %s&quot;, strerror(errno));
+    fclose(fp);
+    unlink(tmpfile);
+    return C_ERR;
+&#125;
+</code></pre>
+<h3 id="rdbSaveRio-格式化保存"><a href="#rdbSaveRio-格式化保存" class="headerlink" title="rdbSaveRio(格式化保存)"></a>rdbSaveRio(格式化保存)</h3><p>rdbSaveRio 会将 Redis 内存中的数据以相对紧凑的格式写入到文件.</p>
+<p>大致流程:</p>
+<ol>
+<li> 先写入 REDIS 魔法值，然后是 RDB 文件的版本( rdb_version )，额外辅助信息 ( aux )。辅助信息中包含了 Redis 的版本，内存占用和复制库( repl-id )和偏移量( repl-offset )等</li>
+<li>遍历数据库,先写入 RDB_OPCODE_SELECTDB识别码和数据库编号，接着写入 RDB_OPCODE_RESIZEDB识别码和数据库键值数量和待失效键值数量，最后会遍历所有的键值，依次写入。在写入键值时，当该键值有失效时间时，会先写入 RDB_OPCODE_EXPIRETIME_MS识别码和失效时间，然后写入键值类型的识别码，最后再写入键和值。</li>
+<li>完数据库信息后，还会把 Lua 相关的信息写入，最后再写入 RDB_OPCODE_EOF结束符识别码和校验值.</li>
+</ol>
+<p><strong>rdbSaveRio-rdb.c</strong></p>
+<pre><code class="c++">
+/* Produces a dump of the database in RDB format sending it to the specified
+ * Redis I/O channel. On success C_OK is returned, otherwise C_ERR
+ * is returned and part of the output, or all the output, can be
+ * missing because of I/O errors.
+ *
+ * When the function returns C_ERR and if &#39;error&#39; is not NULL, the
+ * integer pointed by &#39;error&#39; is set to the value of errno just after the I/O
+ * error. */
+int rdbSaveRio(rio *rdb, int *error, int flags, rdbSaveInfo *rsi) &#123;
+    dictIterator *di = NULL;
+    dictEntry *de;
+    char magic[10];
+    int j;
+    uint64_t cksum;
+    size_t processed = 0;
+
+    if (server.rdb_checksum)
+        rdb-&gt;update_cksum = rioGenericUpdateChecksum;
+    snprintf(magic,sizeof(magic),&quot;REDIS%04d&quot;,RDB_VERSION);
+    /**写入 REDIS 魔法值*/
+    if (rdbWriteRaw(rdb,magic,9) == -1) goto werr;
+    /**写入辅助信息 REDIS版本,服务器操作系统位数,当前时间,复制信息比如repl-stream-db,repl-id和repl-offset等等数据 */
+    if (rdbSaveInfoAuxFields(rdb,flags,rsi) == -1) goto werr;
+    /** 写入额外辅助信息. */
+    if (rdbSaveModulesAux(rdb, REDISMODULE_AUX_BEFORE_RDB) == -1) goto werr;
+
+    /** 遍历数据库*/
+    for (j = 0; j &lt; server.dbnum; j++) &#123;
+        /**获取数据库指针地址和数据库字典*/
+        redisDb *db = server.db+j;
+        dict *d = db-&gt;dict;
+        if (dictSize(d) == 0) continue;
+        di = dictGetSafeIterator(d);
+
+        /* Write the SELECT DB opcode */
+        /**写入数据库部分的开始标识*/
+        if (rdbSaveType(rdb,RDB_OPCODE_SELECTDB) == -1) goto werr;
+        /** 写入当前数据库号*/
+        if (rdbSaveLen(rdb,j) == -1) goto werr;
+
+        /* Write the RESIZE DB opcode. We trim the size to UINT32_MAX, which
+         * is currently the largest type we are able to represent in RDB sizes.
+         * However this does not limit the actual size of the DB to load since
+         * these sizes are just hints to resize the hash tables. */
+        uint64_t db_size, expires_size;
+        /**获取数据库字典大小和过期键字典大小*/
+        db_size = dictSize(db-&gt;dict);
+        expires_size = dictSize(db-&gt;expires);
+        /**写入当前待写入数据的类型，此处为 RDB_OPCODE_RESIZEDB，表示数据库大小*/
+        if (rdbSaveType(rdb,RDB_OPCODE_RESIZEDB) == -1) goto werr;
+        /**写入获取数据库字典大小和过期键字典大小*/
+        if (rdbSaveLen(rdb,db_size) == -1) goto werr;
+        if (rdbSaveLen(rdb,expires_size) == -1) goto werr;
+
+        /* Iterate this DB writing every entry */
+        /**遍历当前数据库的键值对*/
+        while((de = dictNext(di)) != NULL) &#123;
+            sds keystr = dictGetKey(de);
+            robj key, *o = dictGetVal(de);
+            long long expire;
+            /**初始化 key*/
+            initStaticStringObject(key,keystr);
+            /**获取键的过期数据 */
+            expire = getExpire(db,&amp;key);
+            /** 保存键值对数据*/
+            if (rdbSaveKeyValuePair(rdb,&amp;key,o,expire) == -1) goto werr;
+
+            /* When this RDB is produced as part of an AOF rewrite, move
+             * accumulated diff from parent to child while rewriting in
+             * order to have a smaller final write. */
+            if (flags &amp; RDB_SAVE_AOF_PREAMBLE &amp;&amp;
+                rdb-&gt;processed_bytes &gt; processed+AOF_READ_DIFF_INTERVAL_BYTES)
+            &#123;
+                processed = rdb-&gt;processed_bytes;
+                aofReadDiffFromParent();
+            &#125;
+        &#125;
+        dictReleaseIterator(di);
+        di = NULL; /* So that we don&#39;t release it again on error. */
+    &#125;
+
+    /* If we are storing the replication information on disk, persist
+     * the script cache as well: on successful PSYNC after a restart, we need
+     * to be able to process any EVALSHA inside the replication backlog the
+     * master will send us. */
+    /**保存 Lua 脚本*/
+    if (rsi &amp;&amp; dictSize(server.lua_scripts)) &#123;
+        di = dictGetIterator(server.lua_scripts);
+        while((de = dictNext(di)) != NULL) &#123;
+            robj *body = dictGetVal(de);
+            if (rdbSaveAuxField(rdb,&quot;lua&quot;,3,body-&gt;ptr,sdslen(body-&gt;ptr)) == -1)
+                goto werr;
+        &#125;
+        dictReleaseIterator(di);
+        di = NULL; /* So that we don&#39;t release it again on error. */
+    &#125;
+
+    if (rdbSaveModulesAux(rdb, REDISMODULE_AUX_AFTER_RDB) == -1) goto werr;
+
+    /* EOF opcode */
+    /**写入结束符*/
+    if (rdbSaveType(rdb,RDB_OPCODE_EOF) == -1) goto werr;
+
+    /* CRC64 checksum. It will be zero if checksum computation is disabled, the
+     * loading code skips the check in this case. */
+    cksum = rdb-&gt;cksum;
+    memrev64ifbe(&amp;cksum);
+    /**写入CRC64校验*/
+    if (rioWrite(rdb,&amp;cksum,8) == 0) goto werr;
+    return C_OK;
+
+werr:
+    if (error) *error = errno;
+    if (di) dictReleaseIterator(di);
+    return C_ERR;
+&#125;
+</code></pre>
+<h3 id="rdbSaveKeyValuePair-键值对写入"><a href="#rdbSaveKeyValuePair-键值对写入" class="headerlink" title="rdbSaveKeyValuePair(键值对写入)"></a>rdbSaveKeyValuePair(键值对写入)</h3><p><strong>rdbSaveKeyValuePair-rdb.c</strong></p>
+<pre><code class="c++">int rdbSaveKeyValuePair(rio *rdb, robj *key, robj *val, long long expiretime) &#123;
+    int savelru = server.maxmemory_policy &amp; MAXMEMORY_FLAG_LRU;
+    int savelfu = server.maxmemory_policy &amp; MAXMEMORY_FLAG_LFU;
+
+    /* Save the expire time */
+    if (expiretime != -1) &#123;
+        /**写入过期时间操作码标识*/
+        if (rdbSaveType(rdb,RDB_OPCODE_EXPIRETIME_MS) == -1) return -1;
+        if (rdbSaveMillisecondTime(rdb,expiretime) == -1) return -1;
+    &#125;
+
+    /* Save the LRU info. */
+    if (savelru) &#123;
+        /**写入LRU空闲时间操作码标识*/
+        uint64_t idletime = estimateObjectIdleTime(val);
+        idletime /= 1000; /* Using seconds is enough and requires less space.*/
+        if (rdbSaveType(rdb,RDB_OPCODE_IDLE) == -1) return -1;
+        if (rdbSaveLen(rdb,idletime) == -1) return -1;
+    &#125;
+
+    /* Save the LFU info. */
+    if (savelfu) &#123;
+        /** 写入LFU访问频率操作码标识*/
+        uint8_t buf[1];
+        buf[0] = LFUDecrAndReturn(val);
+        /* We can encode this in exactly two bytes: the opcode and an 8
+         * bit counter, since the frequency is logarithmic with a 0-255 range.
+         * Note that we do not store the halving time because to reset it
+         * a single time when loading does not affect the frequency much. */
+        if (rdbSaveType(rdb,RDB_OPCODE_FREQ) == -1) return -1;
+        if (rdbWriteRaw(rdb,buf,1) == -1) return -1;
+    &#125;
+
+    /* Save type, key, value */
+    /**写入键值对的类型标识*/
+    if (rdbSaveObjectType(rdb,val) == -1) return -1;
+    /**写入键值对的key*/
+    if (rdbSaveStringObject(rdb,key) == -1) return -1;
+    /**写入键值对的value*/
+    if (rdbSaveObject(rdb,val,key) == -1) return -1;
+    return 1;
+&#125;
+</code></pre>
+<h2 id="rdb文件格式"><a href="#rdb文件格式" class="headerlink" title="rdb文件格式"></a>rdb文件格式</h2><p>RDB文件为二进制格式保存.</p>
+<h3 id="解析rdb文件示例"><a href="#解析rdb文件示例" class="headerlink" title="解析rdb文件示例"></a>解析rdb文件示例</h3><p><img src="/images/redis/redis.assets/rdb%E6%96%87%E4%BB%B6.png" alt="rdb文件"></p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><p><strong>Length Encoding 长度编码</strong></p>
+<table>
+<thead>
+<tr>
+<th>字节数</th>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>00pppppp</td>
+<td>1个字节</td>
+<td>长度小于或等于63个字节（6位）的字符串值</td>
+</tr>
+<tr>
+<td>01pppppp(qqqqqqqq)</td>
+<td>2字节</td>
+<td>长度小于或等于16383字节（14位）的字符串值</td>
+</tr>
+<tr>
+<td>10______&lt;4 byte&gt;</td>
+<td>5字节</td>
+<td>接下来的4个字节包含一个无符号的int。长度大于或等于16384个字节的字符串值</td>
+</tr>
+<tr>
+<td>1100____</td>
+<td>3个字节</td>
+<td>整数编码为16位带符号（2个字节）</td>
+</tr>
+<tr>
+<td>1101____</td>
+<td>5字节</td>
+<td>整数编码为32位带符号（4个字节）</td>
+</tr>
+<tr>
+<td>1110____</td>
+<td>9字节</td>
+<td>整数编码为64位带符号（8个字节）</td>
+</tr>
+<tr>
+<td>1111____</td>
+<td>4字节</td>
+<td>整数编码为24位带符号（3个字节）</td>
+</tr>
+</tbody></table>
+<h3 id="总体结构–-rdbSave方法"><a href="#总体结构–-rdbSave方法" class="headerlink" title="总体结构– rdbSave方法"></a>总体结构– rdbSave方法</h3><p><img src="/images/redis/redis.assets/rdb%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84(%E6%80%BB).png" alt="rdb文件结构(总)"></p>
+<ul>
+<li><p>REDIS（常量）：RDB文件的最开头是REDIS部分，这个部分的长度为5字节，保存着“REDIS”五个字符。 通过这五个字符，程序可以在载入文件时，快速检查所载入的文件是否RDB文件</p>
+</li>
+<li><p>db_version（变量）：长度为4字节，它的值是一个字符串表示的整数，这个整数记录了RDB文件的 版本号，</p>
+<p>比如二进制中的30303039,转成十进制是48 48 48 57, 对应的ascii码值是 0 0 0 9,就代表RDB文件的版本为第九版</p>
+</li>
+<li><p>aux_fields(辅助字段) : 通用字符串字段，用于向 <code>RDB</code> 添加状态，<code>Version 7</code> 加入的，向后兼容。<code>AUX</code> 字段由键和值两个字符串组成。主要有以下字段</p>
+<ul>
+<li><p>redis-ver：版本号</p>
+</li>
+<li><p>redis-bits：OS Arch</p>
+</li>
+<li><p>ctime：RDB 文件创建时间</p>
+</li>
+<li><p>used-mem：使用内存大小</p>
+</li>
+<li><p>repl-stream-db：Redis 服务器的 db 的索引 </p>
+</li>
+<li><p>repl-id：Redis 主实例的 ID（replication id）</p>
+</li>
+<li><p>repl-offset：Redis 主实例的偏称量（replication offset）</p>
+</li>
+<li><p>aof-preamble：是否启动aof快照</p>
+<p>结构图:</p>
+<p><img src="/images/redis/redis.assets/aux%E7%BB%93%E6%9E%84.png" alt="aux结构"></p>
+</li>
+</ul>
+</li>
+<li><p>databases（变量）：databases部分包含着零个或任意多个数据库，以及各个数据库中的键值对数据</p>
+<ul>
+<li>如果服务器的数据库状态为空（所有数据库都是空的），那么这个部分也为空，长度为 0字节</li>
+<li>如果服务器的数据库状态为非空（有至少一个数据库非空），那么这个部分也为非空， 根据数据库所保存键值对的数量、类型和内容不同，这个部分的长度也会有所不同</li>
+</ul>
+</li>
+<li><p>EOF（常量）：EOF常量的长度为1字节，这个常量标志着RDB文件正文内容的结束，当读入程序遇到这 个值的时候，它知道所有数据库的所有键值对都已经载入完毕了</p>
+</li>
+<li><p>check_sum（变量）：check_sum是一个8字节长的无符号整数，保存着一个校验和，这个校验和是程序通过对 REDIS、db_version、databases、EOF四个部分的内容进行计算得出的。服务器在载入RDB文件时，会将载入数据所计算出的校验和与check_sum所记录的校验和进行对比，以此来检查RDB文件是否有出错或者损坏的情况出现</p>
+</li>
+</ul>
+<p>例子:</p>
+<p><img src="/images/redis/redis.assets/rdb%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E4%BE%8B%E5%AD%90.png" alt="rdb文件结构例子"></p>
+<p>fa(0xfa):  250 RDB_OPCODE_AUX 辅助键值对开始标志,后面跟着扩展键值对.</p>
+<p>ff(0xff): 255 RDB_OPCODE_EOF 文件结束标志.</p>
+<h3 id="database文件结构"><a href="#database文件结构" class="headerlink" title="database文件结构"></a>database文件结构</h3><p><img src="/images/redis/redis.assets/rdb%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84(database).png" alt="rdb文件结构(database)"></p>
+<ul>
+<li>每个非空数据库在RDB文件中都可以保存为SELECTDB、db_number、REDISDB、db_size、expires_size、key_value_pairs六个部分：</li>
+<li>SELECTDB常量：长度为1字节，当读入程序遇到这个值的时候，它知道接下来要读入的将是一个数据库号码</li>
+<li>db_number：保存着一个数据库号码，根据号码的大小不同，这个部分的长度可以是1字 节、2字节或者5字节。当程序读入db_number部分之后，服务器会调用SELECT命令，根据读入的数据库号码进行数据库切换，使得之后读入的键值对可以载入到正确的数据库中</li>
+<li>db_size: db中key的个数</li>
+<li>expires_size: db中存在过期时间的key个数</li>
+<li>key_value_pairs部分：保存了数据库中的所有键值对数据，如果键值对带有过期时间，那 么过期时间也会和键值对保存在一起。根据键值对的数量、类型、内容以及是否有过期时间 等条件的不同，key_value_pairs部分的长度也会有所不同</li>
+</ul>
+<p>例子:</p>
+<p><img src="/images/redis/redis.assets/rdb%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84(database)%E4%BE%8B%E5%AD%90.png" alt="rdb文件结构(database)例子"></p>
+<p>fe(0xfe): 254 RDB_OPCODE_SELECTDB db选择标志,后面跟着二字节的数据库index.</p>
+<p>fb(0xfb): 251 RDB_OPCODE_RESIZEDB 后面跟着当前db存在的key个数与存在过期时间的key个数.</p>
+<h3 id="keyValuePair结构"><a href="#keyValuePair结构" class="headerlink" title="keyValuePair结构"></a>keyValuePair结构</h3><p>rdbSaveRio在写键值时，会调用 rdbSaveKeyValuePair 函数。</p>
+<p>每个键值对都有4个部分：</p>
+<ul>
+<li><p>key到期时间戳。这是可选的。</p>
+<p>该部分以一个字节标志开始。该标志是：</p>
+<ul>
+<li>0xfd：以秒为单位指定以下过期值。以下4个字节将Unix时间戳表示为无符号整数。</li>
+<li>0xfc：指定以下过期值（以毫秒为单位）。以下8个字节将Unix时间戳表示为无符号长。</li>
+</ul>
+</li>
+<li><p>1个字节的标志，指示值的类型。</p>
+</li>
+<li><p>key，编码为Redis字符串。</p>
+</li>
+<li><p>value，根据值类型进行编码的值。</p>
+</li>
+</ul>
+<p>根据键的不同类型写入不同格式，各种键值的类型和格式如下所示:</p>
+<h4 id="RDB-TYPE-STRING-0"><a href="#RDB-TYPE-STRING-0" class="headerlink" title="RDB_TYPE_STRING 0"></a>RDB_TYPE_STRING 0</h4><p><img src="/images/redis/redis.assets/rdb%E5%AD%98%E5%82%A8(Stirng%E7%BB%93%E6%9E%84).png" alt="rdb存储(Stirng结构)"></p>
+<p>Redis字符串是二进制安全的——这意味着您可以在其中存储任何内容。它们没有任何特殊的字符串结尾标记。</p>
+<p>三种类型的字符串：</p>
+<ul>
+<li><p>长度前缀字符串: 字符串的长度（以字节为单位）首先使用Length Encoding进行编码。此后，将存储字符串的原始字节。</p>
+</li>
+<li><p>8、16或32位整数: 根据长度编码规则,来确定需要读取的位数作为值. </p>
+</li>
+<li><p>LZF压缩字符串: </p>
+<p>读取方式:</p>
+<ul>
+<li>使用长度编码从流中读取压缩的长度 clen</li>
+<li>使用长度编码从流中读取未压缩的长度</li>
+<li>从流中读取下一个 clen 长度的压缩字节</li>
+<li>最后，使用LZF算法解压这些字节</li>
+</ul>
+</li>
+</ul>
+<h4 id="RDB-TYPE-LIST-1"><a href="#RDB-TYPE-LIST-1" class="headerlink" title="RDB_TYPE_LIST 1"></a>RDB_TYPE_LIST 1</h4><p><img src="/images/redis/redis.assets/rdb%E5%AD%98%E5%82%A8(list%E7%BB%93%E6%9E%84).png" alt="rdb存储(list结构)"></p>
+<ul>
+<li><p>zlhead: 字符串编码解码，存储当前 key 所属 value 的 bytes 数目以及是否启用了 lzf 等信息。 如 ziplist 以 <code>1B</code> 开头，对应 2 进制为 <code>0b00011011</code> ，后 6 bit 表示为 十进制 <code>27</code> ，表示当前 ziplist 共有 27 bytes。从 开始读取直到 。</p>
+</li>
+<li><p>zlbytes: 4 byte 无符号整数，采用小端字节序编码。表示当前 ziplist 总占用字节数。</p>
+</li>
+<li><p>zltail: 4 byte 无符号整数，采用小端字节序编码。代表到达最后一个 entry 需要跳过的字节数。</p>
+</li>
+<li><p>zllen: 2 byte 无符号整数，采用小端字节序编码。ziplist entry 数目。当用于存储 hash 数据时，entry 数为 key 数 + value数。</p>
+</li>
+<li><p>entrys: 存储 entry 列表。每个 entry 按如下方法存储。</p>
+<p><length-prev-entry><special-flag><raw-bytes-of-entry></p>
+<ul>
+<li><length-prev-entry>: 可变长编码，存储前一个 entry 的占用的字节数。使用整数编码。</li>
+<li><special-flag>: 同样是可变长编码，存储当前 entry 的类型以及长度。</li>
+<li><raw-bytes-of-entry>: 存储实际数据。依据 <special-flag> 指定的类型和长度。采用整数编码或字符串编码。</li>
+</ul>
+</li>
+<li><p>zlend: 固定以 <code>0xFF</code> 结尾。</p>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#redis-%E4%BA%94-RDB%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">redis (五) RDB日志详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">整体流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">各流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#serverCron-%E8%87%AA%E5%8A%A8%E8%A7%A6%E5%8F%91%E6%8C%81%E4%B9%85%E5%8C%96%E9%80%BB%E8%BE%91"><span class="toc-number">1.2.1.</span> <span class="toc-text">serverCron(自动触发持久化逻辑)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bgsaveCommand-%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8Crdb%E6%8C%81%E4%B9%85%E5%8C%96%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">bgsaveCommand(子进程后台执行rdb持久化检查状态)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdbSaveBackground-fork%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">rdbSaveBackground(fork子进程)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdbSave-RDB-%E6%8C%81%E4%B9%85%E5%8C%96%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.4.</span> <span class="toc-text">rdbSave(RDB 持久化函数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdbSaveRio-%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BF%9D%E5%AD%98"><span class="toc-number">1.2.5.</span> <span class="toc-text">rdbSaveRio(格式化保存)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdbSaveKeyValuePair-%E9%94%AE%E5%80%BC%E5%AF%B9%E5%86%99%E5%85%A5"><span class="toc-number">1.2.6.</span> <span class="toc-text">rdbSaveKeyValuePair(键值对写入)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rdb%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">rdb文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90rdb%E6%96%87%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">解析rdb文件示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%E2%80%93-rdbSave%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">总体结构– rdbSave方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#database%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.4.</span> <span class="toc-text">database文件结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#keyValuePair%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.5.</span> <span class="toc-text">keyValuePair结构</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

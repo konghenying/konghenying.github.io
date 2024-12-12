@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2023 空痕影.
+        &copy; 2024 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -127,44 +127,44 @@
     <div id="post0" class="else">
         <p class="animated fadeInDown">
             
-            <a href="/categories/docker"><b>「
-                </b>DOCKER<b> 」</b></a>
+            <a href="/categories/linux"><b>「
+                </b>LINUX<b> 」</b></a>
             
             五月 25, 2023
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2023/05/25/docker/docker%20file/" title="docker file" class="posttitle">docker file</a></h3>
+            <a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="CENTOS7后通用配置" class="posttitle">CENTOS7后通用配置</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                10k
+                2.3k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                9 mins.
+                2 mins.
             </span>
             
             
         </p>
         
         
-        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
         
         <div class="md-content animated fadeIn">
             
-            <ol>
-<li>dockerhub直接下载.</li>
-<li>将操作系统中文件打包成容器镜像.</li>
-<li>把正在运行的容器加工后打包成镜像.</li>
-<li>通过dockerfile自定义生成镜像.</li>
-</ol>
-<h3 id="1-dockerhub直接下载"><a href="#1-dockerhub直接下载" class="headerlink" title="1. dockerhub直接下载"></a>1. dockerhub直接下载</h3><pre><code class="bash">docker pull...</code></pre>
+            <h3 id="1-先关闭防火墙"><a href="#1-先关闭防火墙" class="headerlink" title="1.先关闭防火墙"></a>1.先关闭防火墙</h3><pre><code class="shell">#关闭防火墙                                                                  
+systemctl stop firewalld
+#禁止开机自启
+systemctl disabled firewalld
+</code></pre>
+<h3 id="2-配置网卡信息"><a href="#2-配置网卡信息" class="headerlink" title="2.配置网卡信息"></a>2.配置网卡信息</h3><p></p>
+<p>保存退出后输入: service...</p>
             
-            <span class="read-more"><a href="/2023/05/25/docker/docker%20file/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -194,48 +194,208 @@
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/docker">
-                  <b>「 </b>DOCKER<b> 」</b>
+                <a href="/categories/linux">
+                  <b>「 </b>LINUX<b> 」</b>
                 </a>
             
             五月 25, 2023
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/docker/docker%20file/" title="docker file" class="posttitle">docker file</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="CENTOS7后通用配置" class="posttitle">CENTOS7后通用配置</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        10k
+                        2.3k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        9 mins.
+                        2 mins.
                     </span>
                 
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <ol>
-<li>dockerhub直接下载.</li>
-<li>将操作系统中文件打包成容器镜像.</li>
-<li>把正在运行的容器加工后打包成镜像.</li>
-<li>通过dockerfile自定义生成镜像.</li>
-</ol>
-<h3 id="1-dockerhub直接下载"><a href="#1-dockerhub直接下载" class="headerlink" title="1. dockerhub直接下载"></a>1. dockerhub直接下载</h3><pre><code class="bash">docker pull cennter:latest
+                <h3 id="1-先关闭防火墙"><a href="#1-先关闭防火墙" class="headerlink" title="1.先关闭防火墙"></a>1.先关闭防火墙</h3><pre><code class="shell">#关闭防火墙                                                                  
+systemctl stop firewalld
+#禁止开机自启
+systemctl disabled firewalld
 </code></pre>
-<h3 id="2-将操作系统打包成容器镜像"><a href="#2-将操作系统打包成容器镜像" class="headerlink" title="2. 将操作系统打包成容器镜像"></a>2. 将操作系统打包成容器镜像</h3><h4 id="2-1-安装尽可能小的系统"><a href="#2-1-安装尽可能小的系统" class="headerlink" title="2.1.安装尽可能小的系统"></a>2.1.安装尽可能小的系统</h4><h4 id="2-2-将整个操作系统打成tar包"><a href="#2-2-将整个操作系统打成tar包" class="headerlink" title="2.2.将整个操作系统打成tar包"></a>2.2.将整个操作系统打成tar包</h4><pre><code class="bash"># tar --numeric-owner --exclude=/proc --exclude=/sys -cvf centos7.6.tar /
-</code></pre>
-<h4 id="2-3-将tar包加载至本地容器镜像"><a href="#2-3-将tar包加载至本地容器镜像" class="headerlink" title="2.3. 将tar包加载至本地容器镜像"></a>2.3. 将tar包加载至...</h4>
+<h3 id="2-配置网卡信息"><a href="#2-配置网卡信息" class="headerlink" title="2.配置网卡信息"></a>2.配置网卡信息</h3><p></p>
+<p>保存退出后输入: service network restart 来重启网卡,更新配置.</p>
+<pre><code class="properties">TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF...</code></pre>
             
-            <span class="read-more"><a href="/2023/05/25/docker/docker%20file/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/linux">
+                  <b>「 </b>LINUX<b> 」</b>
+                </a>
+            
+            五月 25, 2023
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/" title="删除文件不释放空间" class="posttitle">删除文件不释放空间</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        1.6k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>删除正在被占用的日志文件时,存储空间没有被释放.</p>
+<p>rm filename </p>
+<p>命令删除文件后,</p>
+<p>df -h </p>
+<p>按G查看磁盘使用情况.发现空间没有被释放掉.</p>
+<p>lsof |grep delete</p>
+<p>通过上述命令可以查看删除文件被占用情况.第二列为对应应用的PID.</p>
+<p></p>
+<p>kill掉相应的应用后文件被占用的空间被释放.</p>
+<p></p>
+<p><strong>总结:</strong></p>
+<p>当log文件过大,被错误日志塞满磁盘时,使用rm删除文件无法清除被占用的文件空间.需要停止占用的应用.</p>
+<p>若想不停止服务来清理空间,可以使用 <code>echo &quot;&quot; &gt...</code></p>
+            
+            <span class="read-more"><a href="/2023/05/25/linux/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE%E7%A9%BA%E9%97%B4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            五月 25, 2023
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85docker/" title="Untitled" class="posttitle">Untitled</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        0
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                
+            
+            <span class="read-more"><a href="/2023/05/25/linux/win10%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85docker/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/git">
+                  <b>「 </b>GIT<b> 」</b>
+                </a>
+            
+            五月 25, 2023
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/git/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" title="git常用命名速查" class="posttitle">git常用命名速查</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        3.8k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        3 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <h4 id="git结构概览"><a href="#git结构概览" class="headerlink" title="git结构概览"></a>git结构概览</h4><p></p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><pre><code class="shell">git init
+git init --bare repo_name.git    #创建一个名为repo_name的裸仓库，作为远程仓库使用
+</code></pre>
+<h4 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h4><pre><code class="shell">git status
+</code></pre>
+<h4 id="添加文件至暂存区"><a href="#添加文件至暂存区" class="headerlink" title="添加文件至暂存区"></a>添加文件至暂存区</h4><pre><code class="shell">git add filename #添加某个文件
+git add . #添加工作区中的所有文件
+</code></pre>
+<h4 id="提交至本地仓库"><a href="#提交至本地仓库" class="headerlink" title="提交至本地仓库"></a>提交至本地仓库</h4><pre><code class="shell">git commit -m &quot;本次提交的说明&quot; #不带m参数则会打开互交界面，输入提交说明后通过vi操作保存退出完成提交
+git commit -a -m &...</code></pre>
+            
+            <span class="read-more"><a href="/2023/05/25/git/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -254,9 +414,9 @@
                   <b>「 </b>DOCKER<b> 」</b>
                 </a>
             
-            五月 25, 2023
+            十一月 10, 2022
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/docker/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="docker常用命令" class="posttitle">docker常用命令</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/11/10/docker/2.docker%20file/" title="二 docker file" class="posttitle">二 docker file</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
@@ -279,71 +439,19 @@
         
         <div class="md-content animated fadeIn">
             
-                <h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><h4 id="镜像查询与下载"><a href="#镜像查询与下载" class="headerlink" title="镜像查询与下载"></a>镜像查询与下载</h4><pre><code class="shell">docker search &#123;镜像名称&#125;
-
-eg:
-root@空痕影的matebook:~# docker search elasticsearch
-NAME                                               DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
-elasticsearch                                      Elasticsearch is a powerful open source sear…   5622      [OK]
-kibana                                             Kibana gives shape to any kind of data...</code></pre>
-            
-            <span class="read-more"><a href="/2023/05/25/docker/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/es">
-                  <b>「 </b>ES<b> 」</b>
-                </a>
-            
-            十月 01, 2022
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2022/10/01/java/lombook%E4%B9%8B%E5%9D%91/" title="lombook注意点1" class="posttitle">lombook注意点1</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        5.4k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        5 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>   一个实体类存有pId,即第一个字母小写,第二个字母大写的情况.</p>
-<pre><code class="java">public class Department &#123;
-    private Long id;
-    private Long pId;
-    private String name;
-&#125;
+                <ol>
+<li>dockerhub直接下载.</li>
+<li>将操作系统中文件打包成容器镜像.</li>
+<li>把正在运行的容器加工后打包成镜像.</li>
+<li>通过dockerfile自定义生成镜像.</li>
+</ol>
+<h3 id="1-dockerhub直接下载"><a href="#1-dockerhub直接下载" class="headerlink" title="1. dockerhub直接下载"></a>1. dockerhub直接下载</h3><pre><code class="bash">docker pull cennter:latest
 </code></pre>
-<p>如果走idea自动生成的get/set方法,为区分其驼峰,get/set后面跟的第一个字母不会大写,这样输出给前端的值将是正常的驼峰格式.</p>
-<pre><code class="java">public class Department &#123;
-    private Long id;
-    ...</code></pre>
+<h3 id="2-将操作系统打包成容器镜像"><a href="#2-将操作系统打包成容器镜像" class="headerlink" title="2. 将操作系统打包成容器镜像"></a>2. 将操作系统打包成容器镜像</h3><h4 id="2-1-安装尽可能小的系统"><a href="#2-1-安装尽可能小的系统" class="headerlink" title="2.1.安装尽可能小的系统"></a>2.1.安装尽可能小的系统</h4><h4 id="2-2-将整个操作系统打成tar包"><a href="#2-2-将整个操作系统打成tar包" class="headerlink" title="2.2.将整个操作系统打成tar包"></a>2.2.将整个操作系统打成tar包</h4><pre><code class="bash"># tar --numeric-owner --exclude=/proc --exclude=/sys -cvf centos7.6.tar /
+</code></pre>
+<h4 id="2-3-将tar包加载至本地容器镜像"><a href="#2-3-将tar包加载至本地容器镜像" class="headerlink" title="2.3. 将tar包加载至本地容器镜像"></a>2.3. 将tar包加载至...</h4>
             
-            <span class="read-more"><a href="/2022/10/01/java/lombook%E4%B9%8B%E5%9D%91/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2022/11/10/docker/2.docker%20file/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -358,119 +466,19 @@ kibana                                             Kibana gives shape to any kin
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/es">
-                  <b>「 </b>ES<b> 」</b>
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
                 </a>
             
-            十月 01, 2022
+            十月 21, 2022
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2022/10/01/java/maven/" title="maven 上传私服" class="posttitle">maven 上传私服</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%20(%E5%9B%9B)/" title="zookeeper（四） 使用" class="posttitle">zookeeper（四） 使用</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        3.6k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        3 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <h3 id="1-配置maven的settings配置-其中包含私服地址-账户等信息"><a href="#1-配置maven的settings配置-其中包含私服地址-账户等信息" class="headerlink" title="1.配置maven的settings配置.其中包含私服地址,账户等信息."></a>1.配置maven的settings配置.其中包含私服地址,账户等信息.</h3><h3 id="2-在idea中关联maven配置文件settings"><a href="#2-在idea中关联maven配置文件settings" class="headerlink" title="2.在idea中关联maven配置文件settings"></a>2.在idea中关联maven配置文件settings</h3><p>关联settings</p>
-<h3 id="3-pom中配置私服地址"><a href="#3-pom中配置私服地址" class="headerlink" title="3.pom中配置私服地址"></a>3.pom中配置私服地址</h3><pre><code>  &lt;!-- 使用分发管理将本项目打成jar包，直接上传到指定服务器 --&gt; 
-  &lt;distributionManagement&gt; 
-    &lt;!--正式版本--&gt; 
-    &lt;repository&gt; 
-      &lt;!-- nexus服务器中用户名：在settings.xml中&lt;server&gt;的id...</code></pre>
-            
-            <span class="read-more"><a href="/2022/10/01/java/maven/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/java">
-                  <b>「 </b>JAVA<b> 」</b>
-                </a>
-            
-            五月 04, 2022
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2022/05/04/java/stopwatch%E4%BC%98%E9%9B%85%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/" title="stopwatch优雅打印执行时间" class="posttitle">stopwatch优雅打印执行时间</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        5.8k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        5 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>在开发过程中, 有时需要记录一段代码的执行时间,或任务执行的时间.传统用法是在执行开始于结束各记录一次时间,两次时间相减就是执行时间.但这每次计算都需要设置两个变量放于首位.且随着业务改动,调整较大. 而目前有这么一类秒表工具类stopwatch.一次定义,多次使用. 提供者有spring-framework,apache与google.</p>
-<p>在业务开始与结束分别获取一次系统时间,并在最后两值相减获取执行时间,并按照自己的格式输出.</p>
-<pre><code class="java">
-    public static void main(String[]...</code></pre>
-            
-            <span class="read-more"><a href="/2022/05/04/java/stopwatch%E4%BC%98%E9%9B%85%E6%89%93%E5%8D%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/java">
-                  <b>「 </b>JAVA<b> 」</b>
-                </a>
-            
-            五月 04, 2022
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2022/05/04/java/%E6%97%A5%E6%9C%9F%E6%B3%A8%E8%A7%A3/" title="日期注解" class="posttitle">日期注解</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        263
+                        611
                     </span>
                 
                 
@@ -482,95 +490,56 @@ kibana                                             Kibana gives shape to any kin
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <pre><code class="java">@JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
-接口输出所用到的格式化日期注解
-@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
-接口接收日期字段所用到的格式化日期注解
-</code></pre>
-
-            
-            <span class="read-more"><a href="/2022/05/04/java/%E6%97%A5%E6%9C%9F%E6%B3%A8%E8%A7%A3/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
-                </a>
-            
-            十二月 06, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/12/06/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="MySQL(六)查询优化" class="posttitle">MySQL(六)查询优化</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        7.1k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        6 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
                 <ul>
-<li><p>网络</p>
+<li><p>六十花甲纳音歌</p>
 </li>
-<li><p>CPU</p>
+<li><p>十天干所属</p>
 </li>
-<li><p>IO</p>
+<li><p>十二地支所属</p>
 </li>
-<li><p>上下文切换</p>
+<li><p>五行相生相克</p>
 </li>
-<li><p>系统调用</p>
+<li><p>六亲相生相克</p>
 </li>
-<li><p>生成统计信息</p>
-</li>
-<li><p>锁等待时间</p>
-</li>
-</ul>
+<li><p>天干地址八卦方位图 </p>
 <ul>
-<li>减少访问数据量的方式进行优化<ul>
-<li>确认应用程序是否在检索大量超过需要的数据</li>
-<li>确认mysql服务器层是否在分析大量超过需要的数据行</li>
+<li>先天八卦</li>
+<li>后天八卦</li>
 </ul>
 </li>
-<li>是否向数据库请求了不需要的数据<ul>
-<li>查询不需要的记录,优化:使用limit限制查询的列.</li>
-<li>多表关联时返回全部列,优化:取用到的字段</li>
-<li>总是取出全部列,优化:取用到的字段</li>
-<li>重复查询相同的数据,优化:在外部缓存起来.</li>
-</ul>
+<li><p>天干相合</p>
+</li>
+<li><p>地支相合</p>
+</li>
+<li><p>五行次序</p>
+</li>
+<li><p>八卦次序</p>
+</li>
+<li><p>八宫所属</p>
+</li>
+<li><p>以钱代蓍法</p>
+</li>
+<li><p>六十四卦名</p>
+</li>
+<li><p>六兽歌</p>
+</li>
+<li><p>八宫诸身</p>
+</li>
+<li><p>年上起月法</p>
+</li>
+<li><p>日上起时法</p>
+</li>
+<li><p>定寅时法</p>
 </li>
 </ul>
-<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>  如果查询缓存是打开的，那么mysql会优先检查这个查询是否...</p>
+
             
-            <span class="read-more"><a href="/2021/12/06/mysql/6%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%20(%E5%9B%9B)/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -585,73 +554,19 @@ kibana                                             Kibana gives shape to any kin
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
                 </a>
             
-            十月 24, 2021
+            十月 21, 2022
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="MySQL(八)日志文件" class="posttitle">MySQL(八)日志文件</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%80%EF%BC%89%E6%A6%82%E8%BF%B0/" title="zookeeper（一） 概述" class="posttitle">zookeeper（一） 概述</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        3.8k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        3 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>A  原子性  –undolog实现</p>
-<p>C 一致性  –通过其他三个(AID)来实现</p>
-<p>I  隔离性   –通过锁实现</p>
-<p>D 持久性   –redolog实现</p>
-<p>确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启mysql服务的时候，根据redo log进行重做，从而达到事务的持久性这一特性。</p>
-<ul>
-<li><p>当发生数据修改的时候, innodb 引擎会先将记录写到 redo log 中，并更新内存，此时更新就算是完成了，同时 innodb 引擎会在合适的时机将记录操作到磁盘中</p>
-</li>
-<li><p>redolog 是固定大小的，是循...</p></li></ul>
-            
-            <span class="read-more"><a href="/2021/10/24/mysql/8.1%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/es">
-                  <b>「 </b>ES<b> 」</b>
-                </a>
-            
-            十月 12, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/10/12/es/2%20%E5%88%86%E8%AF%8D%E5%99%A8/" title="分词器" class="posttitle">分词器</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        6k
+                        5.6k
                     </span>
                 
                 
@@ -663,23 +578,16 @@ kibana                                             Kibana gives shape to any kin
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <p> 分词之前的预处理，过滤无用字符</p>
-<p> 切词用</p>
-<h3 id="常见的分词器"><a href="#常见的分词器" class="headerlink" title="常见的分词器"></a>常见的分词器</h3><ul>
-<li>standard analyzer：默认分词器，中文支持的不理想，会逐字拆分。</li>
-<li>pattern tokenizer：以正则匹配分隔符，把文本拆分成若干词项。</li>
-<li>simple pattern tokenizer：以正则匹配词项，速度比pattern tokenizer快。</li>
-<li>whitespace analyzer：以空白符分隔</li>
-</ul>
-<h3 id="中文分词器-ik"><a href="#中文分词器-ik" class="headerlink" title="中文分词器 ik"></a>中文分词器 ik</h3><h4 id="安装与部署"><a href="#安装与部署" class="headerlink" title="安装与部署"></a>安装与部署</h4><ul>
-<li>ik下载地址: <a target="_blank" rel="noopener" href="https://github.com/medcl/elasticsearch-analysis-ik">https://github.com/medcl/elasticsearch...</a></li></ul>
+                <p>  <a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">zookeeper</a>是一种分布式应用程序的分布式协调服务，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。</p>
+<p>  zookeeper设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</p>
+<p>  zookeeper将数据保存在内存中，保证了高吞吐与低延迟，同时Zk规定节点的数据大小不能超过1M，我们实际使用时节点存储的数据...</p>
             
-            <span class="read-more"><a href="/2021/10/12/es/2%20%E5%88%86%E8%AF%8D%E5%99%A8/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%80%EF%BC%89%E6%A6%82%E8%BF%B0/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -694,43 +602,158 @@ kibana                                             Kibana gives shape to any kin
     <div class="else">
         <p class="animated fadeInDown">
             
-                <a href="/categories/es">
-                  <b>「 </b>ES<b> 」</b>
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
                 </a>
             
-            十月 12, 2021
+            十月 21, 2022
         </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/10/12/es/3%20%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2/" title="聚合查询" class="posttitle">聚合查询</a></h3>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AE%89%E8%A3%85/" title="zookeeper（二） 安装" class="posttitle">zookeeper（二） 安装</a></h3>
         
             <p class="post-count animated fadeInDown">
                 
                     <span>
                         <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        2.8k
+                        11k
                     </span>
                 
                 
                     <span>
                         <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        3 mins.
+                        10 mins.
                     </span>
                 
                 
             </p>
             
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
             
         
         <div class="md-content animated fadeIn">
             
-                <p>聚合（aggs）查询中,<strong>进行聚合的字段必须是exact value，分词字段不可进行聚合</strong>，对于text字段如果需要使用聚合，需要开启fielddata，但是通常不建议，因为fielddata是将聚合使用的数据结构由磁盘（doc_values）变为了堆内存（field_data），大数据的聚合操作很容易导致OOM，详细原理会在进阶篇中阐述。</p>
-<p><strong>三种聚合分类</strong></p>
-<ol>
-<li><p>分桶聚合（Bucket agregations）：类比SQL中的group by的作用，主要用于统计不同类型数据的数量</p>
-<p>函数：terms</p>
-<p>注意...</p></li></ol>
+                <h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><pre><code class="shell"># 默认拉取最新的版本，如要指定版本 zookeeeper:版本号
+docker pull zookeeper
+</code></pre>
+<p></p>
+<h3 id="创建并运行容器"><a href="#创建并运行容器" class="headerlink" title="创建并运行容器"></a>创建并运行容器</h3><pre><code class="shell">docker run --name zookeeper -e JAMFLAGS=&quot;-Xmx256m&quot; -v /mysoft/zookeeper/data/:/data/ -d -p 2181:2181 --privileged zookeeper
+</code></pre>
+<p></p>
+<h3 id="使用zk客户端创建节点"><a href="#使用zk客户端创建节点" class="headerlink" title="使用zk客户端创建节点"></a>使用zk客户端创建节点</h3><pre><code class="shell"># 进入容器
+docker exec -it acf2ec660c0e...</code></pre>
             
-            <span class="read-more"><a href="/2021/10/12/es/3%20%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AE%89%E8%A3%85/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/中间件">
+                  <b>「 </b>中间件<b> 」</b>
+                </a>
+            
+            十月 21, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE/" title="zookeeper（三） 协议" class="posttitle">zookeeper（三） 协议</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        9.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        8 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ol>
+<li>先启动node01<ul>
+<li>会建立一个2888的服务端口与3888的选举端口。</li>
+<li>此时只有一个服务启动，所以没有其他关联。</li>
+</ul>
+</li>
+<li>再启动node02<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>同时查找集群配置，发现能联通node1，并建立socket连接，将随机分配一个端口与node1的3888选举端口映射。</li>
+</ul>
+</li>
+<li>然后是node03<ul>
+<li>同样建立一个2888的服务端口与3888的选举端口。</li>
+<li>查找集群配置，发现能联通node1与node2，并建立两条socket连接，随机分配端口与node1与node2...</li></ul></li></ol>
+            
+            <span class="read-more"><a href="/2022/10/21/zookeeper/zookeeper%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/docker">
+                  <b>「 </b>DOCKER<b> 」</b>
+                </a>
+            
+            十月 10, 2022
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2022/10/10/docker/3.docker%20%E9%95%9C%E5%83%8F/" title="三 docker镜像" class="posttitle">三 docker镜像</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        14k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        13 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ul>
+<li>Docker 镜像是只读的容器模板，是Docker容器基础</li>
+<li>为Docker容器提供了静态文件系统运行环境（rootfs）</li>
+<li>区分: 容器是镜像的运行状态,镜像是容器的静止状态.</li>
+</ul>
+<h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p> 是实现联合挂载技术的文件系统.可以实现在一个挂载点同时挂在多个文件系统,将挂载点的原目录与被挂载内容进行整合,使得最终可见的文件系统包含整合后的各层文件与目录.</p>
+<h3 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h3><p></p>
+<p>容器文件系统中有多种存储驱动实现方式:aufs,devicemapper,overlay,overlay2等.docker目前默认使用的是overlay2...</p>
+            
+            <span class="read-more"><a href="/2022/10/10/docker/3.docker%20%E9%95%9C%E5%83%8F/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
 </div>
@@ -751,7 +774,7 @@ kibana                                             Kibana gives shape to any kin
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2023
+        &copy; 2024
         <span class="gradient-text">
             空痕影
         </span>.

@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>六 docker 容器访问 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="容器访问宿主机访问容器前提
+dockerfile中将端口暴露.
+EXPORT 80
+
+启动时将暴露端口映射.
+-p 80:80, -P
+
+
+分类宿主机随机端口映射所有端口docker run -it,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">六 docker 容器访问</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/docker"><b>「
+                    </b>DOCKER<b> 」</b></a>
+                
+                十月 10, 2021
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2021/10/10/docker/6.docker%20%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE/" title="六 docker 容器访问" class="">六 docker 容器访问</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    14k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    12 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="容器访问"><a href="#容器访问" class="headerlink" title="容器访问"></a>容器访问</h1><h2 id="宿主机访问容器"><a href="#宿主机访问容器" class="headerlink" title="宿主机访问容器"></a>宿主机访问容器</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol>
+<li><p>dockerfile中将端口暴露.</p>
+<p>EXPORT 80</p>
+</li>
+<li><p>启动时将暴露端口映射.</p>
+<p>-p 80:80, -P</p>
+</li>
+</ol>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="宿主机随机端口映射所有端口"><a href="#宿主机随机端口映射所有端口" class="headerlink" title="宿主机随机端口映射所有端口"></a>宿主机随机端口映射所有端口</h4><pre><code class="bash">docker run -it -d -P redis
+</code></pre>
+<p><img src="/images/docker/docker.assets/docker_redis_port.png" alt="redis_port"></p>
+<h4 id="宿主机随机端口映射容器指定端口"><a href="#宿主机随机端口映射容器指定端口" class="headerlink" title="宿主机随机端口映射容器指定端口"></a>宿主机随机端口映射容器指定端口</h4><pre><code class="bash">docker run -it -d -P 6379 redis
+</code></pre>
+<h4 id="宿主机指定端口映射容器指定端口"><a href="#宿主机指定端口映射容器指定端口" class="headerlink" title="宿主机指定端口映射容器指定端口"></a>宿主机指定端口映射容器指定端口</h4><pre><code class="bash">docker run -it -d -p 6379:6379 redis    
+</code></pre>
+<h4 id="宿主机指定ip随机端口映射容器指定端口"><a href="#宿主机指定ip随机端口映射容器指定端口" class="headerlink" title="宿主机指定ip随机端口映射容器指定端口"></a>宿主机指定ip随机端口映射容器指定端口</h4><pre><code class="bash">#语法 -p 宿主机ip:宿主机端口:容器端口
+docker run -it -d -p 10.10.0.2::6379 redis
+</code></pre>
+<h4 id="宿主机指定ip-端口映射容器指定端口"><a href="#宿主机指定ip-端口映射容器指定端口" class="headerlink" title="宿主机指定ip,端口映射容器指定端口"></a>宿主机指定ip,端口映射容器指定端口</h4><pre><code class="bash">docker run -it -d -p 10.10.0.2:26379:6379 redis
+</code></pre>
+<h3 id="底层iptables支撑"><a href="#底层iptables支撑" class="headerlink" title="底层iptables支撑"></a>底层iptables支撑</h3><h4 id="网络映射"><a href="#网络映射" class="headerlink" title="网络映射"></a>网络映射</h4><p>使用<code>docker run -p </code>启动容器自动添加一条NAT规则.模型如下:</p>
+<p><img src="/images/docker/docker.assets/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E5%8E%9F%E7%90%861.png" alt="桥接模式原理1"></p>
+<p>启动容器后在宿主机上查看网络情况 ip addr可以看到多了条veth,且与各个docker容器间存在映射关系.如图所示:</p>
+<p><img src="/images/docker/docker.assets/docker%E6%A1%A5%E6%8E%A5%E7%A4%BA%E4%BE%8B1.png" alt="桥接示例"></p>
+<p>查看宿主机网络情况ip addr</p>
+<pre><code class="bash">root@matebook:~# ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1280 qdisc mq state UP group default qlen 1000
+    link/ether 00:15:5d:3d:bd:c4 brd ff:ff:ff:ff:ff:ff
+    inet 172.31.110.192/20 brd 172.31.111.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::215:5dff:fe3d:bdc4/64 scope link
+       valid_lft forever preferred_lft forever
+3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:d5:d8:e3:f9 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:d5ff:fed8:e3f9/64 scope link
+       valid_lft forever preferred_lft forever
+5: veth2e262e0@if4: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP group default
+    link/ether be:6b:7c:48:66:8e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::bc6b:7cff:fe48:668e/64 scope link
+       valid_lft forever preferred_lft forever
+7: veth47940e8@if6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP group default
+    link/ether f6:5e:ba:1a:69:5c brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::f45e:baff:fe1a:695c/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre>
+<p>可以看到docker存在两个网络映射.veth2e262e0@if4,veth47940e8@if6. 刚好目前就开启了两个docker 容器.</p>
+<p>查看各个容器网络情况 docker exec &lt;容器id&gt; ip addr.</p>
+<pre><code class="bash">root@matebook:~# docker exec 32480dd13be4 ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+6: eth0@if7: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+root@matebook:~# docker exec c782648e59b4 ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+4: eth0@if5: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+</code></pre>
+<p>可以看到第一个容器中存在eth0@if7的网络记录.第二个容器中存在eth0@if5网络记录.</p>
+<p>记录映射格式:<code>[序号]: [目标网卡]@[if序号]</code></p>
+<p>可以分析到:</p>
+<ol>
+<li><code>5: veth2e262e0@if4:</code> 在宿主机<code>序号5</code>的网卡记录映射到目标为<code>veth2e262e0的虚拟网卡</code>中的<code>序号4</code>的记录上.</li>
+<li><code>7: veth47940e8@if6:</code>在宿主机<code>序号7</code>的网卡记录映射到目标为<code>veth47940e8的虚拟网卡</code>中的<code>序号6</code>的记录上.</li>
+<li><code>6: eth0@if7:</code>在<code>容器32480dd13be4</code>中<code>序号6</code>的网卡记录映射到目标为<code>eth0的网卡</code>中的<code>序号7</code>的记录上.</li>
+<li><code>4: eth0@if5:</code>在<code>容器c782648e59b4</code>中<code>序号4</code>的网卡记录映射到目标为<code>eth0的网卡</code>中的<code>序号5</code>的记录上.</li>
+</ol>
+<h4 id="随机端口映射原理"><a href="#随机端口映射原理" class="headerlink" title="随机端口映射原理"></a>随机端口映射原理</h4><p>通过命令查看随机端口配置.</p>
+<pre><code class="bash">root@matebook:~# sysctl -a|grep port|grep range
+net.ipv4.ip_local_port_range = 32768    60999
+</code></pre>
+<p>记录显示,linux系统将随机端口范围指定为32768到60999.</p>
+<p>docker创建随机端口时,从起始端口开始找.找到没有被占用的端口并使用.</p>
+<h2 id="容器间访问"><a href="#容器间访问" class="headerlink" title="容器间访问"></a>容器间访问</h2><h3 id="创建网桥"><a href="#创建网桥" class="headerlink" title="创建网桥"></a>创建网桥</h3><pre><code class="bash"># 命令格式 docker netwrok create -d [bridge|host|none] [netwrokname]
+root@matebook:~# docker network create -d bridge kafkaSingle
+542cdc3f8f04573296028ab12c98fe731cd701d9e9194530c5b1a5b2c636eef0
+</code></pre>
+<h3 id="容器使用网桥"><a href="#容器使用网桥" class="headerlink" title="容器使用网桥"></a>容器使用网桥</h3><p>方式一: 创建的时候指定网络</p>
+<p>通过 <code>--netwrok networkname</code> 来指定使用网桥情况. </p>
+<pre><code class="bash">docker run -d --name zookeeper -p 2181:2181 --network  kafkaSingle  zookeeper
+</code></pre>
+<p>方式二: 中途添加网络</p>
+<pre><code class="bash">docker network connect [OPTIONS] NETWORK CONTAINER
+</code></pre>
+<p>OPTIONS</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–alias string</td>
+<td>为容器添加网络范围的别名,其他容器可以通过别名来访问当前容器 eg:ping zookeeper</td>
+</tr>
+<tr>
+<td>–ip string</td>
+<td>指定ip地址</td>
+</tr>
+<tr>
+<td>–ip6 string</td>
+<td>指定IPv6地址</td>
+</tr>
+<tr>
+<td>–link list</td>
+<td>添加链接到另一个容器</td>
+</tr>
+<tr>
+<td>–link-local-ip strings</td>
+<td>添加容器的链接本地地址</td>
+</tr>
+</tbody></table>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><h4 id="1-将容器zookeeper连接-断开到网络kafkaSingle中"><a href="#1-将容器zookeeper连接-断开到网络kafkaSingle中" class="headerlink" title="1. 将容器zookeeper连接/断开到网络kafkaSingle中"></a>1. 将容器zookeeper连接/断开到网络kafkaSingle中</h4><pre><code class="bash">docker netwrok [connect|disconnect] kafkaSingle zookeeper
+</code></pre>
+<h4 id="2-查看kafkaSingle网络情况"><a href="#2-查看kafkaSingle网络情况" class="headerlink" title="2. 查看kafkaSingle网络情况"></a>2. 查看kafkaSingle网络情况</h4><p>   可以在”Containers”中查看该网络中存在的容器列表与分配的ip地址.</p>
+<pre><code class="bash">root@matebook:~# docker network inspect kafkaSingle
+[
+ &#123;
+     &quot;Name&quot;: &quot;kafkaSingle&quot;,
+     &quot;Id&quot;: &quot;542cdc3f8f04573296028ab12c98fe731cd701d9e9194530c5b1a5b2c636eef0&quot;,
+     &quot;Created&quot;: &quot;2023-08-26T11:11:57.225413748+08:00&quot;,
+     &quot;Scope&quot;: &quot;local&quot;,
+     &quot;Driver&quot;: &quot;bridge&quot;,
+     &quot;EnableIPv6&quot;: false,
+     &quot;IPAM&quot;: &#123;
+         &quot;Driver&quot;: &quot;default&quot;,
+         &quot;Options&quot;: &#123;&#125;,
+         &quot;Config&quot;: [
+             &#123;
+                 &quot;Subnet&quot;: &quot;172.18.0.0/16&quot;,
+                 &quot;Gateway&quot;: &quot;172.18.0.1&quot;
+             &#125;
+         ]
+     &#125;,
+     &quot;Internal&quot;: false,
+     &quot;Attachable&quot;: false,
+     &quot;Ingress&quot;: false,
+     &quot;ConfigFrom&quot;: &#123;
+         &quot;Network&quot;: &quot;&quot;
+     &#125;,
+     &quot;ConfigOnly&quot;: false,
+     &quot;Containers&quot;: &#123;
+         &quot;61412251c20cbe1fda7fe1530a503dd4eead08071e3ae21be29ff076f65b7b0f&quot;: &#123;
+             &quot;Name&quot;: &quot;zookeeper&quot;,
+             &quot;EndpointID&quot;: &quot;bbe942a5cbc9e21e9f38c5f5c02d64998348efe40d3d9afb096b5ffcf47a926e&quot;,
+             &quot;MacAddress&quot;: &quot;02:42:ac:12:00:02&quot;,
+             &quot;IPv4Address&quot;: &quot;172.18.0.2/16&quot;,
+             &quot;IPv6Address&quot;: &quot;&quot;
+         &#125;
+     &#125;,
+     &quot;Options&quot;: &#123;&#125;,
+     &quot;Labels&quot;: &#123;&#125;
+ &#125;
+]
+</code></pre>
+<h4 id="3-使用容器名来连接"><a href="#3-使用容器名来连接" class="headerlink" title="3. 使用容器名来连接"></a>3. 使用容器名来连接</h4><p>   <strong>用户自定义的网卡可以在容器之间提供自动的 DNS 解析</strong>，缺省的桥接网络上的容器只能通过 IP 地址互相访问，除非使用 –link 参数。在用户自定义的网卡上，容器直接可以通过名称或者别名相互解析。</p>
+<p>   在启动kafka时配置zk地址使用容器名称,会自动寻找指定网络下的containers中name为zookeeper或者别名为zookeeper的容器.</p>
+<pre><code class="bash">docker run -d --name kafkaSingle  -p 9092:9092  -e KAFKA_BROKER_ID=0  -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092  -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092  --network  kafkaSingle  a692873757c0
+</code></pre>
+<h4 id="4-使用别名来连接"><a href="#4-使用别名来连接" class="headerlink" title="4. 使用别名来连接"></a>4. 使用别名来连接</h4><p>   创建一个redis容器,并将容器添加进kafakSingle网络中,并配置别名为redis01.</p>
+<pre><code class="bash">docker run -d -P --name r1 redis
+docker netwrok connect --alias redis01 kafkaSingle r1
+</code></pre>
+<p>   通过<code>docker inspect r1</code> 查看其中的网络信息.</p>
+<p>   可以发现<code>netwroks</code>中多了一块<code>kafakSingle</code>网络.并且Aliases参数中多了刚配置的别名<code>redis01</code>.</p>
+<pre><code class="json">&quot;kafkaSingle&quot;: &#123;
+ &quot;IPAMConfig&quot;: &#123;&#125;,
+ &quot;Links&quot;: null,
+ &quot;Aliases&quot;: [
+     &quot;redis01&quot;,
+     &quot;55319e8c0fcc&quot;
+ ],
+ &quot;NetworkID&quot;: &quot;542cdc3f8f04573296028ab12c98fe731cd701d9e9194530c5b1a5b2c636eef0&quot;,
+ &quot;EndpointID&quot;: &quot;015d6804b9a3c358ed24b452614c97796ca770739ba1e54817a1599e2b59c8d9&quot;,
+ &quot;Gateway&quot;: &quot;172.18.0.1&quot;,
+ &quot;IPAddress&quot;: &quot;172.18.0.4&quot;,
+ &quot;IPPrefixLen&quot;: 16,
+ &quot;IPv6Gateway&quot;: &quot;&quot;,
+ &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+ &quot;GlobalIPv6PrefixLen&quot;: 0,
+ &quot;MacAddress&quot;: &quot;02:42:ac:12:00:04&quot;,
+ &quot;DriverOpts&quot;: &#123;&#125;
+&#125;
+</code></pre>
+<pre><code>root@844fe2437b67:/# ping r1
+PING r1 (172.18.0.4): 56 data bytes
+
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.4): 56 data bytes
+
+root@844fe2437b67:/# ping 55319e8c0fcc
+PING 55319e8c0fcc (172.18.0.4): 56 data bytes
+</code></pre>
+<p><strong>使用别名来实现ha效果</strong></p>
+<p>再创建一个redis 取名为r2.并加入kafakSingle网络中,取别名也为redis01.</p>
+<pre><code class="bash">root@matebook:~# docker run -P -d --name r2 redis
+dacf41e9bd3ae45364476ff8bd42fd154c626c16836039a6dcebd3d6538adc96
+root@matebook:~# docker network connect --alias redis01 kafkaSingle r2
+</code></pre>
+<p> 验证: 通过kafkaSingle网络中的其他容器来ping <code>redis01</code>这个别称.可以发现容器会自动轮询访问两台机器.</p>
+<pre><code class="bash">root@matebook:~# docker exec -it n1 bash
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.6): 56 data bytes
+64 bytes from 172.18.0.6: icmp_seq=0 ttl=64 time=0.074 ms
+64 bytes from 172.18.0.6: icmp_seq=1 ttl=64 time=0.065 ms
+^C--- redis01 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.065/0.070/0.074/0.000 ms
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.4): 56 data bytes
+64 bytes from 172.18.0.4: icmp_seq=0 ttl=64 time=0.054 ms
+^C--- redis01 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.054/0.054/0.054/0.000 ms
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.4): 56 data bytes
+64 bytes from 172.18.0.4: icmp_seq=0 ttl=64 time=0.060 ms
+^C--- redis01 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.060/0.060/0.060/0.000 ms
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.4): 56 data bytes
+64 bytes from 172.18.0.4: icmp_seq=0 ttl=64 time=0.058 ms
+^[[A^C--- redis01 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.058/0.058/0.058/0.000 ms
+
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.6): 56 data bytes
+64 bytes from 172.18.0.6: icmp_seq=0 ttl=64 time=0.069 ms
+^C--- redis01 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.069/0.069/0.069/0.000 ms
+
+root@844fe2437b67:/# ping redis01
+PING redis01 (172.18.0.4): 56 data bytes
+64 bytes from 172.18.0.4: icmp_seq=0 ttl=64 time=0.052 ms
+64 bytes from 172.18.0.4: icmp_seq=1 ttl=64 time=0.066 ms
+</code></pre>
+<h4 id="5-使用link来连接"><a href="#5-使用link来连接" class="headerlink" title="5. 使用link来连接"></a>5. 使用link来连接</h4>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE"><span class="toc-number">1.</span> <span class="toc-text">容器访问</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%BF%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE%E5%AE%B9%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">宿主机访问容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82iptables%E6%94%AF%E6%92%91"><span class="toc-number">1.1.3.</span> <span class="toc-text">底层iptables支撑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%97%B4%E8%AE%BF%E9%97%AE"><span class="toc-number">1.2.</span> <span class="toc-text">容器间访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E6%A1%A5"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建网桥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E7%BD%91%E6%A1%A5"><span class="toc-number">1.2.2.</span> <span class="toc-text">容器使用网桥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">例子</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

@@ -1,0 +1,1175 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>java客户端 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="java客户端Java Transport Clientv (version:7.x)生命周期（生卒年：ES 0.9 - ES 7.x）Java API在7.x之前使用的客户端名称叫Transpor,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">java客户端</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/es"><b>「
+                    </b>ES<b> 」</b></a>
+                
+                八月 08, 2024
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2024/08/08/es/8.java%E5%AE%A2%E6%88%B7%E7%AB%AF/" title="java客户端" class="">java客户端</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    37k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    34 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="java客户端"><a href="#java客户端" class="headerlink" title="java客户端"></a>java客户端</h1><h2 id="Java-Transport-Clientv-version-7-x"><a href="#Java-Transport-Clientv-version-7-x" class="headerlink" title="Java Transport Clientv (version:7.x)"></a>Java Transport Clientv (version:7.x)</h2><h3 id="生命周期（生卒年：ES-0-9-ES-7-x）"><a href="#生命周期（生卒年：ES-0-9-ES-7-x）" class="headerlink" title="生命周期（生卒年：ES 0.9 - ES 7.x）"></a>生命周期（生卒年：ES 0.9 - ES 7.x）</h3><p><code>Java API</code>在7.x之前使用的客户端名称叫<code>TransportClient</code>，从7.0.0开始，官方已经不建议使用<code>TransportClient</code>作为ES的Java客户端了，并且从8.0开始被彻底删除。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><code>TransportClient</code> 使用<code>transport</code>模块（<strong>9300端口</strong>）远程连接到 Elasticsearch 集群，客户端并不加入集群，而是通过获取单个或者多个transport地址来以轮询的方式与他们通信。</li>
+<li><code>TransportClient</code>使用<code>transport</code>协议与Elasticsearch节点通信，如果客户端的版本和与其通信的ES实例的版本不同，就会出现兼容性问题。而<code>low-level REST</code>使用的是HTTP协议，可以与任意版本ES集群通信。<code>high-level REST</code>是基于<code>low-level REST</code>的。</li>
+</ul>
+<h3 id="maven依赖"><a href="#maven依赖" class="headerlink" title="maven依赖"></a>maven依赖</h3><pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+    &lt;artifactId&gt;transport&lt;/artifactId&gt;
+    &lt;version&gt;7.17.23&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="创建连接"><a href="#创建连接" class="headerlink" title="创建连接"></a>创建连接</h4><pre><code class="java">// on startup
+TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
+        .addTransportAddress(new TransportAddress(InetAddress.getByName(&quot;host1&quot;), 9300))
+        .addTransportAddress(new TransportAddress(InetAddress.getByName(&quot;host2&quot;), 9300));
+
+// use client
+
+// on shutdown
+
+client.close();
+</code></pre>
+<h5 id="嗅探器"><a href="#嗅探器" class="headerlink" title="嗅探器"></a>嗅探器</h5><p> 嗅探器,可以使客户端连接得到其内部节点列表中的节点,该列表通过addTransportAddress方法获取的,然后呼叫这些节点上的状态api来发现可用的数据节点.</p>
+<pre><code> **注意**: 若连接的节点为主节点,且不为数据节点.则嗅探器在完成嗅探后会将主节点剔除,更改到数据节点发送数据.为了降低主节点的压力.
+</code></pre>
+<pre><code class="java">// setting
+Settings settings = Settings.builder()
+        .put(&quot;client.transport.sniff&quot;, false)
+        .put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;)
+        .put(&quot;client.transport.ping_timeout&quot;,5)
+        .put(&quot;client.transport.nodes_sampler_interval&quot;,5)
+    .build();
+TransportClient client = new PreBuiltTransportClient(settings)
+        .addTransportAddress(new TransportAddress(InetAddress.getByName(&quot;host1&quot;), 9300))
+        .addTransportAddress(new TransportAddress(InetAddress.getByName(&quot;host2&quot;), 9300));
+</code></pre>
+<p>​    <strong>参数</strong></p>
+<ul>
+<li>client.transport.ignore_cluster_name : 设为true 可以忽略集群名称验证.默认false</li>
+<li>client.transport.ping_timeout: 嗅探超时时间. 默认为5s.</li>
+<li>client.transport.nodes_sampler_interval: 心跳检测间隔时间. 默认5s</li>
+</ul>
+<h4 id="简单的增删改查"><a href="#简单的增删改查" class="headerlink" title="简单的增删改查"></a>简单的增删改查</h4><h5 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h5><pre><code class="java">//region Request对象
+CreateIndexRequest request = client.admin().indices().prepareCreate(&quot;product2&quot;).request();
+//endregion
+
+//region 组装数据
+// 方式一: 直接以json字符串的方式传入
+request.mapping(
+        &quot;&#123;\n&quot; +
+                &quot;  \&quot;properties\&quot;: &#123;\n&quot; +
+                &quot;    \&quot;message\&quot;: &#123;\n&quot; +
+                &quot;      \&quot;type\&quot;: \&quot;text\&quot;\n&quot; +
+                &quot;    &#125;\n&quot; +
+                &quot;  &#125;\n&quot; +
+                &quot;&#125;&quot;,
+        XContentType.JSON);
+// 方式二: 以map格式传入
+        Map&lt;String, Object&gt; message = new HashMap&lt;&gt;();
+        message.put(&quot;type&quot;, &quot;text&quot;);
+        Map&lt;String, Object&gt; properties = new HashMap&lt;&gt;();
+        properties.put(&quot;message&quot;, message);
+        Map&lt;String, Object&gt; mapping = new HashMap&lt;&gt;();
+        mapping.put(&quot;properties&quot;, properties);
+        request.mapping(mapping,XContentType.JSON);
+// 方式三 以内置的构造器构造后插入
+        XContentBuilder builder = XContentFactory.jsonBuilder();
+        builder.startObject();
+        &#123;
+            builder.startObject(&quot;properties&quot;);
+            &#123;
+                builder.startObject(&quot;message&quot;);
+                &#123;
+                    builder.field(&quot;type&quot;, &quot;text&quot;);
+                &#125;
+                builder.endObject();
+            &#125;
+            builder.endObject();
+        &#125;
+        builder.endObject();
+        request.source(builder);
+
+//region setting
+request.settings(Settings.builder()
+        .put(&quot;index.number_of_shards&quot;, 3)
+        .put(&quot;index.number_of_replicas&quot;, 0)
+);
+CreateIndexResponse createIndexResponse = client.admin().indices().create(request).get();
+// 是否所有节点都已确认请求
+createIndexResponse.isAcknowledged();
+// 在超时之前是否为索引中的每个碎片启动所需数量的碎片副本
+createIndexResponse.isShardsAcknowledged();
+</code></pre>
+<h5 id="新增文档"><a href="#新增文档" class="headerlink" title="新增文档"></a>新增文档</h5><pre><code class="json">        // request对象.
+        IndexRequest request = client.prepareIndex(&quot;product&quot;, &quot;_doc&quot;).request();
+        // 组装数据
+        // 方式一: 以内置的构造器构造后插入
+        XContentBuilder builder = XContentFactory.jsonBuilder()
+                .startObject()
+                .field(&quot;name&quot;, &quot;苹果&quot;)
+                .field(&quot;desc&quot;, &quot;四川苹果&quot;)
+                .field(&quot;price&quot;, 34.2)
+                .field(&quot;date&quot;, LocalDateTime.now().format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;)))
+                .field(&quot;tags&quot;, &quot;水果,四川,甜&quot;.replace(&quot;\&quot;&quot;, &quot;&quot;).split(&quot;,&quot;))
+                .endObject();
+        request.source(builder);
+
+        // 方式二: 以json字符串形式传入(以map的形式传入.本意还是以json形式传入)
+                String jsonStr = &quot;&#123;\n&quot; +
+                &quot;    \&quot;name\&quot;: \&quot;苹果\&quot;,\n&quot; +
+                &quot;    \&quot;desc\&quot;: \&quot;四川\&quot;,\n&quot; +
+                &quot;    \&quot;price\&quot;: 34.3,\n&quot; +
+                &quot;    \&quot;date\&quot;: \&quot;2024-08-01\&quot;,\n&quot; +
+                &quot;    \&quot;tags\&quot;: [\n&quot; +
+                &quot;        \&quot;水果\&quot;,\n&quot; +
+                &quot;        \&quot;四川\&quot;,\n&quot; +
+                &quot;        \&quot;甜\&quot;\n&quot; +
+                &quot;    ]\n&quot; +
+                &quot;&#125;&quot;;
+         request.source(jsonStr,XContentType.JSON);
+        // 执行index
+        IndexResponse indexResponse = client.index(request).get();
+
+
+// 其中有更简便的方法.把创建request,组装数据与执行连接起来.后续例子都用简便方法.
+        IndexResponse response = client.prepareIndex(&quot;product&quot;, &quot;_doc&quot;)
+                .setSource(jsonStr,XContentType.JSON)
+                .get();
+</code></pre>
+<h5 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h5><pre><code class="java">UpdateResponse response = client.prepareUpdate(&quot;product&quot;, &quot;_doc&quot;, &quot;2&quot;)
+                .setDoc(XContentFactory.jsonBuilder()
+                        .startObject()
+                        .field(&quot;name&quot;, &quot;update name&quot;)
+                        .endObject())
+                .get();
+</code></pre>
+<h5 id="删除文档"><a href="#删除文档" class="headerlink" title="删除文档"></a>删除文档</h5><pre><code class="java"> DeleteResponse response = client.prepareDelete(&quot;product&quot;, &quot;_doc&quot;, &quot;2&quot;).get();
+</code></pre>
+<h5 id="查询文档"><a href="#查询文档" class="headerlink" title="查询文档"></a>查询文档</h5><h6 id="根据id获取指定文档"><a href="#根据id获取指定文档" class="headerlink" title="根据id获取指定文档"></a>根据id获取指定文档</h6><pre><code class="java">GetResponse response = client.prepareGet(&quot;product&quot;, &quot;_doc&quot;, &quot;1&quot;).get();
+        String index = response.getIndex();//获取索引名称
+        String type = response.getType();//获取索引类型
+        String id = response.getId();//获取索引id
+</code></pre>
+<h6 id="获取索引下的所有文档"><a href="#获取索引下的所有文档" class="headerlink" title="获取索引下的所有文档"></a>获取索引下的所有文档</h6><pre><code class="java">earchResponse response = client.prepareSearch(&quot;product&quot;)
+                .get();
+        SearchHits searchHits = response.getHits();
+        SearchHit[] hits = searchHits.getHits();
+        for (SearchHit hit : hits) &#123;
+            String res = hit.getSourceAsString();
+            System.out.println(&quot;res&quot; + res);
+        &#125;
+</code></pre>
+<h6 id="条件查询获取文档"><a href="#条件查询获取文档" class="headerlink" title="条件查询获取文档"></a>条件查询获取文档</h6><pre><code class="java">        SearchResponse response = client.prepareSearch(&quot;product&quot;)
+                .setQuery(QueryBuilders.termQuery(&quot;name&quot;, &quot;xiaomi&quot;)) //Query
+                .setPostFilter(QueryBuilders.rangeQuery(&quot;price&quot;) // filter
+                               .from(0).to(4000))
+                .setFrom(1).setSize(2)
+                .get();
+        SearchHits searchHits = response.getHits();
+        SearchHit[] hits = searchHits.getHits();
+        for (SearchHit hit : hits) &#123;
+            String res = hit.getSourceAsString();
+            System.out.println(&quot;res&quot; + res);
+        &#125;
+</code></pre>
+<h6 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h6><pre><code class="java">// 搜索执行 
+SearchResponse response = client.prepareSearch(&quot;product&quot;)
+                .setSize(0)
+                .setQuery(QueryBuilders.matchAllQuery())
+                .addAggregation(AggregationBuilders.dateHistogram(&quot;group_by_month&quot;)
+                        .field(&quot;date&quot;)
+                        .calendarInterval(DateHistogramInterval.MONTH)
+                        .minDocCount(1)
+                        .subAggregation(AggregationBuilders.terms(&quot;by_tag&quot;)
+                                .field(&quot;tags.keyword&quot;)
+                                .subAggregation(AggregationBuilders.avg(&quot;avg_price&quot;)
+                                        .field(&quot;price&quot;))
+                        )
+                ).execute().actionGet();
+// 结构解析
+SearchHit[] hits = response.getHits().getHits();
+        Map&lt;String, Aggregation&gt; map = response.getAggregations().asMap();
+        Aggregation group_by_month = map.get(&quot;group_by_month&quot;);
+        Histogram dates = (Histogram) group_by_month;
+        Iterator&lt;Histogram.Bucket&gt; buckets = (Iterator&lt;Histogram.Bucket&gt;) dates.getBuckets().iterator();
+        while (buckets.hasNext()) &#123;
+            Histogram.Bucket dateBucket = buckets.next();
+            System.out.println(&quot;\n月份：&quot; + dateBucket.getKeyAsString() + &quot;\n计数：&quot; + dateBucket.getDocCount());
+            Aggregation by_tag = dateBucket.getAggregations().asMap().get(&quot;by_tag&quot;);
+            StringTerms terms = (StringTerms) by_tag;
+            Iterator&lt;StringTerms.Bucket&gt; tags = terms.getBuckets().iterator();
+            while (tags.hasNext()) &#123;
+                StringTerms.Bucket tag = tags.next();
+                System.out.println(&quot;\t变迁名称：&quot; + tag.getKey() + &quot;\n\t数量：&quot; + tag.getDocCount());
+                Aggregation avg_price = tag.getAggregations().get(&quot;avg_price&quot;);
+                Avg avg = (Avg) avg_price;
+                System.out.println(&quot;\t平均价格：&quot; + avg.getValue());
+            &#125;
+        &#125;
+</code></pre>
+<h2 id="Java-REST-Client"><a href="#Java-REST-Client" class="headerlink" title="Java REST Client"></a>Java REST Client</h2><p>​    <code>RestClient</code> 是线程安全的，<code>RestClient</code>使用 Elasticsearch 的 HTTP 服务，默认为<code>9200</code>端口，这一点和<code>transport client</code>不同.</p>
+<h3 id="生命周期-生卒年-ES-5-0-0-alpha4至ES7-17"><a href="#生命周期-生卒年-ES-5-0-0-alpha4至ES7-17" class="headerlink" title="生命周期 (生卒年: ES 5.0.0-alpha4至ES7.17)"></a>生命周期 (生卒年: ES 5.0.0-alpha4至ES7.17)</h3><p>第一个 5.0.0 版 Java REST 客户端.但 5.0.0只是发布第一个<code>Java Low-level REST client</code>时的ES版本（2016年），不代表其向前只兼容到5.0，<code>Java Low-level REST client</code>基于Apache HTTP 客户端，它允许使用 HTTP 与任何版本的 Elasticsearch 集群进行通信。</p>
+<h3 id="Java-Low-level-REST-client"><a href="#Java-Low-level-REST-client" class="headerlink" title="Java Low-level REST client"></a>Java Low-level REST client</h3><p>之所以称为低级客户端，是因为它几乎没有帮助 Java 用户构建请求或解析响应。它处理请求的路径和查询字符串构造，但它将 JSON 请求和响应主体视为必须由用户处理的不透明字节数组。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>与任何 Elasticsearch 版本兼容</li>
+<li>最小化依赖</li>
+<li>跨所有可用节点的负载平衡</li>
+<li>在节点故障和特定响应代码的情况下进行故障转移</li>
+<li>连接失败惩罚（是否重试失败的节点取决于它连续失败的次数；失败的尝试越多，客户端在再次尝试同一节点之前等待的时间就越长）</li>
+<li>持久连接</li>
+<li>请求和响应的跟踪记录</li>
+<li>可选的集群节点自动发现</li>
+</ul>
+<h4 id="maven依赖-1"><a href="#maven依赖-1" class="headerlink" title="maven依赖"></a>maven依赖</h4><pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+    &lt;artifactId&gt;elasticsearch-rest-client&lt;/artifactId&gt;
+    &lt;version&gt;7.17.9&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h4><h5 id="创建连接-1"><a href="#创建连接-1" class="headerlink" title="创建连接"></a>创建连接</h5><pre><code class="java">RestClient restClient = RestClient.builder(
+    new HttpHost(&quot;localhost1&quot;, 9200, &quot;http&quot;),
+    new HttpHost(&quot;localhost2&quot;, 9200, &quot;http&quot;)).build();
+    
+    // .......
+    
+    
+restClient.close();
+</code></pre>
+<h6 id="嗅探器-1"><a href="#嗅探器-1" class="headerlink" title="嗅探器"></a>嗅探器</h6><p>​    允许从正在运行的 Elasticsearch 集群中自动发现节点并将它们设置为现有 RestClient 实例的最小库.</p>
+<p><strong>依赖</strong></p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+            &lt;artifactId&gt;elasticsearch-rest-client-sniffer&lt;/artifactId&gt;
+            &lt;version&gt;7.17.9&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<p><strong>创建</strong></p>
+<pre><code class="java">     // 设置嗅探失败监听器
+    SniffOnFailureListener sniffOnFailureListener = new SniffOnFailureListener();
+    // 创建客户端,并设置失败监听器为嗅探失败监听器
+    RestClient restClient = RestClient.builder(
+                    new HttpHost(&quot;localhost&quot;, 9200, &quot;http&quot;)).setFailureListener(sniffOnFailureListener)
+            .build();
+    // 设置嗅探器配置
+    Sniffer sniffer = Sniffer.builder(restClient)
+            .setSniffIntervalMillis(5*60*1000)
+            .setSniffAfterFailureDelayMillis(60*1000)
+            .build();
+    // 将嗅探器绑定失败监听器
+    sniffOnFailureListener.setSniffer(sniffer); //将 Sniffer 实例设置为失败侦听器
+
+    sniffer.close();
+
+// Create the Java API Client with the same low level client
+ElasticsearchTransport transport = new RestClientTransport(
+    restClient,
+    new JacksonJsonpMapper()
+);
+
+ElasticsearchClient esClient = new ElasticsearchClient(restClient);
+    restClient.close();
+</code></pre>
+<ul>
+<li>sniffIntervalMillis: 嗅探间隔时间.默认5分钟</li>
+<li>sniffAfterFailureDelayMillis: 节点失败后的立即嗅探时间.<ol>
+<li>设置嗅探失败监听器</li>
+<li>在客户端创建时,关联上嗅探失败监听器.</li>
+<li>设置嗅探器</li>
+<li>将嗅探器绑定到失败监听器上</li>
+</ol>
+</li>
+</ul>
+<h5 id="创建索引-1"><a href="#创建索引-1" class="headerlink" title="创建索引"></a>创建索引</h5><pre><code class="java">    Request request = new Request(&quot;PUT&quot;,&quot;/product2&quot;);
+    NStringEntity entity = new NStringEntity(&quot;&#123;\n&quot; +
+            &quot;  \&quot;properties\&quot;: &#123;\n&quot; +
+            &quot;    \&quot;message\&quot;: &#123;\n&quot; +
+            &quot;      \&quot;type\&quot;: \&quot;text\&quot;\n&quot; +
+            &quot;    &#125;\n&quot; +
+            &quot;  &#125;\n&quot; +
+            &quot;&#125;&quot;);
+    request.setEntity(entity);
+    restClient.performRequest(request);
+</code></pre>
+<h5 id="新增文档-1"><a href="#新增文档-1" class="headerlink" title="新增文档"></a>新增文档</h5><pre><code class="java">    Request request = new Request(&quot;POST&quot;,&quot;/product2/_doc&quot;);
+    NStringEntity entity = new NStringEntity(&quot;&#123;\n&quot; +
+            &quot;    \&quot;name\&quot;: \&quot;苹果\&quot;,\n&quot; +
+            &quot;    \&quot;desc\&quot;: \&quot;四川\&quot;,\n&quot; +
+            &quot;    \&quot;price\&quot;: 34.3,\n&quot; +
+            &quot;    \&quot;date\&quot;: \&quot;2024-08-01\&quot;,\n&quot; +
+            &quot;    \&quot;tags\&quot;: [\n&quot; +
+            &quot;        \&quot;水果\&quot;,\n&quot; +
+            &quot;        \&quot;四川\&quot;,\n&quot; +
+            &quot;        \&quot;甜\&quot;\n&quot; +
+            &quot;    ]\n&quot; +
+            &quot;&#125;\n&quot;);
+
+    request.setEntity(entity);
+    Response response = restClient.performRequest(request);
+</code></pre>
+<h3 id="Java-Hight-level-REST-client"><a href="#Java-Hight-level-REST-client" class="headerlink" title="Java Hight-level REST client"></a>Java Hight-level REST client</h3><p>Java 高级 REST 客户端在 Java 低级 REST 客户端之上运行。它的主要目标是公开 API 特定的方法，接受请求对象作为参数并返回响应对象，以便请求编组和响应解组由客户端本身处理。要求Elasticsearch版本为<code>2.0</code>或者更高。</p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>支持所有ES的API调用</li>
+<li>客户端和ES核心服务完全独立，无共同依赖</li>
+<li>基于Low Level Client，只向后兼容ES的大版本.</li>
+</ul>
+<h4 id="maven依赖-2"><a href="#maven依赖-2" class="headerlink" title="maven依赖"></a>maven依赖</h4><pre><code>
+</code></pre>
+<h4 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h4><h5 id="创建连接-2"><a href="#创建连接-2" class="headerlink" title="创建连接"></a>创建连接</h5><pre><code class="java">    RestClient restClient = RestClient.builder(
+                    new HttpHost(&quot;localhost&quot;, 9200, &quot;http&quot;))
+            .build();
+
+    // Create the HLRC
+    RestHighLevelClient highLevelClient = new RestHighLevelClientBuilder(restClient)
+            .setApiCompatibilityMode(true)
+            .build();
+</code></pre>
+<h5 id="新建索引"><a href="#新建索引" class="headerlink" title="新建索引"></a>新建索引</h5><pre><code class="java">    CreateIndexRequest request = new CreateIndexRequest(&quot;product2&quot;);
+    request.settings(Settings.builder()
+            .put(&quot;index.number_of_shards&quot;, 3)
+            .put(&quot;index.number_of_replicas&quot;, 0)
+    );
+    //endregion
+    //region mapping
+    request.mapping(
+            &quot;&#123;\n&quot; +
+                    &quot;  \&quot;properties\&quot;: &#123;\n&quot; +
+                    &quot;    \&quot;message\&quot;: &#123;\n&quot; +
+                    &quot;      \&quot;type\&quot;: \&quot;text\&quot;\n&quot; +
+                    &quot;    &#125;\n&quot; +
+                    &quot;  &#125;\n&quot; +
+                    &quot;&#125;&quot;,
+            XContentType.JSON);
+    CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
+</code></pre>
+<h5 id="新增文档-2"><a href="#新增文档-2" class="headerlink" title="新增文档"></a>新增文档</h5><pre><code class="java"> // 新增单条 
+IndexRequest indexRequest = new IndexRequest(&quot;product2&quot;);
+indexRequest.source(&quot;&#123;\n&quot; +
+        &quot;    \&quot;name\&quot;: \&quot;苹果\&quot;,\n&quot; +
+        &quot;    \&quot;desc\&quot;: \&quot;四川\&quot;,\n&quot; +
+        &quot;    \&quot;price\&quot;: 34.3,\n&quot; +
+        &quot;    \&quot;date\&quot;: \&quot;2024-08-01\&quot;,\n&quot; +
+        &quot;    \&quot;tags\&quot;: [\n&quot; +
+        &quot;        \&quot;水果\&quot;,\n&quot; +
+        &quot;        \&quot;四川\&quot;,\n&quot; +
+        &quot;        \&quot;甜\&quot;\n&quot; +
+        &quot;    ]\n&quot; +
+        &quot;&#125;\n&quot;,XContentType.JSON);
+IndexResponse response = client.index(indexRequest,RequestOptions.DEFAULT);
+
+// 批量新增
+BulkRequest request = new BulkRequest(&quot;product&quot;);
+request.add(new IndexRequest().source(&quot;&#123;\&quot;name\&quot;: \&quot;香蕉\&quot;&quot;));
+request.add(new IndexRequest().source(&quot;&#123;\&quot;name\&quot;: \&quot;葡萄\&quot;&quot;));
+BulkResponse response2 = client.bulk(request, RequestOptions.DEFAULT);
+</code></pre>
+<h5 id="更新文档-1"><a href="#更新文档-1" class="headerlink" title="更新文档"></a>更新文档</h5><pre><code class="java">// 更新单条
+UpdateRequest updateRequest = new UpdateRequest(&quot;product2&quot;,&quot;2&quot;);
+updateRequest.doc(&quot;&#123;\n&quot; +
+        &quot;    \&quot;name\&quot;: \&quot;苹果\&quot;,\n&quot; +
+        &quot;    \&quot;desc\&quot;: \&quot;四川\&quot;,\n&quot; +
+        &quot;    \&quot;price\&quot;: 34.3,\n&quot; +
+        &quot;    \&quot;date\&quot;: \&quot;2024-08-01\&quot;,\n&quot; +
+        &quot;    \&quot;tags\&quot;: [\n&quot; +
+        &quot;        \&quot;水果\&quot;,\n&quot; +
+        &quot;        \&quot;四川\&quot;,\n&quot; +
+        &quot;        \&quot;甜\&quot;\n&quot; +
+        &quot;    ]\n&quot; +
+        &quot;&#125;\n&quot;,XContentType.JSON);
+UpdateResponse updateResponse =  client.update(updateRequest,RequestOptions.DEFAULT);
+
+// update by query
+UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest(&quot;product2&quot;);
+updateByQueryRequest.setQuery(QueryBuilders.termQuery(&quot;name&quot;, &quot;梨&quot;));
+updateByQueryRequest.setScript(new Script(ScriptType.INLINE, &quot;painless&quot;, &quot;ctx._source.desc+=&#39;#&#39;;&quot;, Collections.emptyMap()));
+BulkByScrollResponse response = client.updateByQuery(updateByQueryRequest,RequestOptions.DEFAULT);
+</code></pre>
+<h5 id="删除文档-1"><a href="#删除文档-1" class="headerlink" title="删除文档"></a>删除文档</h5><pre><code class="java">// 删除单条记录
+DeleteRequest deleteRequest = new DeleteRequest(&quot;product2&quot;,&quot;2&quot;);
+DeleteResponse deleteResponse = client.delete(deleteRequest,RequestOptions.DEFAULT);
+// delete by query
+DeleteByQueryRequest deleteByQueryRequest = new DeleteByQueryRequest(&quot;product2&quot;);
+deleteByQueryRequest.setQuery(QueryBuilders.termQuery(&quot;name&quot;, &quot;梨&quot;));
+BulkByScrollResponse response = client.deleteByQuery(deleteByQueryRequest,RequestOptions.DEFAULT);
+</code></pre>
+<h5 id="查询文档-1"><a href="#查询文档-1" class="headerlink" title="查询文档"></a>查询文档</h5><pre><code class="java">// query by id
+GetRequest request = new GetRequest(&quot;product2&quot;, &quot;6&quot;);
+GetResponse getResponse =  client.get(request,RequestOptions.DEFAULT);
+
+// 条件查询
+SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+searchSourceBuilder.query(QueryBuilders.termQuery(&quot;name&quot;,&quot;苹果&quot;));
+searchSourceBuilder.size(20);
+searchSourceBuilder.from(0);
+
+SearchRequest searchRequest = new SearchRequest(&quot;product2&quot;);
+searchRequest.source(searchSourceBuilder);
+
+client.search(searchRequest,RequestOptions.DEFAULT);
+</code></pre>
+<h2 id="java-client-version-8-x"><a href="#java-client-version-8-x" class="headerlink" title="java client ( version:8.x)"></a>java client ( version:8.x)</h2><p>在Es7.15版本之后，es官方将它的高级客户端RestHighLevelClient标记为弃用状态。同时推出了全新的java API客户端Elasticsearch Java API Client，该客户端也将在Elasticsearch8.0及以后版本中成为官方推荐使用的客户端。支持除Vector title search API和Find structure API之外的所有Elasticsearch API。且支持所有API数据类型，并且不再有原始JSON Value属性。</p>
+<h3 id="maven依赖-3"><a href="#maven依赖-3" class="headerlink" title="maven依赖"></a>maven依赖</h3><pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;co.elastic.clients&lt;/groupId&gt;
+  &lt;artifactId&gt;elasticsearch-java&lt;/artifactId&gt;
+  &lt;version&gt;8.15.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+  &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+  &lt;version&gt;2.17.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h3><h4 id="创建-连接"><a href="#创建-连接" class="headerlink" title="创建 连接"></a>创建 连接</h4><pre><code class="java"> String apiKey = &quot;VnVhQ2ZHY0JDZGJrU...&quot;;
+
+// Create the low-level client
+RestClient restClient = RestClient
+       .builder(HttpHost.create(&quot;https://host1:9200&quot;),HttpHost.create(&quot;https://host2:9200&quot;))
+       .setDefaultHeaders(new Header[]&#123;
+               new BasicHeader(&quot;Authorization&quot;, &quot;ApiKey &quot; + apiKey)
+       &#125;)
+       .build();
+// Create the transport with a Jackson mapper
+ElasticsearchTransport transport = new RestClientTransport(
+       restClient, new JacksonJsonpMapper());
+
+// And create the API client
+ElasticsearchClient esClient = new ElasticsearchClient(transport);
+
+// 关闭连接
+transport.close();
+
+
+// 如果需要创建高级客户端可以使用以下代码
+// height level client 与esClient使用相同的restClient来构建.
+RestHighLevelClient hlrc = new RestHighLevelClientBuilder(restClient)
+        .setApiCompatibilityMode(true)
+        .build();
+
+
+</code></pre>
+<h4 id="创建索引-2"><a href="#创建索引-2" class="headerlink" title="创建索引"></a>创建索引</h4><pre><code class="java"> // 正常构造器写法
+CreateIndexResponse createIndexResponse = client.indices().create(
+       new CreateIndexRequest.Builder()
+               .index(&quot;product_v2&quot;)
+               .aliases(&quot;product&quot;,
+                       new Alias.Builder().isWriteIndex(true).build())
+               .build()
+);
+
+// lambda表达式写法
+CreateIndexResponse createIndexResponse = client.indices().create(
+       c -&gt; c.index(&quot;product_v2&quot;).aliases(&quot;product&quot;,
+               b-&gt;b.isWriteIndex(true)));
+
+&#125;
+</code></pre>
+<h4 id="新增文档-3"><a href="#新增文档-3" class="headerlink" title="新增文档"></a>新增文档</h4><p>本质上使用的方法.但在创建request的时候存在多种方式.</p>
+<pre><code class="java">IndexResponse response = esClient.index(request);
+</code></pre>
+<h5 id="方式一-使用构造器构造"><a href="#方式一-使用构造器构造" class="headerlink" title="方式一: 使用构造器构造"></a>方式一: 使用构造器构造</h5><pre><code class="java">Product product = new Product(&quot;bk-1&quot;, &quot;City bike&quot;, 123.0);
+
+IndexRequest.Builder&lt;Product&gt; indexReqBuilder = new IndexRequest.Builder&lt;&gt;();
+indexReqBuilder.index(&quot;product&quot;);
+indexReqBuilder.id(product.getSku());
+indexReqBuilder.document(product);
+
+IndexResponse response = esClient.index(indexReqBuilder.build());
+</code></pre>
+<h5 id="方式二-使用lambda语言简化构造"><a href="#方式二-使用lambda语言简化构造" class="headerlink" title="方式二: 使用lambda语言简化构造"></a>方式二: 使用lambda语言简化构造</h5><pre><code class="java">Product product = new Product(&quot;bk-1&quot;, &quot;City bike&quot;, 123.0);
+// 使用of方法来创建request请求体.
+IndexRequest&lt;Product&gt; request = IndexRequest.of(i -&gt; i
+    .index(&quot;products&quot;)
+    .id(product.getSku())
+    .document(product)
+);
+IndexResponse response = esClient.index(request);
+
+// 或直接在index中拼接请求体
+IndexResponse response = esClient.index(i -&gt; i
+    .index(&quot;products&quot;)
+    .id(product.getSku())
+    .document(product)
+);
+</code></pre>
+<h5 id="方式三-json字符流的形式输入"><a href="#方式三-json字符流的形式输入" class="headerlink" title="方式三: json字符流的形式输入"></a>方式三: json字符流的形式输入</h5><pre><code class="java">Reader input = new StringReader(
+               &quot;&#123;&#39;name&#39;:&#39;苹果&#39;, &#39;message&#39;: &#39;来自大凉山的特产&#39;,&#39;price&#39;:34.2,&#39;tags&#39;:&#39;水果&#39;&#125;&quot;
+                       .replace(&#39;\&#39;&#39;, &#39;&quot;&#39;));
+
+IndexRequest&lt;JsonData&gt; request = IndexRequest.of(i -&gt; i
+       .index(&quot;product_v2&quot;)
+       .withJson(input)
+);
+
+IndexResponse response = client.index(request);
+</code></pre>
+<h5 id="批量创建-以构造的方式"><a href="#批量创建-以构造的方式" class="headerlink" title="批量创建(以构造的方式)"></a>批量创建(以构造的方式)</h5><pre><code class="java">BulkRequest.Builder br = new BulkRequest.Builder();
+
+br.operations(op -&gt; op           
+        .index(idx -&gt; idx            
+            .index(&quot;product_v2&quot;)
+            .document(product)
+        )
+    );
+
+BulkResponse result = esClient.bulk(br.build());
+if (result.errors()) &#123;
+    logger.error(&quot;Bulk had errors&quot;);
+    for (BulkResponseItem item: result.items()) &#123;
+        if (item.error() != null) &#123;
+            logger.error(item.error().reason());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h5 id="批量创建-以json数据流的方式"><a href="#批量创建-以json数据流的方式" class="headerlink" title="批量创建(以json数据流的方式)"></a>批量创建(以json数据流的方式)</h5><pre><code class="java">// 简例
+File[] logFiles = logDir.listFiles(
+    file -&gt; file.getName().matches(&quot;log-.*\\.json&quot;)
+);
+BulkRequest.Builder br = new BulkRequest.Builder();
+
+FileInputStream input = new FileInputStream(logFiles[0]);
+    BinaryData data = BinaryData.of(IOUtils.toByteArray(input), ContentType.APPLICATION_JSON);
+
+    br.operations(op -&gt; op
+        .index(idx -&gt; idx
+            .index(&quot;logs&quot;)
+            .document(data)
+        )
+    );
+</code></pre>
+<p><strong>加上批量摄取器</strong></p>
+<p> <code>bulkIngester</code> 在8.7版本替代了BulkProcessor. </p>
+<p>使用完后需要关闭<code>bulkIngester</code>.</p>
+<p><strong>参数</strong></p>
+<ul>
+<li>maxOperations: 单批次最大操作数量1000.</li>
+<li>maxSize: 设置何时根据当前添加的操作的字节大小刷新新的批量请求。一旦超过该大小，就会发送请求。默认为5兆。可以设置为-1来禁用.</li>
+<li>maxConcurrentRequests: 发送请求(批次)的并发数. 默认为1.</li>
+</ul>
+<pre><code class="java">BulkIngester&lt;Void&gt; ingester = BulkIngester.of(b -&gt; b
+    .client(esClient)    
+    .maxOperations(100)  
+    .flushInterval(1, TimeUnit.SECONDS) 
+);
+
+// 
+// 简例中的插入程序.
+FileInputStream input = new FileInputStream(logFiles[0]);
+    BinaryData data = BinaryData.of(IOUtils.toByteArray(input), ContentType.APPLICATION_JSON);
+
+    br.operations(op -&gt; op
+        .index(idx -&gt; idx
+            .index(&quot;logs&quot;)
+            .document(data)
+        )
+    );
+
+ingester.close();
+</code></pre>
+<p><strong>加上监听器</strong></p>
+<p>监听器中的contenxts为文件名称列表.</p>
+<p>将监听器加在批量摄取器上.</p>
+<pre><code class="java">BulkListener&lt;String&gt; listener = new BulkListener&lt;String&gt;() &#123; 
+    @Override
+    public void beforeBulk(long executionId, BulkRequest request, List&lt;String&gt; contexts) &#123;
+    &#125;
+
+    @Override
+    public void afterBulk(long executionId, BulkRequest request, List&lt;String&gt; contexts, BulkResponse response) &#123;
+        // The request was accepted, but may contain failed items.
+        // The &quot;context&quot; list gives the file name for each bulk item.
+        logger.debug(&quot;Bulk request &quot; + executionId + &quot; completed&quot;);
+        for (int i = 0; i &lt; contexts.size(); i++) &#123;
+            BulkResponseItem item = response.items().get(i);
+            if (item.error() != null) &#123;
+                // Inspect the failure cause
+                logger.error(&quot;Failed to index file &quot; + contexts.get(i) + &quot; - &quot; + item.error().reason());
+            &#125;
+        &#125;
+    &#125;
+
+    @Override
+    public void afterBulk(long executionId, BulkRequest request, List&lt;String&gt; contexts, Throwable failure) &#123;
+        // The request could not be sent
+        logger.debug(&quot;Bulk request &quot; + executionId + &quot; failed&quot;, failure);
+    &#125;
+&#125;;
+
+
+BulkIngester&lt;String&gt; ingester = BulkIngester.of(b -&gt; b
+    .client(esClient)
+    .maxOperations(100)
+    .flushInterval(1, TimeUnit.SECONDS)
+    .listener(listener) 
+);
+
+// 简例
+FileInputStream input = new FileInputStream(logFiles[0]);
+    BinaryData data = BinaryData.of(IOUtils.toByteArray(input), ContentType.APPLICATION_JSON);
+
+    br.operations(op -&gt; op
+        .index(idx -&gt; idx
+            .index(&quot;logs&quot;)
+            .document(data)
+        )
+    );
+
+ingester.close();
+
+</code></pre>
+<h4 id="更新文档-2"><a href="#更新文档-2" class="headerlink" title="更新文档"></a>更新文档</h4><pre><code>
+</code></pre>
+<h4 id="删除文档-2"><a href="#删除文档-2" class="headerlink" title="删除文档"></a>删除文档</h4><pre><code>
+</code></pre>
+<h4 id="查询文档-2"><a href="#查询文档-2" class="headerlink" title="查询文档"></a>查询文档</h4><h5 id="根据id获取文档"><a href="#根据id获取文档" class="headerlink" title="根据id获取文档"></a>根据id获取文档</h5><pre><code class="java">GetResponse&lt;Product&gt; response = esClient.get(g -&gt; g
+    .index(&quot;product_v2&quot;) 
+    .id(&quot;bk-1&quot;),
+    Product.class      
+);
+</code></pre>
+<h5 id="简单条件查询"><a href="#简单条件查询" class="headerlink" title="简单条件查询"></a>简单条件查询</h5><pre><code class="java">// 查询出name为香蕉的文档
+SearchResponse&lt;Product&gt; response = client.search(s -&gt; s
+                       .index(&quot;product_v2&quot;)
+                       .query(q -&gt; q
+                               .term(t -&gt; t
+                                       .field(&quot;name&quot;)
+                                       .value(&quot;香蕉&quot;)
+                               )
+                       ),
+               Product.class
+       );
+
+// 结果
+TotalHits total = response.hits().total();
+boolean isExactResult = total.relation() == TotalHitsRelation.Eq;
+
+if (isExactResult) &#123;
+    logger.info(&quot;There are &quot; + total.value() + &quot; results&quot;);
+&#125; else &#123;
+    logger.info(&quot;There are more than &quot; + total.value() + &quot; results&quot;);
+&#125;
+
+List&lt;Hit&lt;Product&gt;&gt; hits = response.hits().hits();
+for (Hit&lt;Product&gt; hit: hits) &#123;
+    Product product = hit.source();
+    logger.info(&quot;Found product &quot; + product.getSku() + &quot;, score &quot; + hit.score());
+&#125;
+</code></pre>
+<h5 id="多条件查询"><a href="#多条件查询" class="headerlink" title="多条件查询"></a>多条件查询</h5><pre><code class="java">// 查询出高于30的苹果 文档
+// Search by product name
+Query byName = MatchQuery.of(m -&gt; m 
+    .field(&quot;name&quot;)
+    .query(&quot;苹果&quot;)
+)._toQuery(); 
+
+// Search by max price
+Query byMaxPrice = RangeQuery.of(r -&gt; r
+    .number(n -&gt; n
+    .field(&quot;price&quot;)
+    .gte(30)) 
+)._toQuery();
+
+// Combine name and price queries to search the product index
+SearchResponse&lt;Product&gt; response = esClient.search(s -&gt; s
+    .index(&quot;product_v2&quot;)
+    .query(q -&gt; q
+        .bool(b -&gt; b 
+            .must(byName) 
+            .must(byMaxPrice)
+        )
+    ),
+    Product.class
+);
+</code></pre>
+<h5 id="脚本搜索"><a href="#脚本搜索" class="headerlink" title="脚本搜索"></a>脚本搜索</h5><pre><code class="java">SearchResponse&lt;Product&gt; response = client.search(s -&gt; s
+                       .index(&quot;product_v2&quot;)
+                       .query(q -&gt;q
+                               .script(s1 -&gt; s1
+                                       .script(Script.of(f2 -&gt; f2.
+                                               lang(&quot;paniness&quot;)
+                                               .source(&quot;&#123;\&quot;query\&quot;:&#123;\&quot;match\&quot;:&#123;\&quot;&#123;&#123;field&#125;&#125;\&quot;:\&quot;&#123;&#123;value&#125;&#125;\&quot;&#125;&#125;&#125;&quot;)
+                                               .params(&quot;field&quot;, JsonData.of(&quot;name&quot;))
+                                               .params(&quot;value&quot;, JsonData.of(&quot;苹果&quot;))
+                                       ))
+                               )
+                       ),
+               Product.class
+       );
+</code></pre>
+<p>另一种写法</p>
+<p> 将脚本存储后.通过客户端调用脚本的方式来查询文档.</p>
+<pre><code class="java">// Create a script
+esClient.putScript(r -&gt; r
+    .id(&quot;query-script&quot;) 
+    .script(s -&gt; s
+        .lang(&quot;mustache&quot;)
+        .source(&quot;&#123;\&quot;query\&quot;:&#123;\&quot;match\&quot;:&#123;\&quot;&#123;&#123;field&#125;&#125;\&quot;:\&quot;&#123;&#123;value&#125;&#125;\&quot;&#125;&#125;&#125;&quot;)
+    ));
+    
+// 
+SearchTemplateResponse&lt;Product&gt; response = esClient.searchTemplate(r -&gt; r
+        .index(&quot;some-index&quot;)
+        .id(&quot;query-script&quot;) 
+        .params(&quot;field&quot;, JsonData.of(&quot;some-field&quot;)) 
+        .params(&quot;value&quot;, JsonData.of(&quot;some-data&quot;)),
+    Product.class
+);
+</code></pre>
+<h5 id="es-ql方式查询"><a href="#es-ql方式查询" class="headerlink" title="es|ql方式查询"></a>es|ql方式查询</h5><p>可以写一句sql来给es客户端解析翻译.</p>
+<p><strong>参数</strong></p>
+<ul>
+<li>format: 输出格式.可选csv,json,yml.或者自定义</li>
+<li>delimiter:分隔符.在format为csv的时候使用.</li>
+</ul>
+<pre><code class="java">// 注意:多行文本在jdk15+才能使用
+String queryAuthor =
+       &quot;&quot;&quot;
+           from product_v2
+           | where name == &quot;苹果&quot;
+           | sort price desc
+           | limit 10
+       &quot;&quot;&quot;;
+
+BinaryResponse response = client.esql().query(q -&gt; q
+       .format(&quot;csv&quot;)
+       .delimiter(&quot;,&quot;)
+       .query(queryAuthor));
+
+String result = new BufferedReader(new InputStreamReader(response.content()))
+       .lines().collect(Collectors.joining(&quot;\n&quot;));
+// 或者直接映射到实体类
+List&lt;Book&gt; queryRes = (List&lt;Book&gt;) client.esql().query(ObjectsEsqlAdapter.of(Product.class), queryAuthor);
+</code></pre>
+<h5 id="聚合查询-1"><a href="#聚合查询-1" class="headerlink" title="聚合查询"></a>聚合查询</h5><pre><code class="java">Query query = MatchQuery.of(m -&gt; m
+    .field(&quot;name&quot;)
+    .query(&quot;苹果&quot;)
+)._toQuery();
+
+SearchResponse&lt;Void&gt; response = esClient.search(b -&gt; b
+    .index(&quot;product_v2&quot;)
+    .size(0) 
+    .query(query) 
+    .aggregations(&quot;price-histogram&quot;, a -&gt; a 
+        .histogram(h -&gt; h 
+            .field(&quot;price&quot;)
+            .interval(50.0)
+        )
+    ),
+    Void.class 
+);
+
+
+List&lt;HistogramBucket&gt; buckets = response.aggregations()
+    .get(&quot;price-histogram&quot;) 
+    .histogram() 
+    .buckets().array(); 
+
+for (HistogramBucket bucket: buckets) &#123;
+    logger.info(&quot;There are &quot; + bucket.docCount() +
+        &quot; bikes under &quot; + bucket.key());
+&#125;
+</code></pre>
+<h2 id="Spring-Data-Elasticsearch"><a href="#Spring-Data-Elasticsearch" class="headerlink" title="Spring Data Elasticsearch"></a>Spring Data Elasticsearch</h2>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">1.</span> <span class="toc-text">java客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-Transport-Clientv-version-7-x"><span class="toc-number">1.1.</span> <span class="toc-text">Java Transport Clientv (version:7.x)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88%E7%94%9F%E5%8D%92%E5%B9%B4%EF%BC%9AES-0-9-ES-7-x%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">生命周期（生卒年：ES 0.9 - ES 7.x）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#maven%E4%BE%9D%E8%B5%96"><span class="toc-number">1.1.3.</span> <span class="toc-text">maven依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.4.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-REST-Client"><span class="toc-number">1.2.</span> <span class="toc-text">Java REST Client</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F-%E7%94%9F%E5%8D%92%E5%B9%B4-ES-5-0-0-alpha4%E8%87%B3ES7-17"><span class="toc-number">1.2.1.</span> <span class="toc-text">生命周期 (生卒年: ES 5.0.0-alpha4至ES7.17)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Low-level-REST-client"><span class="toc-number">1.2.2.</span> <span class="toc-text">Java Low-level REST client</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Hight-level-REST-client"><span class="toc-number">1.2.3.</span> <span class="toc-text">Java Hight-level REST client</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-client-version-8-x"><span class="toc-number">1.3.</span> <span class="toc-text">java client ( version:8.x)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#maven%E4%BE%9D%E8%B5%96-3"><span class="toc-number">1.3.1.</span> <span class="toc-text">maven依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-3"><span class="toc-number">1.3.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Data-Elasticsearch"><span class="toc-number">1.4.</span> <span class="toc-text">Spring Data Elasticsearch</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

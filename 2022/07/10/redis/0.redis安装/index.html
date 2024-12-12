@@ -1,0 +1,979 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>redis (零) 安装 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="安装snap 安装方式
+源码安装 github地址redis-hashes 选择5.0的最新版本.5.0.14 
+单节点# 1.下载安装包
+wget http://download.redis.io,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">redis (零) 安装</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                七月 10, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/0.redis%E5%AE%89%E8%A3%85/" title="redis (零) 安装" class="">redis (零) 安装</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    30k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    28 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><a target="_blank" rel="noopener" href="https://snapcraft.io/install/redis/centos">snap 安装方式</a></p>
+<h2 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h2><p> <a target="_blank" rel="noopener" href="https://github.com/redis/redis-hashes">github地址redis-hashes</a> 选择5.0的最新版本.5.0.14 </p>
+<h3 id="单节点"><a href="#单节点" class="headerlink" title="单节点"></a>单节点</h3><pre><code class="shell"># 1.下载安装包
+wget http://download.redis.io/releases/redis-5.0.14.tar.gz
+# 2.解压
+tar -zxf redis-5.0.14.tar.gz
+# 3.进入文件夹,可以查看readme.md来查看安装步骤与参数设置.
+# make本质时读取makefile文件里的命令集,所以可以通过阅读具体的makefile来了解具体的安装细节.
+# make install 本质是一个拷贝的步骤.
+make
+# 异常点:
+make[1]: [persist-settings] Error 2 (ignored)
+    CC adlist.o
+/bin/sh: cc: command not found
+# 3.1安装gcc
+yum install gcc
+# 先清除之前出问题的安装文件 再执行make
+make distclean &amp; make
+# 结果
+Hint: It&#39;s a good idea to run &#39;make test&#39; ;)
+make[1]: Leaving directory `/root/redis-5.0.14/src&#39;
+# 安装完成后目录下会出现一个src文件夹.里面存有可执行脚本与配置.
+# eg: ./redis-server 即redis启动命令.
+
+# 4. 安装到配置的目录下.在编译的时候设置为/user/local/bin. 或者自己配置来覆盖PERFIX=/opt/redis/bin/
+make install
+# 结果:
+[root@unreal-laser-1 redis-5.0.14]# cd /usr/local/bin/
+caddy            redis-benchmark  redis-check-aof  redis-check-rdb  redis-cli        redis-sentinel   redis-server  
+
+# 4.1 redis也提供了交互式安装在utils文件夹下, utils/install_server.sh
+./install_server.sh
+# 此方法会在/etc/init.d/下生成一个redis_前缀+端口的可执行文件,供快捷使用.通过这种方式可以快速的创建出大量的redis实例来组建集群.
+# 执行例子
+[root@unreal-laser-1 utils]# ./install_server.sh 
+Welcome to the redis service installer
+This script will help you easily set up a running redis server
+
+Please select the redis port for this instance: [6379] 
+Selecting default: 6379
+Please select the redis config file name [/etc/redis/6379.conf] 
+Selected default - /etc/redis/6379.conf
+Please select the redis log file name [/var/log/redis_6379.log] 
+Selected default - /var/log/redis_6379.log
+Please select the data directory for this instance [/var/lib/redis/6379] 
+Selected default - /var/lib/redis/6379
+Please select the redis executable path [/usr/local/bin/redis-server] 
+Selected config:
+Port           : 6379
+Config file    : /etc/redis/6379.conf
+Log file       : /var/log/redis_6379.log
+Data dir       : /var/lib/redis/6379
+Executable     : /usr/local/bin/redis-server
+Cli Executable : /usr/local/bin/redis-cli
+Is this ok? Then press ENTER to go on or Ctrl-C to abort.
+Copied /tmp/6379.conf =&gt; /etc/init.d/redis_6379
+Installing service...
+Successfully added to chkconfig!
+Successfully added to runlevels 345!
+Starting Redis server...
+Installation successful!
+
+# 5. 如果不是默认安装位置,则配置到系统环境变量.可直接在键入redis-server
+vi /etc/profile
+
+export REDIS_HOME=/opt/redis
+export PATH=$&#123;REDIS_HOME&#125;/bin:$PATH
+
+source /etc/profile
+
+# 6. 配置文件启动
+# 在源目录中存在配置文件 redis.conf. 里面可以配置port端口,bind指定ip,protected-model模式,请求密码等配置.
+# 可以将配置文件拷贝到指定文件夹下修改后, 启动服务带指定配置文件的方式启动.
+servic-server -C /data/redis/redis.conf
+
+# 7.验证
+redis -p 6379
+set k1 v2
+</code></pre>
+<h3 id="单机分布式-工具创建"><a href="#单机分布式-工具创建" class="headerlink" title="单机分布式(工具创建)"></a>单机分布式(工具创建)</h3><h4 id="1-创建多个实例-使用install-service-工具快速创建"><a href="#1-创建多个实例-使用install-service-工具快速创建" class="headerlink" title="1. 创建多个实例 使用install_service 工具快速创建."></a>1. 创建多个实例 使用install_service 工具快速创建.</h4><pre><code class="shell">
+[root@unreal-laser-1 redis-5.0.14]# utils/install_server.sh 
+Welcome to the redis service installer
+This script will help you easily set up a running redis server
+
+Please select the redis port for this instance: [6379] 6391
+Please select the redis config file name [/etc/redis/6391.conf] 
+Selected default - /etc/redis/6391.conf
+Please select the redis log file name [/var/log/redis_6391.log] 
+Selected default - /var/log/redis_6391.log
+Please select the data directory for this instance [/var/lib/redis/6391] 
+Selected default - /var/lib/redis/6391
+Please select the redis executable path [/usr/local/bin/redis-server] 
+Selected config:
+Port           : 6391
+Config file    : /etc/redis/6391.conf
+Log file       : /var/log/redis_6391.log
+Data dir       : /var/lib/redis/6391
+Executable     : /usr/local/bin/redis-server
+Cli Executable : /usr/local/bin/redis-cli
+Is this ok? Then press ENTER to go on or Ctrl-C to abort.^[[A
+Copied /tmp/6391.conf =&gt; /etc/init.d/redis_6391
+Installing service...
+Successfully added to chkconfig!
+Successfully added to runlevels 345!
+Starting Redis server...
+Installation successful!
+</code></pre>
+<h4 id="2-更改配置文件参数-设置允许集群化"><a href="#2-更改配置文件参数-设置允许集群化" class="headerlink" title="2. 更改配置文件参数.设置允许集群化"></a>2. 更改配置文件参数.设置允许集群化</h4><pre><code class="shell">################################ REDIS CLUSTER  ###############################
+
+# Normal Redis instances can&#39;t be part of a Redis Cluster; only nodes that are
+# started as cluster nodes can. In order to start a Redis instance as a
+# cluster node enable the cluster support uncommenting the following:
+#
+ cluster-enabled yes
+</code></pre>
+<h4 id="3-使用-create-cluster-工具启动与创建集群"><a href="#3-使用-create-cluster-工具启动与创建集群" class="headerlink" title="3. 使用 create_cluster 工具启动与创建集群."></a>3. 使用 create_cluster 工具启动与创建集群.</h4><pre><code class="shell"># 3.1 修改配置
+vi create-cluster
+
+#!/bin/bash
+
+# Settings
+PORT=6390 # redis开始端口(不包含)
+TIMEOUT=2000
+NODES=6  # 集群内redis数量
+REPLICAS=1 # 集群内每个master的副本数量
+
+# 3.2 启动redis实例
+[root@unreal-laser-1 create-cluster]# ./create-cluster start
+Starting 6391
+Starting 6392
+Starting 6393
+Starting 6394
+Starting 6395
+Starting 6396
+
+[root@unreal-laser-1 create-cluster]# ps -ef |grep redis
+root      4081     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6391 [cluster]
+root      4086     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6392 [cluster]
+root      4091     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6393 [cluster]
+root      4096     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6394 [cluster]
+root      4101     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6395 [cluster]
+root      4106     1  0 13:12 ?        00:00:00 ../../src/redis-server *:6396 [cluster]
+
+# 3.3 创建集群 分槽位
+[root@unreal-laser-1 create-cluster]# ./create-cluster create
+&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...
+Master[0] -&gt; Slots 0 - 5460
+Master[1] -&gt; Slots 5461 - 10922
+Master[2] -&gt; Slots 10923 - 16383
+Adding replica 127.0.0.1:6395 to 127.0.0.1:6391
+Adding replica 127.0.0.1:6396 to 127.0.0.1:6392
+Adding replica 127.0.0.1:6394 to 127.0.0.1:6393
+&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity
+[WARNING] Some slaves are in the same host as their master
+M: b0cae9ff9a4113655baaa738262ec3cdbfaf3181 127.0.0.1:6391
+   slots:[0-5460] (5461 slots) master
+M: bcc2f26686c119d6456c704b0c7157c5901638bf 127.0.0.1:6392
+   slots:[5461-10922] (5462 slots) master
+M: cf7be26997a8e7ca41f920b26baf3af674fea347 127.0.0.1:6393
+   slots:[10923-16383] (5461 slots) master
+S: 264e5466122e21aaed7dcdea76544f8bba574a23 127.0.0.1:6394
+   replicates b0cae9ff9a4113655baaa738262ec3cdbfaf3181
+S: 56a2631d540bfddea0ec759e20123c7586c9f07a 127.0.0.1:6395
+   replicates bcc2f26686c119d6456c704b0c7157c5901638bf
+S: 3e04dd7d7300d04a3317ce35412fbb9223dc8af0 127.0.0.1:6396
+   replicates cf7be26997a8e7ca41f920b26baf3af674fea347
+Can I set the above configuration? (type &#39;yes&#39; to accept): yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:6391)
+M: b0cae9ff9a4113655baaa738262ec3cdbfaf3181 127.0.0.1:6391
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+M: cf7be26997a8e7ca41f920b26baf3af674fea347 127.0.0.1:6393
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+M: bcc2f26686c119d6456c704b0c7157c5901638bf 127.0.0.1:6392
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: 3e04dd7d7300d04a3317ce35412fbb9223dc8af0 127.0.0.1:6396
+   slots: (0 slots) slave
+   replicates cf7be26997a8e7ca41f920b26baf3af674fea347
+S: 56a2631d540bfddea0ec759e20123c7586c9f07a 127.0.0.1:6395
+   slots: (0 slots) slave
+   replicates bcc2f26686c119d6456c704b0c7157c5901638bf
+S: 264e5466122e21aaed7dcdea76544f8bba574a23 127.0.0.1:6394
+   slots: (0 slots) slave
+   replicates b0cae9ff9a4113655baaa738262ec3cdbfaf3181
+[OK] All nodes agree about slots configuration.
+</code></pre>
+<h4 id="4-验证集群"><a href="#4-验证集群" class="headerlink" title="4. 验证集群"></a>4. 验证集群</h4><pre><code class="shell">[root@unreal-laser-1 create-cluster]# redis-cli -c -p 6391
+127.0.0.1:6391&gt; set k1 v1
+-&gt; Redirected to slot [12706] located at 127.0.0.1:6393
+OK
+127.0.0.1:6393&gt; 
+</code></pre>
+<h4 id="5-关闭并清除集群"><a href="#5-关闭并清除集群" class="headerlink" title="5. 关闭并清除集群"></a>5. 关闭并清除集群</h4><pre><code class="shell">[root@unreal-laser-1 create-cluster]# ./create-cluster stop
+Stopping 6391
+Stopping 6392
+Stopping 6393
+Stopping 6394
+Stopping 6395
+Stopping 6396
+[root@unreal-laser-1 create-cluster]# ./create-cluster clean
+</code></pre>
+<h3 id="分布式可多节点分布-命令启动"><a href="#分布式可多节点分布-命令启动" class="headerlink" title="分布式可多节点分布(命令启动)"></a>分布式可多节点分布(命令启动)</h3><h4 id="1-修改配置文件后启动每台redis实例"><a href="#1-修改配置文件后启动每台redis实例" class="headerlink" title="1. 修改配置文件后启动每台redis实例."></a>1. 修改配置文件后启动每台redis实例.</h4><pre><code class="shell">[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6391.conf 
+[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6392.conf 
+[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6393.conf 
+[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6394.conf 
+[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6395.conf 
+[root@unreal-laser-1 create-cluster]# /usr/local/bin/redis-server /etc/redis/6396.conf 
+[root@unreal-laser-1 create-cluster]# ps -ef |grep redis
+root      4153     1  0 13:35 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6391 [cluster]
+root      4158     1  0 13:35 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6392 [cluster]
+root      4163     1  0 13:35 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6393 [cluster]
+root      4168     1  0 13:36 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6394 [cluster]
+root      4173     1  0 13:36 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6395 [cluster]
+root      4178     1  0 13:36 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6396 [cluster]
+root      4183  3585  0 13:36 pts/0    00:00:00 grep --color=auto redis
+[root@unreal-laser-1 create-cluster]# 
+</code></pre>
+<h4 id="2-使用redis-cli-启动集群"><a href="#2-使用redis-cli-启动集群" class="headerlink" title="2. 使用redis-cli 启动集群"></a>2. 使用redis-cli 启动集群</h4><pre><code class="shell">[root@unreal-laser-1 create-cluster]# redis-cli --cluster create 127.0.0.1:6391 127.0.0.1:6392 127.0.0.1:6393 127.0.0.1:6394 127.0.0.1:6395 127.0.0.1:6396 --cluster-replicas 1
+&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...
+Master[0] -&gt; Slots 0 - 5460
+Master[1] -&gt; Slots 5461 - 10922
+Master[2] -&gt; Slots 10923 - 16383
+Adding replica 127.0.0.1:6395 to 127.0.0.1:6391
+Adding replica 127.0.0.1:6396 to 127.0.0.1:6392
+Adding replica 127.0.0.1:6394 to 127.0.0.1:6393
+&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity
+[WARNING] Some slaves are in the same host as their master
+M: 618df2f0ccdee025082f3bbc0a00ccf9576e39ab 127.0.0.1:6391
+   slots:[0-5460] (5461 slots) master
+M: d1f712737921e6fa06640a7d480d832a747a6353 127.0.0.1:6392
+   slots:[5461-10922] (5462 slots) master
+M: cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36 127.0.0.1:6393
+   slots:[10923-16383] (5461 slots) master
+S: 5271066457de6352bb2cda790d91139eff3bc00c 127.0.0.1:6394
+   replicates 618df2f0ccdee025082f3bbc0a00ccf9576e39ab
+S: 71a2a47182cfa9ceda66ec89964c8de8037743c8 127.0.0.1:6395
+   replicates d1f712737921e6fa06640a7d480d832a747a6353
+S: 37755f730f3e1da3df84172b89cbcc5e6b8c33f9 127.0.0.1:6396
+   replicates cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36
+Can I set the above configuration? (type &#39;yes&#39; to accept): yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+.
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:6391)
+M: 618df2f0ccdee025082f3bbc0a00ccf9576e39ab 127.0.0.1:6391
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: 71a2a47182cfa9ceda66ec89964c8de8037743c8 127.0.0.1:6395
+   slots: (0 slots) slave
+   replicates d1f712737921e6fa06640a7d480d832a747a6353
+M: cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36 127.0.0.1:6393
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+M: d1f712737921e6fa06640a7d480d832a747a6353 127.0.0.1:6392
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: 5271066457de6352bb2cda790d91139eff3bc00c 127.0.0.1:6394
+   slots: (0 slots) slave
+   replicates 618df2f0ccdee025082f3bbc0a00ccf9576e39ab
+S: 37755f730f3e1da3df84172b89cbcc5e6b8c33f9 127.0.0.1:6396
+   slots: (0 slots) slave
+   replicates cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36
+[OK] All nodes agree about slots configuration.
+&gt;&gt;&gt; Check for open slots...
+&gt;&gt;&gt; Check slots coverage...
+[OK] All 16384 slots covered.
+</code></pre>
+<h4 id="3-查看集群配置"><a href="#3-查看集群配置" class="headerlink" title="3.查看集群配置"></a>3.查看集群配置</h4><pre><code class="shell"># 可以查看槽位的分布,集群主从的分布,keys总数等信息
+[root@unreal-laser-1 create-cluster]# redis-cli --cluster check 127.0.0.1 6391
+127.0.0.1:6391 (618df2f0...) -&gt; 0 keys | 5461 slots | 1 slaves.
+127.0.0.1:6393 (cee0a60b...) -&gt; 0 keys | 5461 slots | 1 slaves.
+127.0.0.1:6392 (d1f71273...) -&gt; 0 keys | 5462 slots | 1 slaves.
+[OK] 0 keys in 3 masters.
+0.00 keys per slot on average.
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:6391)
+M: 618df2f0ccdee025082f3bbc0a00ccf9576e39ab 127.0.0.1:6391
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: 71a2a47182cfa9ceda66ec89964c8de8037743c8 127.0.0.1:6395
+   slots: (0 slots) slave
+   replicates d1f712737921e6fa06640a7d480d832a747a6353
+M: cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36 127.0.0.1:6393
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+M: d1f712737921e6fa06640a7d480d832a747a6353 127.0.0.1:6392
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: 5271066457de6352bb2cda790d91139eff3bc00c 127.0.0.1:6394
+   slots: (0 slots) slave
+   replicates 618df2f0ccdee025082f3bbc0a00ccf9576e39ab
+S: 37755f730f3e1da3df84172b89cbcc5e6b8c33f9 127.0.0.1:6396
+   slots: (0 slots) slave
+   replicates cee0a60b5b42c66a0e9a21a8f70cdd1b4752ff36
+[OK] All nodes agree about slots configuration.
+&gt;&gt;&gt; Check for open slots...
+&gt;&gt;&gt; Check slots coverage...
+[OK] All 16384 slots covered.
+[root@unreal-laser-1 create-cluster]# redis-cli --cluster info 127.0.0.1 6391
+127.0.0.1:6391 (618df2f0...) -&gt; 0 keys | 5461 slots | 1 slaves.
+127.0.0.1:6393 (cee0a60b...) -&gt; 0 keys | 5461 slots | 1 slaves.
+127.0.0.1:6392 (d1f71273...) -&gt; 0 keys | 5462 slots | 1 slaves.
+[OK] 0 keys in 3 masters.
+0.00 keys per slot on average.
+</code></pre>
+<h3 id="主从复制版"><a href="#主从复制版" class="headerlink" title="主从复制版"></a>主从复制版</h3><h4 id="1-创建并启动实例-一主两从版"><a href="#1-创建并启动实例-一主两从版" class="headerlink" title="1. 创建并启动实例(一主两从版)"></a>1. 创建并启动实例(一主两从版)</h4><pre><code class="shell">[root@unreal-laser-1 utils]# ps -ef |grep redis
+root      4299     1  0 13:54 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6400
+root      4366     1  0 13:54 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6401
+root      4433     1  0 13:54 ?        00:00:00 /usr/local/bin/redis-server 127.0.0.1:6402
+root      4438  3585  0 13:54 pts/0    00:00:00 grep --color=auto redis
+</code></pre>
+<h4 id="2-进入从节点-关联主节点"><a href="#2-进入从节点-关联主节点" class="headerlink" title="2. 进入从节点,关联主节点"></a>2. 进入从节点,关联主节点</h4><pre><code class="shell">[root@unreal-laser-1 utils]# redis-cli -p 6401
+127.0.0.1:6401&gt; help slaveof
+
+  SLAVEOF host port
+  summary: Make the server a replica of another instance, or promote it as master. Deprecated starting with Redis 5. Use REPLICAOF instead.
+  since: 1.0.0
+  group: server
+
+127.0.0.1:6401&gt; slaveof 127.0.0.1 6400
+OK
+127.0.0.1:6401&gt; exit
+[root@unreal-laser-1 utils]# redis-cli -p 6402
+127.0.0.1:6402&gt; slaveof 127.0.0.1 6400
+OK
+127.0.0.1:6402&gt; 
+</code></pre>
+<h4 id="2-2-修改配置文件来永久配置"><a href="#2-2-修改配置文件来永久配置" class="headerlink" title="2.2. 修改配置文件来永久配置"></a>2.2. 修改配置文件来永久配置</h4><pre><code class="shell"># 主节点的ip:端口
+replicaof &lt;masterip&gt; &lt;masterport&gt;
+# 主节点的密码
+masterauth
+# 复制主节点信息时,服务是否对外提供旧的数据.
+replica-serve-stale-data yes
+# 从节点只读
+replica-read-only yes
+# 同步文件时直接通过网络还是先保存在磁盘再通过网络.
+repl-diskless-sync no
+</code></pre>
+<p>2.3 启动redis服务时就带上跟随节点</p>
+<pre><code class="shell">redis-cli /etc/redis/6401.conf --replicof 172.0.0.1 6400 
+</code></pre>
+<h4 id="3-查看节点信息"><a href="#3-查看节点信息" class="headerlink" title="3. 查看节点信息"></a>3. 查看节点信息</h4><pre><code class="shell">
+127.0.0.1:6401&gt; info replication
+# Replication
+role:slave
+master_host:127.0.0.1
+master_port:6400
+master_link_status:up
+master_last_io_seconds_ago:9
+master_sync_in_progress:0
+slave_repl_offset:1108
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_replid:0836b25f984c6dfeb7618db88ec426b31c103558
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:1108
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:1108
+</code></pre>
+<h2 id="docker-安装"><a href="#docker-安装" class="headerlink" title="docker 安装"></a>docker 安装</h2><h3 id="docker-单节点"><a href="#docker-单节点" class="headerlink" title="docker 单节点"></a>docker 单节点</h3><h4 id="1-拉取镜像"><a href="#1-拉取镜像" class="headerlink" title="1. 拉取镜像"></a>1. 拉取镜像</h4><pre><code class="shell">docker pull redis
+</code></pre>
+<h4 id="2-设置挂载目录"><a href="#2-设置挂载目录" class="headerlink" title="2. 设置挂载目录"></a>2. 设置挂载目录</h4><p> 为防止容器被重建,需要本地化配置文件与日志.</p>
+<p>1）、挂载redis的配置文件,  liunx 下redis.conf文件位置： /data/redis/single/redis.conf</p>
+<p>2）、挂载redis 的持久化文件（为了数据的持久化）, liunx 下redis的data文件位置 ： /data/redis/single/data</p>
+<h4 id="3-启动容器并挂载文件夹"><a href="#3-启动容器并挂载文件夹" class="headerlink" title="3. 启动容器并挂载文件夹"></a>3. 启动容器并挂载文件夹</h4><pre><code class="shell">docker run --restart=always --log-opt max-size=100m --log-opt max-file=2 -p 6379:6379 --name myredis -v /data/redis/single/redis.conf:/etc/redis/redis.conf -v /data/redis/single/data:/data -d redis redis-server /etc/redis/redis.conf  --appendonly yes  --requirepass 1234qwer
+
+- restart=always :开机自启
+--log-opt :日志配置,大小100M,两个文件
+--name myredis :容器名称
+-v 数据挂载 : 将配置文件与数据挂载到实体机上.
+-d redis :后台启动
+--appendonly yes : 开启aof持久化日志.
+--requirepass 1234qwer :配置redis密码
+</code></pre>
+<h3 id="docker-集群安装"><a href="#docker-集群安装" class="headerlink" title="docker 集群安装"></a>docker 集群安装</h3><h4 id="1-创建实例"><a href="#1-创建实例" class="headerlink" title="1. 创建实例"></a>1. 创建实例</h4><pre><code class="shell">root@空痕影的matebook:~# docker create --name redis01 -p 6410:6379  redis --cluster-enabled yes
+d53a5cf3a96dad49918b8b4058d1498bef600ed5f3db767c6a31f85affe72ca0
+root@空痕影的matebook:~# docker create --name redis02 -p 6411:6379  redis --cluster-enabled yes
+8bc4e7878fb4ea1824088c6852e962606f71c4834e5d866a06ce175b5edfe6ea
+root@空痕影的matebook:~# docker create --name redis03 -p 6412:6379  redis --cluster-enabled yes
+0adc8c6f6ab8fb4b5f18c03981f2412b82841021ea1f5c1315a7c601637500c9
+root@空痕影的matebook:~# docker create --name redis04 -p 6413:6379  redis --cluster-enabled yes
+0f540dd6daa9f0eccc59afea290d906e6564a12f27d15e0ca3b909ba34fd4a28
+root@空痕影的matebook:~# docker create --name redis05 -p 6414:6379  redis --cluster-enabled yes
+7f68463fd648a0a152377344b469973380d36370972c0851f577621b13475721
+root@空痕影的matebook:~# docker create --name redis06 -p 6415:6379  redis --cluster-enabled yes
+44d7d44c2e6577d48f558fe56fa305916504cee0af7af2ac8d2f9a405d3c7663
+</code></pre>
+<h4 id="2-启动实例"><a href="#2-启动实例" class="headerlink" title="2. 启动实例"></a>2. 启动实例</h4><pre><code class="shell">root@空痕影的matebook:~# docker start redis01 redis02 redis03 redis04 redis05 redis06
+redis01
+redis02
+redis03
+redis04
+redis05
+redis06
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS         PORTS                    NAMES
+44d7d44c2e65   redis     &quot;docker-entrypoint.s…&quot;   About a minute ago   Up 2 seconds   0.0.0.0:6415-&gt;6379/tcp   redis06
+7f68463fd648   redis     &quot;docker-entrypoint.s…&quot;   About a minute ago   Up 3 seconds   0.0.0.0:6414-&gt;6379/tcp   redis05
+0f540dd6daa9   redis     &quot;docker-entrypoint.s…&quot;   About a minute ago   Up 4 seconds   0.0.0.0:6413-&gt;6379/tcp   redis04
+0adc8c6f6ab8   redis     &quot;docker-entrypoint.s…&quot;   About a minute ago   Up 5 seconds   0.0.0.0:6412-&gt;6379/tcp   redis03
+8bc4e7878fb4   redis     &quot;docker-entrypoint.s…&quot;   2 minutes ago        Up 5 seconds   0.0.0.0:6411-&gt;6379/tcp   redis02
+d53a5cf3a96d   redis     &quot;docker-entrypoint.s…&quot;   2 minutes ago        Up 6 seconds   0.0.0.0:6410-&gt;6379/tcp   redis01
+</code></pre>
+<h4 id="3-添加网络"><a href="#3-添加网络" class="headerlink" title="3. 添加网络"></a>3. 添加网络</h4><pre><code class="shell">root@空痕影的matebook:~# docker network connect redis redis01
+root@空痕影的matebook:~# docker network connect redis redis02
+root@空痕影的matebook:~# docker network connect redis redis03
+root@空痕影的matebook:~# docker network connect redis redis04
+root@空痕影的matebook:~# docker network connect redis redis05    
+root@空痕影的matebook:~# docker network connect redis redis06
+</code></pre>
+<h4 id="4-组建集群"><a href="#4-组建集群" class="headerlink" title="4.组建集群."></a>4.组建集群.</h4><pre><code class="shell">root@空痕影的matebook:~# docker exec -it redis01 redis-cli --cluster create redis01:6379 redis02:6379 redis03:6379 redis04:6379 redis05:6379 redis06:6379 --cluster-replicas 1
+&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...
+Master[0] -&gt; Slots 0 - 5460
+Master[1] -&gt; Slots 5461 - 10922
+Master[2] -&gt; Slots 10923 - 16383
+Adding replica redis05:6379 to redis01:6379
+Adding replica redis06:6379 to redis02:6379
+Adding replica redis04:6379 to redis03:6379
+M: 48d8ca861c9a9c851eadecd85bc6e0b079b0aefc redis01:6379
+   slots:[0-5460] (5461 slots) master
+M: 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 redis02:6379
+   slots:[5461-10922] (5462 slots) master
+M: 54a71415c0d526fdf3ce878e571c77f03182a3d4 redis03:6379
+   slots:[10923-16383] (5461 slots) master
+S: d5d1eee4b7aadfcee66c15e3ce96560b28016398 redis04:6379
+   replicates 54a71415c0d526fdf3ce878e571c77f03182a3d4
+S: 8d02be58d0d941742a02b1a0a564239087c95c31 redis05:6379
+   replicates 48d8ca861c9a9c851eadecd85bc6e0b079b0aefc
+S: 9be0891269c835f4953693acac6e1833041e0453 redis06:6379
+   replicates 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9
+Can I set the above configuration? (type &#39;yes&#39; to accept): yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+....
+&gt;&gt;&gt; Performing Cluster Check (using node redis01:6379)
+M: 48d8ca861c9a9c851eadecd85bc6e0b079b0aefc redis01:6379
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: d5d1eee4b7aadfcee66c15e3ce96560b28016398 172.21.0.5:6379
+   slots: (0 slots) slave
+   replicates 54a71415c0d526fdf3ce878e571c77f03182a3d4
+S: 9be0891269c835f4953693acac6e1833041e0453 172.21.0.7:6379
+   slots: (0 slots) slave
+   replicates 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9
+M: 54a71415c0d526fdf3ce878e571c77f03182a3d4 172.21.0.4:6379
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+M: 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 172.21.0.3:6379
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: 8d02be58d0d941742a02b1a0a564239087c95c31 172.21.0.6:6379
+   slots: (0 slots) slave
+   replicates 48d8ca861c9a9c851eadecd85bc6e0b079b0aefc
+[OK] All nodes agree about slots configuration.
+&gt;&gt;&gt; Check for open slots...
+&gt;&gt;&gt; Check slots coverage...
+[OK] All 16384 slots covered.
+</code></pre>
+<h4 id="5-查看集群情况"><a href="#5-查看集群情况" class="headerlink" title="5. 查看集群情况"></a>5. 查看集群情况</h4><pre><code class="bash">root@空痕影的matebook:~# /usr/local/redis/bin/redis-cli -p 6410
+127.0.0.1:6410&gt; cluster nodes
+d5d1eee4b7aadfcee66c15e3ce96560b28016398 172.21.0.5:6379@16379 slave 54a71415c0d526fdf3ce878e571c77f03182a3d4 0 1656229105755 3 connected
+9be0891269c835f4953693acac6e1833041e0453 172.21.0.7:6379@16379 slave 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 0 1656229103000 2 connected
+48d8ca861c9a9c851eadecd85bc6e0b079b0aefc 172.21.0.2:6379@16379 myself,master - 0 1656229103000 1 connected 0-5460
+54a71415c0d526fdf3ce878e571c77f03182a3d4 172.21.0.4:6379@16379 master - 0 1656229103749 3 connected 10923-16383
+3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 172.21.0.3:6379@16379 master - 0 1656229104752 2 connected 5461-10922
+8d02be58d0d941742a02b1a0a564239087c95c31 172.21.0.6:6379@16379 slave 48d8ca861c9a9c851eadecd85bc6e0b079b0aefc 0 1656229104000 1 connected
+127.0.0.1:6410&gt; cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:6
+cluster_size:3
+cluster_current_epoch:6
+cluster_my_epoch:1
+cluster_stats_messages_ping_sent:634
+cluster_stats_messages_pong_sent:650
+cluster_stats_messages_sent:1284
+cluster_stats_messages_ping_received:645
+cluster_stats_messages_pong_received:634
+cluster_stats_messages_meet_received:5
+cluster_stats_messages_received:1284
+total_cluster_links_buffer_limit_exceeded:0
+</code></pre>
+<h3 id="6-服务挂机实验"><a href="#6-服务挂机实验" class="headerlink" title="6.服务挂机实验"></a>6.服务挂机实验</h3><pre><code class="shell"># 关闭redis01 内网id为127.21.0.2
+root@空痕影的matebook:~# docker rm -f redis01
+redis01
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                    NAMES
+44d7d44c2e65   redis     &quot;docker-entrypoint.s…&quot;   23 minutes ago   Up 22 minutes   0.0.0.0:6415-&gt;6379/tcp   redis06
+7f68463fd648   redis     &quot;docker-entrypoint.s…&quot;   23 minutes ago   Up 22 minutes   0.0.0.0:6414-&gt;6379/tcp   redis05
+0f540dd6daa9   redis     &quot;docker-entrypoint.s…&quot;   23 minutes ago   Up 22 minutes   0.0.0.0:6413-&gt;6379/tcp   redis04
+0adc8c6f6ab8   redis     &quot;docker-entrypoint.s…&quot;   23 minutes ago   Up 22 minutes   0.0.0.0:6412-&gt;6379/tcp   redis03
+8bc4e7878fb4   redis     &quot;docker-entrypoint.s…&quot;   24 minutes ago   Up 22 minutes   0.0.0.0:6411-&gt;6379/tcp   redis02
+
+# 通过其他redis客户端查看集群信息,发现ndoe01被打上了fail标签,且node01的从节点redis05:127.21.0.6.自动升级为master,并提供服务
+root@空痕影的matebook:~# /usr/local/redis/bin/redis-cli -c -p 6411
+127.0.0.1:6411&gt; cluster nodes
+d5d1eee4b7aadfcee66c15e3ce96560b28016398 172.21.0.5:6379@16379 slave 54a71415c0d526fdf3ce878e571c77f03182a3d4 0 1656229328000 3 connected
+8d02be58d0d941742a02b1a0a564239087c95c31 172.21.0.6:6379@16379 master - 0 1656229329392 7 connected 0-5460
+3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 172.21.0.3:6379@16379 myself,master - 0 1656229330000 2 connected 5461-10922
+9be0891269c835f4953693acac6e1833041e0453 172.21.0.7:6379@16379 slave 3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 0 1656229330396 2 connected
+54a71415c0d526fdf3ce878e571c77f03182a3d4 172.21.0.4:6379@16379 master - 0 1656229328389 3 connected 10923-16383
+48d8ca861c9a9c851eadecd85bc6e0b079b0aefc 172.21.0.2:6379@16379 master,fail - 1656229298278 1656229293000 1 connected
+127.0.0.1:6411&gt; exit
+
+# 关闭redis02 内网id为127.21.0.3
+root@空痕影的matebook:~# docker rm -f redis02
+redis02
+
+# 通过其他redis客户端查看集群信息,发现ndoe02被打上了fail标签,且node01的从节点redis05:127.21.0.7.自动升级为master,并提供服务
+root@空痕影的matebook:~# /usr/local/redis/bin/redis-cli -c -p 6412
+127.0.0.1:6412&gt; cluster nodes
+9be0891269c835f4953693acac6e1833041e0453 172.21.0.7:6379@16379 master - 0 1656229415476 8 connected 5461-10922
+54a71415c0d526fdf3ce878e571c77f03182a3d4 172.21.0.4:6379@16379 myself,master - 0 1656229414000 3 connected 10923-16383
+8d02be58d0d941742a02b1a0a564239087c95c31 172.21.0.6:6379@16379 master - 0 1656229416480 7 connected 0-5460
+3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 172.21.0.3:6379@16379 master,fail - 1656229394394 1656229391000 2 connected
+48d8ca861c9a9c851eadecd85bc6e0b079b0aefc 172.21.0.2:6379@16379 master,fail - 1656229300077 1656229296064 1 connected
+d5d1eee4b7aadfcee66c15e3ce96560b28016398 172.21.0.5:6379@16379 slave 54a71415c0d526fdf3ce878e571c77f03182a3d4 0 1656229413470 3 connected
+127.0.0.1:6412&gt; exit
+
+# 关闭redis02 内网id为127.21.0.4
+root@空痕影的matebook:~# docker rm -f redis03
+redis03
+
+# 通过其他redis客户端查看集群信息,发现ndoe03被打上了fail标签,且node01的从节点redis05:127.21.0.7.自动升级为master,并提供服务
+root@空痕影的matebook:~# /usr/local/redis/bin/redis-cli -c -p 6413
+127.0.0.1:6413&gt; cluster nodes
+d5d1eee4b7aadfcee66c15e3ce96560b28016398 172.21.0.5:6379@16379 myself,slave 54a71415c0d526fdf3ce878e571c77f03182a3d4 0 1656229439000 3 connected
+54a71415c0d526fdf3ce878e571c77f03182a3d4 172.21.0.4:6379@16379 master - 1656229432221 1656229430213 3 connected 10923-16383
+3ec70dc57ed3e54a4591e9feb20c7f4be97074e9 172.21.0.3:6379@16379 master,fail - 1656229396096 1656229391077 2 connected
+9be0891269c835f4953693acac6e1833041e0453 172.21.0.7:6379@16379 master - 0 1656229440245 8 connected 5461-10922
+48d8ca861c9a9c851eadecd85bc6e0b079b0aefc 172.21.0.2:6379@16379 master,fail - 1656229298773 1656229296000 1 connected
+8d02be58d0d941742a02b1a0a564239087c95c31 172.21.0.6:6379@16379 master - 0 1656229438240 7 connected 0-5460
+127.0.0.1:6413&gt; set k2 v2
+(error) MOVED 449 172.21.0.6:6379
+127.0.0.1:6413&gt; exit
+root@空痕影的matebook:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                    NAMES
+44d7d44c2e65   redis     &quot;docker-entrypoint.s…&quot;   27 minutes ago   Up 26 minutes   0.0.0.0:6415-&gt;6379/tcp   redis06
+7f68463fd648   redis     &quot;docker-entrypoint.s…&quot;   27 minutes ago   Up 26 minutes   0.0.0.0:6414-&gt;6379/tcp   redis05
+0f540dd6daa9   redis     &quot;docker-entrypoint.s…&quot;   27 minutes ago   Up 26 minutes   0.0.0.0:6413-&gt;6379/tcp   redis04
+root@空痕影的matebook:~# /usr/local/redis/bin/redis-cli -c -p 6413
+127.0.0.1:6413&gt; set k1 v2
+OK
+</code></pre>
+<p><strong>注意: 本集群智能再redis的桥接网络下使用.因为外网连不上容器内的ip</strong></p>
+<p>如有需要,则将网络定义为local.</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">源码安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%8A%82%E7%82%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">单节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%9C%BA%E5%88%86%E5%B8%83%E5%BC%8F-%E5%B7%A5%E5%85%B7%E5%88%9B%E5%BB%BA"><span class="toc-number">1.1.2.</span> <span class="toc-text">单机分布式(工具创建)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%8F%AF%E5%A4%9A%E8%8A%82%E7%82%B9%E5%88%86%E5%B8%83-%E5%91%BD%E4%BB%A4%E5%90%AF%E5%8A%A8"><span class="toc-number">1.1.3.</span> <span class="toc-text">分布式可多节点分布(命令启动)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E7%89%88"><span class="toc-number">1.1.4.</span> <span class="toc-text">主从复制版</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">docker 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-%E5%8D%95%E8%8A%82%E7%82%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text">docker 单节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.2.</span> <span class="toc-text">docker 集群安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%9C%8D%E5%8A%A1%E6%8C%82%E6%9C%BA%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.2.3.</span> <span class="toc-text">6.服务挂机实验</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

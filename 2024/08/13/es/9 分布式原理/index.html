@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>分布式原理 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="分布式原理单节点坏处
+服务性能受节点主机性能限制
+可用性差，主机或服务挂了就无法使用
+节点服务变更困难，若碰到需要重启服务才能生效的配置
+
+分布式的优缺点
+高可用性：集群可容忍部分节点宕机而保持服务,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">分布式原理</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/es"><b>「
+                    </b>ES<b> 」</b></a>
+                
+                八月 13, 2024
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2024/08/13/es/9%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%8E%9F%E7%90%86/" title="分布式原理" class="">分布式原理</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    23k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    21 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/es/" rel="tag">es</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="分布式原理"><a href="#分布式原理" class="headerlink" title="分布式原理"></a>分布式原理</h1><h2 id="单节点坏处"><a href="#单节点坏处" class="headerlink" title="单节点坏处"></a>单节点坏处</h2><ul>
+<li>服务性能受节点主机性能限制</li>
+<li>可用性差，主机或服务挂了就无法使用</li>
+<li>节点服务变更困难，若碰到需要重启服务才能生效的配置</li>
+</ul>
+<h2 id="分布式的优缺点"><a href="#分布式的优缺点" class="headerlink" title="分布式的优缺点"></a>分布式的优缺点</h2><ul>
+<li>高可用性：集群可容忍部分节点宕机而保持服务的可用性和数据的完整性</li>
+<li>易扩展：当集群的性能不满足业务要求时，可以方便快速的扩容集群，而无需停止服务。</li>
+<li>高性能：集群通过负载均衡器分摊并发请求压力，可以大大提高集群的吞吐能力和并发能力。</li>
+</ul>
+<p>但相应的,由于节点的增加,维护难度相应提升.</p>
+<h2 id="es服务环境"><a href="#es服务环境" class="headerlink" title="es服务环境"></a>es服务环境</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>elasticsearch.yml中可配置项</p>
+<h4 id="关键配置"><a href="#关键配置" class="headerlink" title="关键配置"></a>关键配置</h4><ul>
+<li>cluster.name: 集群名称，唯一确定一个集群。</li>
+<li>node.name：节点名称，一个集群中的节点名称是唯一固定的，不同节点不能同名。</li>
+<li>node.master: 主节点属性值</li>
+<li>node.data: 数据节点属性值</li>
+<li>network.host： 本节点的绑定ip，及提供服务的ip地址</li>
+<li>http.port: 本节点的http端口</li>
+<li>transport.port：9300——集群之间通信的端口，若不指定默认：9300</li>
+<li>discovery.seed_hosts: 节点发现需要配置一些种子节点，与7.X之前老版本：disvoery.zen.ping.unicast.hosts类似，一般配置集群中的全部节点</li>
+<li>cluster.initial_master_nodes：指定集群初次选举中用到的具有主节点资格的节点，称为集群引导，只在第一次形成集群时需要。</li>
+</ul>
+<h4 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h4><p>​    <code>node.attr.&#123;attribute&#125;: value</code> 自定义节点属性.可用于后续的索引分片分配配置.    可使用<code>GET _cat/nodeattrs?v</code>来查看节点属性.</p>
+<h5 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h5><ul>
+<li><p>通过编辑elasticsearch.yml 配置.</p>
+<pre><code class="yaml">node.attr.rack_id: rack_one
+</code></pre>
+</li>
+<li><p>通过在启动节点时使用命令’-E’设置参数.</p>
+<pre><code class="bash">./bin/elasticsearch -Enode.attr.rack_id=rack_one
+</code></pre>
+</li>
+</ul>
+<h5 id="索引级配置使用"><a href="#索引级配置使用" class="headerlink" title="索引级配置使用"></a>索引级配置使用</h5><ul>
+<li><p>index.routing.allocation.include.{attribute}：表示索引可以分配在包含多个值中其中一个的节点上。</p>
+</li>
+<li><p>index.routing.allocation.require.{attribute}：表示索引要分配在包含索引指定值的节点上（通常一般设置一个值）。</p>
+</li>
+<li><p>index.routing.allocation.exclude.{attribute}：表示索引只能分配在不包含所有指定值的节点上。</p>
+<p>eg: 将kong_v2索引只分配到node4与node5上.</p>
+<pre><code class="elm">PUT kong_v2
+&#123;
+  &quot;settings&quot;: &#123;
+    &quot;number_of_shards&quot;: 3,
+    &quot;number_of_replicas&quot;: 1,
+    &quot;index.routing.allocation.include._name&quot;: &quot;node4,node5&quot;
+  &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+<h5 id="集群级配置使用"><a href="#集群级配置使用" class="headerlink" title="集群级配置使用"></a>集群级配置使用</h5><p>elasticsearch修改集群范围设置提供两种方式，</p>
+<ul>
+<li>persistent：永久性修改，persistent相关的修改保存在了<code>/path.data/cluster.name/nodes/0/_state/global-n.st</code>，如果想删除设置，删除此文件即可。</li>
+<li>transient：集群重启后失效。</li>
+</ul>
+<p>使用参数</p>
+<ul>
+<li><p>cluster.routing.allocation.include.{attribute}: 将分片分配给至少具有 逗号分隔的值。</p>
+</li>
+<li><p>cluster.routing.allocation.require.{attribute}:  仅将分片分配给具有<em>所有</em> 逗号分隔的值。</p>
+</li>
+<li><p>cluster.routing.allocation.exclude.{attribute}: 不要将分片分配给具有<em>任何</em> 逗号分隔的值。</p>
+</li>
+<li><p>cluster.routing.allocation.awareness.attributes: 强制指定感知属性</p>
+</li>
+</ul>
+<pre><code class="elm">PUT _cluster/settings
+&#123;
+  &quot;persistent&quot;: &#123;
+    &quot;cluster.routing.allocation.awareness.attributes&quot;: &quot;rack_id&quot; // 设置感知属性为`rack_id`
+  &#125;
+&#125;
+</code></pre>
+<h3 id="两种模式-开发模式与生产模式"><a href="#两种模式-开发模式与生产模式" class="headerlink" title="两种模式:开发模式与生产模式"></a>两种模式:开发模式与生产模式</h3><ul>
+<li><p>开发模式(单节点模式): 开发模式是默认配置（未配置集群发现设置），如果用户只是出于学习目的，而引导检查会把很多用户挡在门外，所以ES提供了一个设置项discovery.type=single-node。此项配置为指定节点为单节点发现以绕过引导检查。</p>
+<p>​    <img src="es.assets%5C%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F.png" alt="单节点部署方式"></p>
+</li>
+<li><p>生产模式(集群模式): 当用户修改了有关集群的相关配置会触发生产模式，在生产模式下，服务启动会触发ES的引导检查或者叫启动检查（bootstrap checks），所谓引导检查就是在服务启动之前对一些重要的配置项进行检查，检查其配置值是否是合理的。引导检查包括对JVM大小、内存锁、虚拟内存、最大线程数、集群发现相关配置等相关的检查，如果某一项或者几项的配置不合理，ES会拒绝启动服务，并且在开发模式下的某些警告信息会升级成错误信息输出。引导检查十分严格，之所以宁可拒绝服务也要阻止用户启动服务是为了防止用户在对ES的基本使用不了解的前提下启动服务而导致的后期性能问题无法解决或者解决起来很麻烦。因为一旦服务以某种不合理的配置启动，时间久了之后可能会产生较大的性能问题，但此时集群已经变得难以维护，ES为了避免这种情况而做出了引导检查的设置。这种设定虽然增加了用户的使用门槛，但是避免了日后产生更大的问题.</p>
+<p>​    <img src="es.assets%5C%E5%A4%9A%E8%8A%82%E7%82%B9%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F.png" alt="多节点分布式部署方式"></p>
+</li>
+</ul>
+<h3 id="主从架构"><a href="#主从架构" class="headerlink" title="主从架构"></a>主从架构</h3><p>Elasticsearch为什么使用主从模式（Leader/Follower）？Elasticsearch使用的主从架构模式，其实除此之外，还可以使用分布式哈希表（DHT），其区别在于：</p>
+<ul>
+<li>主从模式适合节点数量不多，并且节点的状态改变（加入集群或者离开集群）不频繁的情况。</li>
+<li>分布式哈希表支持每小时数千个节点的加入或离开，响应约为4-10跳。</li>
+</ul>
+<p>ES的应用场景一般来说单个集群中一般不会有太多节点（一般来说不超过一千个），节点的数量远远小于单个节点（只的是主节点）所能维护的连接数。并且通常主节点不必经常处理节点的加入和离开，处于相对稳定的对等网络中，因此使用主从模式。</p>
+<h3 id="ES节点分类"><a href="#ES节点分类" class="headerlink" title="ES节点分类"></a>ES节点分类</h3><h4 id="候选节点-role-master"><a href="#候选节点-role-master" class="headerlink" title="候选节点(role=master)"></a>候选节点(role=master)</h4><p>master节点是那些在集群状态发布期间参与选举并执行某些任务的节点，配置了master角色的节点都是有效的投票节点，可以参与选举也可以投票.</p>
+<p>硬件要求: 高CPU,高内存,高网络,低存储</p>
+<h4 id="仅投票节点-role-master-voting-only"><a href="#仅投票节点-role-master-voting-only" class="headerlink" title="仅投票节点(role=master,voting_only)"></a>仅投票节点(role=master,voting_only)</h4><p>​    配置了master和voting_only角色的节点将成为仅投票节点，仅投票节点虽然也是候选节点，但是在选举过程中仅可以投票而不参与竞选。不过仅投票节点可以同时也是数据节点，这样的话，其不具备被选举为Master的资格，但是参与投票，可以在选举过程中发挥关键票的作用。常常作用在需要平衡票数或防止脑裂.</p>
+<p>职责:</p>
+<ul>
+<li>当现有票数不足以选出Master的时候，充当决胜票。</li>
+<li>在小型集群中仅投票节点可同时作为数据节点避免资源浪费</li>
+</ul>
+<p>硬件要求: 高CPU,低内存,高网络,低存储</p>
+<h4 id="主节点-active-master"><a href="#主节点-active-master" class="headerlink" title="主节点[active master]"></a>主节点[active master]</h4><p>​    主节点是从候选节点中选举得出,任何不是<code>voting-only</code>的<code>master</code>节点都可以被选举为<code>active master</code>.</p>
+<p>职责:</p>
+<ul>
+<li>创建或删除索引</li>
+<li>规划和执行分片策略</li>
+<li>发布、修改集群状态</li>
+</ul>
+<p>要求:</p>
+<ul>
+<li>避免重负载：主节点负责轻量级集群范围的操作，例如创建或删除索引、跟踪哪些节点是集群的一部分以及决定将哪些分片分配给哪些节点。拥有一个稳定的主节点对于集群健康很重要。当选的主节点拥有履行其职责所需的资源，这对于集群的健康非常重要。如果所选的主节点承载了其他任务，那么集群将不能很好地运行。避免 master 被其他任务超载的最可靠方法是将所有符合 master 的节点配置为仅具有 master 角色的专用 master 节点，使它们能够专注于管理集群。专用master节点仍将充当协调节点，将请求从客户端路由到集群中的其他节点，但是不要以负载均衡器的目的而设置候选节点.</li>
+<li>持久化集群元数据: 主节点必须有一个<code>path.data</code>目录，其内容在重启后仍然存在，就像数据节点一样，因为这是存储集群元数据的地方。集群元数据描述了如何读取存储在数据节点上的数据，因此如果丢失，则无法读取存储在数据节点上的数据。</li>
+<li>高可用性 (HA): 集群需要至少三个候选节点，其中至少两个不是仅投票节点。这样即使其中一个节点发生故障，也可以保证剩下的节点能够选举出一个主节点。</li>
+</ul>
+<p>硬件要求: 高CPU,高内存,高网络,低存储.</p>
+<h4 id="数据节点-role-data"><a href="#数据节点-role-data" class="headerlink" title="数据节点(role=data)"></a>数据节点(role=data)</h4><p>数据节点保存包含已编入索引的文档的分片。数据节点处理数据相关操作，如 CRUD、搜索和聚合。这些操作是 I/O 密集型、内存密集型和 CPU 密集型的。</p>
+<p>硬件要求: 高CPU,高内存,高网络,高且快存储.</p>
+<h2 id="ES模块"><a href="#ES模块" class="headerlink" title="ES模块"></a>ES模块</h2><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Cluster模块是Master节点执行集群管理的封装实现，管理集群状态，维护集群级（除了集群级，还有索引级分片级等级别）的配置信息。其主要功能包括：</p>
+<ul>
+<li>管理集群状态，将新生成的集群状态发布到集群的所有节点</li>
+<li>调用allocation模块执行分片分配感知，决策分片分配行为</li>
+<li>在集群各个节点直接迁移分片，保证数据平衡，shard rebalance</li>
+</ul>
+<h3 id="Allocation"><a href="#Allocation" class="headerlink" title="Allocation"></a>Allocation</h3><p>此模块是实现了对节点分片的分配感知策略，新节点加入离开、动态扩容都需要分片分配感知，此模块由主节点调用，常见的使用场景如：跨机架强制感知实现高可用，冷热集群架构设计等。</p>
+<h3 id="Bootstrap"><a href="#Bootstrap" class="headerlink" title="Bootstrap"></a>Bootstrap</h3><p>引导检查模块，</p>
+<p>  检查项:</p>
+<ul>
+<li><strong>堆大小检查</strong></li>
+<li><strong>文件描述符检查</strong></li>
+<li><strong>内存锁检查</strong></li>
+<li><strong>最大线程数检查</strong></li>
+<li><strong>最大文件大小检查</strong></li>
+<li>虚拟内存检查</li>
+<li>文件系统映射数检查</li>
+<li>客户端JVM检查</li>
+<li>串行收集器检查</li>
+<li>系统调用过滤器检查</li>
+<li>OnError和OnOOMError检查</li>
+<li>早期访问检查</li>
+<li>所有权限检查</li>
+<li><strong>发现配置检查</strong></li>
+</ul>
+<h3 id="Ingest"><a href="#Ingest" class="headerlink" title="Ingest"></a>Ingest</h3><p>预处理模块负责数据索引之前的一些预操作，比如数据类型处理、数据的结构转换等，很多场景下课替代logstash处理管道消息，Elastic认证考试考点之一。</p>
+<h3 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h3><p>监控功能提供了一种方式来了解 Elasticsearch 集群的运行状况和性能</p>
+<h3 id="Discovery"><a href="#Discovery" class="headerlink" title="Discovery"></a>Discovery</h3><p>发现模块负责管理如发现集群中新加入的节点，或者节点退出之后将状态信息移除，起作用类似于ZooKeeper。发现木块是用于elasticsearch和的内置发现模块 默认值。它提供单播发现，但可以扩展到 支持云环境和其他形式的发现</p>
+<h3 id="Gateway"><a href="#Gateway" class="headerlink" title="Gateway"></a>Gateway</h3><p>负责说对收到Master广播下来的集群状态数据的持久化存储，并在集群完全重启时恢复他们</p>
+<h3 id="Indices"><a href="#Indices" class="headerlink" title="Indices"></a>Indices</h3><p>索引模块管理全局级索引配置，不包括索引级及索引以下级。集群启动阶段需要主副本分片恢复就是在这个模块完成的</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>HTTP模块允许通过JSON over HTTP的方式访问ES的API，HTTP模块本质上是完全异步的，这一位置没有阻塞线程等待响应。使用异步通信进行HTTP的好处是解决了C10k的问题。</p>
+<h3 id="Transport"><a href="#Transport" class="headerlink" title="Transport"></a>Transport</h3><p>传输模块用于集群内部节点通信。传输模块使用TCP协议，每个节点都与其他节点维持若干个TCP长连接，通信本质也是完全异步的。</p>
+<h2 id="分片-shard"><a href="#分片-shard" class="headerlink" title="分片(shard)"></a>分片(shard)</h2><p>Shard即数据分片，是ES的数据载体。在ES中数据分为primary shard（主分片）和replica shard（副本分片）:</p>
+<ul>
+<li>primary承载单个索引的一部分数据，分布于各个节点，</li>
+<li>replica为某个primary的副本，即备份。</li>
+</ul>
+<p>分片分配的原则是尽量均匀的分配在集群中的各个节点，以最大程度降低部分shard在出现意外时对整个集群乃至服务造成的影响。</p>
+<h3 id="分片创建策略"><a href="#分片创建策略" class="headerlink" title="分片创建策略"></a>分片创建策略</h3><p>ES使用数据分片（shard）来提高服务的可用性，将数据分散保存在不同的节点上以降低当单个节点发生故障时对数据完整性的影响，同时使用副本（repiica）来保证数据的完整性。关于分片的默认分配策略，在7.x之前，默认5个primary shard，每个primary shard默认分配一个replica，即5主1副，而7.x之后，默认1主1副.</p>
+<ul>
+<li>ES在分配单个索引的分片时会将每个分片尽可能分配到更多的节点上。</li>
+<li>Paimary只能在索引创建时配置数量，而replica可以在任何时间分配，并且primary支持读和写操作，而replica只支持客户端的读取操作，数据由es自动管理，从primary同步。</li>
+<li>ES不允许Primary和它的Replica放在同一个节点中，并且同一个节点不接受完全相同的两个Replica</li>
+<li>同一个节点允许多个索引的分片同时存在。</li>
+</ul>
+<p>eg: 在3master,3data的集群中创建了一个分片为5,副本为2的索引<code>kong_v1</code>. es会尽可能的平衡分片的位置.</p>
+<p><img src="es.assets/%E7%B4%A2%E5%BC%95%E5%88%86%E5%8C%BA.png" alt="索引分区"></p>
+<h4 id="创建时分片数量建议"><a href="#创建时分片数量建议" class="headerlink" title="创建时分片数量建议"></a>创建时分片数量建议</h4><ul>
+<li><strong>避免分片过多</strong>：大多数搜索会命中多个分片。每个分片在单个 CPU 线程上运行搜索。虽然分片可以运行多个并发搜索，但跨大量分片的<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-threadpool.html">搜索</a>会耗尽节点的<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-threadpool.html">搜索线程池</a>。这会导致低吞吐量和缓慢的搜索速度。</li>
+<li><strong>分片越少越好</strong>：每个分片都使用内存和 CPU 资源。在大多数情况下，一小组大分片比许多小分片使用更少的资源。</li>
+<li><strong>分片的合理容量</strong>: 10GB-50GB。在索引的生命周期管理中，一般设置50GB为单个索引的最大阈值。</li>
+<li><strong>堆内存容量和分片数量的关联</strong>：小于20分片/每GB堆内存，一个节点可以容纳的分片数量与节点的堆内存成正比。<code>GET _cat/nodes?v=true&amp;h=heap.current</code> 可以通过该命令查询节点的堆内存情况.</li>
+<li><strong>避免重负载节点</strong>：如果分配给特定节点的分片过多，会造成当前节点为<strong>重负载节点</strong></li>
+</ul>
+<h4 id="索引分片分配：Index-Shard-Allocation"><a href="#索引分片分配：Index-Shard-Allocation" class="headerlink" title="索引分片分配：Index Shard Allocation"></a>索引分片分配：Index Shard Allocation</h4><h5 id="分片均衡策略：shard-rebalance"><a href="#分片均衡策略：shard-rebalance" class="headerlink" title="分片均衡策略：shard rebalance"></a>分片均衡策略：shard rebalance</h5><p>​    Elasticsearch 运行一个称为<strong>rebalancing</strong> 的自动过程，它在集群中的节点之间移动分片以改善其平衡。重新平衡遵循所有其他分片分配规则，例如<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-cluster.html#cluster-shard-allocation-filtering">分配过滤</a>和<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-cluster.html#forced-awareness">强制意识</a>，这可能会阻止它完全平衡集群。</p>
+<p><strong>cluster.routing.rebalance.enable</strong></p>
+<p>(<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/settings.html#dynamic-cluster-setting">动态</a>) 为特定类型的分片启用或禁用重新平衡：</p>
+<ul>
+<li><code>all</code> -（默认）允许对所有类型的分片进行分片平衡。</li>
+<li><code>primaries</code> - 只允许主分片的分片平衡。</li>
+<li><code>replicas</code> - 仅允许对副本分片进行分片平衡。</li>
+<li><code>none</code> - 任何索引都不允许进行任何类型的分片平衡。</li>
+</ul>
+<pre><code class="elm">PUT _cluster/settings
+&#123;
+    &quot;transient&quot;: &#123;
+        &quot;cluster.routing.rebalance.enable&quot;: &quot;all&quot;
+    &#125;
+&#125;
+</code></pre>
+<p><strong>cluster.routing.allocation.allow_rebalance</strong></p>
+<p>(<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/settings.html#dynamic-cluster-setting">动态</a>) 指定何时允许分片重新平衡：</p>
+<ul>
+<li><code>always</code> - 始终允许重新平衡。</li>
+<li><code>indices_primaries_active</code> - 仅当集群中的所有主节点都已分配时。</li>
+<li><code>indices_all_active</code> -（默认）仅当集群中的所有分片（主分片和副本）都被分配时。</li>
+</ul>
+<pre><code class="elm">PUT _cluster/settings
+&#123;
+    &quot;transient&quot;: &#123;
+        &quot;cluster.routing.allocation.allow_rebalance&quot;: &quot;always&quot;,
+        -- 执行分片重新平衡的并发数 默认是2.
+        &quot;cluster.routing.allocation.cluster_concurrent_rebalance&quot;: &quot;2&quot;
+    &#125;
+&#125;
+</code></pre>
+<h6 id="分片平衡规则"><a href="#分片平衡规则" class="headerlink" title="分片平衡规则"></a>分片平衡规则</h6><ul>
+<li><p><code>cluster.routing.allocation.balance.shard</code>:（动态）定义节点上分配的分片总数的权重因子（浮点数）。默认为<code>0.45f</code>.提高数值会增加集群节点中分片数量相等的趋势.</p>
+</li>
+<li><p><code>cluster.routing.allocation.balance.index</code>: （动态）定义分配在特定节点（浮点数）上的每个索引的分片数的权重因子。默认为0.55f. 提高数值会增加集群节点中,每个索引的分片数量相等趋势.</p>
+</li>
+<li><p><code>cluster.routing.allocation.balance.threshold</code>: （动态）应该执行的操作的最小优化值（非负浮点）。默认为<code>1.0f</code>. 提高数值集群在优化分片平衡方面不那么积极.</p>
+<p><strong>与磁盘相关的规则</strong></p>
+<p>当磁盘空间倾斜的时候，es需要自动调整。</p>
+<ul>
+<li><p><code>cluster.routing.allocation.disk.threshold_enabled</code>: （动态）默认为true。设置为false禁用磁盘分配决定器。</p>
+</li>
+<li><p><code>cluster.routing.allocation.disk.watermark.low</code>:  （动态）控制磁盘使用的低水位线。默认为0.85，这意味着 Elasticsearch 不会将分片分配给磁盘使用率超过 85% 的节点。也可用具体的存储大小指定,比如:500mb,100gb. 此参数对主分片无效.只对副本产生作用</p>
+</li>
+<li><p><code>cluster.routing.allocation.disk.watermark.high</code>: （动态）控制高水位线。它默认为0.9，这意味着 Elasticsearch 将尝试将分片从磁盘使用率高于 90% 的节点，开始挪分片去其他节点。</p>
+</li>
+<li><p><code>cluster.routing.allocation.disk.watermark.flood_stage</code>: （动态）控制洪峰水位线。它默认为0.95.当索引中有一块磁盘的超过洪峰线.索引将被锁定,只接受读取与删除请求,拒绝插入与更新请求. 被锁定的索引会被<code>index.blocks.read_only_allow_delete:true</code> 标记.</p>
+<pre><code class="elm">-- 取消read_only标记,使索引恢复新增能力.
+PUT kong_v2/_settings
+&#123;
+  &quot;index.blocks.read_only_allow_delete&quot;:null
+&#125;
+</code></pre>
+</li>
+<li><p><code>cluster.info.update.interval</code>:（动态）Elasticsearch 应该多久检查一次集群中每个节点的磁盘使用情况。默认为30s.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="延迟分配策略（默认1m）"><a href="#延迟分配策略（默认1m）" class="headerlink" title="延迟分配策略（默认1m）"></a>延迟分配策略（默认1m）</h5><p>当节点出于任何原因（有意或无意）离开集群时，主节点会做出以下反应</p>
+<ul>
+<li>将副本分片提升为主分片以替换节点上的任何主分片。</li>
+<li>分配副本分片以替换丢失的副本（假设有足够的节点）。</li>
+<li>在其余节点之间均匀地重新平衡分片。</li>
+</ul>
+<p>这些操作旨在通过确保尽快完全复制每个分片来保护集群免受数据丢失。即使我们在<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.2/recovery.html">节点级别</a>和<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.2/shards-allocation.html">集群级别</a>限制并发恢复 ，这种“分片洗牌”仍然会给集群带来很多额外的负载，如果丢失的节点可能很快就会返回，这可能是不必要的.</p>
+<h5 id="分片过滤-Shard-allocation-filtering"><a href="#分片过滤-Shard-allocation-filtering" class="headerlink" title="分片过滤: Shard allocation filtering"></a>分片过滤: Shard allocation filtering</h5><p>控制分片存在节点的位置</p>
+<ul>
+<li>index.routing.allocation.include.{attribute}：表示索引可以分配在包含多个值中其中一个的至少节点上。</li>
+<li>index.routing.allocation.require.{attribute}：表示索引要分配在包含索引指定值的节点上（通常一般设置一个值）。</li>
+<li>index.routing.allocation.exclude.{attribute}：表示索引只能分配在不包含所有指定值的节点上。</li>
+</ul>
+<pre><code class="elm">PUT kong_v2
+&#123;
+  &quot;settings&quot;: &#123;
+    &quot;number_of_shards&quot;: 3,
+    &quot;number_of_replicas&quot;: 1,
+    &quot;index.routing.allocation.include._name&quot;: &quot;node4,node5&quot;
+  &#125;
+&#125;
+</code></pre>
+<p><img src="es.assets/%E5%88%86%E7%89%87%E8%BF%87%E6%BB%A4.png" alt="分片过滤"></p>
+<h4 id="分片分配感知-Shard-Allocation-Awareness"><a href="#分片分配感知-Shard-Allocation-Awareness" class="headerlink" title="分片分配感知: Shard Allocation Awareness"></a>分片分配感知: Shard Allocation Awareness</h4><p>​    通过自定义节点属性作为感知属性，让 Elasticsearch 在分配分片时将物理硬件配置考虑在内。如果 Elasticsearch 知道哪些节点位于同一物理服务器上、同一机架中或同一区域中，则它可以分离主副本分片，以最大程度地降低在发生故障时丢失数据的风险。</p>
+<p>eg:</p>
+<ol>
+<li>在节点中设置自定义属性.rack_id: rack_one</li>
+</ol>
+<pre><code class="yaml">node.attr.rack_id: rack_one
+</code></pre>
+<ol start="2">
+<li>在创建索引前设置集群配置使用rack_id这个自定义参数.</li>
+</ol>
+<pre><code class="elm">PUT _cluster/settings
+&#123;
+  &quot;persistent&quot;: &#123;
+    &quot;cluster.routing.allocation.awareness.attributes&quot;: &quot;rack_id&quot;
+  &#125;
+&#125;
+</code></pre>
+<h4 id="强制感知策略：Forced-awareness"><a href="#强制感知策略：Forced-awareness" class="headerlink" title="强制感知策略：Forced awareness"></a>强制感知策略：Forced awareness</h4><p>​    默认情况下，如果一个区域发生故障，Elasticsearch 会将所有故障的副本分片分配给其他区域。但是剩余区域可能没有足够的性能冗余来承载这些分片。</p>
+<p>为了防止在发生故障时单个位置过载,可以配置强制感知策略来影像副本分片的分配位置.</p>
+<p>eg: </p>
+<pre><code class="elm">PUT _cluster/settings
+&#123;
+  &quot;persistent&quot;: &#123;
+      &quot;cluster.routing.allocation.awareness.attributes&quot;: &quot;zone&quot;,
+      &quot;cluster.routing.allocation.awareness.force.zone.values&quot;:&quot;zone1,zone2&quot;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="高可用性"><a href="#高可用性" class="headerlink" title="高可用性"></a>高可用性</h2><p>​    高可用性即：High Availability（HA），高可用性是分布式系统架构设计的重要因素之一，简单来说，可用性越高的集群在发生意外情况（如断电、节点宕机）的时候，服务发生故障而不可用的可能性越低，也就是降低了意外情况而对整体服务产生的影响的可能性.</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ul>
+<li>通过“分布式”的概念实现多个节点的负载均衡，并且使服务具备可扩展能力。</li>
+<li>通过针对分片、节点的一列策略降低单个故障点对整体服务产生的影响。</li>
+<li>通过<strong>容灾机制</strong>，尽可能把故障点还原，以恢复服务的最大可用性。</li>
+</ul>
+<h3 id="容灾机制"><a href="#容灾机制" class="headerlink" title="容灾机制"></a>容灾机制</h3><p>​    容错性可以理解系统容忍的局部发生异常情况的比率和当异常发生时自行恢复的能力。在<code>ES</code>中表现为对节点宕机的处理机制。</p>
+<p>步骤:</p>
+<ol>
+<li><strong>Master选举</strong>：选出集群中的Leader。</li>
+<li>Replica容错：新的<code>Active Master</code>会将丢失的Primary的某个Replica提升为Primary。</li>
+<li>尝试恢复故障节点：Master尝试恢复故障节点。</li>
+<li>数据同步：Master将宕机期间丢失的数据同步到重启节点对应的分片上去，从而使服务恢复正常。</li>
+</ol>
+<h3 id="高可用性集群"><a href="#高可用性集群" class="headerlink" title="高可用性集群"></a>高可用性集群</h3><p>​    高可用性的中心思想就是采取一切可能的策略，降低集群中任意一部分节点出现问题后导致服务整体不可用的概率。其包含数据的完整性，集群的存活概率以及选主等。</p>
+<h4 id="两节点集群"><a href="#两节点集群" class="headerlink" title="两节点集群"></a>两节点集群</h4><ul>
+<li>如果出于硬件成本考虑，集群中只允许有两个节点，那么一般来说最好把两个节点都设置成数据节点。您还应该通过设置索引确保每个分片都在两个节点上冗余存储。每个非可搜索快照索引上的<code>Number_of_replicas</code>为1。这是默认行为，但可能会被<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/index-templates.html">索引模板</a>覆盖。<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/index-modules.html#dynamic-index-settings">Auto-expand replicas</a>也可以达到同样的效果，但是在这么小的集群中没有必要使用这个功能。</li>
+<li>推荐在两个节点之一设置<code>node.master: false</code>明确告知其不具备候选节点资格。目的是为了确定哪个节点是主节点。集群可以容忍另一个不具备候选资格的节点的丢失。如果不做此设置，这时两个节点都会具有候选资格，但是其中一个节点如果宕机，由于选主需要票数过半（票数&gt;N/2+1），也就是票数必须是两票才能选出active master，所以会导致无法选主。此时集群无法容忍任何一个节点宕机</li>
+<li>默认情况下，ES会为每个节点分配所有角色，如果手动分配角色，一般建议为每个节点分配所有角色，如果其中一个节点宕机，另一个节点可以取而代之。</li>
+</ul>
+<h4 id="三节点集群-lt-HA的最低配置-gt"><a href="#三节点集群-lt-HA的最低配置-gt" class="headerlink" title="三节点集群 &lt;HA的最低配置&gt;"></a>三节点集群 &lt;HA的最低配置&gt;</h4><ul>
+<li>三节点部署：如果整个集群中所有节点一共只有三个，建议把三个节点全部部署为数据节点和候选节点。虽然active master节点一般只负责轻量级任务不做数据节点。但是通常来说三节点集群一般不会承载很大的业务量，也就不必考虑那么多了。这也是处于成本考虑不得已而为之。三节点集群的容错能力是1，即允许一台节点故障。</li>
+<li>二加一部署：即两个候选节点，一个仅投票节点，若干数据节点。这种配置的最大好处就是在保证高可用的前提下性价比更高，适用于小规模集群。由于在避免脑裂的前提下，要选举出主节点的最小节点数量是3，也就是选主的必要条件是票数过半也就是2票。而候选节点一般是不负责其他的任务的，也就不会为其分配data角色，那么集群通常会出现三个节点不存放数据的局面。此时会产生造成资源浪费。因为<code>active master</code>只存在一个，另外两个master作为候选节点，在及群众仅仅是充当了负载均衡器。为了避免这种资源浪费，通常的做法是把其中一个候选节点设置为仅投票节点，即<code>node.roles: [ data, master, voting_only ]</code>，此时，当前节点在选举过程中，仅有选举权而没有被选举权，这样就可以同时给他分配数据节点的角色，因为其不会被选举为<code>active master</code>。三节点集群中，三个节点必须都具有<code>master</code>角色，并且仅投票节点最多只能有一个。仅投票节点由叫<code>仲裁节点</code>起着<code>决胜票</code>的作用。</li>
+</ul>
+<h4 id="多节点集群"><a href="#多节点集群" class="headerlink" title="多节点集群"></a>多节点集群</h4><p>​    一旦集群增长到三个以上的节点，可以开始根据它们的职责对这些节点做职责专一化。主要根据需要配置尽可能多的<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-node.html#data-node">数据节点</a>、<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/ingest.html">预处理节点</a>、<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-node.html#ml-node">机器学习节点</a>等来均衡工作负载。随着集群变大，一般建议给每个角色使用专用节点，以便为每个任务独立扩展资源。</p>
+<p>​    但是，最好将集群中候选节点数量限制为三个。主节点不像其他节点类型那样扩展，因为集群总是只选择其中之一作为集群的主节点。如果有太多候选节点，那么主选举可能需要更长的时间才能完成。在较大的集群中，一般建议把候选节点设置为专用候选节点，即不分配其他角色，并避免向这些专用节点发送任何客户端请求。以免候选节点被不必要的额外工作所拖累导致集群服务不稳定。</p>
+<p>​    但是可以把候选节点之一配置为<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-node.html#voting-only-node">仅投票节点</a>以便它永远不会被选为主节点。例如，集群可能有两个专用的候选节点和一个既是数据节点又是仅投票的候选节点的第三个节点。这第三个仅投票节点将在Master选举中投出决胜票，但是自己永远不会被选举为active master。</p>
+<h4 id="大规模单集群"><a href="#大规模单集群" class="headerlink" title="大规模单集群"></a>大规模单集群</h4><ul>
+<li>避免跨数据中心：ES对网络和宽带要求较高，并且一般来说要尽量避免服务跨多个数据中心。因为一旦遇到分区恢复问题，它必须重新同步任何丢失的数据并重新平衡集群。如果一定要跨多个数据中心，建议在每个数据中心部署独立集群，然后配置<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/modules-cross-cluster-search.html">跨集群搜索</a>或<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/xpack-ccr.html">跨集群复制</a>。</li>
+<li>部署分片分配感知：为了降低当集群出现单个或区域节点（比如一个机架）宕机对整个服务造成的影响，一般策略是通过<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/allocation-awareness.html">分配感知来实现</a>。</li>
+</ul>
+<h4 id="双区集群"><a href="#双区集群" class="headerlink" title="双区集群"></a>双区集群</h4><ul>
+<li>如果集群部署在两个区域比如两个机房内，应该在每个区域中拥有不同数量的候选节点，这样在其中一个区域出现问题的时候，会增加另一个区域的存活概率。比如两个机房部署同一个集群，那么两个机房的候选节点避免相等，因为此时如果一个机房意外断电，两个机房的服务都会停止。配置单数投票节点可避免此问题。此时其中一个机房断电，服务可用的概率为50%。</li>
+<li>双区集群理论上能容忍一个区域的数据丢失，但不是任意一个区域，打个比方：服务部署在两个机房，机房A和机房B，要么是仅允许A机房出现故障而不允许B机房出现故障，也就是A机房断电服务可用，但是B机房断电服务中断；要么是仅允许B机房出现故障而不允许A机房出现故障，也就是B机房断电服务可用，但是A机房断电服务中断。从高可用的角度想，我们更希望任意一个机房断电，另一个机房的服务都不受影响，但是这是不可能的。因为没有断电的机房不知道出现故障的机房是断网了还是断电了，也就不知道应该是发起独立选举还是等待下去。如果两个机房都可以独立选主，那么就无法避免脑裂，可能会产生两个机房选出active master。解决办法是在两个区域中都配置一个仅投票节点并在独立的第三个区域添加一个额外的候选节点。这样两个区域其中之一断电，额外的投票节点就可以投出关键票。这个额外的节点也叫<code>专用tiebreaker</code>节点，此节点可以用低配服务器。</li>
+</ul>
+<h4 id="多区集群"><a href="#多区集群" class="headerlink" title="多区集群"></a>多区集群</h4><p>​    如果集群中有三个区域，那么每个区域中应该有一个候选节点。如果集群包含三个以上的区域，那么应该选择其中的三个区域，并在这三个区域中的每一个区域中放置一个候选节点。这意味着即使其中一个区域发生故障，集群仍然可以选举主节点。</p>
+<h4 id="多集群"><a href="#多集群" class="headerlink" title="多集群"></a>多集群</h4><p>​    Elasticsearch是主从结构，主节点能管理的节点上线一般不超过一千个，如果继续增加节点，可能会导致active master不稳定，如果集群想突破集群规模带来的性能瓶颈，一般可配置多集群，利用跨集群搜索单个超大集群拆分成多个小集群（相对小，千节点级别）来完成对集群的性能扩展。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>集群应该至少有两个区域包含数据节点。</li>
+<li>除了主分片之外，每个 不是<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.13/searchable-snapshots.html">可搜索快照索引的索引</a>都应该有每个主分片的至少一个副本。</li>
+<li>分片分配感知配置为避免将分片的所有副本集中在单个区域内。</li>
+<li>集群至少有三个候选节点。这些节点中至少有两个不是仅投票节点，均衡分配在至少三个区域中。</li>
+<li>客户端被配置为将其请求发送到多个区域中的节点，或者被配置为使用负载平衡器来平衡一组适当的节点之间的请求。</li>
+</ul>
+<h2 id="Master选举"><a href="#Master选举" class="headerlink" title="Master选举"></a>Master选举</h2><h3 id="中心思想"><a href="#中心思想" class="headerlink" title="中心思想"></a>中心思想</h3><p>所有分布式系统都需要解决数据的一致性问题,处理这种问题一般都两种策略:</p>
+<ul>
+<li>避免发生数据不一致性问题.</li>
+<li>发生了数据不一致性问题后的处理策略.</li>
+</ul>
+<h3 id="ES的选举算法"><a href="#ES的选举算法" class="headerlink" title="ES的选举算法"></a>ES的选举算法</h3><ul>
+<li><p>Bully：Bully是Leader选举的基本算法之一，基本原理就是按照节点ID进行排序，任何时候当前Leader的节点ID都是集群中最高节点ID。该算法非常易于实现但是当Leader处于不稳定状态的时候，如因负载过重而假死，此时可能会触发选主，选出第二大ID的节点为新的Leader。ES通过推迟选举直到Master失效（Master放弃Active Master资格触发选举）来解决问题，但是会产生双主或多主（也就是脑裂）问题。</p>
+</li>
+<li><p>Paxos：Paxos非常强大，在选举方面的灵活性比Bully算法有很大的优势，但是其原理非常复杂。</p>
+</li>
+<li><p>Raft：Raft是一种使用较为广泛的分布式一致性的协议，在Raft中，节点可能的状态有三种：</p>
+<ul>
+<li>Leader：主节点</li>
+<li>Candidate：候选节点</li>
+<li>Follower：跟随节点</li>
+</ul>
+<p>​        所有的节点开始都是跟随节点。如果跟随节点收不到领导节点的信号，则他们可以成为候选节点候选节点接着请求其他节点投票节点将以他们的投票回复候选节点如果候选节点获取到大多数节点的投票，则他将会成为领导节点此过程称为Leader选举。</p>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">分布式原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%8A%82%E7%82%B9%E5%9D%8F%E5%A4%84"><span class="toc-number">1.1.</span> <span class="toc-text">单节点坏处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">分布式的优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#es%E6%9C%8D%E5%8A%A1%E7%8E%AF%E5%A2%83"><span class="toc-number">1.3.</span> <span class="toc-text">es服务环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F-%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E4%B8%8E%E7%94%9F%E4%BA%A7%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">两种模式:开发模式与生产模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.3.</span> <span class="toc-text">主从架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES%E8%8A%82%E7%82%B9%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.4.</span> <span class="toc-text">ES节点分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES%E6%A8%A1%E5%9D%97"><span class="toc-number">1.4.</span> <span class="toc-text">ES模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster"><span class="toc-number">1.4.1.</span> <span class="toc-text">Cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Allocation"><span class="toc-number">1.4.2.</span> <span class="toc-text">Allocation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrap"><span class="toc-number">1.4.3.</span> <span class="toc-text">Bootstrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ingest"><span class="toc-number">1.4.4.</span> <span class="toc-text">Ingest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor"><span class="toc-number">1.4.5.</span> <span class="toc-text">Monitor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discovery"><span class="toc-number">1.4.6.</span> <span class="toc-text">Discovery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gateway"><span class="toc-number">1.4.7.</span> <span class="toc-text">Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Indices"><span class="toc-number">1.4.8.</span> <span class="toc-text">Indices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-number">1.4.9.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transport"><span class="toc-number">1.4.10.</span> <span class="toc-text">Transport</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%89%87-shard"><span class="toc-number">1.5.</span> <span class="toc-text">分片(shard)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%89%87%E5%88%9B%E5%BB%BA%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.1.</span> <span class="toc-text">分片创建策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">高可用性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E7%81%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">1.6.2.</span> <span class="toc-text">容灾机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7%E9%9B%86%E7%BE%A4"><span class="toc-number">1.6.3.</span> <span class="toc-text">高可用性集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Master%E9%80%89%E4%B8%BE"><span class="toc-number">1.7.</span> <span class="toc-text">Master选举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">1.7.1.</span> <span class="toc-text">中心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95"><span class="toc-number">1.7.2.</span> <span class="toc-text">ES的选举算法</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>

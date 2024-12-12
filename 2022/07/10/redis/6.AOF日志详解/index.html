@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>redis(六) AOF日志详解 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="redis(六) AOF日志详解之前已经大致的讲解过aof的整体执行流程.
+主要有四点:
+
+命令追加
+文件写入
+日志重写
+日志重载.
+
+本文会根据以上四点,分析源码来了解redis具体的执行过程,以,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">redis(六) AOF日志详解</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/中间件"><b>「
+                    </b>中间件<b> 」</b></a>
+                
+                七月 10, 2022
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2022/07/10/redis/6.AOF%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3/" title="redis(六) AOF日志详解" class="">redis(六) AOF日志详解</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    21k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    19 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="redis-六-AOF日志详解"><a href="#redis-六-AOF日志详解" class="headerlink" title="redis(六) AOF日志详解"></a>redis(六) AOF日志详解</h1><p>之前已经大致的讲解过aof的整体执行流程.</p>
+<p>主要有四点:</p>
+<ul>
+<li>命令追加</li>
+<li>文件写入</li>
+<li>日志重写</li>
+<li>日志重载.</li>
+</ul>
+<p>本文会根据以上四点,分析源码来了解redis具体的执行过程,以更好的理解机制.</p>
+<h2 id="命令追加"><a href="#命令追加" class="headerlink" title="命令追加"></a>命令追加</h2><p>​        当AOF持久化功能处于打开状态时，服务器在执行完一个写命令之后，会以协议格式将被执行的写命令追加到服务器状态的aof_buf缓冲区的末尾.</p>
+<p>追加时机:</p>
+<ul>
+<li>客户端命令</li>
+<li>过期健删除，内存淘汰等发生时，会删除对应的key，也会把删除命令通过propagate函数传播到AOF中</li>
+<li>事务追加传播命令时，会在头和尾加上”multi”和”exec”</li>
+</ul>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><img src="/images/redis/redis.assets/aof%E5%91%BD%E4%BB%A4%E8%BF%BD%E5%8A%A0.png" alt="aof命令追加"></p>
+<h3 id="call-接收客户端命令-–-server-c"><a href="#call-接收客户端命令-–-server-c" class="headerlink" title="call(接收客户端命令) – server.c"></a>call(接收客户端命令) – server.c</h3><pre><code class="c">
+void call(client *c, int flags) &#123;
+    /** 省略其他逻辑*/
+    
+    /** */
+   /* Propagate the command into the AOF and replication link */
+    if (flags &amp; CMD_CALL_PROPAGATE &amp;&amp;
+        (c-&gt;flags &amp; CLIENT_PREVENT_PROP) != CLIENT_PREVENT_PROP)
+    &#123;
+       /** 省略其他逻辑 */
+
+        /** 当需要同步或者aof日志保存时,调用propagate方法  */
+        /* Call propagate() only if at least one of AOF / replication
+         * propagation is needed. Note that modules commands handle replication
+         * in an explicit way, so we never replicate them automatically. */
+        if (propagate_flags != PROPAGATE_NONE &amp;&amp; !(c-&gt;cmd-&gt;flags &amp; CMD_MODULE))
+            propagate(c-&gt;cmd,c-&gt;db-&gt;id,c-&gt;argv,c-&gt;argc,propagate_flags);
+    &#125;
+
+&#125;
+</code></pre>
+<h3 id="propagate-传播命令-server-c"><a href="#propagate-传播命令-server-c" class="headerlink" title="propagate(传播命令) - -server.c"></a>propagate(传播命令) - -server.c</h3><pre><code class="c">void propagate(struct redisCommand *cmd, int dbid, robj **argv, int argc,
+               int flags)
+&#123;
+    /** aof日志配置开启,则追加命令到aof日志 */
+    if (server.aof_state != AOF_OFF &amp;&amp; flags &amp; PROPAGATE_AOF)
+        feedAppendOnlyFile(cmd,dbid,argv,argc);
+    if (flags &amp; PROPAGATE_REPL)
+        replicationFeedSlaves(server.slaves,dbid,argv,argc);
+&#125;
+</code></pre>
+<h3 id="feedAppendOnlyFile-–-aof-c"><a href="#feedAppendOnlyFile-–-aof-c" class="headerlink" title="feedAppendOnlyFile() – aof.c"></a>feedAppendOnlyFile() – aof.c</h3><pre><code class="c">
+void feedAppendOnlyFile(struct redisCommand *cmd, int dictid, robj **argv, int argc) &#123;
+    sds buf = sdsempty();
+    robj *tmpargv[3];
+
+    /** 选择正确的db */
+    /* The DB this command was targeting is not the same as the last command
+     * we appended. To issue a SELECT command is needed. */
+    if (dictid != server.aof_selected_db) &#123;
+        char seldb[64];
+
+        snprintf(seldb,sizeof(seldb),&quot;%d&quot;,dictid);
+        buf = sdscatprintf(buf,&quot;*2\r\n$6\r\nSELECT\r\n$%lu\r\n%s\r\n&quot;,
+            (unsigned long)strlen(seldb),seldb);
+        server.aof_selected_db = dictid;
+    &#125;
+
+    /** 如果命令中带有过期时间，把相对时间转化成绝对时间 */
+    if (cmd-&gt;proc == expireCommand || cmd-&gt;proc == pexpireCommand ||
+        cmd-&gt;proc == expireatCommand) &#123;
+        /* Translate EXPIRE/PEXPIRE/EXPIREAT into PEXPIREAT */
+        buf = catAppendOnlyExpireAtCommand(buf,cmd,argv[1],argv[2]);
+    &#125; else if (cmd-&gt;proc == setexCommand || cmd-&gt;proc == psetexCommand) &#123;
+        /* Translate SETEX/PSETEX to SET and PEXPIREAT */
+        tmpargv[0] = createStringObject(&quot;SET&quot;,3);
+        tmpargv[1] = argv[1];
+        tmpargv[2] = argv[3];
+        buf = catAppendOnlyGenericCommand(buf,3,tmpargv);
+        decrRefCount(tmpargv[0]);
+        buf = catAppendOnlyExpireAtCommand(buf,cmd,argv[1],argv[2]);
+    &#125; else if (cmd-&gt;proc == setCommand &amp;&amp; argc &gt; 3) &#123;
+        int i;
+        robj *exarg = NULL, *pxarg = NULL;
+        /* Translate SET [EX seconds][PX milliseconds] to SET and PEXPIREAT */
+        /** 按照redis的协议对命令编码 */
+        buf = catAppendOnlyGenericCommand(buf,3,argv);
+        for (i = 3; i &lt; argc; i ++) &#123;
+            if (!strcasecmp(argv[i]-&gt;ptr, &quot;ex&quot;)) exarg = argv[i+1];
+            if (!strcasecmp(argv[i]-&gt;ptr, &quot;px&quot;)) pxarg = argv[i+1];
+        &#125;
+        serverAssert(!(exarg &amp;&amp; pxarg));
+        if (exarg)
+            buf = catAppendOnlyExpireAtCommand(buf,server.expireCommand,argv[1],
+                                               exarg);
+        if (pxarg)
+            buf = catAppendOnlyExpireAtCommand(buf,server.pexpireCommand,argv[1],
+                                               pxarg);
+    &#125; else &#123;
+        /* All the other commands don&#39;t need translation or need the
+         * same translation already operated in the command vector
+         * for the replication itself. */
+        buf = catAppendOnlyGenericCommand(buf,argc,argv);
+    &#125;
+
+    /* Append to the AOF buffer. This will be flushed on disk just before
+     * of re-entering the event loop, so before the client will get a
+     * positive reply about the operation performed. */
+    /** 把命令追加到aof缓存中 
+        在重新进入事件循环之前，这些命令会被冲洗到磁盘上，
+     *     并向客户端返回一个回复*/
+    if (server.aof_state == AOF_ON)
+        server.aof_buf = sdscatlen(server.aof_buf,buf,sdslen(buf));
+
+    /* If a background append only file rewriting is in progress we want to
+     * accumulate the differences between the child DB and the current one
+     * in a buffer, so that when the child process will do its work we
+     * can append the differences to the new append only file. */
+    /** 如果存在aof重写子进程，
+        将命令追加到重写缓存中，
+     *     从而记录当前正在重写的 AOF 文件和数据库当前状态的差异。 */
+    if (server.aof_child_pid != -1)
+        aofRewriteBufferAppend((unsigned char*)buf,sdslen(buf));
+
+    /** 释放缓存文件持有 */
+    sdsfree(buf);
+&#125;
+</code></pre>
+<h2 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h2><p>讲缓存中的命令刷入磁盘中.</p>
+<p>写入时机:</p>
+<ul>
+<li><p>服务关闭前</p>
+</li>
+<li><p>sleep事件前</p>
+</li>
+<li><p>定时查询是否满足同步机制即serverCron函数调用flushAppendOnlyFile函数.</p>
+<p>flushAppendOnlyFile函数的行为由服务器配置的appendfsync选项的值决定</p>
+<ul>
+<li>always：将aof_buf中的所有内容写入并同步到aof文件。</li>
+<li>everysec：将aof_buf中的所有内容写入到aof文件，如果上次同步的时间距离现在超过1s，那么对aof文件进行同  步，同步操作由一个线程专门负责执行。</li>
+<li>no：将aof_buf中的所有内容写入到aof文件，但不对aof文件同步，同步有操作系统执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="flushAppendOnlyFile-刷入文件-–-aof-c"><a href="#flushAppendOnlyFile-刷入文件-–-aof-c" class="headerlink" title="flushAppendOnlyFile(刷入文件)  – aof.c"></a>flushAppendOnlyFile(刷入文件)  – aof.c</h3><pre><code class="c">#define AOF_WRITE_LOG_ERROR_RATE 30 /* Seconds between errors logging. */
+void flushAppendOnlyFile(int force) &#123;
+    ssize_t nwritten;
+    int sync_in_progress = 0;
+    mstime_t latency;
+    /** 判断aof_buf缓存是否为空,但怕还是有缓存数据到打aof_buf中,所以需要再进行刷入文件操作. */
+    if (sdslen(server.aof_buf) == 0) &#123;
+        /* Check if we need to do fsync even the aof buffer is empty,
+         * because previously in AOF_FSYNC_EVERYSEC mode, fsync is
+         * called only when aof buffer is not empty, so if users
+         * stop write commands before fsync called in one second,
+         * the data in page cache cannot be flushed in time. */
+        if (server.aof_fsync == AOF_FSYNC_EVERYSEC &amp;&amp;
+            server.aof_fsync_offset != server.aof_current_size &amp;&amp;
+            server.unixtime &gt; server.aof_last_fsync &amp;&amp;
+            !(sync_in_progress = aofFsyncInProgress())) &#123;
+            goto try_fsync;
+        &#125; else &#123;
+            return;
+        &#125;
+    &#125;
+
+    /** 判断fsync处于每秒同步,则获取是否存在flush进程状态 */
+    if (server.aof_fsync == AOF_FSYNC_EVERYSEC)
+        sync_in_progress = aofFsyncInProgress();
+
+    /** 当fsync处于每秒刷新时且后台执行(force=0)flush写入 */
+    if (server.aof_fsync == AOF_FSYNC_EVERYSEC &amp;&amp; !force) &#123;
+        /* With this append fsync policy we do background fsyncing.
+         * If the fsync is still in progress we can try to delay
+         * the write for a couple of seconds. */
+        /** 当前还有正在执行的flush的后台线程,则进行延时等待执行 */
+        if (sync_in_progress) &#123;
+            if (server.aof_flush_postponed_start == 0) &#123;
+                /* No previous write postponing, remember that we are
+                 * postponing the flush and return. */
+                server.aof_flush_postponed_start = server.unixtime;
+                return;
+                /** 正有异步线程在fsync操作时需要等2秒钟才进行写磁盘操作*/
+            &#125; else if (server.unixtime - server.aof_flush_postponed_start &lt; 2) &#123;
+                /* We were already waiting for fsync to finish, but for less
+                 * than two seconds this is still ok. Postpone again. */
+                return;
+            &#125;
+            /* Otherwise fall trough, and go write since we can&#39;t wait
+             * over two seconds. */
+            server.aof_delayed_fsync++;
+            serverLog(LL_NOTICE,&quot;Asynchronous AOF fsync is taking too long (disk is busy?). Writing the AOF buffer without waiting for fsync to complete, this may slow down Redis.&quot;);
+        &#125;
+    &#125;
+    /* We want to perform a single write. This should be guaranteed atomic
+     * at least if the filesystem we are writing is a real physical one.
+     * While this will save us against the server being killed I don&#39;t think
+     * there is much to do about the whole server stopping for power problems
+     * or alike */
+
+    /** 把aof_buf数据写入aof_fd中 */
+    latencyStartMonitor(latency);
+    nwritten = aofWrite(server.aof_fd,server.aof_buf,sdslen(server.aof_buf));
+    latencyEndMonitor(latency);
+    /* We want to capture different events for delayed writes:
+     * when the delay happens with a pending fsync, or with a saving child
+     * active, and when the above two conditions are missing.
+     * We also use an additional event name to save all samples which is
+     * useful for graphing / monitoring purposes. */
+    if (sync_in_progress) &#123;
+        latencyAddSampleIfNeeded(&quot;aof-write-pending-fsync&quot;,latency);
+    &#125; else if (server.aof_child_pid != -1 || server.rdb_child_pid != -1) &#123;
+        latencyAddSampleIfNeeded(&quot;aof-write-active-child&quot;,latency);
+    &#125; else &#123;
+        latencyAddSampleIfNeeded(&quot;aof-write-alone&quot;,latency);
+    &#125;
+    latencyAddSampleIfNeeded(&quot;aof-write&quot;,latency);
+
+    /* We performed the write so reset the postponed flush sentinel to zero. */
+    server.aof_flush_postponed_start = 0;
+    /** aof_buf的数据没有完全到文件缓冲 */
+    if (nwritten != (ssize_t)sdslen(server.aof_buf)) &#123;
+        static time_t last_write_error_log = 0;
+        int can_log = 0;
+        /** 每隔30秒打印一次错误日志 */
+        /* Limit logging rate to 1 line per AOF_WRITE_LOG_ERROR_RATE seconds. */
+        if ((server.unixtime - last_write_error_log) &gt; AOF_WRITE_LOG_ERROR_RATE) &#123;
+            can_log = 1;
+            last_write_error_log = server.unixtime;
+        &#125;
+
+        /* Log the AOF write error and record the error code. */
+        /** 如果写入出错，那么尝试将该情况写入到日志里面 */
+        if (nwritten == -1) &#123;
+            if (can_log) &#123;
+                serverLog(LL_WARNING,&quot;Error writing to the AOF file: %s&quot;,
+                    strerror(errno));
+                server.aof_last_write_errno = errno;
+            &#125;
+        &#125; else &#123;
+            if (can_log) &#123;
+                serverLog(LL_WARNING,&quot;Short write while writing to &quot;
+                                       &quot;the AOF file: (nwritten=%lld, &quot;
+                                       &quot;expected=%lld)&quot;,
+                                       (long long)nwritten,
+                                       (long long)sdslen(server.aof_buf));
+            &#125;
+            /** 尝试移除新追加的不完整内容 */
+            if (ftruncate(server.aof_fd, server.aof_current_size) == -1) &#123;
+                if (can_log) &#123;
+                    serverLog(LL_WARNING, &quot;Could not remove short write &quot;
+                             &quot;from the append-only file.  Redis may refuse &quot;
+                             &quot;to load the AOF the next time it starts.  &quot;
+                             &quot;ftruncate: %s&quot;, strerror(errno));
+                &#125;
+            &#125; else &#123;
+                /* If the ftruncate() succeeded we can set nwritten to
+                 * -1 since there is no longer partial data into the AOF. */
+                nwritten = -1;
+            &#125;
+            server.aof_last_write_errno = ENOSPC;
+        &#125;
+
+        /* Handle the AOF write error. */
+        /**处理写入 AOF 文件时出现的错误 */
+        if (server.aof_fsync == AOF_FSYNC_ALWAYS) &#123;
+            /* We can&#39;t recover when the fsync policy is ALWAYS since the
+             * reply for the client is already in the output buffers, and we
+             * have the contract with the user that on acknowledged write data
+             * is synced on disk. */
+            serverLog(LL_WARNING,&quot;Can&#39;t recover from AOF write error when the AOF fsync policy is &#39;always&#39;. Exiting...&quot;);
+            exit(1);
+        &#125; else &#123;
+            /* Recover from failed write leaving data into the buffer. However
+             * set an error to stop accepting writes as long as the error
+             * condition is not cleared. */
+            server.aof_last_write_status = C_ERR;
+
+            /* Trim the sds buffer if there was a partial write, and there
+             * was no way to undo it with ftruncate(2). */
+            if (nwritten &gt; 0) &#123;
+                server.aof_current_size += nwritten;
+                sdsrange(server.aof_buf,nwritten,-1);
+            &#125;
+            return; /* We&#39;ll try again on the next call... */
+        &#125;
+    &#125; else &#123;
+        /* Successful write(2). If AOF was in error state, restore the
+         * OK state and log the event. */
+        /** 写入成功，更新最后写入状态 */
+        if (server.aof_last_write_status == C_ERR) &#123;
+            serverLog(LL_WARNING,
+                &quot;AOF write error looks solved, Redis can write again.&quot;);
+            server.aof_last_write_status = C_OK;
+        &#125;
+    &#125;
+    /**更新写入后的 AOF 文件大小*/
+    server.aof_current_size += nwritten;
+
+    /* Re-use AOF buffer when it is small enough. The maximum comes from the
+     * arena size of 4k minus some overhead (but is otherwise arbitrary). */
+    /**如果 AOF 缓存的大小足够小的话，那么重用这个缓存，
+     * 否则的话，释放 AOF 缓存。*/
+    if ((sdslen(server.aof_buf)+sdsavail(server.aof_buf)) &lt; 4000) &#123;
+        /** 清空缓存中的内容，等待重用 */
+        sdsclear(server.aof_buf);
+    &#125; else &#123;
+        /** 释放缓存 */
+        sdsfree(server.aof_buf);
+        server.aof_buf = sdsempty();
+    &#125;
+
+try_fsync:
+    /* Don&#39;t fsync if no-appendfsync-on-rewrite is set to yes and there are
+     * children doing I/O in the background. */
+    /** 如果 no-appendfsync-on-rewrite 选项为开启状态，
+     * 并且有 BGSAVE 或者 BGREWRITEAOF 正在进行的话，
+     * 那么不执行 fsync  */
+    if (server.aof_no_fsync_on_rewrite &amp;&amp;
+        (server.aof_child_pid != -1 || server.rdb_child_pid != -1))
+            return;
+
+    /* Perform the fsync if needed. */
+    if (server.aof_fsync == AOF_FSYNC_ALWAYS) &#123;
+        /* redis_fsync is defined as fdatasync() for Linux in order to avoid
+         * flushing metadata. */
+        latencyStartMonitor(latency);
+        redis_fsync(server.aof_fd); /* Let&#39;s try to get this data on the disk */
+        latencyEndMonitor(latency);
+        latencyAddSampleIfNeeded(&quot;aof-fsync-always&quot;,latency);
+        /**更新aof的同步指针 */
+        server.aof_fsync_offset = server.aof_current_size;
+        /**更新最后一次执行 fsnyc 的时间*/
+        server.aof_last_fsync = server.unixtime;
+        /** 策略为每秒 fsnyc ，并且距离上次 fsync 已经超过 1 秒*/
+    &#125; else if ((server.aof_fsync == AOF_FSYNC_EVERYSEC &amp;&amp;
+                server.unixtime &gt; server.aof_last_fsync)) &#123;
+        if (!sync_in_progress) &#123;
+            /** 后台执行flash*/
+            aof_background_fsync(server.aof_fd);
+            server.aof_fsync_offset = server.aof_current_size;
+        &#125;
+        /** 更新最后一次执行 fsync 的时间 */
+        server.aof_last_fsync = server.unixtime;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="rewriteAppendOnlyFileBackground-后台执行写入-–aof-c"><a href="#rewriteAppendOnlyFileBackground-后台执行写入-–aof-c" class="headerlink" title="rewriteAppendOnlyFileBackground(后台执行写入)  –aof.c"></a>rewriteAppendOnlyFileBackground(后台执行写入)  –aof.c</h3><pre><code class="c">int rewriteAppendOnlyFileBackground(void) &#123;
+    pid_t childpid;
+    long long start;
+    /** 已经有进程在进行 AOF或者rdb 重写了, 返回异常*/
+    if (server.aof_child_pid != -1 || server.rdb_child_pid != -1) return C_ERR;
+    /** 创建子进程失败,返回异常 */
+    if (aofCreatePipes() != C_OK) return C_ERR;
+    openChildInfoPipe();
+    start = ustime();
+    /** fork主进程 */
+    if ((childpid = fork()) == 0) &#123;
+        char tmpfile[256];
+
+        /* Child */
+        /** 关闭无用的资源*/
+        closeClildUnusedResourceAfterFork();
+        /** 设置进程名称*/
+        redisSetProcTitle(&quot;redis-aof-rewrite&quot;);
+        snprintf(tmpfile,256,&quot;temp-rewriteaof-bg-%d.aof&quot;, (int) getpid());
+        /** 创建临时文件, 并进行 AOF 重写 */
+        if (rewriteAppendOnlyFile(tmpfile) == C_OK) &#123;
+            size_t private_dirty = zmalloc_get_private_dirty(-1);
+
+            if (private_dirty) &#123;
+                serverLog(LL_NOTICE,
+                    &quot;AOF rewrite: %zu MB of memory used by copy-on-write&quot;,
+                    private_dirty/(1024*1024));
+            &#125;
+
+            server.child_info_data.cow_size = private_dirty;
+            sendChildInfo(CHILD_INFO_TYPE_AOF);
+            /**发送重写成功信号*/
+            exitFromChild(0);
+        &#125; else &#123;
+            /**发送重写失败信号*/
+            exitFromChild(1);
+        &#125;
+    &#125; else &#123;
+        /* Parent */
+        /**记录执行 fork 所消耗的时间*/
+        server.stat_fork_time = ustime()-start;
+        /** 记录执行fork内存拷贝速度,gb/s */
+        server.stat_fork_rate = (double) zmalloc_used_memory() * 1000000 / server.stat_fork_time / (1024*1024*1024); /* GB per second. */
+        latencyAddSampleIfNeeded(&quot;fork&quot;,server.stat_fork_time/1000);
+        if (childpid == -1) &#123;
+            closeChildInfoPipe();
+            serverLog(LL_WARNING,
+                &quot;Can&#39;t rewrite append only file in background: fork: %s&quot;,
+                strerror(errno));
+            aofClosePipes();
+            return C_ERR;
+        &#125;
+        serverLog(LL_NOTICE,
+            &quot;Background append only file rewriting started by pid %d&quot;,childpid);
+        /**记录 AOF 重写的信息*/
+        server.aof_rewrite_scheduled = 0;
+        server.aof_rewrite_time_start = time(NULL);
+        server.aof_child_pid = childpid;
+        /**关闭字典自动 rehash*/
+        updateDictResizePolicy();
+        /* We set appendseldb to -1 in order to force the next call to the
+         * feedAppendOnlyFile() to issue a SELECT command, so the differences
+         * accumulated by the parent into server.aof_rewrite_buf will start
+         * with a SELECT statement and it will be safe to merge. */
+        /**将 aof_selected_db 设为 -1 ，
+         * 强制让 feedAppendOnlyFile() 下次执行时引发一个 SELECT 命令，
+         * 从而确保之后新添加的命令会设置到正确的数据库中*/
+        server.aof_selected_db = -1;
+        replicationScriptCacheFlush();
+        return C_OK;
+    &#125;
+    return C_OK; /* unreached */
+&#125;
+</code></pre>
+<h2 id="日志重写"><a href="#日志重写" class="headerlink" title="日志重写"></a>日志重写</h2><p>​        aof是通过不断追加写命令来记录数据库状态，所以服务器执行比较久之后，aof文件中的内容会越来越多，磁盘占有量越来越大，同时也是使通过过aof文件还原数据库的需要的时间也变得很久。所以就需要通过读取服务器当前的数据库状态来重写新的aof文件。</p>
+<p>​        redis设置了AOF重写缓冲区，在创建子进程后，主进程每执行一个写命令都会写到重写缓冲区。在子进程完成重写后，主进程会将AOF重写缓冲区的数据写入到重写的AOF文件，保证数据状态的一致。</p>
+<p>重写时机: 定时任务扫描到aof日志文件过大时.</p>
+<h3 id="serverCron-判断重写条件-–-server-c"><a href="#serverCron-判断重写条件-–-server-c" class="headerlink" title="serverCron(判断重写条件) – server.c"></a>serverCron(判断重写条件) – server.c</h3><pre><code class="c">
+
+int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) &#123;
+   /** ... */
+
+    /* Start a scheduled AOF rewrite if this was requested by the user while
+     * a BGSAVE was in progress. */
+    if (server.rdb_child_pid == -1 &amp;&amp; server.aof_child_pid == -1 &amp;&amp;
+        server.aof_rewrite_scheduled)
+    &#123;
+        rewriteAppendOnlyFileBackground();
+    &#125;
+
+    /* Check if a background saving or AOF rewrite in progress terminated. */
+    if (server.rdb_child_pid != -1 || server.aof_child_pid != -1 ||
+        ldbPendingChildren())
+    &#123;
+       /** .... */
+    &#125; else &#123;
+       /** ... */
+
+        /* Trigger an AOF rewrite if needed. */
+        if (server.aof_state == AOF_ON &amp;&amp;
+            server.rdb_child_pid == -1 &amp;&amp;
+            server.aof_child_pid == -1 &amp;&amp;
+            server.aof_rewrite_perc &amp;&amp;
+            server.aof_current_size &gt; server.aof_rewrite_min_size)
+        &#123;
+            long long base = server.aof_rewrite_base_size ?
+                server.aof_rewrite_base_size : 1;
+            long long growth = (server.aof_current_size*100/base) - 100;
+            if (growth &gt;= server.aof_rewrite_perc) &#123;
+                serverLog(LL_NOTICE,&quot;Starting automatic rewriting of AOF on %lld%% growth&quot;,growth);
+                rewriteAppendOnlyFileBackground();
+            &#125;
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">91 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#redis-%E5%85%AD-AOF%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">redis(六) AOF日志详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%BF%BD%E5%8A%A0"><span class="toc-number">1.1.</span> <span class="toc-text">命令追加</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.1.1.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-%E6%8E%A5%E6%94%B6%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4-%E2%80%93-server-c"><span class="toc-number">1.1.2.</span> <span class="toc-text">call(接收客户端命令) – server.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#propagate-%E4%BC%A0%E6%92%AD%E5%91%BD%E4%BB%A4-server-c"><span class="toc-number">1.1.3.</span> <span class="toc-text">propagate(传播命令) - -server.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#feedAppendOnlyFile-%E2%80%93-aof-c"><span class="toc-number">1.1.4.</span> <span class="toc-text">feedAppendOnlyFile() – aof.c</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">文件写入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flushAppendOnlyFile-%E5%88%B7%E5%85%A5%E6%96%87%E4%BB%B6-%E2%80%93-aof-c"><span class="toc-number">1.2.1.</span> <span class="toc-text">flushAppendOnlyFile(刷入文件)  – aof.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rewriteAppendOnlyFileBackground-%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%E5%86%99%E5%85%A5-%E2%80%93aof-c"><span class="toc-number">1.2.2.</span> <span class="toc-text">rewriteAppendOnlyFileBackground(后台执行写入)  –aof.c</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E9%87%8D%E5%86%99"><span class="toc-number">1.3.</span> <span class="toc-text">日志重写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#serverCron-%E5%88%A4%E6%96%AD%E9%87%8D%E5%86%99%E6%9D%A1%E4%BB%B6-%E2%80%93-server-c"><span class="toc-number">1.3.1.</span> <span class="toc-text">serverCron(判断重写条件) – server.c</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2024
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>
