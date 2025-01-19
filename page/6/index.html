@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2024 空痕影.
+        &copy; 2025 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -127,35 +127,38 @@
     <div id="post0" class="else">
         <p class="animated fadeInDown">
             
-            <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            <a href="/categories/mysql"><b>「
+                </b>MYSQL<b> 」</b></a>
             
-            九月 02, 2021
+            九月 03, 2021
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/09/02/mysql/5.1%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95/" title="空痕影的从头再来" class="posttitle">空痕影的从头再来</a></h3>
+            <a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="MySQL(七)分区表" class="posttitle">MySQL(七)分区表</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                1.4k
+                6.4k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                1 mins.
+                6 mins.
             </span>
             
             
         </p>
         
         
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+        
         <div class="md-content animated fadeIn">
             
-            <p>有时候需要索引很长的字符串，这会让索引变的大且慢，通常情况下可以使用某个列开始的部分字符串，这样大大的节约索引空间，从而提高索引效率，但这会降低索引的选择性，索引的选择性是指不重复的索引值和数据表记录...</p>
+            <p>对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。<br>mysql在...</p>
             
-            <span class="read-more"><a href="/2021/09/02/mysql/5.1%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -176,6 +179,54 @@
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/mysql">
+                  <b>「 </b>MYSQL<b> 」</b>
+                </a>
+            
+            九月 03, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="MySQL(七)分区表" class="posttitle">MySQL(七)分区表</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        6.4k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        6 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <p>对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。<br>mysql在创建表时使用partition by子句定义每个分区存放的数据，在执行查询的时候，优化器会根据分区定义过滤那些没有我们需要数据的分区，这样查询就无须扫描所有分区。<br>分区的主要目的是将数据安好一个较粗的力度分在不同的表中，这样可以将相关的数据存放在一起。</p>
+<ol>
+<li>表非常大以至于无法全部都放在内存中，或者只在表...</li></ol>
+            
+            <span class="read-more"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
 <div class="post" id="post">
     <div class="post-cover animated fadeIn" style="
             background-image:
@@ -665,60 +716,6 @@
 </div>
 
 
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/设计模式">
-                  <b>「 </b>设计模式<b> 」</b>
-                </a>
-            
-            六月 03, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/06/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/11%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" title="装饰器模式" class="posttitle">装饰器模式</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        3.9k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        4 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>为了扩展一个类经常使用继承方式实现，由于继承为类引入静态特征，并且随着扩展功能的增多，子类会很膨胀。</p>
-<p>动态地给一个对象添加一些额外的职责, 通过创建一个包装对象，也就是装饰来包裹真实的对象。</p>
-<p></p>
-<ul>
-<li><p>抽象组件角色(Component)：定义一个对象接口，以规范准备接受附加责任的对象，即可以给这些对象动态地添加职责。</p>
-</li>
-<li><p>具体组件角色(ConcreteComponent) :被装饰者，定义一个将要被装饰增加功能的类。可以给这个类的对象添加一些职责</p>
-</li>
-<li><p>抽象装饰器(Decorator):维持一个指向构件Component...</p></li></ul>
-            
-            <span class="read-more"><a href="/2021/06/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/11%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
     </div>
     
     <div id="pager"><a href="/page/7/" class="more" data-loading="加载中..." data-load-more="加载更多">加载更多</a></div>
@@ -734,7 +731,7 @@
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2024
+        &copy; 2025
         <span class="gradient-text">
             空痕影
         </span>.

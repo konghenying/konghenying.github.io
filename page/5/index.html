@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2024 空痕影.
+        &copy; 2025 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -133,19 +133,19 @@
             十月 10, 2021
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2021/10/10/docker/5.docker%20run%20%E5%90%AF%E5%8A%A8/" title="五 docker run" class="posttitle">五 docker run</a></h3>
+            <a href="/2021/10/10/docker/6.docker%20%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE/" title="六 docker 容器访问" class="posttitle">六 docker 容器访问</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                1.6k
+                14k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                1 mins.
+                12 mins.
             </span>
             
             
@@ -156,21 +156,17 @@
         
         <div class="md-content animated fadeIn">
             
-            <p>​    启动一个新的容器。可以通过指定镜像、容器名、端口映射等参数启动运行容器。</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-<th align="left">例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>–add-host list</td>
-<td>增加host映射,为dns失效环境强制增加域名映射</td>
-<td align="left">–add-...</td></tr></tbody></table>
+            <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol>
+<li><p>dockerfile中将端口暴露.</p>
+<p>EXPORT 80</p>
+</li>
+<li><p>启动时将暴露端口映射.</p>
+<p>-p 80:80, -P</p>
+</li>
+</ol>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="宿主机随机端口映射所有端口"><a href="#宿主机随机端口映射所有端口" class="headerlink" title="宿主机随机端口映射所有端口"></a>宿主机随机端口映射所有端口</h4><pre><code class="bash">docker run -it -d -P redis...</code></pre>
             
-            <span class="read-more"><a href="/2021/10/10/docker/5.docker%20run%20%E5%90%AF%E5%8A%A8/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2021/10/10/docker/6.docker%20%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -191,6 +187,68 @@
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="/categories/docker">
+                  <b>「 </b>DOCKER<b> 」</b>
+                </a>
+            
+            十月 10, 2021
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2021/10/10/docker/6.docker%20%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE/" title="六 docker 容器访问" class="posttitle">六 docker 容器访问</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        14k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        12 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol>
+<li><p>dockerfile中将端口暴露.</p>
+<p>EXPORT 80</p>
+</li>
+<li><p>启动时将暴露端口映射.</p>
+<p>-p 80:80, -P</p>
+</li>
+</ol>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="宿主机随机端口映射所有端口"><a href="#宿主机随机端口映射所有端口" class="headerlink" title="宿主机随机端口映射所有端口"></a>宿主机随机端口映射所有端口</h4><pre><code class="bash">docker run -it -d -P redis
+</code></pre>
+<p></p>
+<h4 id="宿主机随机端口映射容器指定端口"><a href="#宿主机随机端口映射容器指定端口" class="headerlink" title="宿主机随机端口映射容器指定端口"></a>宿主机随机端口映射容器指定端口</h4><pre><code class="bash">docker run -it -d -P 6379 redis
+</code></pre>
+<h4 id="宿主机指定端口映射容器指定端口"><a href="#宿主机指定端口映射容器指定端口" class="headerlink" title="宿主机指定端口映射容器指定端口"></a>宿主机指定端口映射容器指定端口</h4><pre><code class="bash">docker run -it -d -p 6379:6379 redis    
+</code></pre>
+<h4 id="宿主机指定ip随机端口映射容器指定端口"><a href="#宿主机指定ip随机端口映射容器指定端口" class="headerlink" title="宿主机指定ip随机端口映射容器指定端口"></a>宿主机指定ip随机端口映射容器指定端口</h4><pre><code class="bash">#语法 -p 宿主机ip:宿主机端口:容器端口
+docker...</code></pre>
+            
+            <span class="read-more"><a href="/2021/10/10/docker/6.docker%20%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
 <div class="post" id="post">
     <div class="post-cover animated fadeIn" style="
             background-image:
@@ -687,54 +745,6 @@ kibana                                             Kibana gives shape to any kin
 </div>
 
 
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/mysql">
-                  <b>「 </b>MYSQL<b> 」</b>
-                </a>
-            
-            九月 03, 2021
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="MySQL(七)分区表" class="posttitle">MySQL(七)分区表</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        6.4k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        6 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <p>对于用户而言，分区表是一个独立的逻辑表，但是底层是由多个物理子表组成。分区表对于用户而言是一个完全封装底层实现的黑盒子，对用户而言是透明的，从文件系统中可以看到多个使用#分隔命名的表文件。<br>mysql在创建表时使用partition by子句定义每个分区存放的数据，在执行查询的时候，优化器会根据分区定义过滤那些没有我们需要数据的分区，这样查询就无须扫描所有分区。<br>分区的主要目的是将数据安好一个较粗的力度分在不同的表中，这样可以将相关的数据存放在一起。</p>
-<ol>
-<li>表非常大以至于无法全部都放在内存中，或者只在表...</li></ol>
-            
-            <span class="read-more"><a href="/2021/09/03/mysql/7%E5%88%86%E5%8C%BA%E8%A1%A8/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
     </div>
     
     <div id="pager"><a href="/page/6/" class="more" data-loading="加载中..." data-load-more="加载更多">加载更多</a></div>
@@ -750,7 +760,7 @@ kibana                                             Kibana gives shape to any kin
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2024
+        &copy; 2025
         <span class="gradient-text">
             空痕影
         </span>.

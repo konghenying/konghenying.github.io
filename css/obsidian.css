@@ -104,11 +104,7 @@ pre code .language-mark b {
   width: 100%;
 }
 .CodeMirror .CodeMirror-lines {
-  line-hight: 1;
   font-size: 0.8rem;
-  font-family: Rubik, Lato, lucida grande, lucida sans unicode, Tahoma, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
-}
-.CodeMirror .CodeMirror-lines .CodeMirror-line {
   font-family: Rubik, Lato, lucida grande, lucida sans unicode, Tahoma, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
 }
 /* Responsive style */
@@ -380,7 +376,7 @@ audio {
   background-color: #fff;
   width: 75px;
   height: 32px;
-  mask-image: url("../img/logo.png");
+/* mask-image: url("../img/logo.png"); */
   mask-size: contain;
   transition: background-color 0.5s ease-in-out;
 }

@@ -67,7 +67,7 @@
         
     </ul>
     <p class="copyright" id="copyright">
-        &copy; 2024 空痕影.
+        &copy; 2025 空痕影.
         Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
         Theme <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
     </p>
@@ -127,44 +127,40 @@
     <div id="post0" class="else">
         <p class="animated fadeInDown">
             
-            <a href="/categories/linux"><b>「
-                </b>LINUX<b> 」</b></a>
+            <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
             
             五月 25, 2023
         </p>
         <h3 class="post-title animated fadeInDown">
-            <a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="CENTOS7后通用配置" class="posttitle">CENTOS7后通用配置</a></h3>
+            <a href="/2023/05/25/kafka/kafka(%E4%BA%8C)%20%E7%94%9F%E4%BA%A7%E8%80%85/" title="kafka(二) 生产者" class="posttitle">kafka(二) 生产者</a></h3>
         
         <p class="post-count animated fadeInDown">
             
             <span>
                 <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                2.3k
+                1.1k
             </span>
             
             
             <span>
                 <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                2 mins.
+                1 mins.
             </span>
             
             
         </p>
         
         
-        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+        <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
         
         <div class="md-content animated fadeIn">
             
-            <h3 id="1-先关闭防火墙"><a href="#1-先关闭防火墙" class="headerlink" title="1.先关闭防火墙"></a>1.先关闭防火墙</h3><pre><code class="shell">#关闭防火墙                                                                  
-systemctl stop firewalld
-#禁止开机自启
-systemctl disabled firewalld
-</code></pre>
-<h3 id="2-配置网卡信息"><a href="#2-配置网卡信息" class="headerlink" title="2.配置网卡信息"></a>2.配置网卡信息</h3><p></p>
-<p>保存退出后输入: service...</p>
+            <ol>
+<li><p>序列化ProducerRecord.</p>
+</li>
+<li><p>如果ProducerRecord中指定了Partition.则分区器(Partitioner)不做任何事情.否则分区器根据消息的key得到一个Partition...</p></li></ol>
             
-            <span class="read-more"><a href="/2023/05/25/linux/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85CENTOS7%E5%90%8E%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE/" title="查看全文" class="posttitle">查看全文</a>
+            <span class="read-more"><a href="/2023/05/25/kafka/kafka(%E4%BA%8C)%20%E7%94%9F%E4%BA%A7%E8%80%85/" title="查看全文" class="posttitle">查看全文</a>
                 <b class="iconfont icon-arrow-right- gradient-text"></b></span>
         </div>
     </div>
@@ -185,6 +181,59 @@ systemctl disabled firewalld
 
     <div id="primary">
         
+<div class="post" id="post">
+    <div class="post-cover animated fadeIn" style="
+            background-image:
+            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+            url(/img/welcome-cover2.jpg);">
+    </div>
+    <div class="else">
+        <p class="animated fadeInDown">
+            
+                <a href="javascript:;"><b>「 </b>文章<b> 」</b></a>
+            
+            五月 25, 2023
+        </p>
+        <h3 class="post-title animated fadeInDown"><a href="/2023/05/25/kafka/kafka(%E4%BA%8C)%20%E7%94%9F%E4%BA%A7%E8%80%85/" title="kafka(二) 生产者" class="posttitle">kafka(二) 生产者</a></h3>
+        
+            <p class="post-count animated fadeInDown">
+                
+                    <span>
+                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                        1.1k
+                    </span>
+                
+                
+                    <span>
+                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                        1 mins.
+                    </span>
+                
+                
+            </p>
+            
+                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
+            
+        
+        <div class="md-content animated fadeIn">
+            
+                <ol>
+<li><p>序列化ProducerRecord.</p>
+</li>
+<li><p>如果ProducerRecord中指定了Partition.则分区器(Partitioner)不做任何事情.否则分区器根据消息的key得到一个Partition。</p>
+</li>
+<li><p>消息被添加到相应的batch中,独立的线程将这些batch发送到broker上.</p>
+</li>
+<li><p>broker收到消息会返回一个响应. </p>
+<p>  成功写入返回RecordMetaData对象，包含了Topic信息、Patition信息、消息在Partition中的Offset信息.</p>
+<p>  失败会返回错误. 生产者收...</p></li></ol>
+            
+            <span class="read-more"><a href="/2023/05/25/kafka/kafka(%E4%BA%8C)%20%E7%94%9F%E4%BA%A7%E8%80%85/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
+        </div>
+    </div>
+</div>
+
+
 <div class="post" id="post">
     <div class="post-cover animated fadeIn" style="
             background-image:
@@ -706,59 +755,6 @@ docker exec -it acf2ec660c0e...</code></pre>
 </div>
 
 
-<div class="post" id="post">
-    <div class="post-cover animated fadeIn" style="
-            background-image:
-            radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
-            url(/img/welcome-cover2.jpg);">
-    </div>
-    <div class="else">
-        <p class="animated fadeInDown">
-            
-                <a href="/categories/docker">
-                  <b>「 </b>DOCKER<b> 」</b>
-                </a>
-            
-            十月 10, 2022
-        </p>
-        <h3 class="post-title animated fadeInDown"><a href="/2022/10/10/docker/3.docker%20%E9%95%9C%E5%83%8F/" title="三 docker镜像" class="posttitle">三 docker镜像</a></h3>
-        
-            <p class="post-count animated fadeInDown">
-                
-                    <span>
-                        <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                        14k
-                    </span>
-                
-                
-                    <span>
-                        <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                        13 mins.
-                    </span>
-                
-                
-            </p>
-            
-                <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-            
-        
-        <div class="md-content animated fadeIn">
-            
-                <ul>
-<li>Docker 镜像是只读的容器模板，是Docker容器基础</li>
-<li>为Docker容器提供了静态文件系统运行环境（rootfs）</li>
-<li>区分: 容器是镜像的运行状态,镜像是容器的静止状态.</li>
-</ul>
-<h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p> 是实现联合挂载技术的文件系统.可以实现在一个挂载点同时挂在多个文件系统,将挂载点的原目录与被挂载内容进行整合,使得最终可见的文件系统包含整合后的各层文件与目录.</p>
-<h3 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h3><p></p>
-<p>容器文件系统中有多种存储驱动实现方式:aufs,devicemapper,overlay,overlay2等.docker目前默认使用的是overlay2...</p>
-            
-            <span class="read-more"><a href="/2022/10/10/docker/3.docker%20%E9%95%9C%E5%83%8F/" title="查看全文" class="posttitle">查看全文</a> <b class="iconfont icon-arrow-right- gradient-text"></b></span>
-        </div>
-    </div>
-</div>
-
-
     </div>
     
     <div id="pager"><a href="/page/3/" class="more" data-loading="加载中..." data-load-more="加载更多">加载更多</a></div>
@@ -774,7 +770,7 @@ docker exec -it acf2ec660c0e...</code></pre>
 </body>
 <footer>
     <p class="copyright" id="copyright">
-        &copy; 2024
+        &copy; 2025
         <span class="gradient-text">
             空痕影
         </span>.

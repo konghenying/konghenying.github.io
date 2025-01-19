@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>arthas 异常排查(一) 一次内存泄露 - 空痕影的从头再来</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="TriDiamond Obsidian,"> 
+    <meta name="description" content="arthas 异常排查(一 ) 一次内存泄露1. 查看服务发现内存消耗严重图中的5638进程java程序内存已经来到了52%,即8G.肯定是不正常的.
+
+2. 下载arthas来分析数据.curl ,"> 
+    <meta name="author" content="空痕影"> 
+    <link rel="alternative" href="atom.xml" title="空痕影的从头再来" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">空痕影的从头再来</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://konghenying.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">arthas 异常排查(一) 一次内存泄露</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg) ">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/jvm"><b>「
+                    </b>JVM<b> 」</b></a>
+                
+                一月 05, 2025
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2025/01/05/jvm/arthas%E6%8E%92%E6%9F%A5%E9%97%AE%E9%A2%98/" title="arthas 异常排查(一) 一次内存泄露" class="">arthas 异常排查(一) 一次内存泄露</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>文章字数</i>
+                    3.6k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
+                    3 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>阅读次数</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/jvm/" rel="tag">jvm</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="arthas-异常排查-一-一次内存泄露"><a href="#arthas-异常排查-一-一次内存泄露" class="headerlink" title="arthas 异常排查(一 ) 一次内存泄露"></a>arthas 异常排查(一 ) 一次内存泄露</h1><h2 id="1-查看服务发现内存消耗严重"><a href="#1-查看服务发现内存消耗严重" class="headerlink" title="1. 查看服务发现内存消耗严重"></a>1. 查看服务发现内存消耗严重</h2><p>图中的5638进程java程序内存已经来到了52%,即8G.肯定是不正常的.</p>
+<p><img src="/images/jvm/arthas.assets/top-memory.jpg" alt="top"></p>
+<h2 id="2-下载arthas来分析数据"><a href="#2-下载arthas来分析数据" class="headerlink" title="2. 下载arthas来分析数据."></a>2. 下载arthas来分析数据.</h2><pre><code class="bash">curl -O https://arthas.aliyun.com/arthas-boot.jar
+java -jar arthas-boot.jar 
+# 选择5638进程的java程序.
+</code></pre>
+<p><img src="/images/jvm/arthas.assets/arthas%E5%90%AF%E5%8A%A8.jpg" alt="arthas启动"></p>
+<h2 id="3-使用memory查看内存情况"><a href="#3-使用memory查看内存情况" class="headerlink" title="3. 使用memory查看内存情况"></a>3. 使用memory查看内存情况</h2><p>使用<code>memory</code> 查看内存分布情况. </p>
+<p><img src="/images/jvm/arthas.assets/memory%E6%83%85%E5%86%B5.jpg" alt="memory"></p>
+<p>发现nonheap(非堆内存)存在异常占用.且metaspace(元空间)中占用也异常.由此推测是类加载器泄露或动态生成过多类.</p>
+<h2 id="4-通过jvm查看"><a href="#4-通过jvm查看" class="headerlink" title="4. 通过jvm查看"></a>4. 通过jvm查看</h2><p>使用<code>jvm</code>查看内存分布情况.</p>
+<p><img src="/images/jvm/arthas.assets/jvm%E6%83%85%E5%86%B5.jpg" alt="jvm"></p>
+<p>发现类加载统计次数非常高.属于异常情况.</p>
+<h2 id="5-使用classloader查看类加载详情"><a href="#5-使用classloader查看类加载详情" class="headerlink" title="5. 使用classloader查看类加载详情"></a>5. 使用classloader查看类加载详情</h2><p><img src="/images/jvm/arthas.assets/classloader%E6%83%85%E5%86%B5.jpg" alt="image-20250106104728660"></p>
+<p>通过连续的键入<code>classloader</code>.发现com.alibaba.fastjson2.util.DynamicClassLoader这个类加载器loaded次数持续上涨.</p>
+<p>使用<code>classloader --list</code> 可以查看类加载器的hash值,用于后续的过滤.</p>
+<h2 id="6-检查代码-找出fastjson相关代码-做测试排查"><a href="#6-检查代码-找出fastjson相关代码-做测试排查" class="headerlink" title="6.  检查代码,找出fastjson相关代码.做测试排查"></a>6.  检查代码,找出fastjson相关代码.做测试排查</h2><p>最后检查到serializeConfig这里存在问题.config只需存于一份即可,无须每次调用都创建一次.</p>
+<pre><code class="java">// others
+SerializeConfig serializeConfig = new SerializeConfig();
+// 驼峰转下划线
+serializeConfig.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+String reqStr = JSON.toJSONString(req, serializeConfig);
+</code></pre>
+<p>跟踪serializeConfig代码发现创建对象时会在无参构造中创建ObjectWriterProvider对象.</p>
+<pre><code class="java"> public class SerializeConfig &#123;
+  .......
+    public SerializeConfig() &#123;
+        this(new ObjectWriterProvider());
+    &#125;
+
+    public SerializeConfig(ObjectWriterProvider provider) &#123;
+        this.fieldBased = false;
+        this.provider = provider;
+    &#125;
+&#125;
+</code></pre>
+<p>而在翻阅fastjson的github仓库的时候,fastjson的开发人员回答的是<a target="_blank" rel="noopener" href="https://github.com/alibaba/fastjson2/issues/2109#issuecomment-1868262179">provider单例</a>.</p>
+<p><img src="/images/jvm/arthas.assets/github-%E7%AD%94%E6%A1%88.jpg" alt="image-20250107145159436"></p>
+<h2 id="7-验证"><a href="#7-验证" class="headerlink" title="7. 验证"></a>7. 验证</h2><p>通过通过<code>sc</code>命令查看类加载情况</p>
+<p>查找 <code>com.alibaba.fastjson2</code>包下的类.并通过类加载器过滤该类所创建的类.</p>
+<pre><code class="bash">sc -d com.alibaba.fastjson2.* -c 21d2b7f7 -n 20
+</code></pre>
+<p>发现存在大量的writer类使用后没有销毁.</p>
+<p><img src="/images/jvm/arthas.assets/fastjonsWriter.jpg" alt="image-20250106231235402"></p>
+<h2 id="8-修改"><a href="#8-修改" class="headerlink" title="8. 修改"></a>8. 修改</h2><p>将SerializeConfig对象上升到类变量中.保持单例.</p>
+<pre><code class="java">private SerializeConfig serializeConfig = new SerializeConfig();
+
+......
+// 驼峰转下划线
+serializeConfig.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+String reqStr = JSON.toJSONString(req, serializeConfig);
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/折戸伸治 - 梦のあと I.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>空痕影</p>
+                    <span>学而不思则罔,思而不学则殆.</span>
+                    <dl>
+                        <dd><a href="https://github.com/konghenying" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">92 <p>文章</p></a></li>
+                    <li><a href="/categories">18 <p>分类</p></a></li>
+                    <li><a href="/tags">18 <p>标签</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>目录</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#arthas-%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5-%E4%B8%80-%E4%B8%80%E6%AC%A1%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="toc-number">1.</span> <span class="toc-text">arthas 异常排查(一 ) 一次内存泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E5%86%85%E5%AD%98%E6%B6%88%E8%80%97%E4%B8%A5%E9%87%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1. 查看服务发现内存消耗严重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BDarthas%E6%9D%A5%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 下载arthas来分析数据.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8memory%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E6%83%85%E5%86%B5"><span class="toc-number">1.3.</span> <span class="toc-text">3. 使用memory查看内存情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%80%9A%E8%BF%87jvm%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.4.</span> <span class="toc-text">4. 通过jvm查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8classloader%E6%9F%A5%E7%9C%8B%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%AF%A6%E6%83%85"><span class="toc-number">1.5.</span> <span class="toc-text">5. 使用classloader查看类加载详情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%A3%80%E6%9F%A5%E4%BB%A3%E7%A0%81-%E6%89%BE%E5%87%BAfastjson%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81-%E5%81%9A%E6%B5%8B%E8%AF%95%E6%8E%92%E6%9F%A5"><span class="toc-number">1.6.</span> <span class="toc-text">6.  检查代码,找出fastjson相关代码.做测试排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%AA%8C%E8%AF%81"><span class="toc-number">1.7.</span> <span class="toc-text">7. 验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BF%AE%E6%94%B9"><span class="toc-number">1.8.</span> <span class="toc-text">8. 修改</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2025
+        <span class="gradient-text">
+            空痕影
+        </span>.
+        Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.4" target="_blank" rel="noopener">v1.4.4</a></small>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+ 
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+ 
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+  
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+   
+<script src="/js/busuanzi.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    if ($('span[id^="busuanzi_"]').length) {
+      initialBusuanzi();
+    }
+  });
+</script>
+ 
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-149874671-1');
+</script>
+ 
+
+<script>
+  function initialTyped() {
+    var typedTextEl = $('.typed-text');
+    if (typedTextEl && typedTextEl.length > 0) {
+      var typed = new Typed('.typed-text', {
+        strings: ['学而不思则罔,思而不学则殆.', '岁月是一指流沙,苍老是一段年华.'],
+        typeSpeed: 90,
+        loop: true,
+        loopCount: Infinity,
+        backSpeed: 20,
+      });
+    }
+  }
+
+  if ($('.article-header') && $('.article-header').length) {
+    $(document).ready(function () {
+      initialTyped();
+    });
+  }
+</script>
+
+
+
+
+ <!-- 例：百度统计 --> <script> var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?d180eba02c599a67bfa54b22bf3b32f2"; var s = document.getElementsByTagName("script")[0];  s.parentNode.insertBefore(hm, s); })(); </script> 
+
+</html>
