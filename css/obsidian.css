@@ -376,7 +376,6 @@ audio {
   background-color: #fff;
   width: 75px;
   height: 32px;
-/* mask-image: url("../img/logo.png"); */
   mask-size: contain;
   transition: background-color 0.5s ease-in-out;
 }
